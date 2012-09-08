@@ -1,6 +1,9 @@
 *.class
+build/*
+dist/*
+coverage*/*
+doc/*
+style-reports/*
+test-build/*
+test-reports/*
 
-# Package Files #
-*.jar
-*.war
-*.ear
