@@ -6,7 +6,9 @@ import common.Result;
  */
 public interface IModel {
 
-		
+	public boolean isSaved();
+
+	public boolean isValid();
 	/**
 	 * Validates if the model is in a savable state
 	 */
