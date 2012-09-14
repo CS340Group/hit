@@ -1,5 +1,6 @@
 package gui.common;
 
+import common.Result;
 /**
  * IModel defines functionality that is supported by all models in the program.
  */

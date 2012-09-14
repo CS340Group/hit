@@ -1,9 +1,9 @@
-package gui.item;
+package gui.product;
 
 import gui.common.IModel;
 import common.Result;
 
-public class Item extends ItemData implements IModel{
+public class Product extends ProductData implements IModel{
 
 	private int _id;
 
@@ -11,7 +11,7 @@ public class Item extends ItemData implements IModel{
 
 	private boolean _saved;	
 
-	public Item(){
+	public Product(){
 		super();
 		_id = -1;
 		_valid = false;
