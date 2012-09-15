@@ -12,10 +12,21 @@ import common.Result;
  */
 public class ProductVault extends Vault {
 	
-	public static Product find() {
+	/** 
+	 * Returns an instance of a {@link gui.product.Product product} located within the product vault. 
+	 * @param id unique integer representing automatically assigned index of pre-exiting product.
+	 * Returns a copy of the product if found. Otherwise, returns null.
+	 */
+	public static Product find(int id) {
 		return null;
 	}
 	
+	/**
+	 * Used by {@link guit.item.Item Item} to make sure that an automatically created product is a
+	 * valid new product.
+	 * @param model is a reference to the newly created Product instance which wants to be added to the vault.
+	 * If the validation fails, a Result instance is returned wiht a message detailing the reason for failure.
+	 */
 	protected static Result validateNew(Product model){
 		return null;
 	}
