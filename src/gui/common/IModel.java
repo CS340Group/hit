@@ -6,11 +6,18 @@ import common.Result;
  */
 public interface IModel {
 
+	/**
+	 *	Returns true if the model is saved in the vault, false otherwise.
+	 */
 	public boolean isSaved();
 
-	public boolean isValid();
 	/**
-	 * Validates if the model is in a savable state
+	 * Returns true if the model is able to be saved to the vault, false otherwise.
+	 */
+	public boolean isValid();
+	
+	/**
+	 * Validates if the model is in a savable state.
 	 */
 	Result validate();
 
