@@ -3,11 +3,14 @@ git checkout master
 rm -rf scratch
 mkdir scratch
 ant doc
+ant coverage
+ant checkstyle
 mv *reports scratch/
 ant clean
 git checkout gh-pages
-mv -f scratch/* ./
+cp -rf scratch/* ./
 git add .
 git commit -m "auto doc regen"
 git push origin gh-pages
 git checkout master
+rm -rf scratch
