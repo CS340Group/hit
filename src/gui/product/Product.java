@@ -6,7 +6,7 @@ import common.Result;
 /**
  * The Product class encapsulates all the funtions and data associated with a "Product".
  * It extends the {@link gui.product.ProductData ProductData} 
- * class which contains getters and setters for the various datas.
+ * 	class which contains getters and setters for the various datas.
  */
 
 public class Product extends ProductData implements IModel{
