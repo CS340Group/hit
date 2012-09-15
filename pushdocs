@@ -6,6 +6,7 @@ ant doc
 ant coverage
 ant checkstyle
 mv *reports scratch/
+mv doc scratch/
 ant clean
 git checkout gh-pages
 cp -rf scratch/* ./
