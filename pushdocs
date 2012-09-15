@@ -6,7 +6,7 @@ ant doc
 mv *reports scratch/
 ant clean
 git checkout gh-pages
-mv scratch/* ./
+mv -f scratch/* ./
 git add .
 git commit -m "auto doc regen"
 git push origin gh-pages
