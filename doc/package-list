@@ -7,6 +7,7 @@ gui.item
 gui.main
 gui.product
 gui.productgroup
+gui.reports.common
 gui.reports.expired
 gui.reports.notices
 gui.reports.productstats
