@@ -2,7 +2,7 @@
 git checkout master
 rm -rf sratch
 ant doc
-mv *report scratch/
+mv *reports scratch/
 ant clean
 git checkout gh-pages
 mv scratch/* ./
