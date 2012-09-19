@@ -1,6 +1,6 @@
-package gui.item;
+package model.item;
 
-import gui.common.IModel;
+import model.common.IModel;
 import common.Result;
 
 /**
@@ -8,7 +8,7 @@ import common.Result;
  * It extends the {@link gui.item.ItemData ItemData} 
  * 	class which contains getters and setters for the various datas.
  */
-public class Item extends ItemData implements IModel{
+public class Item implements IModel{
 
 		/**
 	 * A unique ID is associated with every Item once it is presisted to the vault.
@@ -33,7 +33,7 @@ public class Item extends ItemData implements IModel{
 	 * Constructor
 	 */
 	public Item(){
-		super();
+		//super();
 		_id = -1;
 		_valid = false;
 		_saved = false;

@@ -1,9 +1,9 @@
-package gui.product;
+package model.product;
 
 import java.util.ArrayList;
 
-import gui.common.IModel;
-import gui.common.Vault;
+import model.common.IModel;
+import model.common.Vault;
 import common.Result;
 
 /**

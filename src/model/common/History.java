@@ -1,8 +1,8 @@
-package gui.common;
+package model.common;
 
 import java.util.Stack;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+import common.Result;
 /**
  * The history class keeps charge of any changes made to the vaults.  It has the ability to undo any changes.
  * <PRE>

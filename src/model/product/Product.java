@@ -1,18 +1,17 @@
-package gui.storageunit;
+package model.product;
 
-import gui.common.IModel;
+import model.common.IModel;
 import common.Result;
-import gui.inventory.ProductContainerData;
 
 /**
- * The StorageUnit class encapsulates all the funtions and data associated with a "StorageUnit".
- * It extends the {@link gui.inventory.ProductContainerData ProductContainerData} 
+ * The Product class encapsulates all the funtions and data associated with a "Product".
+ * It extends the {@link model.product.ProductData ProductData} 
  * 	class which contains getters and setters for the various datas.
  */
-public class StorageUnit extends ProductContainerData implements IModel{
 
+public class Product implements IModel{
 	/**
-	 * A unique ID is associated with every StorageUnit once it is presisted to the vault.
+	 * A unique ID is associated with every Product once it is presisted to the vault.
 	 * _id is not set by the user, but by the vault when it is saved.
 	 * _id can be -1 if it is new and has not been saved
 	 */
@@ -34,36 +33,36 @@ public class StorageUnit extends ProductContainerData implements IModel{
 	/**
 	 * Constructor
 	 */
-	public StorageUnit(){
-		super();
+	public Product(){
+		//super();
 		_id = -1;
 		_valid = false;
 		_saved = false;
 	}
 
 	/**
-	 * Is the StorageUnit saved?
+	 * Is the Product saved?
 	 */
 	public boolean isSaved(){
 		return this._saved;
 	}
 
 	/**
-	 * Is the StorageUnit valid?
+	 * Is the Product valid?
 	 */
 	public boolean isValid(){
 		return this._valid;
 	}
 
 	/**
-	 * If the StorageUnit is valid it is saved into the vault.
+	 * If the Product is valid it is saved into the vault.
 	 */
 	public Result save(){
 		return new Result(false, "Saving is not yet implemented");
 	}
 
 	/**
-	 * Validate that the StorageUnit is able to be saved into the vault.
+	 * Validate that the product is able to be saved into the vault.
 	 */
 	public Result validate(){
 		return new Result(false, "Validating is not yet implemented");

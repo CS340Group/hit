@@ -1,4 +1,4 @@
-package gui.common;
+package model.common;
 
 public class Action{
 	IModel before;

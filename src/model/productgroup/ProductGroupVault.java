@@ -1,8 +1,8 @@
-package gui.productgroup;
+package model.productgroup;
 
 import java.util.ArrayList;
 
-import gui.common.Vault;
+import model.common.Vault;
 import common.Result;
 
 

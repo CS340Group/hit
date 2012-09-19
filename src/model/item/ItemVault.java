@@ -1,8 +1,8 @@
-package gui.item;
+package model.item;
 
 import java.util.ArrayList;
 
-import gui.common.Vault;
+import model.common.Vault;
 import common.Result;
 
 

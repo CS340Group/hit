@@ -1,17 +1,17 @@
-package gui.product;
+package model.productgroup;
 
-import gui.common.IModel;
+import model.common.IModel;
 import common.Result;
 
 /**
- * The Product class encapsulates all the funtions and data associated with a "Product".
- * It extends the {@link gui.product.ProductData ProductData} 
+ * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
+ * It extends the {@link model.inventory.ProductContainerData ProductContainerData} 
  * 	class which contains getters and setters for the various datas.
  */
+public class ProductGroup implements IModel{
 
-public class Product extends ProductData implements IModel{
 	/**
-	 * A unique ID is associated with every Product once it is presisted to the vault.
+	 * A unique ID is associated with every ProductGroup once it is presisted to the vault.
 	 * _id is not set by the user, but by the vault when it is saved.
 	 * _id can be -1 if it is new and has not been saved
 	 */
@@ -33,36 +33,36 @@ public class Product extends ProductData implements IModel{
 	/**
 	 * Constructor
 	 */
-	public Product(){
-		super();
+	public ProductGroup(){
+		//super();
 		_id = -1;
 		_valid = false;
 		_saved = false;
 	}
 
 	/**
-	 * Is the Product saved?
+	 * Is the ProductGroup saved?
 	 */
 	public boolean isSaved(){
 		return this._saved;
 	}
 
 	/**
-	 * Is the Product valid?
+	 * Is the ProductGroup valid?
 	 */
 	public boolean isValid(){
 		return this._valid;
 	}
 
 	/**
-	 * If the Product is valid it is saved into the vault.
+	 * If the ProductGroup is valid it is saved into the vault.
 	 */
 	public Result save(){
 		return new Result(false, "Saving is not yet implemented");
 	}
 
 	/**
-	 * Validate that the product is able to be saved into the vault.
+	 * Validate that the ProductGroup is able to be saved into the vault.
 	 */
 	public Result validate(){
 		return new Result(false, "Validating is not yet implemented");

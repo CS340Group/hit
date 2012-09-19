@@ -1,8 +1,8 @@
-package gui.storageunit;
+package model.storageunit;
 
 import java.util.ArrayList;
 
-import gui.common.Vault;
+import model.common.Vault;
 import common.Result;
 
 
