@@ -1,6 +1,7 @@
 package model.productgroup;
 
 import model.common.IModel;
+import model.productcontainer.ProductContainer;
 import common.Result;
 
 /**
@@ -8,64 +9,51 @@ import common.Result;
  * It extends the {@link model.inventory.ProductContainerData ProductContainerData} 
  * 	class which contains getters and setters for the various datas.
  */
-public class ProductGroup implements IModel{
+public class ProductGroup extends ProductContainer{
+
+	/* A pointer to the ProductContainer that this group belongs to */
+	private ProductContainer _parent;
+	/* A pointer to the StorageUnit that holds this group. Can be the same
+	 * as _parent */
+	private ProductContainer _rootParent;
+	/* A variable representing the three month supply for this group. */
+	private int _threeMosSupply;
 
 	/**
-	 * A unique ID is associated with every ProductGroup once it is presisted to the vault.
-	 * _id is not set by the user, but by the vault when it is saved.
-	 * _id can be -1 if it is new and has not been saved
-	 */
-	private int _id;
-
-	/**
-	 * When a change is made to the data it becomes invalid and 
-	 * must be validated before it can be saved.
-	 * _valid maintains this state
-	 */
-	private boolean _valid;
-
-	/**
-	 * _saved maintaines the state of if the instance of the model is the same as the 
-	 * persisted model in the vault.
-	 */
-	private boolean _saved;	
-
-	/**
-	 * Constructor
+	 * No-args constructor.
 	 */
 	public ProductGroup(){
-		//super();
-		_id = -1;
-		_valid = false;
-		_saved = false;
+		super();
+		_parent = NULL;
+		_rootParent = NULL;
 	}
 
 	/**
-	 * Is the ProductGroup saved?
+	 * Expects the parent group, and the storage unit that this group belongs
+	 * to. They can be the same value. Also expects some non-negative integer
+	 * for the three-moth supply for this group.
 	 */
-	public boolean isSaved(){
-		return this._saved;
+	public ProductGroup(ProductGroup parent, ProductGroup rootParent, 
+	                    int threeMosSupply){
+		super();
+		_parent = parent;
+		_rootParent = rootParent;
+		_threeMosSupply = threeMosSupply;
 	}
 
 	/**
-	 * Is the ProductGroup valid?
-	 */
-	public boolean isValid(){
-		return this._valid;
+	 * Returns the three-month supply for this group as an int. */	
+	public int getThreeMosSupply(){
+		return _threeMosSupply;
 	}
 
 	/**
-	 * If the ProductGroup is valid it is saved into the vault.
+	 * Allows a non-zero integer to be set for the three month supply.
 	 */
-	public Result save(){
-		return new Result(false, "Saving is not yet implemented");
-	}
-
-	/**
-	 * Validate that the ProductGroup is able to be saved into the vault.
-	 */
-	public Result validate(){
-		return new Result(false, "Validating is not yet implemented");
+	public result setThreeMosSupply(int value){
+		// Do checks
+		_threeMosSupply = value;
+		return Result(true, "Successfully set.")
 	}
 	
 }
