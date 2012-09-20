@@ -24,8 +24,8 @@ public class ProductGroup extends ProductContainer{
 	 */
 	public ProductGroup(){
 		super();
-		_parent = NULL;
-		_rootParent = NULL;
+		_parent = null;
+		_rootParent = null;
 	}
 
 	/**
@@ -50,10 +50,10 @@ public class ProductGroup extends ProductContainer{
 	/**
 	 * Allows a non-zero integer to be set for the three month supply.
 	 */
-	public result setThreeMosSupply(int value){
+	public Result setThreeMosSupply(int value){
 		// Do checks
 		_threeMosSupply = value;
-		return Result(true, "Successfully set.")
+		return new Result(true, "Successfully set.");
 	}
 	
 }
