@@ -29,7 +29,8 @@ public class Product implements IModel{
 	 * persisted model in the vault.
 	 */
 	private boolean _saved;	
-
+	private String name;
+	
 	/**
 	 * Constructor
 	 */
@@ -66,6 +67,12 @@ public class Product implements IModel{
 	 */
 	public Result validate(){
 		return new Result(false, "Validating is not yet implemented");
+	}
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
 	}
 	
 }
