@@ -1,9 +1,17 @@
 package model.storageunit;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
+import model.common.IModel;
 import model.common.Vault;
+import model.item.Item;
+import model.product.Product;
+import model.productgroup.ProductGroup;
 import common.Result;
+import common.util.QueryParser;
 
 
 /**
@@ -20,11 +28,25 @@ public class StorageUnitVault extends Vault {
 	 * Returns just one StorageUnit based on the query sent in. 
 	 * If you need more than one StorageUnit returned use FindAll
 	 * 
-	 * @param attribute Which attribute should we search on for each StorageUnit
+	 * @param attribute Which attribute should we search on for each Product
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static StorageUnit find(String attribute, String value) {
+	public StorageUnit find(String query)  {
+		QueryParser MyQuery = new QueryParser(query);
+
+		
+		//Do a linear Search first
+		//TODO: Add ability to search by index
+		try {
+			return linearSearch(MyQuery,1).get(0);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 	
@@ -36,13 +58,59 @@ public class StorageUnitVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<StorageUnit> findAll(String attribute, String value) {
+	public ArrayList<StorageUnit> findAll(String query) {
+		QueryParser MyQuery = new QueryParser(query);
+
+		
+		//Do a linear Search first
+		//TODO: Add ability to search by index
+		try {
+			ArrayList<StorageUnit> results = linearSearch(MyQuery,0);
+			return results;
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
+	}
+	
+	private ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
+		String objName = MyQuery.getObjName();
+		String attrName = MyQuery.getAttrName();
+		String value = MyQuery.getValue();
+		
+
+		StorageUnit mySU = new StorageUnit();
+		
+		//Class associated with the product model
+		Class suCls = mySU.getClass();
+		//Method we will call to get the value
+		Method method;
+		method = suCls.getMethod("get"+attrName);
+
+		
+		//Loop through entire hashmap and check values one at a time
+		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+			mySU = (StorageUnit) entry.getValue();
+			String mySUValue; 
+			mySUValue = (String) method.invoke(mySU, null);
+
+		    if(mySUValue.equals(value)){
+		    	results.add(mySU);
+		    }
+		    if(count != 0 && results.size() == count )
+		    	return results;
+		}
+		return results;
 	}
 	
 	
 	/**
 	 * Checks if the model passed in already exists in the current map
+	 * - Must have a unique name
 	 * 
 	 * @param model
 	 * @return Result of the check

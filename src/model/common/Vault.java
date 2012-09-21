@@ -1,12 +1,14 @@
 package model.common;
 
 import java.util.SortedMap;
+import java.util.TreeMap;
+
 import common.Result;
 
 public abstract class Vault implements IVault {
 
 	
-	private SortedMap<Integer, IModel> dataVault;
+	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
 	
 	/**
 	 * Constructor.

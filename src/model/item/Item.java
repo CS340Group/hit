@@ -1,6 +1,7 @@
 package model.item;
 
 import model.common.IModel;
+import model.product.Product;
 import common.Result;
 
 /**
@@ -29,6 +30,9 @@ public class Item implements IModel{
 	 */
 	private boolean _saved;	
 
+	private String name;
+	private Product product;
+	private int index;
 	/**
 	 * Constructor
 	 */
@@ -65,6 +69,22 @@ public class Item implements IModel{
 	 */
 	public Result validate(){
 		return new Result(false, "Validating is not yet implemented");
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+	public Product getProduct(){
+		return this.product;
+	}
+	public void setProduct(Product product){
+		this.product = product;
+	}
+	public int getIndex(){
+		return this.index;
 	}
 	
 }
