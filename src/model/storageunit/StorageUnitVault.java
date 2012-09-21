@@ -110,6 +110,7 @@ public class StorageUnitVault extends Vault {
 	
 	/**
 	 * Checks if the model passed in already exists in the current map
+	 * - Must have a unique name
 	 * 
 	 * @param model
 	 * @return Result of the check

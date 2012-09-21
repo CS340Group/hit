@@ -126,6 +126,8 @@ public class ProductVault extends Vault {
 	
 	/**
 	 * Checks if the model passed in already exists in the current map
+	 * - Product must have unique barcode within a su
+	 * 
 	 * 
 	 * @param model
 	 * @return Result of the check
@@ -136,6 +138,7 @@ public class ProductVault extends Vault {
 
 	/**
 	 * Checks if the model already exists in the map
+	 * - Do same checks but skip over current model
 	 * 
 	 * @param model
 	 * @return Result of the check

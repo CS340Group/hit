@@ -118,9 +118,9 @@ public class ItemVault extends Vault {
 			
 			if(objName!= null && objName.equals("product")){
 				//Get the item, call get product, run dynamic method on that
-				myItemValue = (String) method.invoke(myItem.getProduct(), null);
+				myItemValue = method.invoke(myItem.getProduct(), null).toString();
 			} else {
-				myItemValue = (String) method.invoke(myItem, null);
+				myItemValue = method.invoke(myItem, null).toString();
 			}
 		    
 		    if(myItemValue.equals(value)){
@@ -139,6 +139,7 @@ public class ItemVault extends Vault {
 	}
 	/**
 	 * Checks if the model passed in already exists in the current map
+	 * - Item must have a unique barcode
 	 * 
 	 * @param model
 	 * @return Result of the check
@@ -146,17 +147,24 @@ public class ItemVault extends Vault {
 	public Result validateNew(Item model){
 		assert(model!=null);
 		
-		return null;
+		int count = this.find("barcode = "+model.getBarcode.toString()).size();
+		if(count ==0)
+			return new Result(true);
+		else
+			return new Result(false,"Duplicate barcode");
 	}
 
 	/**
 	 * Checks if the model already exists in the map
+	 * - Retrieve current model by index
+	 * - If barcode is the same do nothing, if it's changed check
 	 * 
 	 * @param model
 	 * @return Result of the check
 	 */
-	public static Result validateModified(Item model){
+	public Result validateModified(Item model){
 		assert(model!=null);
+		
 		
 		return null;
 	}
@@ -168,6 +176,7 @@ public class ItemVault extends Vault {
 	 * @return Result of request
 	 */
 	public static Result saveNew(Item model){
+		
 		return null;
 	}
 
