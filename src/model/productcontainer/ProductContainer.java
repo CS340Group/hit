@@ -55,6 +55,10 @@ public class ProductContainer implements IModel{
         _saved = false;
     }
 
+    public int getId(){
+        return _id;
+    }
+
     /**
      * This method should be called whenever an attribute is changed so that 
      * validation must happen again.
