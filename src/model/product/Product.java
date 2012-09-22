@@ -3,7 +3,9 @@ package model.product;
 import model.common.IModel;
 import common.Result;
 import model.storageunit.StorageUnit;
+import model.storageunit.StorageUnitVault;
 import model.productgroup.ProductGroup;
+import model.productgroup.ProductGroupVault;
 import model.common.Barcode;
 import model.common.Unit;
 import org.joda.time.DateTime;
@@ -35,9 +37,9 @@ public class Product implements IModel{
 	 */
 	private boolean _saved;
 
-    private StorageUnit _storage;
+    private int _storageUnitId;
 
-    private ProductGroup _container;
+    private int _containerId;
 
     private DateTime _creationDate;
 
@@ -64,9 +66,17 @@ public class Product implements IModel{
      * Copy constructor
      */
     public Product(Product p){
-        _id = -1;
+        _id = p.getId();
         _valid = false;
         _saved = false;
+        _storageUnitId = p.getStorageUnitId();
+        _containerId = p.getContainerId();
+        _creationDate = p.getCreationDate();
+        _barcode = p.getBarcode();
+        _description = p.getDescription();
+        _size = p.getSize();
+        _shelfLife = p.getSelfLife();
+        _3MonthSupply = p.get3MonthSupply();
     }
 
 	/**
@@ -83,27 +93,33 @@ public class Product implements IModel{
 		return _valid;
 	}
 
-    public StorageUnit getStorage(){
-        return new StorageUnit(_storage);
+    public int getId(){
+        return _id;
     }
 
-    public Result setStorage(StorageUnit s ){
-        assert s != null;
-        assert s.isValid();
-        assert s.isSaved();
-        _storage = s;
+    public StorageUnit getStorageUnit(){
+        return StorageUnitVault.get(_storageUnitId);
+    }
+
+    public int getStorageUnitId(){
+        return _storageUnitId;
+    }
+
+    public Result setStorageUnitId(int id){
+        _storageUnitId = id;
         return new Result(true);
     }
 
     public ProductGroup getContainer(){
-        return new ProductGroup(_container);
+        return ProductGroupVault.get(_containerId);
     }
 
-    public Result setContainer(ProductGroup pg){
-        assert pg != null;
-        assert pg.isValid();
-        assert pg.isSaved();
-        _container = pg;
+    public int getContainerId(){
+        return _containerId;
+    }
+
+    public Result setContainerId(int id){
+        _containerId = id;
         return new Result(true);
     }
 
