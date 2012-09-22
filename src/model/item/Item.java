@@ -1,3 +1,4 @@
+//POINTS to product
 package model.item;
 
 import model.common.IModel;
