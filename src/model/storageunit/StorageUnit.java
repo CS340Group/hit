@@ -11,6 +11,24 @@ import common.Result;
  */
 public class StorageUnit extends ProductContainer{
 
-    public StorageUnit(StorageUnit storage) {
+    private String _name;
+
+    public StorageUnit(){
+        super();
+        this._name = "";
     }
+
+    public StorageUnit(StorageUnit storage) {
+        super(storage);
+        this._name = storage.getName();
+    }
+
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String _name) {
+        this._name = _name;
+    }
+
 }
