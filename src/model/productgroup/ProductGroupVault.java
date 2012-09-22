@@ -120,9 +120,24 @@ public class ProductGroupVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(ProductGroup model){
-		return null;
+	protected Result validateNew(ProductGroup model){
+		Result result = new Result();
+		result = this.checkUniqueName(model);
+		if(result.getStatus() == false)
+			return result;
+		
+		return result;
 	}
+	
+	private Result checkUniqueName(ProductGroup model){
+		ArrayList<ProductGroup> myPGs = this.findAll("name = "+model.getName());
+		for(ProductGroup tempGroup : myPGs){
+			if(tempGroup.getName().equals(model.getName()))
+				return new Result(false,"Duplicate product in container");
+		}
+		return new Result(true);
+	}
+	
 
 	/**
 	 * Checks if the model already exists in the map

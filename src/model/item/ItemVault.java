@@ -132,11 +132,6 @@ public class ItemVault extends Vault {
 		return results;
 	}
 		
-	//TODO: for testing only
-	public void add(Item item){
-		
-		dataVault.put(1, item);
-	}
 	/**
 	 * Checks if the model passed in already exists in the current map
 	 * - Item must have a unique barcode

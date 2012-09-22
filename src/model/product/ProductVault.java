@@ -107,11 +107,11 @@ public class ProductVault extends Vault {
 			String myProductValue; 
 			
 			if(objName!= null && objName.equals("productGroup")){
-				myProductValue = (String) method.invoke(myProduct.getProductGroup(), null);
+				myProductValue = method.invoke(myProduct.getProductGroup(), null).toString();
 			} else if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = (String) method.invoke(myProduct.getStorageUnit(), null);
+				myProductValue = method.invoke(myProduct.getStorageUnit(), null).toString();
 			} else {
-				myProductValue = (String) method.invoke(myProduct, null);
+				myProductValue = method.invoke(myProduct, null).toString();
 			}
 
 		    if(myProductValue.equals(value)){
@@ -125,19 +125,29 @@ public class ProductVault extends Vault {
 		
 	
 	/**
-	 * Checks if the model passed in already exists in the current map
+	 * Checks if a new model will fit in the vault
 	 * - Product must have unique barcode within a su
 	 * 
 	 * 
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(Product model){
-		return null;
+	protected Result validateNew(Product model){
+		Result result = new Result();
+		
+		//Check that the new product is not a duplicate
+		//in the storage container
+		result = this.validateUniqueBarcode(model);
+		if(result.getStatus() != true)
+			return result;
+		
+		
+		return new Result(true);
 	}
+	
 
 	/**
-	 * Checks if the model already exists in the map
+	 * Checks if the updated model will fit into the vault
 	 * - Do same checks but skip over current model
 	 * 
 	 * @param model
@@ -147,6 +157,17 @@ public class ProductVault extends Vault {
 		return null;
 	}
 
+	private Result validateUniqueBarcode(Product model){
+		ArrayList<Product> allProducts = this.findAll("storageUnit.Index = "+model.getStorageUnit().getIndex());
+		String barcode = model.getBarcode().toString();
+		for(Product testProd : allProducts){
+			if(testProd.getBarcode.toString().equals(barcode))
+				return new Result(false,"Duplicate product in container");
+		}
+		return new Result(true);
+	}
+	
+	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.
 	 * 

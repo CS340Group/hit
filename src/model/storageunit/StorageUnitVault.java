@@ -116,7 +116,19 @@ public class StorageUnitVault extends Vault {
 	 * @return Result of the check
 	 */
 	protected static Result validateNew(StorageUnit model){
-		return null;
+		Result result = new Result();
+		result = this.checkUniqueName(model);
+		if(result.getStatus() == false)
+			return result;
+		
+		return result;
+	}
+	
+	private Result checkUniqueName(StorageUnit model){
+		int size = this.find("name = "+model.getName()).size();
+		if(size==0)
+			return new Result(false,"Duplicate storage container name.");
+		return new Result(true);
 	}
 
 	/**
