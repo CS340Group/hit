@@ -260,8 +260,9 @@
 				<pathelement location="${build}"/>
 			</classpath>
 			<classpath refid="junit-classpath" />
-			<classpath refid="cobertura-classpath" />
-		</javac>
+            <classpath refid="cobertura-classpath" />
+            <classpath refid="joda-classpath" />
+        </javac>
 	</target>
 	
 	<target name="test" depends="compile-tests"

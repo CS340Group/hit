@@ -74,6 +74,11 @@ public class Item implements IModel{
         return _id;
     }
 
+    protected Result setId(int id){
+        _id = id;
+        return new Result(true);
+    }
+
     public Result setProductId(int id){
         _productId = id;
         return new Result(true);
@@ -131,6 +136,11 @@ public class Item implements IModel{
 		return this._saved;
 	}
 
+    protected Result setSaved(boolean saved){
+        _saved = saved;
+        return new Result(true);
+    }
+
 	/**
 	 * Is the Item valid?
 	 */
@@ -138,17 +148,30 @@ public class Item implements IModel{
 		return this._valid;
 	}
 
+    protected Result setValid(boolean valid){
+        _valid = valid;
+        return new Result(true);
+    }
+
 	/**
 	 * If the Item is valid it is saved into the vault.
 	 */
 	public Result save(){
-		return new Result(false, "Saving is not yet implemented");
+		if(!isValid())
+            return new Result(false, "Item must be valid before saving.");
+        if(getId() == -1)
+            return ItemVault.saveNew(this);
+        else
+            return ItemVault.saveModified(this);
 	}
 
 	/**
 	 * Validate that the Item is able to be saved into the vault.
 	 */
 	public Result validate(){
-		return new Result(false, "Validating is not yet implemented");
+        if(getId() == -1)
+            return ItemVault.validateNew(this);
+        else
+            return ItemVault.validateModified(this);
 	}
 }

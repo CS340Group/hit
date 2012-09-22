@@ -45,7 +45,7 @@ public class ItemVault extends Vault {
 	 * @throws NoSuchMethodException 
 	 * 
 	 */
-	public Item find(String query)  {
+	public static Item find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -67,7 +67,7 @@ public class ItemVault extends Vault {
 	 * @param query of form obj.attr = value 
 	 * 
 	 */
-	public ArrayList<Item> findAll(String query) {
+	public static ArrayList<Item> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -135,13 +135,16 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateNew(Item model){
+	public static Result validateNew(Item model){
 		assert(model!=null);
-		
-		int count = this.findAll("barcode = "+model.getBarcode().toString()).size();
-		if(count ==0)
+
+        //TODO: This method should call a list of other validate methods for each integrity constraint
+		int count = findAll("Barcode = "+model.getBarcode().toString()).size();
+		if(count ==0){
+            model.setValid(true);
 			return new Result(true);
-		else
+        }
+        else
 			return new Result(false,"Duplicate barcode");
 	}
 
@@ -153,11 +156,13 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateModified(Item model){
+	public static Result validateModified(Item model){
 		assert(model!=null);
-		
-		
-		return null;
+        assert(!dataVault.isEmpty());
+
+        //TODO: This method should call a list of other validate methods for each integrity constraint
+
+        return new Result(true);
 	}
 
 	/**
@@ -167,8 +172,19 @@ public class ItemVault extends Vault {
 	 * @return Result of request
 	 */
 	public static Result saveNew(Item model){
-		
-		return null;
+		if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = 0;
+        if(dataVault.isEmpty())
+            id = 0;
+        else
+            id = dataVault.lastKey()+1;
+
+        model.setId(id);
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 
 	/**
@@ -178,7 +194,13 @@ public class ItemVault extends Vault {
 	 * @return Result of request
 	 */
 	public static Result saveModified(Item model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = model.getId();
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 }
 
