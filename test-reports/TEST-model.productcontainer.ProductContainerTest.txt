@@ -1,5 +1,5 @@
 Testsuite: model.productcontainer.ProductContainerTest
 Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.023 sec
 
-Testcase: testValidate took 0.01 sec
-Testcase: testSave took 0.001 sec
+Testcase: testValidate took 0.011 sec
+Testcase: testSave took 0 sec
