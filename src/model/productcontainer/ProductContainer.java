@@ -12,6 +12,11 @@ import common.Result;
 public class ProductContainer implements IModel{
 
 	/**
+	 * A string that is non-empty and must be unique among its vault context.
+	 */
+	private String _name;
+
+	/**
 	 * A unique ID is associated with every ProductContainer once it is presisted to the vault.
 	 * _id is not set by the user, but by the vault when it is saved.
 	 * _id can be -1 if it is new and has not been saved
@@ -36,8 +41,8 @@ public class ProductContainer implements IModel{
 	/**
 	 * Constructor
 	 */
-	public ProductContainer(){
-		//super();
+	public ProductContainer(String name){
+		_name = name;
 		_id = -1;
 		_valid = false;
 		_saved = false;
@@ -83,13 +88,18 @@ public class ProductContainer implements IModel{
 	 * If the ProductContainer is valid it is saved into the vault.
 	 */
 	public Result save(){
-		return new Result(false, "Saving is not yet implemented");
+		if !(isValid()){
+			return new Result(false, "Not yet validated.");
+		}
 	}
 
 	/**
 	 * Validate that the ProductContainer is able to be saved into the vault.
 	 */
 	public Result validate(){
+		if(_name == ""){
+			return new Result(false, "Name must be non-empty.");
+		}
 		return new Result(false, "Validating is not yet implemented");
 	}
 	
