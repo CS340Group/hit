@@ -7,5 +7,4 @@ style-reports/*
 test-build/*
 test-reports/*
 scratch/*
-
-src/model/productcontainer/.DS_Store
+.metadata/*

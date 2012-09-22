@@ -1,10 +1,17 @@
 package model.product;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import model.common.IModel;
 import model.common.Vault;
+import model.item.Item;
+import model.productgroup.ProductGroup;
+import model.storageunit.StorageUnit;
 import common.Result;
+import common.util.QueryParser;
 
 /**
  * The ProductVault class provides a way to query for Products within the select data backend
@@ -23,7 +30,21 @@ public class ProductVault extends Vault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static Product find(String attribute, String value) {
+	public Product find(String query)  {
+		QueryParser MyQuery = new QueryParser(query);
+
+		
+		//Do a linear Search first
+		//TODO: Add ability to search by index
+		try {
+			return linearSearch(MyQuery,1).get(0);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 	
@@ -35,23 +56,99 @@ public class ProductVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<Product> findAll(String attribute, String value) {
+	public ArrayList<Product> findAll(String query) {
+		QueryParser MyQuery = new QueryParser(query);
+
+		
+		//Do a linear Search first
+		//TODO: Add ability to search by index
+		try {
+			ArrayList<Product> results = linearSearch(MyQuery,0);
+			return results;
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	
+	private ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		ArrayList<Product> results = new ArrayList<Product>();
+		String objName = MyQuery.getObjName();
+		String attrName = MyQuery.getAttrName();
+		String value = MyQuery.getValue();
+		
+		ProductGroup myPG = new ProductGroup();
+		StorageUnit mySU = new StorageUnit();
+		Product myProduct = new Product();
+		
+		//Class associated with the product model
+		Class prdCls = myProduct.getClass();
+		Class suCls = mySU.getClass();
+		Class pgCls = myPG.getClass();
+		//Method we will call to get the value
+		Method method;
+		
+		
+		if(objName!= null && objName.equals("productGroup")){
+			method = pgCls.getMethod("get"+attrName);
+		} else if(objName!= null && objName.equals("storageUnit")){
+			method = suCls.getMethod("get"+attrName);
+		} else {
+			method = prdCls.getMethod("get"+attrName);
+		}
+
+		
+		//Loop through entire hashmap and check values one at a time
+		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+			myProduct = (Product) entry.getValue();
+			String myProductValue; 
+			
+			if(objName!= null && objName.equals("productGroup")){
+				myProductValue = method.invoke(myProduct.getProductGroup(), null).toString();
+			} else if(objName!= null && objName.equals("storageUnit")){
+				myProductValue = method.invoke(myProduct.getStorageUnit(), null).toString();
+			} else {
+				myProductValue = method.invoke(myProduct, null).toString();
+			}
+
+		    if(myProductValue.equals(value)){
+		    	results.add(myProduct);
+		    }
+		    if(count != 0 && results.size() == count )
+		    	return results;
+		}
+		return results;
+	}
+		
 	
 	/**
-	 * Checks if the model passed in already exists in the current map
+	 * Checks if a new model will fit in the vault
+	 * - Product must have unique barcode within a su
+	 * 
 	 * 
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(Product model){
-		return null;
+	protected Result validateNew(Product model){
+		Result result = new Result();
+		
+		//Check that the new product is not a duplicate
+		//in the storage container
+		result = this.validateUniqueBarcode(model);
+		if(result.getStatus() != true)
+			return result;
+		
+		
+		return new Result(true);
 	}
+	
 
 	/**
-	 * Checks if the model already exists in the map
+	 * Checks if the updated model will fit into the vault
+	 * - Do same checks but skip over current model
 	 * 
 	 * @param model
 	 * @return Result of the check
@@ -60,6 +157,17 @@ public class ProductVault extends Vault {
 		return null;
 	}
 
+	private Result validateUniqueBarcode(Product model){
+		ArrayList<Product> allProducts = this.findAll("storageUnit.Index = "+model.getStorageUnit().getIndex());
+		String barcode = model.getBarcode().toString();
+		for(Product testProd : allProducts){
+			if(testProd.getBarcode.toString().equals(barcode))
+				return new Result(false,"Duplicate product in container");
+		}
+		return new Result(true);
+	}
+	
+	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.
 	 * 

@@ -173,5 +173,4 @@ public class Product implements IModel{
 	public Result validate(){
 		return new Result(false, "Validating is not yet implemented");
 	}
-	
 }
