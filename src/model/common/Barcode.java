@@ -27,7 +27,7 @@ public class Barcode{
 		return _number;
 	}
 
-	public string toString(){
+	public String toString(){
 		return (String)_number;
 	}
 

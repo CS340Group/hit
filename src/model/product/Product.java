@@ -1,3 +1,5 @@
+//Points to parent SU and PG
+
 package model.product;
 
 import model.common.IModel;
