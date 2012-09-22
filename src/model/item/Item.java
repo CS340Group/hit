@@ -3,6 +3,7 @@ package model.item;
 import model.common.IModel;
 import model.common.Barcode;
 import model.product.Product;
+import model.product.ProductVault;
 import common.Result;
 
 import org.joda.time.DateTime;
@@ -33,7 +34,7 @@ public class Item implements IModel{
 	 */
 	private boolean _saved;
 
-    private Product _product;
+    private int _productId;
 
     private Barcode _barcode;
 
@@ -59,19 +60,31 @@ public class Item implements IModel{
      * @return
      */
     public Item(Item i){
-
+        _id = i.getId();
+        _valid = false;
+        _saved = false;
+        _productId = i.getProductId();
+        _barcode = i.getBarcode();
+        _entryDate = i.getEntryDate();
+        _exitDate = i.getExitDate();
+        _expirationDate = i.getExpirationDate();
     }
 
-    public Result setProduct(Product p){
-        assert p != null;
-        assert p.isValid();
-        assert p.isSaved();
-        _product = p;
-        return new Result(true, "Product set successfully.");
+    public int getId(){
+        return _id;
+    }
+
+    public Result setProductId(int id){
+        _productId = id;
+        return new Result(true);
     }
 
     public Product getProduct(){
-        return new Product(_product);
+        return ProductVault.get(_productId);
+    }
+
+    public int getProductId(){
+        return _productId;
     }
 
     public Result setBarcode(Barcode b){

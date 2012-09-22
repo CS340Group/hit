@@ -45,9 +45,13 @@ public class ProductContainer implements IModel{
      * Copy Constructor
      */
     public ProductContainer(ProductContainer p){
-        _id = -1;
+        _id = p.getId();
         _valid = false;
         _saved = false;
+    }
+
+    public int getId(){
+        return _id;
     }
 
 	/**
