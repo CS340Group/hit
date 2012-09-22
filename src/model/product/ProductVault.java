@@ -30,7 +30,7 @@ public class ProductVault extends Vault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public Product find(String query)  {
+	public static Product find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -54,7 +54,7 @@ public class ProductVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public ArrayList<Product> findAll(String query) {
+	public static ArrayList<Product> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -70,7 +70,7 @@ public class ProductVault extends Vault {
 		return null;
 	}
 	
-	private ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -128,16 +128,16 @@ public class ProductVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateNew(Product model){
+	protected static Result validateNew(Product model){
 		Result result = new Result();
 		
 		//Check that the new product is not a duplicate
 		//in the storage container
-		result = this.validateUniqueBarcode(model);
+		result = validateUniqueBarcode(model);
 		if(result.getStatus() != true)
 			return result;
-		
-		
+
+        model.setValid(true);
 		return new Result(true);
 	}
 	
@@ -150,11 +150,16 @@ public class ProductVault extends Vault {
 	 * @return Result of the check
 	 */
 	protected static Result validateModified(Product model){
-		return null;
+        assert(model!=null);
+        assert(!dataVault.isEmpty());
+
+        //TODO: This method should call a list of other validate methods for each integrity constraint
+        model.setValid(true);
+        return new Result(true);
 	}
 
-	private Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = this.findAll("storageUnit.Index = "+model.getStorageUnit().getId());
+	private static Result validateUniqueBarcode(Product model){
+		ArrayList<Product> allProducts = findAll("storageUnit.Id = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
 			if(testProd.getBarcode().toString().equals(barcode))
@@ -164,7 +169,11 @@ public class ProductVault extends Vault {
 	}
 
     public static Product get(int id){
-        return null;
+        return new Product((Product) dataVault.get(id));
+    }
+
+    public static int size(){
+        return dataVault.size();
     }
 	
 	/**
@@ -174,7 +183,19 @@ public class ProductVault extends Vault {
 	 * @return Result of request
 	 */
 	protected static Result saveNew(Product model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = 0;
+        if(dataVault.isEmpty())
+            id = 0;
+        else
+            id = dataVault.lastKey()+1;
+
+        model.setId(id);
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 
 	/**
@@ -184,7 +205,13 @@ public class ProductVault extends Vault {
 	 * @return Result of request
 	 */
 	protected static Result saveModified(Product model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = model.getId();
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 
 

@@ -27,6 +27,7 @@ public class ItemTest {
         assertEquals("Item is not valid", false, item.isValid());
         assertEquals("Item should be saveable because its not valid",
                 false, item.save().getStatus());
+        //Technically this should be false but we havnt wired up Barcodes and other classes yet
         assertEquals("Item should pass validation", true, item.validate().getStatus());
         assertEquals("Item should save", true, item.save().getStatus());
         assertEquals("Id should be 0", 0, item.getId());
