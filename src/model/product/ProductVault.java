@@ -38,9 +38,7 @@ public class ProductVault extends Vault {
 		//TODO: Add ability to search by index
 		try {
 			return linearSearch(MyQuery,1).get(0);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -65,9 +63,7 @@ public class ProductVault extends Vault {
 		try {
 			ArrayList<Product> results = linearSearch(MyQuery,0);
 			return results;
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -102,12 +98,12 @@ public class ProductVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
 			if(objName!= null && objName.equals("productGroup")){
-				myProductValue = method.invoke(myProduct.getProductGroup(), null).toString();
+				myProductValue = method.invoke(myProduct.getContainer(), null).toString();
 			} else if(objName!= null && objName.equals("storageUnit")){
 				myProductValue = method.invoke(myProduct.getStorageUnit(), null).toString();
 			} else {
@@ -158,15 +154,18 @@ public class ProductVault extends Vault {
 	}
 
 	private Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = this.findAll("storageUnit.Index = "+model.getStorageUnit().getIndex());
+		ArrayList<Product> allProducts = this.findAll("storageUnit.Index = "+model.getStorageUnit().getId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
-			if(testProd.getBarcode.toString().equals(barcode))
+			if(testProd.getBarcode().toString().equals(barcode))
 				return new Result(false,"Duplicate product in container");
 		}
 		return new Result(true);
 	}
-	
+
+    public static Product get(int id){
+        return null;
+    }
 	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.

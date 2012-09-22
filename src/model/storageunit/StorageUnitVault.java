@@ -32,7 +32,7 @@ public class StorageUnitVault extends Vault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public StorageUnit find(String query)  {
+	public static StorageUnit find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -40,9 +40,7 @@ public class StorageUnitVault extends Vault {
 		//TODO: Add ability to search by index
 		try {
 			return linearSearch(MyQuery,1).get(0);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -58,7 +56,7 @@ public class StorageUnitVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public ArrayList<StorageUnit> findAll(String query) {
+	public static ArrayList<StorageUnit> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -67,16 +65,14 @@ public class StorageUnitVault extends Vault {
 		try {
 			ArrayList<StorageUnit> results = linearSearch(MyQuery,0);
 			return results;
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
 	
-	private ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -93,7 +89,7 @@ public class StorageUnitVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			mySU = (StorageUnit) entry.getValue();
 			String mySUValue; 
 			mySUValue = (String) method.invoke(mySU, null);
@@ -117,19 +113,23 @@ public class StorageUnitVault extends Vault {
 	 */
 	protected static Result validateNew(StorageUnit model){
 		Result result = new Result();
-		result = this.checkUniqueName(model);
+		result = checkUniqueName(model);
 		if(result.getStatus() == false)
 			return result;
 		
 		return result;
 	}
 	
-	private Result checkUniqueName(StorageUnit model){
-		int size = this.find("name = "+model.getName()).size();
+	private static Result checkUniqueName(StorageUnit model){
+		int size = findAll("name = "+model.getName()).size();
 		if(size==0)
 			return new Result(false,"Duplicate storage container name.");
 		return new Result(true);
 	}
+
+    public static StorageUnit get(int id){
+        return null;
+    }
 
 	/**
 	 * Checks if the model already exists in the map

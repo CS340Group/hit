@@ -3,9 +3,12 @@ package model.productgroup;
 import model.productcontainer.ProductContainer;
 import common.Result;
 import model.common.Unit;
+import model.storageunit.StorageUnit;
+import model.storageunit.StorageUnitVault;
+
 /**
  * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
- * It extends the {@link model.inventory.ProductContainerData ProductContainerData} 
+ * It extends the {@link model.productcontainer.ProductContainer ProductContainer}
  * 	class which contains getters and setters for the various datas.
  */
 public class ProductGroup extends ProductContainer{
@@ -67,6 +70,10 @@ public class ProductGroup extends ProductContainer{
         return _parentId;
     }
 
+    public ProductContainer getParent(){
+        return ProductGroupVault.get(_parentId);
+    }
+
     public Result setParentId(int id){
         _parentId = id;
         return new Result(true);
@@ -74,6 +81,10 @@ public class ProductGroup extends ProductContainer{
 
     public int getRootParentId(){
         return _rootParentId;
+    }
+
+    public ProductContainer getRootParent(){
+        return StorageUnitVault.get(_rootParentId);
     }
 
     public Result setRootParentId(int id){

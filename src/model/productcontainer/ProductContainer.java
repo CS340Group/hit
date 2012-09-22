@@ -31,6 +31,8 @@ public class ProductContainer implements IModel{
 	 */
 	private boolean _saved;	
 
+    private String _name;
+
 	/**
 	 * Constructor
 	 */
@@ -52,6 +54,15 @@ public class ProductContainer implements IModel{
 
     public int getId(){
         return _id;
+    }
+
+    public String getName(){
+        return _name;
+    }
+
+    public Result setName(String n){
+        _name = n;
+        return new Result(true);
     }
 
 	/**
