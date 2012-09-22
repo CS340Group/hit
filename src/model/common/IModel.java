@@ -6,6 +6,9 @@ import common.Result;
  */
 public interface IModel {
 
+
+    public int getId();
+
 	/**
 	 *	Returns true if the model is saved in the vault, false otherwise.
 	 */
