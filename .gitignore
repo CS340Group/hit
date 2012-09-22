@@ -10,3 +10,7 @@ scratch/*
 .metadata/*
 .project
 .classpath
+.idea/*
+*.DS_Store
+Hit.iml
+hit.sublime*
