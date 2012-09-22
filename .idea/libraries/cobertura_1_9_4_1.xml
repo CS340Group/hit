@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cobertura-1.9.4.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/cobertura-1.9.4.1/cobertura.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/cobertura-1.9.4.1/cobertura.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
