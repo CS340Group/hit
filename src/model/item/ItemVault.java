@@ -127,7 +127,15 @@ public class ItemVault extends Vault {
 		}
 		return results;
 	}
-		
+
+    public static Item get(int id){
+        return new Item((Item) dataVault.get(id));
+    }
+
+    public static int size(){
+        return dataVault.size();
+    }
+
 	/**
 	 * Checks if the model passed in already exists in the current map
 	 * - Item must have a unique barcode
@@ -139,7 +147,7 @@ public class ItemVault extends Vault {
 		assert(model!=null);
 
         //TODO: This method should call a list of other validate methods for each integrity constraint
-		int count = findAll("Barcode = "+model.getBarcode().toString()).size();
+		int count = findAll("Barcode = " + model.getBarcode().toString()).size();
 		if(count ==0){
             model.setValid(true);
 			return new Result(true);
@@ -161,7 +169,7 @@ public class ItemVault extends Vault {
         assert(!dataVault.isEmpty());
 
         //TODO: This method should call a list of other validate methods for each integrity constraint
-
+        model.setValid(true);
         return new Result(true);
 	}
 
