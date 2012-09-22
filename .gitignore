@@ -8,3 +8,5 @@ test-build/*
 test-reports/*
 scratch/*
 .metadata/*
+.project
+.classpath
