@@ -10,5 +10,7 @@ import common.Result;
  * {@link model.productgroup.ProductGroup ProductGroup}.
  */
 public class StorageUnit extends ProductContainer{
-	
+
+    public StorageUnit(StorageUnit storage) {
+    }
 }

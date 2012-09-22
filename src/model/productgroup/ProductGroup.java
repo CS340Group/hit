@@ -41,7 +41,10 @@ public class ProductGroup extends ProductContainer{
 		_threeMosSupply = threeMosSupply;
 	}
 
-	/**
+    public ProductGroup(ProductGroup container) {
+    }
+
+    /**
 	 * Returns the three-month supply for this group as an int. */	
 	public int getThreeMosSupply(){
 		return _threeMosSupply;
