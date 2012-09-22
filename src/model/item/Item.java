@@ -1,8 +1,11 @@
-//POINTS to product
 package model.item;
 
 import model.common.IModel;
+import model.common.Barcode;
+import model.product.Product;
 import common.Result;
+
+import org.joda.time.DateTime;
 
 /**
  * The Item class encapsulates all the funtions and data associated with a "Item".
@@ -28,7 +31,17 @@ public class Item implements IModel{
 	 * _saved maintaines the state of if the instance of the model is the same as the 
 	 * persisted model in the vault.
 	 */
-	private boolean _saved;	
+	private boolean _saved;
+
+    private Product _product;
+
+    private Barcode _barcode;
+
+    private DateTime _entryDate;
+
+    private DateTime _exitDate;
+
+    private DateTime _expirationDate;
 
 	/**
 	 * Constructor
@@ -39,6 +52,64 @@ public class Item implements IModel{
 		_valid = false;
 		_saved = false;
 	}
+
+    /**
+     *  Copy Constructor
+     * @param
+     * @return
+     */
+    public Item(Item i){
+
+    }
+
+    public Result setProduct(Product p){
+        assert p != null;
+        assert p.isValid();
+        assert p.isSaved();
+        _product = p;
+        return new Result(true, "Product set successfully.");
+    }
+
+    public Product getProduct(){
+        return new Product(_product);
+    }
+
+    public Result setBarcode(Barcode b){
+        assert b != null;
+        _barcode = b;
+        return new Result(true, "Barcode set successfully.");
+    }
+
+    public Barcode getBarcode(){
+        return _barcode;
+    }
+
+    public Result setEntryDate(DateTime d){
+        _entryDate = d;
+        return new Result(true);
+    }
+
+    public DateTime getEntryDate(){
+        return _entryDate;
+    }
+
+    public Result setExitDate(DateTime d){
+        _exitDate = d;
+        return new Result(true);
+    }
+
+    public DateTime getExitDate(){
+        return _exitDate;
+    }
+
+    public Result setExpirationDate(DateTime d){
+        _expirationDate = d;
+        return new Result(true);
+    }
+
+    public DateTime getExpirationDate(){
+        return _expirationDate;
+    }
 
 	/**
 	 * Is the Item saved?

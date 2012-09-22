@@ -41,6 +41,15 @@ public class ProductContainer implements IModel{
 		_saved = false;
 	}
 
+    /**
+     * Copy Constructor
+     */
+    public ProductContainer(ProductContainer p){
+        _id = -1;
+        _valid = false;
+        _saved = false;
+    }
+
 	/**
 	 * Is the ProductContainer saved?
 	 */

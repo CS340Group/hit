@@ -28,7 +28,7 @@ public class Barcode{
 	}
 
 	public String toString(){
-		return (String)_number;
+		return Integer.toString(_number);
 	}
 
 }
