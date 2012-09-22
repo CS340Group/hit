@@ -27,12 +27,10 @@ public class ProductContainerTest {
 
     @After
     public void tearDown() throws Exception {
-
     }
 
     @Test
     public void testValidate() throws Exception {
-        res = foo.validate();
         Assert.assertFalse(foo.validate().getStatus());
         foo.setName("bar");
         Assert.assertTrue(foo.validate().getStatus());
@@ -41,10 +39,12 @@ public class ProductContainerTest {
     @Test
     public void testSave() throws Exception {
         res = foo.save();
-        Assert.assertFalse(res.getMessage(), res.getStatus());
+        Assert.assertFalse(foo.save().getStatus());
         foo.setName("bar");
         foo.validate();
-        res = foo.save();
-        Assert.assertTrue(res.getMessage(), res.getStatus());
+        Assert.assertTrue(foo.save().getStatus());
+        foo.setName("foo");
+        Assert.assertFalse(foo.save().getStatus());
+        Assert.assertTrue(foo.validate().getStatus());
     }
 }

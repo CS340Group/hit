@@ -56,14 +56,27 @@ public class ProductContainer implements IModel{
     }
 
     /**
-     * Getters and setters:
+     * This method should be called whenever an attribute is changed so that 
+     * validation must happen again.
+     */
+    private void invalidate(){
+        _valid = false;
+    }
+
+    /**
+     * Returns the String name of the ProductCointainer.
      */
     public String getName() {
         return _name;
     }
 
+    /**
+     * Sets the name of the ProductContainer, invalidating it as well so that a 
+     * subsequent save must be validated first.
+     */
     public void setName(String _name) {
         this._name = _name;
+        invalidate();
     }
 
     /**
