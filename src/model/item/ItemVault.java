@@ -53,9 +53,7 @@ public class ItemVault extends Vault {
 		//TODO: Add ability to search by index
 		try {
 			return linearSearch(MyQuery,1).get(0);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -78,9 +76,7 @@ public class ItemVault extends Vault {
 		try {
 			ArrayList<Item> results = linearSearch(MyQuery,0);
 			return results;
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -88,7 +84,7 @@ public class ItemVault extends Vault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -112,7 +108,7 @@ public class ItemVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myItem = (Item) entry.getValue();
 			String myItemValue; 
 			
@@ -142,7 +138,7 @@ public class ItemVault extends Vault {
 	public Result validateNew(Item model){
 		assert(model!=null);
 		
-		int count = this.find("barcode = "+model.getBarcode.toString()).size();
+		int count = this.findAll("barcode = "+model.getBarcode().toString()).size();
 		if(count ==0)
 			return new Result(true);
 		else

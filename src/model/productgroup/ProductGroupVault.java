@@ -32,9 +32,7 @@ public class ProductGroupVault extends Vault {
 		//TODO: Add ability to search by index
 		try {
 			return linearSearch(MyQuery,1).get(0);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -59,9 +57,7 @@ public class ProductGroupVault extends Vault {
 		try {
 			ArrayList<ProductGroup> results = linearSearch(MyQuery,0);
 			return results;
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -92,12 +88,12 @@ public class ProductGroupVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : this.dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
 			if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = (String) method.invoke(myPG.getStorageUnit(), null);
+				myProductValue = (String) method.invoke(myPG.getRootParent(), null);
 			} else {
 				myProductValue = (String) method.invoke(myPG, null);
 			}
@@ -137,6 +133,10 @@ public class ProductGroupVault extends Vault {
 		}
 		return new Result(true);
 	}
+
+    public static ProductGroup get(int id){
+        return null;
+    }
 	
 
 	/**

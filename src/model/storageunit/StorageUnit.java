@@ -23,12 +23,4 @@ public class StorageUnit extends ProductContainer{
         this._name = storage.getName();
     }
 
-    public String getName() {
-        return _name;
-    }
-
-    public void setName(String _name) {
-        this._name = _name;
-    }
-
 }
