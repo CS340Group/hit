@@ -88,9 +88,11 @@ public class ProductContainer implements IModel{
 	 * If the ProductContainer is valid it is saved into the vault.
 	 */
 	public Result save(){
-		if !(isValid()){
+		if(!isValid()){
 			return new Result(false, "Not yet validated.");
-		}
+		}else{
+            return new Result(false, "foo");
+        }
 	}
 
 	/**
