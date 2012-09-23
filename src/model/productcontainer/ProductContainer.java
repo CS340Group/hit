@@ -35,7 +35,7 @@ public class ProductContainer implements IModel{
      * persisted model in the vault.
      */
     private boolean _saved;
-
+    private boolean _deleted;
     /**
      * Constructor
      */
@@ -121,5 +121,12 @@ public class ProductContainer implements IModel{
             return new Result(true, "I said it was successful, but validate isn't finished.");
         }
     }
-    
+    public Result delete(){
+		this._deleted = true;
+		return new Result(true);
+	}
+    public Result unDelete(){
+		this._deleted = false;
+		return new Result(true);
+	}
 }

@@ -98,7 +98,7 @@ public class ProductGroupVault extends Vault {
 				myProductValue = (String) method.invoke(myPG, null);
 			}
 
-		    if(myProductValue.equals(value)){
+		    if(myProductValue.equals(value) && !myPG.isDeleted()){
 		    	results.add(myPG);
 		    }
 		    if(count != 0 && results.size() == count )
@@ -145,8 +145,22 @@ public class ProductGroupVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(ProductGroup model){
-		return null;
+	protected Result validateModified(ProductGroup model){
+		assert(model!=null);
+        assert(!dataVault.isEmpty());
+		
+		//Delete current model
+		ProductGroup currentModel = this.get(model.getId());
+		currentModel.delete();
+		//Validate passed in model
+		Result result = this.validateNew(model);
+		//Add current model back
+		currentModel.unDelete();
+		
+        //TODO: This method should call a list of other validate methods for each integrity constraint
+		if(result.getStatus() == true)
+			model.setValid(true);
+        return result;
 	}
 
 	/**

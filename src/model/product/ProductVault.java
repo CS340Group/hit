@@ -110,7 +110,7 @@ public class ProductVault extends Vault {
 				myProductValue = method.invoke(myProduct, null).toString();
 			}
 
-		    if(myProductValue.equals(value)){
+		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
 		    	results.add(myProduct);
 		    }
 		    if(count != 0 && results.size() == count )
@@ -144,18 +144,29 @@ public class ProductVault extends Vault {
 
 	/**
 	 * Checks if the updated model will fit into the vault
-	 * - Do same checks but skip over current model
+	 * -- Does so by deleting the old model, 
+	 * -- doing a validate with the new model
+	 * -- then undelete the model
 	 * 
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(Product model){
-        assert(model!=null);
+	protected Result validateModified(Product model){
+		assert(model!=null);
         assert(!dataVault.isEmpty());
-
+		
+		//Delete current model
+		Product currentModel = this.get(model.getId());
+		currentModel.delete();
+		//Validate passed in model
+		Result result = this.validateNew(model);
+		//Add current model back
+		currentModel.unDelete();
+		
         //TODO: This method should call a list of other validate methods for each integrity constraint
-        model.setValid(true);
-        return new Result(true);
+		if(result.getStatus() == true)
+			model.setValid(true);
+        return result;
 	}
 
 	private static Result validateUniqueBarcode(Product model){
