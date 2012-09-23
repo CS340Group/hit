@@ -173,6 +173,19 @@
 			</classpath>
 		</java>
 	</target>
+
+	<target name="run_tmpmodel" depends="package"
+		description="Run temp main for working on the model.">
+		<java classname="model.tempmain.TempMain" fork="yes">
+			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+			<classpath>
+				<pathelement location="${dist}/lib/inventory-tracker.jar"/>
+			</classpath>
+		</java>
+	</target>
 	
 	<target name="run-sql" depends="package"
 			description="run program with SQL database">

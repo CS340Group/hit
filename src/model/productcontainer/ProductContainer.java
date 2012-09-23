@@ -46,7 +46,7 @@ public class ProductContainer implements IModel{
         _saved = false;
     }
 
-        /**
+    /**
      * Copy Constructor
      */
     public ProductContainer(ProductContainer p){
@@ -118,7 +118,7 @@ public class ProductContainer implements IModel{
         }
         else {
             _valid = true;
-            return new Result(true, "Validating is not yet implemented");
+            return new Result(true, "I said it was successful, but validate isn't finished.");
         }
     }
     
