@@ -18,26 +18,13 @@ public abstract class Vault implements IVault {
 	public Vault(){
 		return;
 	}
-	
-	
-	/**
-	 * Returns the IModel object with the correlating index
-	 * 
-	 * @param index
-	 */
-	protected IModel getItem(int index){
-		return null;
-	}
-	
-	
-	/**
-	 * adds the item to the map
-	 * 
-	 * @param newItem
-	 */
-	protected Result addItem(IModel newItem){
-		return null;
-	}
-	
+
+    public static int size(){
+        return dataVault.size();
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 
 }
