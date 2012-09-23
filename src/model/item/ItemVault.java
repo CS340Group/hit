@@ -3,14 +3,10 @@ package model.item;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import model.common.IModel;
-import model.common.Vault;
 import model.product.Product;
 import common.Result;
 import common.util.QueryParser;
