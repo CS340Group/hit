@@ -5,8 +5,9 @@ import common.Result;
  * IModel defines functionality that is supported by all models in the program.
  */
 public interface IModel {
-
-
+	
+	public boolean isDeleted();
+	
     public int getId();
 
 	/**

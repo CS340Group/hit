@@ -23,4 +23,9 @@ public class StorageUnit extends ProductContainer{
         this._name = storage.getName();
     }
 
+	public void setValid(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

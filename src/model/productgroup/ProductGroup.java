@@ -20,7 +20,7 @@ public class ProductGroup extends ProductContainer{
 	private int _rootParentId;
 	/* A variable representing the three month supply for this group. */
 	private Unit _3MonthSupply;
-
+	private boolean _deleted;
 	/**
 	 * No-args constructor.
 	 */
@@ -91,4 +91,18 @@ public class ProductGroup extends ProductContainer{
         _rootParentId = id;
         return new Result(true);
     }
+    
+    public Result delete(){
+		this._deleted = true;
+		return new Result(true);
+	}
+    public Result unDelete(){
+		this._deleted = false;
+		return new Result(true);
+	}
+
+	public void setValid(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

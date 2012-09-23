@@ -119,7 +119,7 @@ public class ItemVault extends Vault {
 				myItemValue = method.invoke(myItem, null).toString();
 			}
 		    
-		    if(myItemValue.equals(value)){
+		    if(myItemValue.equals(value) && !myItem.isDeleted()){
 		    	results.add(myItem);
 		    }
 		    if(count != 0 && results.size() == count )
@@ -164,15 +164,25 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public static Result validateModified(Item model){
+	public Result validateModified(Item model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
-
+		
+		//Delete current model
+		Item currentModel = this.get(model.getId());
+		currentModel.delete();
+		//Validate passed in model
+		Result result = this.validateNew(model);
+		//Add current model back
+		currentModel.unDelete();
+		
         //TODO: This method should call a list of other validate methods for each integrity constraint
-        model.setValid(true);
-        return new Result(true);
+		if(result.getStatus() == true)
+			model.setValid(true);
+        return result;
 	}
 
+	
 	/**
 	 * Adds the Item to the map if it's new.  Should check before doing so.
 	 * 

@@ -53,6 +53,7 @@ public class Product implements IModel{
 
     private int _3MonthSupply;
 
+    private boolean _deleted;
 	/**
 	 * Constructor
 	 */
@@ -86,6 +87,10 @@ public class Product implements IModel{
 		return _saved;
 	}
 
+	public boolean isDeleted(){
+		return _deleted;
+	}
+	
     protected Result setSaved(boolean saved){
         _saved = saved;
         return new Result(true);
@@ -211,5 +216,14 @@ public class Product implements IModel{
             return ProductVault.validateNew(this);
         else
             return ProductVault.validateModified(this);
+	}
+	
+	public Result delete(){
+		this._deleted = true;
+		return new Result(true);
+	}
+	public Result unDelete(){
+		this._deleted = false;
+		return new Result(true);
 	}
 }

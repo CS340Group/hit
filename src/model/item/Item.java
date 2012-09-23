@@ -44,6 +44,7 @@ public class Item implements IModel{
 
     private DateTime _expirationDate;
 
+    private boolean _deleted;
 	/**
 	 * Constructor
 	 */
@@ -152,6 +153,8 @@ public class Item implements IModel{
         _valid = valid;
         return new Result(true);
     }
+    
+    
 
 	/**
 	 * If the Item is valid it is saved into the vault.
@@ -173,5 +176,14 @@ public class Item implements IModel{
             return ItemVault.validateNew(this);
         else
             return ItemVault.validateModified(this);
+	}
+	
+	public Result delete(){
+		this._deleted = true;
+		return new Result(true);
+	}
+	public Result unDelete(){
+		this._deleted = false;
+		return new Result(true);
 	}
 }
