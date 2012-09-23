@@ -1,15 +1,15 @@
-package model.productgroup;
+package model.productcontainer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.common.IModel;
-import model.common.Vault;
-import model.item.Item;
-import model.product.Product;
-import model.storageunit.StorageUnit;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.StorageUnit;
 import common.Result;
 import common.util.QueryParser;
 
@@ -22,8 +22,27 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductGroupVault extends Vault {
-	
+public class ProductGroupVault {
+
+    protected static SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    private ProductGroupVault(){
+        return;
+    }
+
+    public static int size(){
+        return dataVault.size();
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
+
 	public ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 

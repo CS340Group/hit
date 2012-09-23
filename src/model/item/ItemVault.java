@@ -24,11 +24,22 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ItemVault extends Vault {
-	
-	public ItemVault(){
-		
-	}
+public class ItemVault {
+
+    protected static SortedMap<Integer, Item> dataVault = new TreeMap<Integer, Item>();
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    public ItemVault(){
+        return;
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -108,7 +119,7 @@ public class ItemVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, Item> entry : dataVault.entrySet()) {
 			myItem = (Item) entry.getValue();
 			String myItemValue; 
 			
@@ -120,7 +131,7 @@ public class ItemVault extends Vault {
 			}
 		    
 		    if(myItemValue.equals(value) && !myItem.isDeleted()){
-		    	results.add(myItem);
+		    	results.add(new Item(myItem));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -164,15 +175,15 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateModified(Item model){
+	public static Result validateModified(Item model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Item currentModel = this.get(model.getId());
+		Item currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		

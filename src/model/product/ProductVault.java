@@ -4,12 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.common.IModel;
-import model.common.Vault;
-import model.item.Item;
-import model.productgroup.ProductGroup;
-import model.storageunit.StorageUnit;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.StorageUnit;
 import common.Result;
 import common.util.QueryParser;
 
@@ -20,8 +20,22 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductVault extends Vault {
-	
+public class ProductVault {
+
+    protected static SortedMap<Integer, Product> dataVault = new TreeMap<Integer, Product>();
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    private ProductVault(){
+        return;
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -98,7 +112,7 @@ public class ProductVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, Product> entry : dataVault.entrySet()) {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
@@ -111,7 +125,7 @@ public class ProductVault extends Vault {
 			}
 
 		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
-		    	results.add(myProduct);
+		    	results.add(new Product(myProduct));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -151,15 +165,15 @@ public class ProductVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateModified(Product model){
+	protected static Result validateModified(Product model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = this.get(model.getId());
+		Product currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -170,7 +184,7 @@ public class ProductVault extends Vault {
 	}
 
 	private static Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = findAll("storageUnit.Id = "+model.getStorageUnitId());
+		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
 			if(testProd.getBarcode().toString().equals(barcode))

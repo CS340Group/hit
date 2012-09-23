@@ -5,5 +5,6 @@ package model.common;
  */
 public interface IVault {
 
+
 }
 

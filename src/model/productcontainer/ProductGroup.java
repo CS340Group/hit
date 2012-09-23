@@ -1,10 +1,7 @@
-package model.productgroup;
+package model.productcontainer;
 
-import model.productcontainer.ProductContainer;
 import common.Result;
 import model.common.Unit;
-import model.storageunit.StorageUnit;
-import model.storageunit.StorageUnitVault;
 
 /**
  * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
@@ -99,10 +96,5 @@ public class ProductGroup extends ProductContainer{
     public Result unDelete(){
 		this._deleted = false;
 		return new Result(true);
-	}
-
-	public void setValid(boolean b) {
-		// TODO Auto-generated method stub
-		
 	}
 }

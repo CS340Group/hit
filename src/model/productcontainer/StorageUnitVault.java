@@ -1,17 +1,16 @@
-package model.storageunit;
+package model.productcontainer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.common.IModel;
-import model.common.Vault;
-import model.item.Item;
-import model.product.Product;
-import model.productgroup.ProductGroup;
 import common.Result;
 import common.util.QueryParser;
+import model.productcontainer.StorageUnit;
 
 
 /**
@@ -22,8 +21,24 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class StorageUnitVault extends Vault {
-	
+public class StorageUnitVault{
+
+    protected static SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
+
+    /**
+     * Constructor.
+     */
+    private StorageUnitVault(){
+        return;
+    }
+
+    public static int size(){
+        return dataVault.size();
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 	/**
 	 * Returns just one StorageUnit based on the query sent in. 
 	 * If you need more than one StorageUnit returned use FindAll
@@ -116,13 +131,14 @@ public class StorageUnitVault extends Vault {
 		result = checkUniqueName(model);
 		if(result.getStatus() == false)
 			return result;
-		
+
+        model.setValid(true);
 		return result;
 	}
 	
 	private static Result checkUniqueName(StorageUnit model){
-		int size = findAll("name = "+model.getName()).size();
-		if(size==0)
+		int size = findAll("Name = "+model.getName()).size();
+		if(size!=0)
 			return new Result(false,"Duplicate storage container name.");
 		return new Result(true);
 	}
@@ -137,15 +153,15 @@ public class StorageUnitVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateModified(StorageUnit model){
+	protected static Result validateModified(StorageUnit model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		StorageUnit currentModel = this.get(model.getId());
+		StorageUnit currentModel = get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -162,7 +178,19 @@ public class StorageUnitVault extends Vault {
 	 * @return Result of request
 	 */
 	protected static Result saveNew(StorageUnit model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = 0;
+        if(dataVault.isEmpty())
+            id = 0;
+        else
+            id = dataVault.lastKey()+1;
+
+        model.setId(id);
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 
 	/**
@@ -172,7 +200,13 @@ public class StorageUnitVault extends Vault {
 	 * @return Result of request
 	 */
 	protected static Result saveModified(StorageUnit model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = model.getId();
+        model.setSaved(true);
+        dataVault.put(id,model);
+        return new Result(true);
 	}
 }
 
