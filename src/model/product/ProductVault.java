@@ -22,7 +22,8 @@ import common.util.QueryParser;
  */
 public class ProductVault {
 
-    protected static SortedMap<Integer, Product> dataVault = new TreeMap<Integer, Product>();
+    protected static SortedMap<Integer, Product> dataVault =
+            new TreeMap<Integer, Product>();
 
     /**
      * Constructor.
@@ -84,7 +85,9 @@ public class ProductVault {
 		return null;
 	}
 	
-	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -177,7 +180,6 @@ public class ProductVault {
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;

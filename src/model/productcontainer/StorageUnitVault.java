@@ -23,14 +23,8 @@ import model.productcontainer.StorageUnit;
  */
 public class StorageUnitVault{
 
-    protected static SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
-
-    /**
-     * Constructor.
-     */
-    private StorageUnitVault(){
-        return;
-    }
+    protected static SortedMap<Integer, StorageUnit> dataVault =
+            new TreeMap<Integer, StorageUnit>();
 
     public static int size(){
         return dataVault.size();
@@ -87,7 +81,9 @@ public class StorageUnitVault{
 		return null;
 	}
 	
-	private static ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -104,7 +100,7 @@ public class StorageUnitVault{
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, StorageUnit> entry : dataVault.entrySet()) {
 			mySU = (StorageUnit) entry.getValue();
 			String mySUValue; 
 			mySUValue = (String) method.invoke(mySU, null);
@@ -137,6 +133,13 @@ public class StorageUnitVault{
 	}
 	
 	private static Result checkUniqueName(StorageUnit model){
+        //Null check
+        if(model.getName() == null)
+            return new Result(false, "Name can't be null");
+
+        if(model.getName() == "")
+            return new Result(false, "Name can't be empty");
+
 		int size = findAll("Name = "+model.getName()).size();
 		if(size!=0)
 			return new Result(false,"Duplicate storage container name.");
@@ -144,7 +147,7 @@ public class StorageUnitVault{
 	}
 
     public static StorageUnit get(int id){
-        return null;
+        return new StorageUnit(dataVault.get(id));
     }
 
 	/**
@@ -158,14 +161,13 @@ public class StorageUnitVault{
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		StorageUnit currentModel = get(model.getId());
+		StorageUnit currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
 		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;
@@ -189,7 +191,7 @@ public class StorageUnitVault{
 
         model.setId(id);
         model.setSaved(true);
-        dataVault.put(id,model);
+        dataVault.put(id,new StorageUnit(model));
         return new Result(true);
 	}
 
@@ -205,7 +207,7 @@ public class StorageUnitVault{
 
         int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id,model);
+        dataVault.put(id, new StorageUnit(model));
         return new Result(true);
 	}
 }

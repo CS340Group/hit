@@ -52,13 +52,15 @@ public class ProductContainer implements IModel{
      */
     public ProductContainer(ProductContainer p){
         _id = p.getId();
-        _valid = false;
-        _saved = false;
+        _valid = p.isValid();
+        _saved = p.isSaved();
+        _deleted = p.isDeleted();
+        _name = p.getName();
     }
 
     @Override
     public boolean isDeleted() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return _deleted;
     }
 
     public int getId(){
@@ -76,6 +78,7 @@ public class ProductContainer implements IModel{
      */
     private void invalidate(){
         _valid = false;
+        _saved = false;
     }
 
     /**

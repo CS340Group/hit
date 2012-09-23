@@ -95,7 +95,9 @@ public class ItemVault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -157,7 +159,6 @@ public class ItemVault {
 	public static Result validateNew(Item model){
 		assert(model!=null);
 
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		int count = findAll("Barcode = " + model.getBarcode().toString()).size();
 		if(count ==0){
             model.setValid(true);
@@ -187,7 +188,6 @@ public class ItemVault {
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;

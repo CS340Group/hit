@@ -24,7 +24,8 @@ import common.util.QueryParser;
  */
 public class ProductGroupVault {
 
-    protected static SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
+    protected static SortedMap<Integer, ProductGroup> dataVault =
+            new TreeMap<Integer, ProductGroup>();
 
     /**
      * Constructor.
@@ -83,7 +84,9 @@ public class ProductGroupVault {
 		return null;
 	}
 	
-	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<ProductGroup> results = new ArrayList<ProductGroup>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -107,7 +110,7 @@ public class ProductGroupVault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, ProductGroup> entry : dataVault.entrySet()) {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
@@ -176,7 +179,6 @@ public class ProductGroupVault {
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;

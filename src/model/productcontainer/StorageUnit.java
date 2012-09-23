@@ -14,6 +14,10 @@ public class StorageUnit extends ProductContainer{
         super();
     }
 
+    public StorageUnit(StorageUnit su){
+        super(su);
+    }
+
     public Result validate(){
         if(getId() == -1)
             return StorageUnitVault.validateNew(this);
