@@ -18,7 +18,7 @@ public class ProductTest {
         product = new Product();
         product.setDescription("MyProduct");
         product.set3MonthSupply(3);
-        product.setBarcode(new Barcode(111));
+        product.setBarcode(Barcode.newFromId("111"));
         product.setContainerId(-1);
         product.setCreationDate(new DateTime());
         product.setShelfLife(2);

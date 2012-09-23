@@ -45,6 +45,6 @@ public class ProductContainerTest {
         Assert.assertTrue(foo.save().getStatus());
         foo.setName("foo");
         Assert.assertFalse(foo.save().getStatus());
-        Assert.assertTrue(foo.validate().getStatus());
+        Assert.assertTrue(foo.validate().getMessage(), foo.validate().getStatus());
     }
 }
