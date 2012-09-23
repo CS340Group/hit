@@ -94,7 +94,7 @@ public class StorageUnitVault extends Vault {
 			String mySUValue; 
 			mySUValue = (String) method.invoke(mySU, null);
 
-		    if(mySUValue.equals(value)){
+		    if(mySUValue.equals(value) && !mySU.isDeleted()){
 		    	results.add(mySU);
 		    }
 		    if(count != 0 && results.size() == count )
@@ -137,8 +137,22 @@ public class StorageUnitVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(StorageUnit model){
-		return null;
+	protected Result validateModified(StorageUnit model){
+		assert(model!=null);
+        assert(!dataVault.isEmpty());
+		
+		//Delete current model
+		StorageUnit currentModel = this.get(model.getId());
+		currentModel.delete();
+		//Validate passed in model
+		Result result = this.validateNew(model);
+		//Add current model back
+		currentModel.unDelete();
+		
+        //TODO: This method should call a list of other validate methods for each integrity constraint
+		if(result.getStatus() == true)
+			model.setValid(true);
+        return result;
 	}
 
 	/**
