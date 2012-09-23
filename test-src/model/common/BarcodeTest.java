@@ -14,7 +14,7 @@ import org.junit.Test;
 public class BarcodeTest {
 	@Before
 	public void setUp() throws Exception {
-		Barcode foo = new Barcode(123);
+		Barcode foo = Barcode.newFromId("123");
 	}
 
 	@Test

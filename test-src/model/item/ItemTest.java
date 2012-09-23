@@ -13,7 +13,7 @@ public class ItemTest {
     @BeforeClass
     public static void setup(){
         item = new Item();
-        item.setBarcode(new Barcode(111));
+        item.setBarcode(Barcode.newFromId("111"));
         item.setProductId(-1);
         item.setEntryDate(new DateTime());
         item.setExitDate(new DateTime());
