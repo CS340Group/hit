@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import model.common.IModel;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
+import model.product.ProductVault;
 import common.Result;
 import common.util.QueryParser;
 
@@ -23,6 +24,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ProductGroupVault {
+	static ProductGroupVault currentInstance;
+	private ProductGroupVault(){
+		currentInstance = this;
+	}
+	public static synchronized ProductGroupVault getInstance(){
+		if(currentInstance == null) currentInstance = new ProductGroupVault();
+		return currentInstance;
+	}
 
     protected static SortedMap<Integer, ProductGroup> dataVault =
             new TreeMap<Integer, ProductGroup>();
@@ -169,7 +178,7 @@ public class ProductGroupVault {
         return new Result(true);
 	}
 
-    public static ProductGroup get(int id){
+    public  ProductGroup get(int id){
     	ProductGroup pg = dataVault.get(id);
     	if(pg == null)
     		return null;
@@ -207,7 +216,7 @@ public class ProductGroupVault {
 	 * @param model ProductGroup to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(ProductGroup model){
+	protected  Result saveNew(ProductGroup model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -229,7 +238,7 @@ public class ProductGroupVault {
 	 * @param model ProductGroup to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(ProductGroup model){
+	protected  Result saveModified(ProductGroup model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 

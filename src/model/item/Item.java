@@ -2,6 +2,7 @@ package model.item;
 
 import model.common.IModel;
 import model.common.Barcode;
+import model.common.Model;
 import model.product.Product;
 import model.product.ProductVault;
 import common.Result;
@@ -13,7 +14,7 @@ import org.joda.time.DateTime;
  * It extends the {@link gui.item.ItemData ItemData} 
  * 	class which contains getters and setters for the various datas.
  */
-public class Item implements IModel{
+public class Item extends Model{
 
 		/**
 	 * A unique ID is associated with every Item once it is presisted to the vault.
@@ -92,7 +93,7 @@ public class Item implements IModel{
     }
 
     public Product getProduct(){
-        return ProductVault.get(_productId);
+        return productVault.get(_productId);
     }
 
     public int getProductId(){
@@ -173,9 +174,9 @@ public class Item implements IModel{
 		if(!isValid())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return ItemVault.saveNew(this);
+            return itemVault.saveNew(this);
         else
-            return ItemVault.saveModified(this);
+            return itemVault.saveModified(this);
 	}
 
 	/**
@@ -183,9 +184,9 @@ public class Item implements IModel{
 	 */
 	public Result validate(){
         if(getId() == -1)
-            return ItemVault.validateNew(this);
+            return itemVault.validateNew(this);
         else
-            return ItemVault.validateModified(this);
+            return itemVault.validateModified(this);
 	}
 	
 	public Result delete(){
@@ -195,6 +196,12 @@ public class Item implements IModel{
 	public Result unDelete(){
 		this._deleted = false;
 		return new Result(true);
+	}
+
+	@Override
+	public boolean isDeleted() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
     public void invalidate(){

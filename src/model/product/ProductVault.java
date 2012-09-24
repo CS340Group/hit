@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import model.common.IModel;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
+import model.item.ItemVault;
 import common.Result;
 import common.util.QueryParser;
 
@@ -21,10 +22,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ProductVault {
-
-    protected static SortedMap<Integer, Product> dataVault =
-            new TreeMap<Integer, Product>();
-
+	static ProductVault currentInstance;
+	private ProductVault(){
+		currentInstance = this;
+	}
+	public static synchronized ProductVault getInstance(){
+		if(currentInstance == null) currentInstance = new ProductVault();
+		return currentInstance;
+	}
     /**
      * Constructor.
      *
@@ -45,7 +50,7 @@ public class ProductVault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static Product find(String query)  {
+	public  Product find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -72,7 +77,7 @@ public class ProductVault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<Product> findAll(String query) {
+	public  ArrayList<Product> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -88,7 +93,7 @@ public class ProductVault {
 		return null;
 	}
 	
-	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count)
+	private  ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
@@ -148,7 +153,7 @@ public class ProductVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(Product model){
+	protected  Result validateNew(Product model){
 		Result result = new Result();
 		
 		//Check that the new product is not a duplicate
@@ -171,15 +176,15 @@ public class ProductVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(Product model){
+	protected  Result validateModified(Product model){ 
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = dataVault.get(model.getId());
+		Product currentModel = this.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = validateNew(model);
+		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -188,7 +193,7 @@ public class ProductVault {
         return result;
 	}
 
-	private static Result validateUniqueBarcode(Product model){
+	private  Result validateUniqueBarcode(Product model){
 		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
@@ -198,14 +203,14 @@ public class ProductVault {
 		return new Result(true);
 	}
 
-    public static Product get(int id){
+    public  Product get(int id){
     	Product p = dataVault.get(id);
     	if(p == null)
     		return null;
         return new Product(p);
     }
 
-    public static int size(){
+    public  int size(){
         return dataVault.size();
     }
 	
@@ -215,7 +220,7 @@ public class ProductVault {
 	 * @param model Product to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(Product model){
+	protected  Result saveNew(Product model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -237,7 +242,7 @@ public class ProductVault {
 	 * @param model Product to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(Product model){
+	protected  Result saveModified(Product model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 

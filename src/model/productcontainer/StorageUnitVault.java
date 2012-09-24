@@ -8,6 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import model.common.IModel;
+import model.item.ItemVault;
 import common.Result;
 import common.util.QueryParser;
 import model.productcontainer.StorageUnit;
@@ -22,14 +23,14 @@ import model.productcontainer.StorageUnit;
  * Other findBy* methods may be implemented.
  */
 public class StorageUnitVault{
-
-    protected static SortedMap<Integer, StorageUnit> dataVault =
-            new TreeMap<Integer, StorageUnit>();
-
-    public static int size(){
-        return dataVault.size();
-    }
-
+	static StorageUnitVault currentInstance;
+	private StorageUnitVault(){
+		currentInstance = this;
+	}
+	public static synchronized StorageUnitVault getInstance(){
+		if(currentInstance == null) currentInstance = new StorageUnitVault();
+		return currentInstance;
+	}
     public static void clear(){
         dataVault.clear();
     }
@@ -41,7 +42,7 @@ public class StorageUnitVault{
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static StorageUnit find(String query)  {
+	public  StorageUnit find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -68,7 +69,7 @@ public class StorageUnitVault{
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<StorageUnit> findAll(String query) {
+	public  ArrayList<StorageUnit> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -84,7 +85,7 @@ public class StorageUnitVault{
 		return null;
 	}
 	
-	private static ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count)
+	private  ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
@@ -125,7 +126,7 @@ public class StorageUnitVault{
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(StorageUnit model){
+	protected  Result validateNew(StorageUnit model){
 		Result result = new Result();
 		result = checkUniqueName(model);
 		if(result.getStatus() == false)
@@ -135,7 +136,7 @@ public class StorageUnitVault{
 		return result;
 	}
 	
-	private static Result checkUniqueName(StorageUnit model){
+	private  Result checkUniqueName(StorageUnit model){
         //Null check
         if(model.getName() == null)
             return new Result(false, "Name can't be null");
@@ -149,7 +150,7 @@ public class StorageUnitVault{
 		return new Result(true);
 	}
 
-    public static StorageUnit get(int id){
+    public  StorageUnit get(int id){
     	StorageUnit su = dataVault.get(id);
     	if(su == null)
     		return null;
@@ -186,7 +187,7 @@ public class StorageUnitVault{
 	 * @param model StorageUnit to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(StorageUnit model){
+	protected  Result saveNew(StorageUnit model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -208,7 +209,7 @@ public class StorageUnitVault{
 	 * @param model StorageUnit to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(StorageUnit model){
+	protected  Result saveModified(StorageUnit model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 

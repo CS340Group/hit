@@ -21,6 +21,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ItemVault {
+	static ItemVault currentInstance;
+	private ItemVault(){
+		currentInstance = this;
+	}
+	public static synchronized ItemVault getInstance(){
+		if(currentInstance == null) currentInstance = new ItemVault();
+		return currentInstance;
+	}
 
     protected static SortedMap<Integer, Item> dataVault = new TreeMap<Integer, Item>();
 
@@ -29,13 +37,9 @@ public class ItemVault {
      *
      *
      */
-    public ItemVault(){
         return;
     }
-
-    public static void clear(){
-        dataVault.clear();
-    }
+	
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -52,7 +56,7 @@ public class ItemVault {
 	 * @throws NoSuchMethodException 
 	 * 
 	 */
-	public static Item find(String query)  {
+	public Item find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -77,7 +81,7 @@ public class ItemVault {
 	 * @param query of form obj.attr = value 
 	 * 
 	 */
-	public static ArrayList<Item> findAll(String query) {
+	public ArrayList<Item> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -94,7 +98,7 @@ public class ItemVault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count)
+	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
@@ -140,7 +144,7 @@ public class ItemVault {
 		return results;
 	}
 
-    public static Item get(int id){
+    public Item get(int id){
     	Item i = dataVault.get(id);
     	if(i == null)
     		return null;
@@ -148,7 +152,7 @@ public class ItemVault {
         return new Item(i);
     }
 
-    public static int size(){
+    public int size(){
         return dataVault.size();
     }
 
@@ -159,7 +163,7 @@ public class ItemVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public static Result validateNew(Item model){
+	public Result validateNew(Item model){
 		assert(model!=null);
 
 		int count = findAll("Barcode = " + model.getBarcode().toString()).size();
@@ -179,15 +183,15 @@ public class ItemVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public static Result validateModified(Item model){
+	public  Result validateModified(Item model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Item currentModel = dataVault.get(model.getId());
+		Item currentModel = this.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = validateNew(model);
+		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -203,7 +207,7 @@ public class ItemVault {
 	 * @param model Item to add
 	 * @return Result of request
 	 */
-	public static Result saveNew(Item model){
+	public  Result saveNew(Item model){
 		if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -225,7 +229,7 @@ public class ItemVault {
 	 * @param model Item to add
 	 * @return Result of request
 	 */
-	public static Result saveModified(Item model){
+	public  Result saveModified(Item model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 

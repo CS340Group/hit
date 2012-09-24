@@ -1,6 +1,7 @@
 package model.productcontainer;
 
 import model.common.IModel;
+import model.common.Model;
 import common.Result;
 
 /**
@@ -9,7 +10,7 @@ import common.Result;
  * {@link StorageUnit StorageUnit}. It defines the shared
  * interface for these objects.
  */
-public class ProductContainer implements IModel{
+public class ProductContainer extends Model{
 
     /**
      * A string that is non-empty and must be unique among its vault context.
@@ -133,6 +134,10 @@ public class ProductContainer implements IModel{
     public Result unDelete(){
 		this._deleted = false;
 		return new Result(true);
+	}
+
+	public boolean isDeleted() {
+		return this._deleted;
 	}
 
     protected Result setValid(boolean v){
