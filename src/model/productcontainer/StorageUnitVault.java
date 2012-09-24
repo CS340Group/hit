@@ -150,7 +150,11 @@ public class StorageUnitVault{
 	}
 
     public static StorageUnit get(int id){
-        return new StorageUnit(dataVault.get(id));
+    	StorageUnit su = dataVault.get(id);
+    	if(su == null)
+    		return null;
+
+        return new StorageUnit(su);
     }
 
 	/**

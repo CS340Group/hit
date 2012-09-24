@@ -170,7 +170,11 @@ public class ProductGroupVault {
 	}
 
     public static ProductGroup get(int id){
-        return new ProductGroup(dataVault.get(id));
+    	ProductGroup pg = dataVault.get(id);
+    	if(pg == null)
+    		return null;
+
+        return new ProductGroup(pg);
     }
 	
 

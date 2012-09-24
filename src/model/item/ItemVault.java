@@ -141,7 +141,11 @@ public class ItemVault {
 	}
 
     public static Item get(int id){
-        return new Item((Item) dataVault.get(id));
+    	Item i = dataVault.get(id);
+    	if(i == null)
+    		return null;
+
+        return new Item(i);
     }
 
     public static int size(){

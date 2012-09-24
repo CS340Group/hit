@@ -199,7 +199,10 @@ public class ProductVault {
 	}
 
     public static Product get(int id){
-        return new Product((Product) dataVault.get(id));
+    	Product p = dataVault.get(id);
+    	if(p == null)
+    		return null;
+        return new Product(p);
     }
 
     public static int size(){
