@@ -1,6 +1,6 @@
 package common.util;
 
-import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class QueryParserTest {
 
-    @Test
+    @Ignore
     public void test() {
         System.out.println("heyu");
         ItemVault vault = new ItemVault();

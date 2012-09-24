@@ -57,10 +57,11 @@ public class ProductGroup extends ProductContainer{
 	/**
 	 * Allows a non-zero integer to be set for the three month supply.
 	 */
-	public Result setThreeMosSupply(Unit value){
+	public Result set3MonthSupply(Unit value){
 		// Do checks
 		_3MonthSupply = value;
-		return new Result(true, "Successfully set.");
+        invalidate();
+        return new Result(true, "Successfully set.");
 	}
 
     public int getParentId(){
@@ -73,6 +74,7 @@ public class ProductGroup extends ProductContainer{
 
     public Result setParentId(int id){
         _parentId = id;
+        invalidate();
         return new Result(true);
     }
 
@@ -86,6 +88,7 @@ public class ProductGroup extends ProductContainer{
 
     public Result setRootParentId(int id){
         _rootParentId = id;
+        invalidate();
         return new Result(true);
     }
     
@@ -97,4 +100,20 @@ public class ProductGroup extends ProductContainer{
 		this._deleted = false;
 		return new Result(true);
 	}
+
+    public Result validate(){
+        if(getId() == -1)
+            return ProductGroupVault.validateNew(this);
+        else
+            return ProductGroupVault.validateModified(this);
+    }
+
+    public Result save(){
+        if(!isValid())
+            return new Result(false, "Item must be valid before saving.");
+        if(getId() == -1)
+            return ProductGroupVault.saveNew(this);
+        else
+            return ProductGroupVault.saveModified(this);
+    }
 }

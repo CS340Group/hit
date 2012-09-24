@@ -52,7 +52,10 @@ public class ProductVault {
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-			return linearSearch(MyQuery,1).get(0);
+            ArrayList<Product> results = linearSearch(MyQuery,1);
+            if(results.size() == 0)
+                return null;
+            return results.get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

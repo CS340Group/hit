@@ -44,14 +44,17 @@ public class ProductGroupVault {
         dataVault.clear();
     }
 
-	public ProductGroup find(String query)  {
+	public static ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-			return linearSearch(MyQuery,1).get(0);
+            ArrayList<ProductGroup> results = linearSearch(MyQuery,1);
+            if(results.size() == 0)
+                return null;
+            return results.get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,7 +71,7 @@ public class ProductGroupVault {
 	 * @param value
 	 * 
 	 */
-	public ArrayList<ProductGroup> findAll(String query) {
+	public static ArrayList<ProductGroup> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -84,7 +87,7 @@ public class ProductGroupVault {
 		return null;
 	}
 	
-	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
+	private static ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<ProductGroup> results = new ArrayList<ProductGroup>();
@@ -115,9 +118,9 @@ public class ProductGroupVault {
 			String myProductValue; 
 			
 			if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = (String) method.invoke(myPG.getRootParent(), null);
+				myProductValue = method.invoke(myPG.getRootParent(), null).toString();
 			} else {
-				myProductValue = (String) method.invoke(myPG, null);
+				myProductValue = method.invoke(myPG, null).toString();
 			}
 
 		    if(myProductValue.equals(value) && !myPG.isDeleted()){
@@ -138,26 +141,36 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateNew(ProductGroup model){
+	protected static Result validateNew(ProductGroup model){
 		Result result = new Result();
-		result = this.checkUniqueName(model);
+		result = checkUniqueName(model);
 		if(result.getStatus() == false)
 			return result;
-		
+
+        model.setValid(true);
 		return result;
 	}
 	
-	private Result checkUniqueName(ProductGroup model){
-		ArrayList<ProductGroup> myPGs = this.findAll("name = "+model.getName());
+	private static Result checkUniqueName(ProductGroup model){
+        //Null check
+        if(model.getName() == null)
+            return new Result(false, "Name can't be null");
+
+        if(model.getName() == "")
+            return new Result(false, "Name can't be empty");
+
+		ArrayList<ProductGroup> myPGs = findAll("Name = " + model.getName());
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
 				return new Result(false,"Duplicate product in container");
 		}
-		return new Result(true);
+
+        model.setValid(true);
+        return new Result(true);
 	}
 
     public static ProductGroup get(int id){
-        return null;
+        return new ProductGroup(dataVault.get(id));
     }
 	
 
@@ -167,15 +180,15 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateModified(ProductGroup model){
+	protected static Result validateModified(ProductGroup model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		ProductGroup currentModel = this.get(model.getId());
+		ProductGroup currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -191,7 +204,19 @@ public class ProductGroupVault {
 	 * @return Result of request
 	 */
 	protected static Result saveNew(ProductGroup model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = 0;
+        if(dataVault.isEmpty())
+            id = 0;
+        else
+            id = dataVault.lastKey()+1;
+
+        model.setId(id);
+        model.setSaved(true);
+        dataVault.put(id,new ProductGroup(model));
+        return new Result(true);
 	}
 
 	/**
@@ -201,7 +226,13 @@ public class ProductGroupVault {
 	 * @return Result of request
 	 */
 	protected static Result saveModified(ProductGroup model){
-		return null;
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = model.getId();
+        model.setSaved(true);
+        dataVault.put(id, new ProductGroup(model));
+        return new Result(true);
 	}
 }
 

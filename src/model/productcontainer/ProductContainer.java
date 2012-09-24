@@ -76,7 +76,7 @@ public class ProductContainer implements IModel{
      * This method should be called whenever an attribute is changed so that 
      * validation must happen again.
      */
-    private void invalidate(){
+    public void invalidate(){
         _valid = false;
         _saved = false;
     }
@@ -92,9 +92,10 @@ public class ProductContainer implements IModel{
      * Sets the name of the ProductContainer, invalidating it as well so that a 
      * subsequent save must be validated first.
      */
-    public void setName(String _name) {
+    public Result setName(String _name) {
         this._name = _name;
         invalidate();
+        return new Result(_name==this._name);
     }
 
     /**
@@ -124,6 +125,7 @@ public class ProductContainer implements IModel{
     public Result validate(){
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
     }
+
     public Result delete(){
 		this._deleted = true;
 		return new Result(true);
