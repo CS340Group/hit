@@ -33,20 +33,20 @@ public class ItemTest {
         assertEquals("Id should be 0", 0, item.getId());
         assertEquals("Item is saved", true, item.isSaved());
         assertEquals("Item is Valid", true, item.isValid());
-        assertNotSame("Vault returns a copy", item, ItemVault.get(item.getId()));
-        assertEquals("Vault copy and local copy have same ids", item.getId(), ItemVault.get(item.getId()).getId());
+        assertNotSame("Vault returns a copy", item, item.itemVault.get(item.getId()));
+        assertEquals("Vault copy and local copy have same ids", item.getId(), item.itemVault.get(item.getId()).getId());
     }
 
     @Test
     public void testItemModification(){
-        Item itemCopy = ItemVault.get(item.getId());
+        Item itemCopy = item.itemVault.get(item.getId());
         itemCopy.setProductId(0);
         assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId()
-                != ItemVault.get(item.getId()).getProductId());
+                != item.itemVault.get(item.getId()).getProductId());
         assertEquals("Item should be saveable because its not valid",
                 false, itemCopy.save().getStatus());
         assertEquals("Item should pass validation", true, itemCopy.validate().getStatus());
         assertEquals("Item should save", true, itemCopy.save().getStatus());
-        assertEquals("Vault should not have created a new item", 1, ItemVault.size());
+        assertEquals("Vault should not have created a new item", 1, item.itemVault.size());
     }
 }

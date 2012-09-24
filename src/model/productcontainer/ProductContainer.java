@@ -134,4 +134,5 @@ public class ProductContainer extends Model{
 	public boolean isDeleted() {
 		return this._deleted;
 	}
+
 }

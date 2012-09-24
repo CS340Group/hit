@@ -181,16 +181,19 @@ public class Item extends Model{
 	
 	public Result delete(){
 		this._deleted = true;
+		this._valid = true;
+		this.save();
 		return new Result(true);
 	}
 	public Result unDelete(){
 		this._deleted = false;
+		this._valid = true;
+		this.save();
 		return new Result(true);
 	}
 
 	@Override
 	public boolean isDeleted() {
-		// TODO Auto-generated method stub
-		return false;
+		return _deleted;
 	}
 }

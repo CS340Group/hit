@@ -80,20 +80,14 @@ public class ProductGroupVault extends Vault {
 		String value = MyQuery.getValue();
 		
 		ProductGroup myPG = new ProductGroup();
-		StorageUnit mySU = new StorageUnit();
 		
 		//Class associated with the product model
-		Class suCls = mySU.getClass();
-		Class pgCls = myPG.getClass();
+		Class<? extends ProductGroup> pgCls = myPG.getClass();
 		//Method we will call to get the value
 		Method method;
 		
 		
-		if(objName!= null && objName.equals("storageUnit")){
-			method = suCls.getMethod("get"+attrName);
-		} else {
-			method = pgCls.getMethod("get"+attrName);
-		}
+		method = pgCls.getMethod("get"+attrName);
 
 		
 		//Loop through entire hashmap and check values one at a time
@@ -101,14 +95,10 @@ public class ProductGroupVault extends Vault {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
-			if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = (String) method.invoke(myPG.getRootParent(), null);
-			} else {
-				myProductValue = (String) method.invoke(myPG, null);
-			}
+			myProductValue = (String) method.invoke(myPG);
 
 		    if(myProductValue.equals(value) && !myPG.isDeleted()){
-		    	results.add(myPG);
+		    	results.add(new ProductGroup(myPG));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -135,7 +125,7 @@ public class ProductGroupVault extends Vault {
 	}
 	
 	private Result checkUniqueName(ProductGroup model){
-		ArrayList<ProductGroup> myPGs = this.findAll("name = "+model.getName());
+		ArrayList<ProductGroup> myPGs = this.findAll("Name = "+model.getName());
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
 				return new Result(false,"Duplicate product in container");
@@ -143,10 +133,10 @@ public class ProductGroupVault extends Vault {
 		return new Result(true);
 	}
 
+
     public  ProductGroup get(int id){
-        return null;
+        return new ProductGroup((ProductGroup) dataVault.get(id));
     }
-	
 
 	/**
 	 * Checks if the model already exists in the map

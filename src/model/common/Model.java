@@ -9,10 +9,10 @@ import common.Result;
 public abstract class Model implements IModel{
 	private int _id;
 
-	protected ItemVault itemVault = ItemVault.getInstance();
-	protected ProductVault productVault = ProductVault.getInstance();
-	protected StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
-	protected ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
+	public ItemVault itemVault = ItemVault.getInstance();
+	public ProductVault productVault = ProductVault.getInstance();
+	public StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
+	public ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
 	
 	
 	private boolean _valid;

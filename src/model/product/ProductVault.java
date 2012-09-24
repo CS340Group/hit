@@ -89,20 +89,12 @@ public class ProductVault extends Vault {
 		Product myProduct = new Product();
 		
 		//Class associated with the product model
-		Class prdCls = myProduct.getClass();
-		Class suCls = mySU.getClass();
-		Class pgCls = myPG.getClass();
+		Class<? extends Product> prdCls = myProduct.getClass();
 		//Method we will call to get the value
 		Method method;
 		
 		
-		if(objName!= null && objName.equals("productGroup")){
-			method = pgCls.getMethod("get"+attrName);
-		} else if(objName!= null && objName.equals("storageUnit")){
-			method = suCls.getMethod("get"+attrName);
-		} else {
-			method = prdCls.getMethod("get"+attrName);
-		}
+		method = prdCls.getMethod("get"+attrName);
 
 		
 		//Loop through entire hashmap and check values one at a time
@@ -110,16 +102,10 @@ public class ProductVault extends Vault {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
-			if(objName!= null && objName.equals("productGroup")){
-				myProductValue = method.invoke(myProduct.getContainer(), null).toString();
-			} else if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = method.invoke(myProduct.getStorageUnit(), null).toString();
-			} else {
-				myProductValue = method.invoke(myProduct, null).toString();
-			}
+			myProductValue = method.invoke(myProduct).toString();
 
 		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
-		    	results.add(myProduct);
+		    	results.add(new Product(myProduct));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -170,7 +156,6 @@ public class ProductVault extends Vault {
 		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
-		
         //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
@@ -178,7 +163,7 @@ public class ProductVault extends Vault {
 	}
 
 	private  Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = findAll("storageUnit.Id = "+model.getStorageUnitId());
+		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
 			if(testProd.getBarcode().toString().equals(barcode))
@@ -191,9 +176,7 @@ public class ProductVault extends Vault {
         return new Product((Product) dataVault.get(id));
     }
 
-    public  int size(){
-        return dataVault.size();
-    }
+    
 	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.

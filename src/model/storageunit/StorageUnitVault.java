@@ -90,7 +90,7 @@ public class StorageUnitVault extends Vault {
 		StorageUnit mySU = new StorageUnit();
 		
 		//Class associated with the product model
-		Class suCls = mySU.getClass();
+		Class<? extends StorageUnit> suCls = mySU.getClass();
 		//Method we will call to get the value
 		Method method;
 		method = suCls.getMethod("get"+attrName);
@@ -100,10 +100,10 @@ public class StorageUnitVault extends Vault {
 		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			mySU = (StorageUnit) entry.getValue();
 			String mySUValue; 
-			mySUValue = (String) method.invoke(mySU, null);
+			mySUValue = (String) method.invoke(mySU);
 
 		    if(mySUValue.equals(value) && !mySU.isDeleted()){
-		    	results.add(mySU);
+		    	results.add(new StorageUnit(mySU));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -129,16 +129,15 @@ public class StorageUnitVault extends Vault {
 	}
 	
 	private  Result checkUniqueName(StorageUnit model){
-		int size = findAll("name = "+model.getName()).size();
+		int size = findAll("Name = "+model.getName()).size();
 		if(size==0)
 			return new Result(false,"Duplicate storage container name.");
 		return new Result(true);
 	}
 
     public  StorageUnit get(int id){
-        return null;
+        return new StorageUnit((StorageUnit) dataVault.get(id));
     }
-
 	/**
 	 * Checks if the model already exists in the map
 	 * 
