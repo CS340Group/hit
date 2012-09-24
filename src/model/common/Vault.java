@@ -8,7 +8,7 @@ import common.Result;
 public abstract class Vault implements IVault {
 
 	
-	protected static SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
+	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
 	
 	/**
 	 * Constructor.

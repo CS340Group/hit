@@ -25,10 +25,16 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ItemVault extends Vault {
-	
-	public ItemVault(){
-		
+	static ItemVault currentInstance;
+	private ItemVault(){
+		currentInstance = this;
 	}
+	public static synchronized ItemVault getInstance(){
+		if(currentInstance == null) currentInstance = new ItemVault();
+		return currentInstance;
+	}
+	
+	
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -45,7 +51,7 @@ public class ItemVault extends Vault {
 	 * @throws NoSuchMethodException 
 	 * 
 	 */
-	public static Item find(String query)  {
+	public Item find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -67,7 +73,7 @@ public class ItemVault extends Vault {
 	 * @param query of form obj.attr = value 
 	 * 
 	 */
-	public static ArrayList<Item> findAll(String query) {
+	public ArrayList<Item> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -84,7 +90,7 @@ public class ItemVault extends Vault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -128,11 +134,11 @@ public class ItemVault extends Vault {
 		return results;
 	}
 
-    public static Item get(int id){
+    public Item get(int id){
         return new Item((Item) dataVault.get(id));
     }
 
-    public static int size(){
+    public int size(){
         return dataVault.size();
     }
 
@@ -143,7 +149,7 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public static Result validateNew(Item model){
+	public Result validateNew(Item model){
 		assert(model!=null);
 
         //TODO: This method should call a list of other validate methods for each integrity constraint
@@ -164,15 +170,15 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateModified(Item model){
+	public  Result validateModified(Item model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Item currentModel = this.get(model.getId());
+		Item currentModel = ItemVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = ItemVault.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -189,7 +195,7 @@ public class ItemVault extends Vault {
 	 * @param model Item to add
 	 * @return Result of request
 	 */
-	public static Result saveNew(Item model){
+	public  Result saveNew(Item model){
 		if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -211,7 +217,7 @@ public class ItemVault extends Vault {
 	 * @param model Item to add
 	 * @return Result of request
 	 */
-	public static Result saveModified(Item model){
+	public  Result saveModified(Item model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 

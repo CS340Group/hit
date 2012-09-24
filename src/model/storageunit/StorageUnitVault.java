@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import model.common.IModel;
 import model.common.Vault;
 import model.item.Item;
+import model.item.ItemVault;
 import model.product.Product;
 import model.productgroup.ProductGroup;
 import common.Result;
@@ -23,7 +24,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class StorageUnitVault extends Vault {
-	
+	static StorageUnitVault currentInstance;
+	private StorageUnitVault(){
+		currentInstance = this;
+	}
+	public static synchronized StorageUnitVault getInstance(){
+		if(currentInstance == null) currentInstance = new StorageUnitVault();
+		return currentInstance;
+	}
 	/**
 	 * Returns just one StorageUnit based on the query sent in. 
 	 * If you need more than one StorageUnit returned use FindAll
@@ -32,7 +40,7 @@ public class StorageUnitVault extends Vault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static StorageUnit find(String query)  {
+	public  StorageUnit find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -56,7 +64,7 @@ public class StorageUnitVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<StorageUnit> findAll(String query) {
+	public  ArrayList<StorageUnit> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -72,7 +80,7 @@ public class StorageUnitVault extends Vault {
 		return null;
 	}
 	
-	private static ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private  ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -111,7 +119,7 @@ public class StorageUnitVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(StorageUnit model){
+	protected  Result validateNew(StorageUnit model){
 		Result result = new Result();
 		result = checkUniqueName(model);
 		if(result.getStatus() == false)
@@ -120,14 +128,14 @@ public class StorageUnitVault extends Vault {
 		return result;
 	}
 	
-	private static Result checkUniqueName(StorageUnit model){
+	private  Result checkUniqueName(StorageUnit model){
 		int size = findAll("name = "+model.getName()).size();
 		if(size==0)
 			return new Result(false,"Duplicate storage container name.");
 		return new Result(true);
 	}
 
-    public static StorageUnit get(int id){
+    public  StorageUnit get(int id){
         return null;
     }
 
@@ -161,7 +169,7 @@ public class StorageUnitVault extends Vault {
 	 * @param model StorageUnit to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(StorageUnit model){
+	protected  Result saveNew(StorageUnit model){
 		return null;
 	}
 
@@ -171,7 +179,7 @@ public class StorageUnitVault extends Vault {
 	 * @param model StorageUnit to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(StorageUnit model){
+	protected  Result saveModified(StorageUnit model){
 		return null;
 	}
 }

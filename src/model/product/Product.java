@@ -7,6 +7,7 @@ import model.storageunit.StorageUnitVault;
 import model.productgroup.ProductGroup;
 import model.productgroup.ProductGroupVault;
 import model.common.Barcode;
+import model.common.Model;
 import model.common.Unit;
 import org.joda.time.DateTime;
 
@@ -16,7 +17,7 @@ import org.joda.time.DateTime;
  * 	class which contains getters and setters for the various datas.
  */
 
-public class Product implements IModel{
+public class Product extends Model{
 	/**
 	 * A unique ID is associated with every Product once it is presisted to the vault.
 	 * _id is not set by the user, but by the vault when it is saved.
@@ -118,7 +119,7 @@ public class Product implements IModel{
     }
 
     public StorageUnit getStorageUnit(){
-        return StorageUnitVault.get(_storageUnitId);
+        return storageUnitVault.get(_storageUnitId);
     }
 
     public int getStorageUnitId(){
@@ -131,7 +132,7 @@ public class Product implements IModel{
     }
 
     public ProductGroup getContainer(){
-        return ProductGroupVault.get(_containerId);
+        return productGroupVault.get(_containerId);
     }
 
     public int getContainerId(){
@@ -203,9 +204,9 @@ public class Product implements IModel{
         if(!isValid())
             return new Result(false, "Product must be valid before saving.");
         if(getId() == -1)
-            return ProductVault.saveNew(this);
+            return productVault.saveNew(this);
         else
-            return ProductVault.saveModified(this);
+            return productVault.saveModified(this);
 	}
 
 	/**
@@ -213,9 +214,9 @@ public class Product implements IModel{
 	 */
 	public Result validate(){
         if(getId() == -1)
-            return ProductVault.validateNew(this);
+            return productVault.validateNew(this);
         else
-            return ProductVault.validateModified(this);
+            return productVault.validateModified(this);
 	}
 	
 	public Result delete(){

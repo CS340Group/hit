@@ -9,6 +9,7 @@ import model.common.IModel;
 import model.common.Vault;
 import model.item.Item;
 import model.product.Product;
+import model.product.ProductVault;
 import model.storageunit.StorageUnit;
 import common.Result;
 import common.util.QueryParser;
@@ -23,6 +24,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ProductGroupVault extends Vault {
+	static ProductGroupVault currentInstance;
+	private ProductGroupVault(){
+		currentInstance = this;
+	}
+	public static synchronized ProductGroupVault getInstance(){
+		if(currentInstance == null) currentInstance = new ProductGroupVault();
+		return currentInstance;
+	}
 	
 	public ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
@@ -134,7 +143,7 @@ public class ProductGroupVault extends Vault {
 		return new Result(true);
 	}
 
-    public static ProductGroup get(int id){
+    public  ProductGroup get(int id){
         return null;
     }
 	
@@ -169,7 +178,7 @@ public class ProductGroupVault extends Vault {
 	 * @param model ProductGroup to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(ProductGroup model){
+	protected  Result saveNew(ProductGroup model){
 		return null;
 	}
 
@@ -179,7 +188,7 @@ public class ProductGroupVault extends Vault {
 	 * @param model ProductGroup to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(ProductGroup model){
+	protected  Result saveModified(ProductGroup model){
 		return null;
 	}
 }

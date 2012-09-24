@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import model.common.IModel;
 import model.common.Vault;
 import model.item.Item;
+import model.item.ItemVault;
 import model.productgroup.ProductGroup;
 import model.storageunit.StorageUnit;
 import common.Result;
@@ -21,7 +22,14 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ProductVault extends Vault {
-	
+	static ProductVault currentInstance;
+	private ProductVault(){
+		currentInstance = this;
+	}
+	public static synchronized ProductVault getInstance(){
+		if(currentInstance == null) currentInstance = new ProductVault();
+		return currentInstance;
+	}
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -30,7 +38,7 @@ public class ProductVault extends Vault {
 	 * @param value What value does the column have
 	 * 
 	 */
-	public static Product find(String query)  {
+	public  Product find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -54,7 +62,7 @@ public class ProductVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<Product> findAll(String query) {
+	public  ArrayList<Product> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -70,7 +78,7 @@ public class ProductVault extends Vault {
 		return null;
 	}
 	
-	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private  ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -128,7 +136,7 @@ public class ProductVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(Product model){
+	protected  Result validateNew(Product model){
 		Result result = new Result();
 		
 		//Check that the new product is not a duplicate
@@ -151,15 +159,15 @@ public class ProductVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateModified(Product model){
+	protected  Result validateModified(Product model){ 
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = this.get(model.getId());
+		Product currentModel = ProductVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = ProductVault.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
@@ -169,7 +177,7 @@ public class ProductVault extends Vault {
         return result;
 	}
 
-	private static Result validateUniqueBarcode(Product model){
+	private  Result validateUniqueBarcode(Product model){
 		ArrayList<Product> allProducts = findAll("storageUnit.Id = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
@@ -179,11 +187,11 @@ public class ProductVault extends Vault {
 		return new Result(true);
 	}
 
-    public static Product get(int id){
+    public  Product get(int id){
         return new Product((Product) dataVault.get(id));
     }
 
-    public static int size(){
+    public  int size(){
         return dataVault.size();
     }
 	
@@ -193,7 +201,7 @@ public class ProductVault extends Vault {
 	 * @param model Product to add
 	 * @return Result of request
 	 */
-	protected static Result saveNew(Product model){
+	protected  Result saveNew(Product model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
@@ -215,7 +223,7 @@ public class ProductVault extends Vault {
 	 * @param model Product to add
 	 * @return Result of request
 	 */
-	protected static Result saveModified(Product model){
+	protected  Result saveModified(Product model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
 
