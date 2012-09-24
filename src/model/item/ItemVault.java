@@ -175,10 +175,10 @@ public class ItemVault extends Vault {
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Item currentModel = ItemVault.get(model.getId());
+		Item currentModel = this.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = ItemVault.validateNew(model);
+		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		

@@ -164,10 +164,10 @@ public class ProductVault extends Vault {
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = ProductVault.get(model.getId());
+		Product currentModel = this.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = ProductVault.validateNew(model);
+		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		

@@ -20,14 +20,7 @@ public abstract class Vault implements IVault {
 	}
 	
 	
-	/**
-	 * Returns the IModel object with the correlating index
-	 * 
-	 * @param index
-	 */
-	protected IModel getItem(int index){
-		return null;
-	}
+	
 	
 	
 	/**
