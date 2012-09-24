@@ -3,14 +3,10 @@ package model.item;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import model.common.IModel;
-import model.common.Vault;
 import model.product.Product;
 import common.Result;
 import common.util.QueryParser;
@@ -24,11 +20,22 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ItemVault extends Vault {
-	
-	public ItemVault(){
-		
-	}
+public class ItemVault {
+
+    protected static SortedMap<Integer, Item> dataVault = new TreeMap<Integer, Item>();
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    public ItemVault(){
+        return;
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -52,7 +59,10 @@ public class ItemVault extends Vault {
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-			return linearSearch(MyQuery,1).get(0);
+            ArrayList<Item> results = linearSearch(MyQuery,1);
+            if(results.size() == 0)
+                return null;
+            return results.get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,7 +94,9 @@ public class ItemVault extends Vault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Item> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -108,7 +120,7 @@ public class ItemVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, Item> entry : dataVault.entrySet()) {
 			myItem = (Item) entry.getValue();
 			String myItemValue; 
 			
@@ -120,7 +132,7 @@ public class ItemVault extends Vault {
 			}
 		    
 		    if(myItemValue.equals(value) && !myItem.isDeleted()){
-		    	results.add(myItem);
+		    	results.add(new Item(myItem));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -129,7 +141,11 @@ public class ItemVault extends Vault {
 	}
 
     public static Item get(int id){
-        return new Item((Item) dataVault.get(id));
+    	Item i = dataVault.get(id);
+    	if(i == null)
+    		return null;
+
+        return new Item(i);
     }
 
     public static int size(){
@@ -146,7 +162,6 @@ public class ItemVault extends Vault {
 	public static Result validateNew(Item model){
 		assert(model!=null);
 
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		int count = findAll("Barcode = " + model.getBarcode().toString()).size();
 		if(count ==0){
             model.setValid(true);
@@ -164,19 +179,18 @@ public class ItemVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateModified(Item model){
+	public static Result validateModified(Item model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Item currentModel = this.get(model.getId());
+		Item currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;
