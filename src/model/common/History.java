@@ -4,7 +4,8 @@ import java.util.Stack;
 
 import common.Result;
 /**
- * The history class keeps charge of any changes made to the vaults.  It has the ability to undo any changes.
+ * The history class keeps charge of any changes made to the vaults.
+ * It has the ability to undo any changes.
  * <PRE>
  * Product.UndoAction() // Reverts the vault to how it was before
  * </PRE>

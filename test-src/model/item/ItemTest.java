@@ -2,22 +2,27 @@ package model.item;
 
 import model.common.Barcode;
 import org.joda.time.DateTime;
-import org.junit.BeforeClass;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ItemTest {
 
     public static Item item;
-    @BeforeClass
-    public static void setup(){
+    @Before
+    public void setup(){
         item = new Item();
-        item.setBarcode(Barcode.newFromId("111"));
+        item.setBarcode(Barcode.newFromId("05487033885"));
         item.setProductId(-1);
         item.setEntryDate(new DateTime());
         item.setExitDate(new DateTime());
         item.setExpirationDate(new DateTime());
+    }
+
+    @After
+    public void teardown(){
+        ItemVault.clear();
     }
 
     @Test
@@ -39,6 +44,8 @@ public class ItemTest {
 
     @Test
     public void testItemModification(){
+        item.validate();
+        item.save();
         Item itemCopy = ItemVault.get(item.getId());
         itemCopy.setProductId(0);
         assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId()

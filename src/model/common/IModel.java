@@ -10,6 +10,8 @@ public interface IModel {
 	
     public int getId();
 
+    public void invalidate();
+
 	/**
 	 *	Returns true if the model is saved in the vault, false otherwise.
 	 */

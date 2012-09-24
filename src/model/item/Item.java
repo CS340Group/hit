@@ -71,6 +71,11 @@ public class Item implements IModel{
         _expirationDate = i.getExpirationDate();
     }
 
+    @Override
+    public boolean isDeleted() {
+        return _deleted;
+    }
+
     public int getId(){
         return _id;
     }
@@ -82,6 +87,7 @@ public class Item implements IModel{
 
     public Result setProductId(int id){
         _productId = id;
+        invalidate();
         return new Result(true);
     }
 
@@ -96,6 +102,7 @@ public class Item implements IModel{
     public Result setBarcode(Barcode b){
         assert b != null;
         _barcode = b;
+        invalidate();
         return new Result(true, "Barcode set successfully.");
     }
 
@@ -105,6 +112,7 @@ public class Item implements IModel{
 
     public Result setEntryDate(DateTime d){
         _entryDate = d;
+        invalidate();
         return new Result(true);
     }
 
@@ -114,6 +122,7 @@ public class Item implements IModel{
 
     public Result setExitDate(DateTime d){
         _exitDate = d;
+        invalidate();
         return new Result(true);
     }
 
@@ -123,6 +132,7 @@ public class Item implements IModel{
 
     public Result setExpirationDate(DateTime d){
         _expirationDate = d;
+        invalidate();
         return new Result(true);
     }
 
@@ -186,4 +196,9 @@ public class Item implements IModel{
 		this._deleted = false;
 		return new Result(true);
 	}
+
+    public void invalidate(){
+        _saved = false;
+        _valid = false;
+    }
 }

@@ -2,10 +2,12 @@ package model.product;
 
 import model.common.Barcode;
 import model.common.Unit;
-import model.item.Item;
 import model.item.ItemVault;
+import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
-import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,17 +15,29 @@ import static org.junit.Assert.*;
 public class ProductTest {
 
     public static Product product;
-    @BeforeClass
-    public static void setup(){
+    public static StorageUnit su;
+    @Before
+    public void setup(){
+        su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
         product = new Product();
         product.setDescription("MyProduct");
         product.set3MonthSupply(3);
         product.setBarcode(Barcode.newFromId("111"));
-        product.setContainerId(-1);
+        product.setContainerId(su.getId());
         product.setCreationDate(new DateTime());
         product.setShelfLife(2);
         product.setSize(new Unit(3, "oz"));
-        product.setStorageUnitId(-1);
+        product.setStorageUnitId(su.getId());
+    }
+
+    @After
+    public void teardown(){
+        StorageUnitVault.clear();
+        ProductVault.clear();
     }
 
     @Test
@@ -45,14 +59,16 @@ public class ProductTest {
 
     @Test
     public void testProductModification(){
+        product.validate();
+        product.save();
         Product productCopy = ProductVault.get(product.getId());
-        productCopy.setContainerId(0);
+        productCopy.setContainerId(1);
         assertFalse(productCopy.getContainerId()
                 == ProductVault.get(product.getId()).getContainerId());
         assertEquals("Product should be saveable because its not valid",
                 false, productCopy.save().getStatus());
         assertEquals("Product should pass validation", true, productCopy.validate().getStatus());
         assertEquals("Product should save", true, productCopy.save().getStatus());
-        assertEquals("Vault should not have created a new Product", 1, ItemVault.size());
+        assertEquals("Vault should not have created a new Product", 1, ProductVault.size());
     }
 }

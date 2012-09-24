@@ -4,12 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.common.IModel;
-import model.common.Vault;
-import model.item.Item;
-import model.productgroup.ProductGroup;
-import model.storageunit.StorageUnit;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.StorageUnit;
 import common.Result;
 import common.util.QueryParser;
 
@@ -20,8 +20,23 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductVault extends Vault {
-	
+public class ProductVault {
+
+    protected static SortedMap<Integer, Product> dataVault =
+            new TreeMap<Integer, Product>();
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    private ProductVault(){
+        return;
+    }
+
+    public static void clear(){
+        dataVault.clear();
+    }
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -37,7 +52,10 @@ public class ProductVault extends Vault {
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-			return linearSearch(MyQuery,1).get(0);
+            ArrayList<Product> results = linearSearch(MyQuery,1);
+            if(results.size() == 0)
+                return null;
+            return results.get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,7 +88,9 @@ public class ProductVault extends Vault {
 		return null;
 	}
 	
-	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private static ArrayList<Product> linearSearch(QueryParser MyQuery,int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -98,7 +118,7 @@ public class ProductVault extends Vault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
+		for (Entry<Integer, Product> entry : dataVault.entrySet()) {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
@@ -111,7 +131,7 @@ public class ProductVault extends Vault {
 			}
 
 		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
-		    	results.add(myProduct);
+		    	results.add(new Product(myProduct));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -151,26 +171,25 @@ public class ProductVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateModified(Product model){
+	protected static Result validateModified(Product model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = this.get(model.getId());
+		Product currentModel = dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		Result result = validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
-        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;
 	}
 
 	private static Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = findAll("storageUnit.Id = "+model.getStorageUnitId());
+		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
 			if(testProd.getBarcode().toString().equals(barcode))
@@ -180,7 +199,10 @@ public class ProductVault extends Vault {
 	}
 
     public static Product get(int id){
-        return new Product((Product) dataVault.get(id));
+    	Product p = dataVault.get(id);
+    	if(p == null)
+    		return null;
+        return new Product(p);
     }
 
     public static int size(){

@@ -2,10 +2,10 @@ package model.product;
 
 import model.common.IModel;
 import common.Result;
-import model.storageunit.StorageUnit;
-import model.storageunit.StorageUnitVault;
-import model.productgroup.ProductGroup;
-import model.productgroup.ProductGroupVault;
+import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.ProductGroupVault;
 import model.common.Barcode;
 import model.common.Unit;
 import org.joda.time.DateTime;
@@ -68,8 +68,8 @@ public class Product implements IModel{
      */
     public Product(Product p){
         _id = p.getId();
-        _valid = false;
-        _saved = false;
+        _valid = true;
+        _saved = true;
         _storageUnitId = p.getStorageUnitId();
         _containerId = p.getContainerId();
         _creationDate = p.getCreationDate();
@@ -127,6 +127,7 @@ public class Product implements IModel{
 
     public Result setStorageUnitId(int id){
         _storageUnitId = id;
+        invalidate();
         return new Result(true);
     }
 
@@ -140,6 +141,7 @@ public class Product implements IModel{
 
     public Result setContainerId(int id){
         _containerId = id;
+        invalidate();
         return new Result(true);
     }
 
@@ -149,6 +151,7 @@ public class Product implements IModel{
 
     public Result setCreationDate(DateTime d){
         _creationDate = d;
+        invalidate();
         return new Result(true);
     }
 
@@ -158,6 +161,7 @@ public class Product implements IModel{
 
     public Result setBarcode(Barcode b){
         _barcode = b;
+        invalidate();
         return new Result(true);
     }
 
@@ -167,6 +171,7 @@ public class Product implements IModel{
 
     public Result setDescription(String d){
         _description = d;
+        invalidate();
         return new Result(true);
     }
 
@@ -176,6 +181,7 @@ public class Product implements IModel{
 
     public Result setSize(Unit u){
         _size = u;
+        invalidate();
         return new Result(true);
     }
 
@@ -185,6 +191,7 @@ public class Product implements IModel{
 
     public Result setShelfLife(int i){
         _shelfLife = i;
+        invalidate();
         return new Result(true);
     }
 
@@ -194,6 +201,7 @@ public class Product implements IModel{
 
     public Result set3MonthSupply(int i){
         _3MonthSupply = i;
+        invalidate();
         return new Result(true);
     }
 	/**
@@ -226,4 +234,8 @@ public class Product implements IModel{
 		this._deleted = false;
 		return new Result(true);
 	}
+    public void invalidate(){
+        _valid = false;
+        _saved = false;
+    }
 }
