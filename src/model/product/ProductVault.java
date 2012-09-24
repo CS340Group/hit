@@ -106,20 +106,12 @@ public class ProductVault {
 		Product myProduct = new Product();
 		
 		//Class associated with the product model
-		Class prdCls = myProduct.getClass();
-		Class suCls = mySU.getClass();
-		Class pgCls = myPG.getClass();
+		Class<? extends Product> prdCls = myProduct.getClass();
 		//Method we will call to get the value
 		Method method;
 		
 		
-		if(objName!= null && objName.equals("productGroup")){
-			method = pgCls.getMethod("get"+attrName);
-		} else if(objName!= null && objName.equals("storageUnit")){
-			method = suCls.getMethod("get"+attrName);
-		} else {
-			method = prdCls.getMethod("get"+attrName);
-		}
+		method = prdCls.getMethod("get"+attrName);
 
 		
 		//Loop through entire hashmap and check values one at a time
@@ -127,13 +119,7 @@ public class ProductVault {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
-			if(objName!= null && objName.equals("productGroup")){
-				myProductValue = method.invoke(myProduct.getContainer(), null).toString();
-			} else if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = method.invoke(myProduct.getStorageUnit(), null).toString();
-			} else {
-				myProductValue = method.invoke(myProduct, null).toString();
-			}
+			myProductValue = method.invoke(myProduct).toString();
 
 		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
 		    	results.add(new Product(myProduct));
@@ -187,7 +173,6 @@ public class ProductVault {
 		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
-		
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;
@@ -210,9 +195,7 @@ public class ProductVault {
         return new Product(p);
     }
 
-    public  int size(){
-        return dataVault.size();
-    }
+    
 	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.

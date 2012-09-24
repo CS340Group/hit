@@ -229,10 +229,14 @@ public class Product extends Model{
 	
 	public Result delete(){
 		this._deleted = true;
+		this._valid = true;
+		this.save();
 		return new Result(true);
 	}
 	public Result unDelete(){
 		this._deleted = false;
+		this._valid = true;
+		this.save();
 		return new Result(true);
 	}
     public void invalidate(){

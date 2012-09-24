@@ -105,20 +105,14 @@ public class ProductGroupVault {
 		String value = MyQuery.getValue();
 		
 		ProductGroup myPG = new ProductGroup();
-		StorageUnit mySU = new StorageUnit();
 		
 		//Class associated with the product model
-		Class suCls = mySU.getClass();
-		Class pgCls = myPG.getClass();
+		Class<? extends ProductGroup> pgCls = myPG.getClass();
 		//Method we will call to get the value
 		Method method;
 		
 		
-		if(objName!= null && objName.equals("storageUnit")){
-			method = suCls.getMethod("get"+attrName);
-		} else {
-			method = pgCls.getMethod("get"+attrName);
-		}
+		method = pgCls.getMethod("get"+attrName);
 
 		
 		//Loop through entire hashmap and check values one at a time
@@ -126,14 +120,10 @@ public class ProductGroupVault {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
-			if(objName!= null && objName.equals("storageUnit")){
-				myProductValue = method.invoke(myPG.getRootParent(), null).toString();
-			} else {
-				myProductValue = method.invoke(myPG, null).toString();
-			}
+			myProductValue = (String) method.invoke(myPG);
 
 		    if(myProductValue.equals(value) && !myPG.isDeleted()){
-		    	results.add(myPG);
+		    	results.add(new ProductGroup(myPG));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -165,6 +155,7 @@ public class ProductGroupVault {
         if(model.getName() == null)
             return new Result(false, "Name can't be null");
 
+
         if(model.getName() == "")
             return new Result(false, "Name can't be empty");
 
@@ -178,14 +169,14 @@ public class ProductGroupVault {
         return new Result(true);
 	}
 
+
     public  ProductGroup get(int id){
-    	ProductGroup pg = dataVault.get(id);
+        ProductGroup pg = dataVault.get(id);
     	if(pg == null)
     		return null;
 
         return new ProductGroup(pg);
     }
-	
 
 	/**
 	 * Checks if the model already exists in the map

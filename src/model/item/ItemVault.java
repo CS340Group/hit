@@ -108,32 +108,21 @@ public class ItemVault {
 		
 		Item myItem = new Item();
 		Product myProduct = new Product();
-		//Class associated with the product model
-		Class prdCls = myProduct.getClass();
 		//Class associated with the item model
-		Class cls = myItem.getClass();
+		Class<? extends Item> cls = myItem.getClass();
 		//Method we will call to get the value
 		Method method;
 		
 		
-		if(objName!= null && objName.equals("product")){
-			method = prdCls.getMethod("get"+attrName);
-		} else {
-			method = cls.getMethod("get"+attrName);
-		}
+		method = cls.getMethod("get"+attrName);
 
 		
 		//Loop through entire hashmap and check values one at a time
 		for (Entry<Integer, Item> entry : dataVault.entrySet()) {
 			myItem = (Item) entry.getValue();
 			String myItemValue; 
-			
-			if(objName!= null && objName.equals("product")){
-				//Get the item, call get product, run dynamic method on that
-				myItemValue = method.invoke(myItem.getProduct(), null).toString();
-			} else {
-				myItemValue = method.invoke(myItem, null).toString();
-			}
+
+			myItemValue = method.invoke(myItem).toString();
 		    
 		    if(myItemValue.equals(value) && !myItem.isDeleted()){
 		    	results.add(new Item(myItem));
@@ -152,9 +141,6 @@ public class ItemVault {
         return new Item(i);
     }
 
-    public int size(){
-        return dataVault.size();
-    }
 
 	/**
 	 * Checks if the model passed in already exists in the current map
@@ -194,7 +180,6 @@ public class ItemVault {
 		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
-		
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;

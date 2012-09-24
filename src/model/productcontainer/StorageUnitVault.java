@@ -97,7 +97,7 @@ public class StorageUnitVault{
 		StorageUnit mySU = new StorageUnit();
 		
 		//Class associated with the product model
-		Class suCls = mySU.getClass();
+		Class<? extends StorageUnit> suCls = mySU.getClass();
 		//Method we will call to get the value
 		Method method;
 		method = suCls.getMethod("get"+attrName);
@@ -107,10 +107,10 @@ public class StorageUnitVault{
 		for (Entry<Integer, StorageUnit> entry : dataVault.entrySet()) {
 			mySU = (StorageUnit) entry.getValue();
 			String mySUValue; 
-			mySUValue = (String) method.invoke(mySU, null);
+			mySUValue = (String) method.invoke(mySU);
 
 		    if(mySUValue.equals(value) && !mySU.isDeleted()){
-		    	results.add(mySU);
+		    	results.add(new StorageUnit(mySU));
 		    }
 		    if(count != 0 && results.size() == count )
 		    	return results;
@@ -157,7 +157,6 @@ public class StorageUnitVault{
 
         return new StorageUnit(su);
     }
-
 	/**
 	 * Checks if the model already exists in the map
 	 * 

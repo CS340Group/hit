@@ -20,6 +20,9 @@ public abstract class Vault implements IVault {
 	}
 	
 	
+	public  int size(){
+        return dataVault.size();
+    }
 	
 	
 	
