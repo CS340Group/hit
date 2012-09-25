@@ -1,8 +1,7 @@
 package model.product;
 
 import model.common.Barcode;
-import model.common.Unit;
-import model.item.ItemVault;
+import model.common.Size;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
@@ -30,7 +29,7 @@ public class ProductTest {
         product.setContainerId(su.getId());
         product.setCreationDate(new DateTime());
         product.setShelfLife(2);
-        product.setSize(new Unit(3, "oz"));
+        product.setSize(new Size(3, Size.Unit.oz));
         product.setStorageUnitId(su.getId());
     }
 
@@ -60,6 +59,7 @@ public class ProductTest {
     @Test
     public void testProductModification(){
         Product productCopy = product.productVault.get(product.getId());
+        assertNotNull(productCopy);
         product.validate();
         product.save();
         productCopy.setContainerId(1);
@@ -72,11 +72,32 @@ public class ProductTest {
         assertEquals("Vault should not have created a new Product", 1, product.productVault.size());
     }
 
+    @Test 
+    void testSetShelfLife(){
+        Product p = new Product();
+        assertEquals(false, p.setShelfLife(-5).getStatus());
+        assertEquals(true, p.setShelfLife(5).getStatus());
+    }
+
+    @Test 
+    void testSet3MonthSupply(){
+        Product p = new Product();
+        assertEquals(false, p.set3MonthSupply(-5).getStatus());
+        assertEquals(true, p.set3MonthSupply(5).getStatus());
+    }
+
     @Test
     public void testValidate(){
         Product p = new Product();
-        assertEquals(false, p.validate());
+        assertEquals(false, p.validate().getStatus());
         p.setCreationDate(new DateTime());
-        assertEquals(true, p.validate());
+        // Should still be false. I haven't entered a description.
+        assertEquals(false, p.validate().getStatus());
+        p.setDescription("");
+        // Should still be false. The description is blank.
+        assertEquals(false, p.validate().getStatus());
+        p.setDescription("A description.");
+        assertEquals(true, p.validate().getStatus());
+
     }
 }

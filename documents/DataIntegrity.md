@@ -24,12 +24,11 @@ Constraint | Implemented | Tested
 |:- |:- |:-|
 creationDate must equal the earliest entry date for any item of the product. |  TODO WITH CONTROLLER|  TODO WITH CONTROLLER  
 Barcode must be non-empty |  Product.validate() |  ProductTest.testValidate()  
-Description must be non-empty | |  
-Size magnitude must be non-zero, or limited to 1 when the unit is "count" | |  
-Shelf life must be non-negative | |  
-3-Month supply must be non-negative | |  
-ParentId must be non-empty | |  
-RootParentId must be non-empty | |  
+Description must be non-empty | Product.validate() | ProductTest.testValidate() 
+Size magnitude must be non-zero, or limited to 1 when the unit is "count" | Unit.Validate() |  ProductTest.testValidate()
+Shelf life must be non-negative | Product.setShelfLife |  ProductTest.testShelfLife
+3-Month supply must be non-negative | Product.set3MonthSupply |  ProductTest.testSet3MonthSupply
+ParentId and RootParentId must be non-empty | TODO in controller |  TODO in controller
 
 ### Item
 Constraint | Implemented | Tested

@@ -1,6 +1,6 @@
 package model.productcontainer;
 
-import model.common.Unit;
+import model.common.Size;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,19 +30,19 @@ public class ProductGroupTest {
         pg1.setName("Group A");
         pg1.setParentId(su.getId());
         pg1.setRootParentId(su.getId());
-        pg1.set3MonthSupply(new Unit(3, "oz"));
+        pg1.set3MonthSupply(new Size(3, Size.Unit.oz));
 
         pg2 = new ProductGroup();
         pg2.setName("Group B");
         pg2.setParentId(su.getId());
         pg2.setRootParentId(su.getId());
-        pg2.set3MonthSupply(new Unit(3, "oz"));
+        pg2.set3MonthSupply(new Size(3, Size.Unit.oz));
 
         pg3 = new ProductGroup();
         pg3.setName("Group A");
         pg3.setParentId(su.getId());
         pg3.setRootParentId(su.getId());
-        pg3.set3MonthSupply(new Unit(3, "oz"));
+        pg3.set3MonthSupply(new Size(3, Size.Unit.oz));
 
     }
 

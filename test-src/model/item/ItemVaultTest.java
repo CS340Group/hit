@@ -1,7 +1,7 @@
 package model.item;
 
 import model.common.Barcode;
-import model.common.Unit;
+import model.common.Size;
 import model.product.Product;
 import model.product.ProductVault;
 import org.joda.time.DateTime;
@@ -31,7 +31,7 @@ public class ItemVaultTest {
         p1.setContainerId(-1);
         p1.setCreationDate(new DateTime(2012,6,1,12,0));
         p1.setShelfLife(2);
-        p1.setSize(new Unit(3, "oz"));
+        p1.setSize(new Size(3, Size.Unit.oz));
         p1.setStorageUnitId(-1);
         p1.validate();
         p1.save();
@@ -43,7 +43,7 @@ public class ItemVaultTest {
         p2.setContainerId(-1);
         p2.setCreationDate(new DateTime(2012,6,2,12,0));
         p2.setShelfLife(2);
-        p2.setSize(new Unit(2, "oz"));
+        p2.setSize(new Size(2, Size.Unit.oz));
         p2.setStorageUnitId(-1);
         p2.validate();
         p2.save();

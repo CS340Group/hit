@@ -1,7 +1,7 @@
 package model.productcontainer;
 
 import common.Result;
-import model.common.Unit;
+import model.common.Size;
 
 /**
  * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
@@ -16,7 +16,7 @@ public class ProductGroup extends ProductContainer{
 	 * as _parentId */
 	private int _rootParentId;
 	/* A variable representing the three month supply for this group. */
-	private Unit _3MonthSupply;
+	private Size _3MonthSupply;
 	private boolean _deleted;
 	/**
 	 * No-args constructor.
@@ -33,7 +33,7 @@ public class ProductGroup extends ProductContainer{
 	 * for the three-moth supply for this group.
 	 */
 	public ProductGroup(ProductGroup parent, ProductGroup rootParent, 
-	                    Unit threeMonthSupply){
+	                    Size threeMonthSupply){
 		super();
 		_parentId = parent.getId();
 		_rootParentId = rootParent.getId();
@@ -50,14 +50,14 @@ public class ProductGroup extends ProductContainer{
 
     /**
 	 * Returns the three-month supply for this group as an int. */	
-	public Unit get3MonthSupply(){
+	public Size get3MonthSupply(){
 		return _3MonthSupply;
 	}
 
 	/**
 	 * Allows a non-zero integer to be set for the three month supply.
 	 */
-	public Result set3MonthSupply(Unit value){
+	public Result set3MonthSupply(Size value){
 		// Do checks
 		_3MonthSupply = value;
         invalidate();
