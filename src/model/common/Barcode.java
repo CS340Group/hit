@@ -189,4 +189,12 @@ public class Barcode{
 	public boolean isSet(){
 		return _set;
 	}
+
+	/**
+	 * Checks to make sure the pre-conditions for the barcode are met.
+	 */
+	public Result validate(){
+		Result r = setCode(_code);
+		return r;
+	}
 }
