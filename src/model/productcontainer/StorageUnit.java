@@ -20,17 +20,17 @@ public class StorageUnit extends ProductContainer{
 
     public Result validate(){
         if(getId() == -1)
-            return StorageUnitVault.validateNew(this);
+            return storageUnitVault.validateNew(this);
         else
-            return StorageUnitVault.validateModified(this);
+            return storageUnitVault.validateModified(this);
     }
 
     public Result save(){
         if(!isValid())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return StorageUnitVault.saveNew(this);
+            return storageUnitVault.saveNew(this);
         else
-            return StorageUnitVault.saveModified(this);
+            return storageUnitVault.saveModified(this);
     }
 }

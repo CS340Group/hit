@@ -25,16 +25,20 @@ public class StorageUnitTest {
 
     @After
     public void teardown(){
-        StorageUnitVault.clear();
+        StorageUnitVault.getInstance().clear();
     }
 
     @Test
     public void testValidate() throws Exception {
         assertTrue(su1.validate().getStatus());
+        // Test for enforced non-empty name -->
         assertFalse(su2.validate().getStatus());
+        // ----||.
         su1.save();
+        // Test for enforced uniqe name -->
         su2.setName(su1.getName());
         assertFalse(su2.validate().getStatus());
+        // ----||.
         su2.setName("Good");
         assertTrue(su2.validate().getStatus());
     }
@@ -45,10 +49,10 @@ public class StorageUnitTest {
         su1.validate();
         assertTrue(su1.save().getStatus());
         assertFalse(su2.save().getStatus());
-        assertEquals(1, StorageUnitVault.size());
+        assertEquals(1, StorageUnitVault.getInstance().size());
         String original = su1.getName();
         su1.setName("Unit X");
-        assertEquals(original, StorageUnitVault.get(su1.getId()).getName());
+        assertEquals(original, StorageUnitVault.getInstance().get(su1.getId()).getName());
     }
 
     @Test

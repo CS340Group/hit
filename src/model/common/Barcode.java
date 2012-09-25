@@ -13,6 +13,7 @@ import java.util.List;
 public class Barcode{
 	private String _code;
 	private boolean _set;
+	private boolean _valid;
 
 	/**
 	 * Constructor. Builds an invalid barcode object.
@@ -20,6 +21,25 @@ public class Barcode{
 	public Barcode(){
 		_code = "-1";
 		_set = false;
+	}
+
+	/**
+	 * Constructor. Builds an invalid barcode object from a string arg.
+	 */
+	public Barcode(String code){
+		Result r;
+		if(code.length() == 12){
+			r = setCode(code);
+		}else{
+			r = setCodeFromId(code);
+		}
+		if (r.getStatus()){
+			_set = true;
+			_valid = true;
+		}else{
+			_set = false;
+			_valid = false;
+		}
 	}
 
 	/* ======== Private methods ===== */

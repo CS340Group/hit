@@ -62,6 +62,7 @@ public class Product extends Model{
 		_id = -1;
 		_valid = false;
 		_saved = false;
+        _creationDate = new DateTime();
 	}
 
     /**
@@ -221,6 +222,9 @@ public class Product extends Model{
 	 * Validate that the product is able to be saved into the vault.
 	 */
 	public Result validate(){
+        if (_barcode == null) {
+            return new Result(false, "The barcode must be set.");
+        }
         if(getId() == -1)
             return productVault.validateNew(this);
         else

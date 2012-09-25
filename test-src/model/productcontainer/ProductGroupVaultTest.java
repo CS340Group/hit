@@ -43,28 +43,28 @@ public class ProductGroupVaultTest {
 
     @After
     public void tearDown() throws Exception {
-        StorageUnitVault.clear();
-        ProductGroupVault.clear();
+        StorageUnitVault.getInstance().clear();
+        ProductGroupVault.getInstance().clear();
     }
 
     @Test
     public void testFind() throws Exception {
-        assertEquals(pg1.getId(), ProductGroupVault.find("Name = "+pg1.getName()).getId());
-        assertEquals(pg1.getId(), ProductGroupVault.find("ParentId = "+pg1.getParentId()).getId());
-        assertEquals(pg1.getId(), ProductGroupVault.find("RootParentId = "+pg1.getRootParentId()).getId());
-        assertEquals(pg1.getId(), ProductGroupVault.find("3MonthSupply = "+pg1.get3MonthSupply()).getId());
-        assertNull(ProductGroupVault.find("Name = blah"));
+        assertEquals(pg1.getId(), ProductGroupVault.getInstance().find("Name = "+pg1.getName()).getId());
+        assertEquals(pg1.getId(), ProductGroupVault.getInstance().find("ParentId = "+pg1.getParentId()).getId());
+        assertEquals(pg1.getId(), ProductGroupVault.getInstance().find("RootParentId = "+pg1.getRootParentId()).getId());
+        assertEquals(pg1.getId(), ProductGroupVault.getInstance().find("3MonthSupply = "+pg1.get3MonthSupply()).getId());
+        assertNull(ProductGroupVault.getInstance().find("Name = blah"));
     }
 
     @Test
     public void testFindAll() throws Exception {
-        assertEquals(1,ProductGroupVault.findAll("Name = "+pg1.getName()).size());
-        assertEquals(0,ProductGroupVault.findAll("Name = blah").size());
+        assertEquals(1,ProductGroupVault.getInstance().findAll("Name = "+pg1.getName()).size());
+        assertEquals(0,ProductGroupVault.getInstance().findAll("Name = blah").size());
     }
 
     @Test
     public void testGet() throws Exception {
-        assertNotSame(pg1, ProductGroupVault.get(pg1.getId()));
-        assertEquals(pg1.getId(), ProductGroupVault.get(pg1.getId()).getId());
+        assertNotSame(pg1, ProductGroupVault.getInstance().get(pg1.getId()));
+        assertEquals(pg1.getId(), ProductGroupVault.getInstance().get(pg1.getId()).getId());
     }
 }

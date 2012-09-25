@@ -26,7 +26,7 @@ public class ProductTest {
         product = new Product();
         product.setDescription("MyProduct");
         product.set3MonthSupply(3);
-        product.setBarcode(Barcode.newFromId("111"));
+        product.setBarcode(new Barcode());
         product.setContainerId(su.getId());
         product.setCreationDate(new DateTime());
         product.setShelfLife(2);
@@ -45,7 +45,7 @@ public class ProductTest {
         assertEquals("Id should be -1", -1, product.getId());
         assertEquals("Product is not saved", false, product.isSaved());
         assertEquals("Product is not valid", false, product.isValid());
-        assertEquals("Product should be saveable because its not valid",
+        assertEquals("Product shouldn't be saveable because its not valid",
                 false, product.save().getStatus());
         //Technically this should be false but we havnt wired up Barcodes and other classes yet
         assertEquals("Product should pass validation", true, product.validate().getStatus());
@@ -70,5 +70,13 @@ public class ProductTest {
         assertEquals("Product should pass validation", true, productCopy.validate().getStatus());
         assertEquals("Product should save", true, productCopy.save().getStatus());
         assertEquals("Vault should not have created a new Product", 1, product.productVault.size());
+    }
+
+    @Test
+    public void testValidate(){
+        Product p = new Product();
+        assertEquals(false, p.validate());
+        p.setCreationDate(new DateTime());
+        assertEquals(true, p.validate());
     }
 }
