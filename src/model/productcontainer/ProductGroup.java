@@ -103,17 +103,17 @@ public class ProductGroup extends ProductContainer{
 
     public Result validate(){
         if(getId() == -1)
-            return ProductGroupVault.validateNew(this);
+            return productGroupVault.validateNew(this);
         else
-            return ProductGroupVault.validateModified(this);
+            return productGroupVault.validateModified(this);
     }
 
     public Result save(){
         if(!isValid())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return ProductGroupVault.saveNew(this);
+            return productGroupVault.saveNew(this);
         else
-            return ProductGroupVault.saveModified(this);
+            return productGroupVault.saveModified(this);
     }
 }

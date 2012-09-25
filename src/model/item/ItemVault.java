@@ -8,6 +8,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import model.product.Product;
+import model.common.IModel;
+import model.common.Vault;
 import common.Result;
 import common.util.QueryParser;
 
@@ -20,7 +22,7 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ItemVault {
+public class ItemVault extends Vault{
 	static ItemVault currentInstance;
 	private ItemVault(){
 		currentInstance = this;
@@ -90,7 +92,7 @@ public class ItemVault {
 	}
 	
 	//Search an ordered hashmap one at a time
-	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
@@ -110,7 +112,7 @@ public class ItemVault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, Item> entry : dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myItem = (Item) entry.getValue();
 			String myItemValue; 
 
@@ -126,7 +128,7 @@ public class ItemVault {
 	}
 
     public Item get(int id){
-    	Item i = dataVault.get(id);
+    	Item i = (Item)dataVault.get(id);
     	if(i == null)
     		return null;
 
