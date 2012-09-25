@@ -84,6 +84,17 @@ public class ProductGroupTest {
     }
 
     @Test
+    public void testSet3MonthSupply(){
+        // Should fail due to a negative size. 
+        assertFalse(pg1.set3MonthSupply(new Size(-5, Size.Unit.oz)).getStatus());
+        // A zero in this context should be fine:
+        assertTrue(pg1.set3MonthSupply(new Size(0, Size.Unit.oz)).getStatus());
+        // Should fail. If the unit is count, the amt should be 1.
+        assertFalse(pg1.set3MonthSupply(new Size(5, Size.Unit.count)).getStatus());
+        assertTrue(pg1.set3MonthSupply(new Size(1, Size.Unit.count)).getStatus());
+    }
+
+    @Test
     public void testValidate() throws Exception {
         assertFalse(pg1.isValid());
         assertTrue(pg1.validate().getStatus());

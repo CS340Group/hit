@@ -16,16 +16,17 @@ The data constraints for ProductContainer are enforced by the children of this s
 ### Storage Unit
 Constraint | Implemented | Tested
 |:- |:- |:-|
-Name must be non empty | StorageUnit.validate() | StorageUnitTest.testValidate()
-Name must be unique | StorageUnit.validate() | StorageUnitTest.testValidate()
+Name must be non empty | StorageUnit.validate | StorageUnitTest.testValidate
+Name must be unique | StorageUnit.validate | StorageUnitTest.testValidate
 
 ### Product
 Constraint | Implemented | Tested
 |:- |:- |:-|
 creationDate must equal the earliest entry date for any item of the product. |  TODO WITH CONTROLLER|  TODO WITH CONTROLLER  
-Barcode must be non-empty |  Product.validate() |  ProductTest.testValidate()  
-Description must be non-empty | Product.validate() | ProductTest.testValidate() 
-Size magnitude must be non-zero, or limited to 1 when the unit is "count" | Unit.Validate() |  ProductTest.testValidate()
+Barcode must be non-empty |  Product.validate |  ProductTest.testValidate
+Description must be non-empty | Product.validate | ProductTest.testValidate
+Amount must be non-zero | Product.setSize | ProductTest.testSetSize
+Amount must be limited to 1 when the unit is "count" | Size.Validate |  ProductTest.testValidate
 Shelf life must be non-negative | Product.setShelfLife |  ProductTest.testShelfLife
 3-Month supply must be non-negative | Product.set3MonthSupply |  ProductTest.testSet3MonthSupply
 ParentId and RootParentId must be non-empty | TODO in controller |  TODO in controller
@@ -38,7 +39,7 @@ creationDate must equal the earliest entry date for any item of the product. |  
 ### Product Group
 Constraint | Implemented | Tested
 |:- |:- |:-|
-| | |
+| 3 Month supply cannot be negative.  If the unit is count,  the amount must be 1.| Size.validate |  ProductGroupTest.testSet3MonthSupply
 
 ## Additional Integrity Constraints from the Functional Spec
 ### Adding Items

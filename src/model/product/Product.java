@@ -179,6 +179,9 @@ public class Product extends Model{
     }
 
     public Result setSize(Size u){
+        if(u.getAmount() == 0){
+            return new Result(false, "The size of a product cannot be 0.");
+        }
         if(!u.validate().getStatus()){
             return new Result(false, "That's an invlaid size.");
         }

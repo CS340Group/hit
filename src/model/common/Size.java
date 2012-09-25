@@ -47,8 +47,8 @@ public class Size {
     }
 
     public Result validate(){
-        if (_amount == 0){
-            return new Result(false, "The amount must be non-zero.");
+        if (_amount < 0){
+            return new Result(false, "The amount must not be negative.");
         }
         if (_unit == Unit.count && _amount != 1.0){
             return new Result(false, "If unit=count, amount must be 1");

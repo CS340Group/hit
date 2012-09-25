@@ -87,6 +87,14 @@ public class ProductTest {
     }
 
     @Test
+    public void testSetSize(){
+        Product p = new Product();
+        // Testing that zero is not allowed in product size.
+        assertFalse(p.setSize(new Size(0, Size.Unit.oz)).getStatus());
+        assertTrue(p.setSize(new Size(1, Size.Unit.oz)).getStatus());
+    }
+
+    @Test
     public void testValidate(){
         Product p = new Product();
         assertEquals(false, p.validate().getStatus());
@@ -98,6 +106,5 @@ public class ProductTest {
         assertEquals(false, p.validate().getStatus());
         p.setDescription("A description.");
         assertEquals(true, p.validate().getStatus());
-
     }
 }

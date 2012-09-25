@@ -58,7 +58,9 @@ public class ProductGroup extends ProductContainer{
 	 * Allows a non-zero integer to be set for the three month supply.
 	 */
 	public Result set3MonthSupply(Size value){
-		// Do checks
+        if (!value.validate().getStatus()){
+            return new Result(false, "The 3 mo. is invalid.");
+        }
 		_3MonthSupply = value;
         invalidate();
         return new Result(true, "Successfully set.");
