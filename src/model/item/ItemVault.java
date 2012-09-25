@@ -31,7 +31,9 @@ public class ItemVault extends Vault{
 		if(currentInstance == null) currentInstance = new ItemVault();
 		return currentInstance;
 	}
-
+    public void clear(){
+        dataVault.clear();
+    }
 	
 	
 	/**

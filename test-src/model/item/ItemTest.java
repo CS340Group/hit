@@ -22,7 +22,7 @@ public class ItemTest {
 
     @After
     public void teardown(){
-        ItemVault.clear();
+        ItemVault.getInstance().clear();
     }
 
     @Test
