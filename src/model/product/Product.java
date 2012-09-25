@@ -1,14 +1,11 @@
 package model.product;
 
-import model.common.IModel;
 import common.Result;
+import model.common.Size;
 import model.productcontainer.StorageUnit;
-import model.productcontainer.StorageUnitVault;
 import model.productcontainer.ProductGroup;
-import model.productcontainer.ProductGroupVault;
 import model.common.Barcode;
 import model.common.Model;
-import model.common.Unit;
 import org.joda.time.DateTime;
 
 /**
@@ -48,7 +45,7 @@ public class Product extends Model{
 
     private String _description;
 
-    private Unit _size;
+    private Size _size;
 
     private int _shelfLife;
 
@@ -177,11 +174,17 @@ public class Product extends Model{
         return new Result(true);
     }
 
-    public Unit getSize(){
+    public Size getSize(){
         return _size;
     }
 
-    public Result setSize(Unit u){
+    public Result setSize(Size u){
+        if(u.getAmount() == 0){
+            return new Result(false, "The size of a product cannot be 0.");
+        }
+        if(!u.validate().getStatus()){
+            return new Result(false, "That's an invlaid size.");
+        }
         _size = u;
         invalidate();
         return new Result(true);
@@ -192,6 +195,9 @@ public class Product extends Model{
     }
 
     public Result setShelfLife(int i){
+        if (i<0){
+            return new Result(false, "The shelf life must be non-negative.");
+        }
         _shelfLife = i;
         invalidate();
         return new Result(true);
@@ -202,6 +208,9 @@ public class Product extends Model{
     }
 
     public Result set3MonthSupply(int i){
+        if (i<0){
+            return new Result(false, "The 3 mo. supply must be non-negative.");
+        }
         _3MonthSupply = i;
         invalidate();
         return new Result(true);
@@ -222,8 +231,20 @@ public class Product extends Model{
 	 * Validate that the product is able to be saved into the vault.
 	 */
 	public Result validate(){
-        if (_barcode == null) {
-            return new Result(false, "The barcode must be set.");
+        if (_barcode == null || !_barcode.validate().getStatus()) {
+            return new Result(false, "The barcode must be set and valid.");
+        }
+        if (_description == null || _description.equals("")){
+            return new Result(false, "The description cannot be empty.");
+        }
+        if (!_size.validate().getStatus()){
+            return new Result(false, "The size is invalid.");
+        }
+        if (_shelfLife<0){
+            return new Result(false, "The shelf life must be non-negative.");
+        }
+        if (_3MonthSupply<0){
+            return new Result(false, "The 3 mo. supply must be non-negative.");
         }
         if(getId() == -1)
             return productVault.validateNew(this);
