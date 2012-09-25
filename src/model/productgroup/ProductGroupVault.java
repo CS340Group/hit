@@ -1,16 +1,16 @@
-package model.productcontainer;
+package model.productgroup;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import model.common.IModel;
-import model.productcontainer.ProductGroup;
-import model.productcontainer.StorageUnit;
+import model.common.Vault;
+import model.item.Item;
+import model.product.Product;
 import model.product.ProductVault;
+import model.storageunit.StorageUnit;
 import common.Result;
 import common.util.QueryParser;
 
@@ -23,7 +23,7 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductGroupVault {
+public class ProductGroupVault extends Vault {
 	static ProductGroupVault currentInstance;
 	private ProductGroupVault(){
 		currentInstance = this;
@@ -32,38 +32,15 @@ public class ProductGroupVault {
 		if(currentInstance == null) currentInstance = new ProductGroupVault();
 		return currentInstance;
 	}
-
-    protected static SortedMap<Integer, ProductGroup> dataVault =
-            new TreeMap<Integer, ProductGroup>();
-
-    /**
-     * Constructor.
-     *
-     *
-     */
-    private ProductGroupVault(){
-        return;
-    }
-
-    public static int size(){
-        return dataVault.size();
-    }
-
-    public static void clear(){
-        dataVault.clear();
-    }
-
-	public static ProductGroup find(String query)  {
+	
+	public ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-            ArrayList<ProductGroup> results = linearSearch(MyQuery,1);
-            if(results.size() == 0)
-                return null;
-            return results.get(0);
+			return linearSearch(MyQuery,1).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,7 +57,7 @@ public class ProductGroupVault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<ProductGroup> findAll(String query) {
+	public ArrayList<ProductGroup> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -96,9 +73,7 @@ public class ProductGroupVault {
 		return null;
 	}
 	
-	private static ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
-            throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException{
+	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<ProductGroup> results = new ArrayList<ProductGroup>();
 		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
@@ -116,7 +91,7 @@ public class ProductGroupVault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, ProductGroup> entry : dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
@@ -140,42 +115,27 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(ProductGroup model){
+	protected Result validateNew(ProductGroup model){
 		Result result = new Result();
-		result = checkUniqueName(model);
+		result = this.checkUniqueName(model);
 		if(result.getStatus() == false)
 			return result;
-
-        model.setValid(true);
+		
 		return result;
 	}
 	
-	private static Result checkUniqueName(ProductGroup model){
-        //Null check
-        if(model.getName() == null)
-            return new Result(false, "Name can't be null");
-
-
-        if(model.getName() == "")
-            return new Result(false, "Name can't be empty");
-
-		ArrayList<ProductGroup> myPGs = findAll("Name = " + model.getName());
+	private Result checkUniqueName(ProductGroup model){
+		ArrayList<ProductGroup> myPGs = this.findAll("Name = "+model.getName());
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
 				return new Result(false,"Duplicate product in container");
 		}
-
-        model.setValid(true);
-        return new Result(true);
+		return new Result(true);
 	}
 
 
     public  ProductGroup get(int id){
-        ProductGroup pg = dataVault.get(id);
-    	if(pg == null)
-    		return null;
-
-        return new ProductGroup(pg);
+        return new ProductGroup((ProductGroup) dataVault.get(id));
     }
 
 	/**
@@ -184,18 +144,19 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(ProductGroup model){
+	protected Result validateModified(ProductGroup model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		ProductGroup currentModel = dataVault.get(model.getId());
+		ProductGroup currentModel = this.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
-		Result result = validateNew(model);
+		Result result = this.validateNew(model);
 		//Add current model back
 		currentModel.unDelete();
 		
+        //TODO: This method should call a list of other validate methods for each integrity constraint
 		if(result.getStatus() == true)
 			model.setValid(true);
         return result;
@@ -208,19 +169,7 @@ public class ProductGroupVault {
 	 * @return Result of request
 	 */
 	protected  Result saveNew(ProductGroup model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-
-        int id = 0;
-        if(dataVault.isEmpty())
-            id = 0;
-        else
-            id = dataVault.lastKey()+1;
-
-        model.setId(id);
-        model.setSaved(true);
-        dataVault.put(id,new ProductGroup(model));
-        return new Result(true);
+		return null;
 	}
 
 	/**
@@ -230,13 +179,7 @@ public class ProductGroupVault {
 	 * @return Result of request
 	 */
 	protected  Result saveModified(ProductGroup model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-
-        int id = model.getId();
-        model.setSaved(true);
-        dataVault.put(id, new ProductGroup(model));
-        return new Result(true);
+		return null;
 	}
 }
 

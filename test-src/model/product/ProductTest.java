@@ -53,22 +53,22 @@ public class ProductTest {
         assertEquals("Id should be 0", 0, product.getId());
         assertEquals("Product is saved", true, product.isSaved());
         assertEquals("Product is Valid", true, product.isValid());
-        assertNotSame("Vault returns a copy", product, ProductVault.get(product.getId()));
-        assertEquals("Vault copy and local copy have same ids", product.getId(), ProductVault.get(product.getId()).getId());
+        assertNotSame("Vault returns a copy", product, product.productVault.get(product.getId()));
+        assertEquals("Vault copy and local copy have same ids", product.getId(), product.productVault.get(product.getId()).getId());
     }
 
     @Test
     public void testProductModification(){
+        Product productCopy = product.productVault.get(product.getId());
         product.validate();
         product.save();
-        Product productCopy = ProductVault.get(product.getId());
         productCopy.setContainerId(1);
         assertFalse(productCopy.getContainerId()
-                == ProductVault.get(product.getId()).getContainerId());
-        assertEquals("Product should be saveable because its not valid",
+                == product.productVault.get(product.getId()).getContainerId());
+        assertEquals("Product should not be saveable because its not valid",
                 false, productCopy.save().getStatus());
         assertEquals("Product should pass validation", true, productCopy.validate().getStatus());
         assertEquals("Product should save", true, productCopy.save().getStatus());
-        assertEquals("Vault should not have created a new Product", 1, ProductVault.size());
+        assertEquals("Vault should not have created a new Product", 1, product.productVault.size());
     }
 }
