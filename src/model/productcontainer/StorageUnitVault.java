@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 import model.common.IModel;
 import model.item.ItemVault;
-import model.item.ItemVault;
+import model.common.Vault;
 import common.Result;
 import common.util.QueryParser;
 import model.productcontainer.StorageUnit;
@@ -23,7 +23,7 @@ import model.productcontainer.StorageUnit;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class StorageUnitVault{
+public class StorageUnitVault extends Vault{
 	static StorageUnitVault currentInstance;
 	private StorageUnitVault(){
 		currentInstance = this;
@@ -32,7 +32,7 @@ public class StorageUnitVault{
 		if(currentInstance == null) currentInstance = new StorageUnitVault();
 		return currentInstance;
 	}
-    public static void clear(){
+    public void clear(){
         dataVault.clear();
     }
 	/**
@@ -86,7 +86,7 @@ public class StorageUnitVault{
 		return null;
 	}
 	
-	private  ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private  ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
@@ -105,7 +105,7 @@ public class StorageUnitVault{
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, StorageUnit> entry : dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			mySU = (StorageUnit) entry.getValue();
 			String mySUValue; 
 			mySUValue = (String) method.invoke(mySU);
@@ -152,7 +152,7 @@ public class StorageUnitVault{
 	}
 
     public  StorageUnit get(int id){
-    	StorageUnit su = dataVault.get(id);
+    	StorageUnit su = (StorageUnit)dataVault.get(id);
     	if(su == null)
     		return null;
         return new StorageUnit(su);
@@ -163,12 +163,12 @@ public class StorageUnitVault{
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(StorageUnit model){
+	protected Result validateModified(StorageUnit model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		StorageUnit currentModel = dataVault.get(model.getId());
+		StorageUnit currentModel = (StorageUnit)dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
 		Result result = validateNew(model);

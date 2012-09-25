@@ -136,10 +136,6 @@ public class ProductContainer extends Model{
 		return new Result(true);
 	}
 
-	public boolean isDeleted() {
-		return this._deleted;
-	}
-
     protected Result setValid(boolean v){
         _valid = v;
         return new Result(true);

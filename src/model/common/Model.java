@@ -2,8 +2,8 @@ package model.common;
 
 import model.item.ItemVault;
 import model.product.ProductVault;
-import model.productgroup.ProductGroupVault;
-import model.storageunit.StorageUnitVault;
+import model.productcontainer.ProductGroupVault;
+import model.productcontainer.StorageUnitVault;
 import common.Result;
 
 public abstract class Model implements IModel{

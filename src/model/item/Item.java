@@ -202,16 +202,6 @@ public class Item extends Model{
 		return new Result(true);
 	}
 
-	@Override
-	public boolean isDeleted() {
-		return _deleted;
-	}
-
-	@Override
-	public boolean isDeleted() {
-		return _deleted;
-	}
-
     public void invalidate(){
         _saved = false;
         _valid = false;
