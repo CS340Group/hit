@@ -150,7 +150,10 @@ public class ProductGroupVault {
         if(model.getName() == "")
             return new Result(false, "Name can't be empty");
 
-		ArrayList<ProductGroup> myPGs = findAll("Name = " + model.getName());
+        //Checks that the product group has a unique name in it's container
+        //Return all the ProductGroups in the current level
+		ArrayList<ProductGroup> myPGs = findAll("ParentIdString = " + model.getParentIdString());
+		//Loop through those results and make sure the name is unique
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
 				return new Result(false,"Duplicate product in container");
