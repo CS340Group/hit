@@ -36,8 +36,8 @@ public class ProductTest {
 
     @After
     public void teardown(){
-        StorageUnitVault.clear();
-        ProductVault.clear();
+        StorageUnitVault.getInstance().clear();
+        ProductVault.getInstance().clear();
     }
 
     @Test

@@ -267,7 +267,7 @@
 	
 	<target name="compile-tests" depends="instrument"
 		description="compile unit tests " >
-		<javac srcdir="${test-src}" destdir="${test-build}" debug="true">
+		<javac srcdir="${test-src}" destdir="${test-build}" debug="true" includeantruntime="false">
 			<classpath>
 				<pathelement location="${coverage-build}"/>
 				<pathelement location="${build}"/>
