@@ -8,6 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import model.common.IModel;
+import model.common.Vault;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
 import model.item.ItemVault;
@@ -21,7 +22,7 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductVault {
+public class ProductVault extends Vault{
 	static ProductVault currentInstance;
 	private ProductVault(){
 		currentInstance = this;
@@ -30,15 +31,7 @@ public class ProductVault {
 		if(currentInstance == null) currentInstance = new ProductVault();
 		return currentInstance;
 	}
-    /**
-     * Constructor.
-     *
-     *
-     */
-    private ProductVault(){
-        return;
-    }
-    public static void clear(){
+    public void clear(){
         dataVault.clear();
     }
 	/**
@@ -92,7 +85,7 @@ public class ProductVault {
 		return null;
 	}
 	
-	private  ArrayList<Product> linearSearch(QueryParser MyQuery,int count) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	private  ArrayList<Product> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
@@ -114,7 +107,7 @@ public class ProductVault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, Product> entry : dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myProduct = (Product) entry.getValue();
 			String myProductValue; 
 			
@@ -188,7 +181,7 @@ public class ProductVault {
 	}
 
     public  Product get(int id){
-    	Product p = dataVault.get(id);
+    	Product p = (Product)dataVault.get(id);
     	if(p == null)
     		return null;
         return new Product(p);

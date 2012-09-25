@@ -36,15 +36,6 @@ public class ProductGroupVault {
     protected static SortedMap<Integer, ProductGroup> dataVault =
             new TreeMap<Integer, ProductGroup>();
 
-    /**
-     * Constructor.
-     *
-     *
-     */
-    private ProductGroupVault(){
-        return;
-    }
-
     public static int size(){
         return dataVault.size();
     }

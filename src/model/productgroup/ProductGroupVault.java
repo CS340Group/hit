@@ -1,4 +1,4 @@
-package model.productgroup;
+package model.productcontainer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
