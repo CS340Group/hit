@@ -22,4 +22,5 @@ Name must be unique | StorageUnit.validate() | StorageUnitTest.testValidate()
 Constraint | Implemented | Tested
 |:- |:- |:-|
 creationDate must equal the earliest entry date for any item of the product. |  TODO WITH CONTROLLER|  TODO WITH CONTROLLER  
+Barcode must be non-empty |  Product.validate() |  ProductTest.testValidate()  
 

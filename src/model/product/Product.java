@@ -62,7 +62,6 @@ public class Product extends Model{
 		_id = -1;
 		_valid = false;
 		_saved = false;
-        _creationDate = new DateTime();
 	}
 
     /**

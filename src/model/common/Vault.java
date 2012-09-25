@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 import common.Result;
 
-public abstract class Vault implements IVault {
+public abstract class Vault{
 
 	
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();

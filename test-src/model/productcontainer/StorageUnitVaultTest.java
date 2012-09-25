@@ -32,24 +32,24 @@ public class StorageUnitVaultTest {
 
     @After
     public void tearDown() throws Exception {
-        StorageUnitVault.clear();
+        StorageUnitVault.getInstance().clear();
     }
 
     @Test
     public void testFind() throws Exception {
-        assertEquals(su1.getId(), StorageUnitVault.find("Name = "+su1.getName()).getId());
-        assertNull(StorageUnitVault.find("Name = blah"));
+        assertEquals(su1.getId(), StorageUnitVault.getInstance().find("Name = "+su1.getName()).getId());
+        assertNull(StorageUnitVault.getInstance().find("Name = blah"));
     }
 
     @Test
     public void testFindAll() throws Exception {
-        assertEquals(1,StorageUnitVault.findAll("Name = "+su1.getName()).size());
-        assertEquals(0,StorageUnitVault.findAll("Name = blah").size());
+        assertEquals(1,StorageUnitVault.getInstance().findAll("Name = "+su1.getName()).size());
+        assertEquals(0,StorageUnitVault.getInstance().findAll("Name = blah").size());
     }
 
     @Test
     public void testGet() throws Exception {
-        assertNotSame(su1, StorageUnitVault.get(su1.getId()));
-        assertEquals(su1.getId(), StorageUnitVault.get(su1.getId()).getId());
+        assertNotSame(su1, StorageUnitVault.getInstance().get(su1.getId()));
+        assertEquals(su1.getId(), StorageUnitVault.getInstance().get(su1.getId()).getId());
     }
 }
