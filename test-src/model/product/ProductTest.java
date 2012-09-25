@@ -69,6 +69,6 @@ public class ProductTest {
                 false, productCopy.save().getStatus());
         assertEquals("Product should pass validation", true, productCopy.validate().getStatus());
         assertEquals("Product should save", true, productCopy.save().getStatus());
-        assertEquals("Vault should not have created a new Product", 1, ProductVault.size());
+        assertEquals("Vault should not have created a new Product", 1, product.productVault.size());
     }
 }

@@ -30,15 +30,7 @@ public class ItemVault {
 		return currentInstance;
 	}
 
-    protected static SortedMap<Integer, Item> dataVault = new TreeMap<Integer, Item>();
-
-    /**
-     * Constructor.
-     *
-     *
-     */
-        return;
-    }
+	
 	
 	/**
 	 * Returns just one item based on the query sent in. 

@@ -207,6 +207,11 @@ public class Item extends Model{
 		return _deleted;
 	}
 
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
     public void invalidate(){
         _saved = false;
         _valid = false;

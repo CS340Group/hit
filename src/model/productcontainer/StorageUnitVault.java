@@ -9,6 +9,7 @@ import java.util.TreeMap;
 
 import model.common.IModel;
 import model.item.ItemVault;
+import model.item.ItemVault;
 import common.Result;
 import common.util.QueryParser;
 import model.productcontainer.StorageUnit;
@@ -154,7 +155,6 @@ public class StorageUnitVault{
     	StorageUnit su = dataVault.get(id);
     	if(su == null)
     		return null;
-
         return new StorageUnit(su);
     }
 	/**

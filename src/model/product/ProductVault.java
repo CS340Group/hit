@@ -38,7 +38,6 @@ public class ProductVault {
     private ProductVault(){
         return;
     }
-
     public static void clear(){
         dataVault.clear();
     }
