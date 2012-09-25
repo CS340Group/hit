@@ -27,7 +27,7 @@ public class ItemVaultTest {
         p1 = new Product();
         p1.setDescription("MyProduct1");
         p1.set3MonthSupply(1);
-        p1.setBarcode(Barcode.newFromId("94890002844"));
+        p1.setBarcode(new Barcode("94890002844"));
         p1.setContainerId(-1);
         p1.setCreationDate(new DateTime(2012,6,1,12,0));
         p1.setShelfLife(2);
@@ -39,7 +39,7 @@ public class ItemVaultTest {
         p2 = new Product();
         p2.setDescription("MyProduct2");
         p2.set3MonthSupply(2);
-        p2.setBarcode(Barcode.newFromId("76063005135"));
+        p2.setBarcode(new Barcode("76063005135"));
         p2.setContainerId(-1);
         p2.setCreationDate(new DateTime(2012,6,2,12,0));
         p2.setShelfLife(2);
@@ -49,7 +49,7 @@ public class ItemVaultTest {
         p2.save();
 
         item1 = new Item();
-        item1.setBarcode(Barcode.newFromId("18312201052"));
+        item1.setBarcode(new Barcode("18312201052"));
         item1.setProductId(p1.getId());
         item1.setEntryDate(new DateTime(2012,6,1,12,0));
         item1.setExitDate(DateTime.now());
@@ -58,7 +58,7 @@ public class ItemVaultTest {
         item1.save();
 
         item2 = new Item();
-        item2.setBarcode(Barcode.newFromId("53039901985"));
+        item2.setBarcode(new Barcode("53039901985"));
         item2.setProductId(p1.getId());
         item2.setEntryDate(new DateTime(2012,6,5,12,0));
         item2.setExitDate(DateTime.now());
@@ -67,7 +67,7 @@ public class ItemVaultTest {
         item2.save();
 
         item3 = new Item();
-        item3.setBarcode(Barcode.newFromId("41130359224"));
+        item3.setBarcode(new Barcode("41130359224"));
         item3.setProductId(p2.getId());
         item3.setEntryDate(new DateTime(2012,6,2,12,0));
         item3.setExitDate(DateTime.now().minusHours(6));
@@ -76,7 +76,7 @@ public class ItemVaultTest {
         item3.save();
 
         item4 = new Item();
-        item4.setBarcode(Barcode.newFromId("05487033885"));
+        item4.setBarcode(new Barcode("05487033885"));
         item4.setProductId(p2.getId());
         item4.setEntryDate(new DateTime(2012,6,3,12,0));
         item4.setExitDate(DateTime.now().minusHours(4));
@@ -87,19 +87,19 @@ public class ItemVaultTest {
 
     @After
     public void tearDown() throws Exception {
-        ItemVault.clear();
-        ProductVault.clear();
+        ItemVault.getInstance().clear();
+        ProductVault.getInstance().clear();
     }
 
     @Test
     public void testFind() throws Exception {
-        assertEquals("Find by product id", item1.getId(), ItemVault.find("ProductId = "+p1.getId()).getId());
-        assertEquals("Find by entry date", item2.getId(), ItemVault.find("EntryDate = "+item2.getEntryDate()).getId());
-        assertEquals("Find by exit date", item3.getId(), ItemVault.find("ExitDate = "+item3.getExitDate()).getId());
-        assertEquals("Find by expiration date", item4.getId(), ItemVault.find("ExpirationDate = "+item4.getExpirationDate()).getId());
-        assertEquals("Find by product barcode", item1.getId(), ItemVault.find("product.Barcode = "+p1.getBarcode().toString()).getId());
-        assertEquals("Find by product description", item3.getId(), ItemVault.find("product.Description = "+p2.getDescription()).getId());
-        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.find("product.StorageUnitId = "+p1.getStorageUnitId()).getId());
+        assertEquals("Find by product id", item1.getId(), ItemVault.getInstance().find("ProductId = "+p1.getId()).getId());
+        assertEquals("Find by entry date", item2.getId(), ItemVault.getInstance().find("EntryDate = "+item2.getEntryDate()).getId());
+        assertEquals("Find by exit date", item3.getId(), ItemVault.getInstance().find("ExitDate = "+item3.getExitDate()).getId());
+        assertEquals("Find by expiration date", item4.getId(), ItemVault.getInstance().find("ExpirationDate = "+item4.getExpirationDate()).getId());
+        assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("product.Barcode = "+p1.getBarcode().toString()).getId());
+        assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("product.Description = "+p2.getDescription()).getId());
+        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("product.StorageUnitId = "+p1.getStorageUnitId()).getId());
     }
 
     @Test
@@ -109,12 +109,12 @@ public class ItemVaultTest {
 
     @Test
     public void testGet() throws Exception {
-        assertEquals("Ids match", item1.getId(), ItemVault.get(item1.getId()).getId());
+        assertEquals("Ids match", item1.getId(), ItemVault.getInstance().get(item1.getId()).getId());
     }
 
     @Test
     public void testSize() throws Exception {
-        assertEquals("Size is correct", 4, ItemVault.size());
+        assertEquals("Size is correct", 4, ItemVault.getInstance().size());
     }
 
     @Test

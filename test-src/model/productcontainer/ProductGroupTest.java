@@ -48,8 +48,8 @@ public class ProductGroupTest {
 
     @After
     public void tearDown() throws Exception {
-        StorageUnitVault.clear();
-        ProductGroupVault.clear();
+        StorageUnitVault.getInstance().clear();
+        ProductGroupVault.getInstance().clear();
     }
 
     @Test
@@ -61,12 +61,12 @@ public class ProductGroupTest {
         assertTrue(pg1.isSaved());
         String original = pg1.getName();
         assertTrue(pg1.setName("Group X").getStatus());
-        assertEquals(original,ProductGroupVault.get(pg1.getId()).getName());
+        assertEquals(original,ProductGroupVault.getInstance().get(pg1.getId()).getName());
         assertFalse(pg1.save().getStatus());
         assertFalse(pg1.isSaved());
         assertTrue(pg1.validate().getStatus());
         assertTrue(pg1.save().getStatus());
-        assertEquals(1,ProductGroupVault.size());
+        assertEquals(1,ProductGroupVault.getInstance().size());
 
         assertFalse(pg2.save().getStatus());
         assertFalse(pg2.isSaved());
@@ -75,12 +75,12 @@ public class ProductGroupTest {
         assertTrue(pg2.isSaved());
         original = pg2.getName();
         assertTrue(pg2.setName("Group Y").getStatus());
-        assertEquals(original,ProductGroupVault.get(pg2.getId()).getName());
+        assertEquals(original,ProductGroupVault.getInstance().get(pg2.getId()).getName());
         assertFalse(pg2.save().getStatus());
         assertFalse(pg2.isSaved());
         assertTrue(pg2.validate().getStatus());
         assertTrue(pg2.save().getStatus());
-        assertEquals(2,ProductGroupVault.size());
+        assertEquals(2,ProductGroupVault.getInstance().size());
     }
 
     @Test
