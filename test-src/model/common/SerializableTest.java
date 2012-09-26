@@ -2,14 +2,8 @@ package model.common;
 
 import static org.junit.Assert.*;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
-import model.product.Product;
 import model.productcontainer.StorageUnit;
 
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,6 +34,7 @@ public class SerializableTest {
 
 	@Test
     public void SerialTest(){
+<<<<<<< HEAD
 		StorageUnit su2;
 		VaultPickler vp = new VaultPickler();
 		vp.SerializeMe();
@@ -50,6 +45,17 @@ public class SerializableTest {
         assertTrue("", vp.allVaults.storageUnitVault.size()==2);
         vp.DeSerializeMe();
         assertTrue("",vp.allVaults.storageUnitVault.size()==1);
+=======
+		VaultPickler vp = new VaultPickler();
+		vp.SerializeMe();
+		su = new StorageUnit();
+        su.setName("Test2");
+        su.validate();
+        su.save();
+		vp.DeSerializeMe();
+		assertTrue(vp.allVaults.storageUnitVault.size() == 1);
+		assertTrue(vp.allVaults.storageUnitVault.get(0).getName().equals("Test"));
+>>>>>>> 83dc0c8c1b13af4a79f382803d2c2c10fa7da8c6
     }
 
 }
