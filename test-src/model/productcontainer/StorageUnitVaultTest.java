@@ -3,6 +3,8 @@ package model.productcontainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
@@ -51,5 +53,14 @@ public class StorageUnitVaultTest {
     public void testGet() throws Exception {
         assertNotSame(su1, StorageUnitVault.getInstance().get(su1.getId()));
         assertEquals(su1.getId(), StorageUnitVault.getInstance().get(su1.getId()).getId());
+    }
+    
+    /*
+     * Make sure duplicate Storage Unit names can't exist
+     */
+    @Test
+    public void testDuplicateNames() throws Exception{
+    	su2.setName("Unit A");
+    	assertFalse("The Vault is allowing for duplicate Storage Unit Names",su2.validate().getStatus());
     }
 }
