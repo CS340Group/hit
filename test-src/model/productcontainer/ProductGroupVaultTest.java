@@ -44,7 +44,6 @@ public class ProductGroupVaultTest {
     @After
     public void tearDown() throws Exception {
         StorageUnitVault.getInstance().clear();
-        ProductGroupVault.getInstance().clear();
     }
 
     @Test
