@@ -2,6 +2,10 @@ package model.productcontainer;
 
 import common.Result;
 import model.common.Size;
+import model.item.Item;
+import model.product.Product;
+
+import java.util.ArrayList;
 
 /**
  * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
@@ -95,15 +99,6 @@ public class ProductGroup extends ProductContainer{
         invalidate();
         return new Result(true);
     }
-    
-    public Result delete(){
-		this._deleted = true;
-		return new Result(true);
-	}
-    public Result unDelete(){
-		this._deleted = false;
-		return new Result(true);
-	}
 
     public Result validate(){
         if(getId() == -1)
@@ -119,5 +114,15 @@ public class ProductGroup extends ProductContainer{
             return productGroupVault.saveNew(this);
         else
             return productGroupVault.saveModified(this);
+    }
+
+    public Result isDeleteable(){
+        ArrayList<Product> products = productVault.findAll("ContainerId = "+getId());
+        for(Product product : products){
+            if(!product.isDeleteable().getStatus())
+                return product.isDeleteable();
+        }
+
+        return new Result(true);
     }
 }
