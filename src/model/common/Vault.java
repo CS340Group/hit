@@ -26,7 +26,10 @@ public abstract class Vault implements Serializable{
 	public int size(){
         return dataVault.size();
     }
-	
+
+    public void clear(){
+        dataVault.clear();
+    }
 	
 	
 	/**
