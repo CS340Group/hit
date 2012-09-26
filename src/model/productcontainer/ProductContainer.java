@@ -143,6 +143,7 @@ public class ProductContainer extends Model{
      */
     public Result delete(){
         assert true;
+        if(!isDeletable().getStatus())
 		this._deleted = true;
 		return new Result(true);
 	}
@@ -172,5 +173,13 @@ public class ProductContainer extends Model{
         assert true;
         _saved = b;
         return new Result(true);
+    }
+
+    /**
+     * Indicates if the object is able to be deleted
+     */
+    public Result isDeletable(){
+        assert false : "You should probably override me";
+        return new Result(false);
     }
 }

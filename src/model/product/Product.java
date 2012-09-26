@@ -2,6 +2,7 @@ package model.product;
 
 import common.Result;
 import model.common.Size;
+import model.item.Item;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
 import model.common.Barcode;
@@ -10,9 +11,11 @@ import model.common.Size.Unit;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+
 /**
  * The Product class encapsulates all the funtions and data associated with a "Product".
- * It extends the {@link model.product.ProductData ProductData} 
+ * It extends the {@link model.common.Model Model}
  * 	class which contains getters and setters for the various datas.
  */
 
@@ -119,6 +122,8 @@ public class Product extends Model{
     }
 
     public StorageUnit getStorageUnit(){
+        if(_storageUnitId < 0)
+            return null;
         return storageUnitVault.get(_storageUnitId);
     }
 
@@ -271,17 +276,30 @@ public class Product extends Model{
 	}
 	
 	public Result delete(){
+        if(!isDeleteable().getStatus())
+            return new Result(false, "Must be deleteable");
 		this._deleted = true;
 		this._valid = true;
 		this.save();
 		return new Result(true);
 	}
+
 	public Result unDelete(){
 		this._deleted = false;
 		this._valid = true;
 		this.save();
 		return new Result(true);
 	}
+
+    public Result isDeleteable(){
+        ArrayList<Item> items = itemVault.findAll("ProductId = " + _id);
+        for(Item item : items){
+            if(!item.isDeleted())
+                return new Result(false, "All items must be deleted first");
+        }
+
+        return new Result(true);
+    }
     public void invalidate(){
         _valid = false;
         _saved = false;

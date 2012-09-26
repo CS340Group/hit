@@ -1,6 +1,10 @@
 package model.productcontainer;
 
 import common.Result;
+import model.product.Product;
+
+import java.util.ArrayList;
+
 /**
  * The StorageUnit class encapsulates all the funtions and data associated with a "StorageUnit".
  * It extends the {@link model.productcontainer.ProductContainer ProductContainer} 
@@ -50,5 +54,15 @@ public class StorageUnit extends ProductContainer{
             return storageUnitVault.saveNew(this);
         else
             return storageUnitVault.saveModified(this);
+    }
+
+    public Result isDeleteable(){
+        ArrayList<Product> products = productVault.findAll("StorageUnitId = "+getId());
+        for(Product product : products){
+            if(!product.isDeleteable().getStatus())
+                return product.isDeleteable();
+        }
+
+        return new Result(true);
     }
 }
