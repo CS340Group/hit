@@ -1,0 +1,8 @@
+Testsuite: model.common.BaseModelTest
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.015 sec
+
+Testcase: testMoveItem took 0.003 sec
+Testcase: testAddItem took 0 sec
+Testcase: testRemoveItem took 0 sec
+Testcase: testMoveProduct took 0 sec
+Testcase: testDeleteProduct took 0 sec

@@ -1,0 +1,7 @@
+Testsuite: model.productcontainer.StorageUnitTest
+Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.112 sec
+
+Testcase: testValidate took 0.018 sec
+Testcase: testSave took 0.002 sec
+Testcase: testModified took 0.002 sec
+Testcase: testIsDeleteable took 0.074 sec

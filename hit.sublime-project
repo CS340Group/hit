@@ -1,0 +1,27 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/murphyra/Github/hit/src"
+		},
+				{
+			"path": "/Users/murphyra/Github/hit/test-reports"
+		},
+		{
+			"path": "/Users/murphyra/Github/hit/test-src"
+		},
+		{
+			"path": "/Users/murphyra/Github/hit/documents"
+		}
+
+	],
+	"settings":
+	{
+		 "keys": ["super+b"], "command": "build", "args": {"variant": "test"} ,
+		"sublimejava_classpath":
+		[
+			"/Users/murphyra/Github/hit/lib/junit-4.8.2/junit-4.8.2.jar",
+			"/Users/murphyra/Github/hit/build"
+		]
+	}
+}

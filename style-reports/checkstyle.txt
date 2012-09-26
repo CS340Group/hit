@@ -1,11 +1,2 @@
 Starting audit...
-/Users/nethier/Projects/cs340/hit/src/model/common/History.java:7: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/item/ItemVault.java:87: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/item/ItemVault.java:149: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/item/ItemVault.java:171: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/product/ProductVault.java:73: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/product/ProductVault.java:73:5: Cyclomatic Complexity is 13 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/product/ProductVault.java:156: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productgroup/ProductGroupVault.java:67: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storageunit/StorageUnitVault.java:75: Line is longer than 100 characters.
 Audit done.

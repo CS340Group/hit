@@ -1,0 +1,1945 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"asse",
+				"assertFalse"
+			],
+			[
+				"_",
+				"_amount"
+			],
+			[
+				"pro",
+				"product	package"
+			],
+			[
+				"produ",
+				"productcontainer	package"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"ad",
+				"addCheckDigit"
+			],
+			[
+				"st",
+				"stripped"
+			],
+			[
+				"add",
+				"add(Integer)	boolean"
+			],
+			[
+				"sy",
+				"System"
+			],
+			[
+				"to",
+				"toString(char)	String"
+			],
+			[
+				"assertTrue",
+				"assertTrue(String, boolean)	void"
+			],
+			[
+				"assertT",
+				"assertTrue(String, boolean)	void"
+			],
+			[
+				"pr",
+				"productgroup	package"
+			],
+			[
+				"tip",
+				"tip_pos"
+			],
+			[
+				"ti",
+				"tip_pos"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"a",
+				"active_object"
+			],
+			[
+				"matr",
+				"matrix_basis"
+			],
+			[
+				"is",
+				"isinstance"
+			],
+			[
+				"_is",
+				"_is_image"
+			],
+			[
+				"Te",
+				"TextureChannel"
+			],
+			[
+				"cod",
+				"codec_type"
+			],
+			[
+				"code",
+				"codec_name"
+			],
+			[
+				"fra",
+				"frame_rate"
+			],
+			[
+				"res",
+				"resolution"
+			],
+			[
+				"fps",
+				"fps_parts"
+			],
+			[
+				"stage",
+				"list_stage"
+			],
+			[
+				"ma",
+				"maximumWidth"
+			],
+			[
+				"AS",
+				"AsyncTreeView"
+			],
+			[
+				"QB",
+				"QVBoxLayout"
+			],
+			[
+				"text",
+				"TextureDialog"
+			],
+			[
+				"log",
+				"login_successful"
+			],
+			[
+				"set",
+				"set_from_dict  (function)"
+			],
+			[
+				"login",
+				"login_widget"
+			],
+			[
+				"get",
+				"get_selected  (function)"
+			],
+			[
+				"draw",
+				"drawer_bottom"
+			],
+			[
+				"ing",
+				"ingesting"
+			],
+			[
+				"ass",
+				"assignProperty"
+			],
+			[
+				"dr",
+				"drawer_side  (variable)"
+			],
+			[
+				"pat",
+				"pathToImage"
+			],
+			[
+				"mongo",
+				"mongo_services"
+			],
+			[
+				"p",
+				"python"
+			],
+			[
+				"getpr",
+				"get_projects_for_company_id"
+			],
+			[
+				"cou",
+				"count_files_to_copy"
+			],
+			[
+				"db",
+				"db_stub"
+			],
+			[
+				"prei",
+				"prefix"
+			],
+			[
+				"company",
+				"company_id"
+			],
+			[
+				"name",
+				"name_in_lib"
+			],
+			[
+				"topLe",
+				"indexOfTopLevelItem"
+			],
+			[
+				"wr",
+				"write_path"
+			],
+			[
+				"web",
+				"webm_path"
+			],
+			[
+				"we",
+				"webm_path"
+			],
+			[
+				"make",
+				"make_webm"
+			],
+			[
+				"sys",
+				"system  (function)"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"mouse",
+				"mousePressEvent"
+			],
+			[
+				"ba",
+				"background_pixmap"
+			],
+			[
+				"li",
+				"library"
+			],
+			[
+				"create_res",
+				"_create_resource"
+			],
+			[
+				"crearesour",
+				"_create_resource"
+			],
+			[
+				"lr",
+				"lr_f_cat_id"
+			],
+			[
+				"show",
+				"_show_categories_for_projects  (function)"
+			],
+			[
+				"per",
+				"percentDone"
+			],
+			[
+				"au",
+				"authenticate"
+			],
+			[
+				"userd",
+				"user_dict"
+			],
+			[
+				"extra",
+				"extract_prefix	(global, function)"
+			],
+			[
+				"max",
+				"maximumHeight"
+			],
+			[
+				"bu",
+				"build_anim"
+			],
+			[
+				"s",
+				"s	self"
+			],
+			[
+				"wid",
+				"widg_below	(attribute, instance)"
+			],
+			[
+				"setMa",
+				"setMaximumHeight"
+			],
+			[
+				"wdg",
+				"widg_below	(attribute, instance)"
+			],
+			[
+				"w",
+				"widg_col4	(attribute, instance)"
+			],
+			[
+				"widg",
+				"widg_col2	(attribute, instance)"
+			],
+			[
+				"wi",
+				"widget_animator	(imported, module)"
+			],
+			[
+				"ch",
+				"childCount"
+			],
+			[
+				"parent",
+				"parent=	(parameter_keyword, instance)"
+			],
+			[
+				"bud",
+				"buddy_dicts	(local, instance)"
+			],
+			[
+				"asi",
+				"asset_id"
+			],
+			[
+				"path",
+				"pathToImage	(local, instance)"
+			],
+			[
+				"bas",
+				"base_path	(local, instance)"
+			],
+			[
+				"buddy",
+				"buddy_id	(local, instance)"
+			],
+			[
+				"fls",
+				"files	(attribute, instance)"
+			],
+			[
+				"c",
+				"catlist"
+			],
+			[
+				"_cate",
+				"_catedit_button_pressed_event"
+			],
+			[
+				"_set",
+				"_setup_cat_connections	(attribute, function)"
+			],
+			[
+				"QListW",
+				"QListWidgetItem"
+			],
+			[
+				"budd",
+				"widget_buddies"
+			],
+			[
+				"met",
+				"metaAssigned	(attribute, instance)"
+			],
+			[
+				"acce",
+				"accept"
+			],
+			[
+				"ite",
+				"items_layout	(attribute, instance)"
+			],
+			[
+				"la",
+				"label	(local, instance)"
+			],
+			[
+				"Buddy",
+				"BuddyWidgetItem	(imported, instance)"
+			],
+			[
+				"toS",
+				"toState1"
+			],
+			[
+				"prev",
+				"label_preview"
+			],
+			[
+				"file",
+				"fit_files_list"
+			],
+			[
+				"anm",
+				"anim_group"
+			],
+			[
+				"an",
+				"anim  (variable)"
+			],
+			[
+				"fil",
+				"files_style"
+			],
+			[
+				"lay",
+				"layouts  (variable)"
+			],
+			[
+				"but",
+				"but_layout"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"blue",
+				"blue_color"
+			],
+			[
+				"se",
+				"secondary-color"
+			],
+			[
+				"remov",
+				"removeTagItem	(attribute, function)"
+			],
+			[
+				"clear",
+				"clearSelection"
+			],
+			[
+				"slc",
+				"selection"
+			],
+			[
+				"proj",
+				"projects	(local, instance)"
+			],
+			[
+				"mcro",
+				"macro_states"
+			],
+			[
+				"put_",
+				"put_default_state	(attribute, function)"
+			],
+			[
+				"macr",
+				"macro_states	(attribute, instance)"
+			],
+			[
+				"act",
+				"activeKey	(attribute, instance)"
+			],
+			[
+				"mcoss",
+				"macro_states	(attribute, instance)"
+			],
+			[
+				"select",
+				"selection	(local, instance)"
+			],
+			[
+				"gts",
+				"get_state_from_sources"
+			],
+			[
+				"map",
+				"map_state_for_index"
+			],
+			[
+				"sele",
+				"selected"
+			],
+			[
+				"def",
+				"defs	Method"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"getV",
+				"getVersionAsString  (function)"
+			],
+			[
+				"in",
+				"indexes"
+			],
+			[
+				"cl",
+				"clearTagItems"
+			],
+			[
+				"pyq",
+				"pyqtSignal"
+			],
+			[
+				"clo",
+				"closePressed"
+			],
+			[
+				"tagsI",
+				"tagItemsList"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"wra",
+				"wrapLayout"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Java/Ant.sublime-build",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"t",
+				"Build: Run JUnit tests."
+			],
+			[
+				"disc",
+				"Package Control: Discover Packages"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings - User"
+			],
+			[
+				"packd",
+				"Package Control: Disable Package"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"mark",
+				"Marked"
+			],
+			[
+				"packa",
+				"Package Control: Enable Package"
+			],
+			[
+				"marke",
+				"Marked"
+			],
+			[
+				"b",
+				"Build: Run MODEL main."
+			],
+			[
+				"bm",
+				"Build: Run MODEL main."
+			],
+			[
+				"c",
+				"Clipboard History"
+			],
+			[
+				"tes",
+				"Build: Run JUnit tests."
+			],
+			[
+				"test",
+				"Build: Run JUnit tests."
+			],
+			[
+				"r",
+				"Build: Run MODEL main."
+			],
+			[
+				"ru",
+				"Build: Run MODEL main."
+			],
+			[
+				"run",
+				"Build: Run MODEL main."
+			],
+			[
+				"tmp",
+				"View: Toggle Minimap"
+			],
+			[
+				"te",
+				"Build: Run JUnit tests."
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"btest",
+				"Build: Run JUnit tests."
+			],
+			[
+				"buildtest",
+				"Build: Run JUnit tests."
+			],
+			[
+				"disco",
+				"Package Control: Discover Packages"
+			],
+			[
+				"packdi",
+				"Package Control: Disable Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"istall",
+				"Package Control: Install Package"
+			],
+			[
+				"ma",
+				"Marked"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"packl",
+				"Package Control: List Packages"
+			],
+			[
+				"snippet",
+				"Snippet: MarkdownBoldLetterList"
+			],
+			[
+				"bdo",
+				"Build: Build docs."
+			],
+			[
+				"budo",
+				"Build: Build docs."
+			],
+			[
+				"dispa",
+				"Package Control: Disable Package"
+			],
+			[
+				"packagedi",
+				"Package Control: Disable Package"
+			],
+			[
+				"diable",
+				"Package Control: Disable Package"
+			],
+			[
+				"buildd",
+				"Build: Build docs."
+			],
+			[
+				"build",
+				"Build: Build"
+			],
+			[
+				"repl",
+				"SublimeREPL: Python"
+			],
+			[
+				"rep",
+				"SublimeREPL: Python"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"color",
+				"Color picker"
+			],
+			[
+				"sublpy",
+				"SublimeREPL: Python"
+			],
+			[
+				"replpy",
+				"SublimeREPL: Python"
+			],
+			[
+				"replp",
+				"SublimeREPL: Python"
+			],
+			[
+				"surep",
+				"SublimeREPL: Python"
+			],
+			[
+				"pytho",
+				"Set Syntax: Python"
+			],
+			[
+				"syntpy",
+				"Set Syntax: Python"
+			],
+			[
+				"pyr",
+				"SublimeREPL: Python - RUN current file"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"reply",
+				"SublimeREPL: Python"
+			],
+			[
+				"sublp",
+				"SublimeREPL: Python"
+			],
+			[
+				"enabl",
+				"Package Control: Enable Package"
+			],
+			[
+				"subl",
+				"SublimeREPL: Python"
+			],
+			[
+				"pyth",
+				"Set Syntax: Python"
+			],
+			[
+				"reprpy",
+				"Set Syntax: Regular Expressions (Python)"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"pyside",
+				"SublimePySide: Create new Qt Project from template"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"upgr",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"extrat",
+				"Rope Refactoring: Extract Variable"
+			],
+			[
+				"rope",
+				"Rope Refactoring: Extract Variable"
+			],
+			[
+				"ropevari",
+				"Rope Refactoring: Extract Variable"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"json",
+				"Pretty JSON: Reformat (Pretty Print) JSON"
+			],
+			[
+				"gist",
+				"GitHub: Private Gist from Selection"
+			],
+			[
+				"gist from",
+				"GitHub: Public Gist from Selection"
+			],
+			[
+				":lint",
+				"JSLint: Run JSLint"
+			],
+			[
+				"jquery",
+				"Set Syntax: jQuery (JavaScript)"
+			],
+			[
+				":install",
+				"Package Control: Install Package"
+			],
+			[
+				":inst",
+				"Package Control: Install Package"
+			],
+			[
+				":pack",
+				"Package Control: Install Package"
+			],
+			[
+				"synt ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"sass",
+				"Set Syntax: Sass"
+			],
+			[
+				":sass",
+				"Set Syntax: Sass"
+			],
+			[
+				":packa",
+				"Package Control: Upgrade Package"
+			],
+			[
+				":package",
+				"Package Control: Install Package"
+			],
+			[
+				":toggle ope",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				":open fil",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				":packag",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Snippet: py",
+				"Snippet: Python3Print"
+			],
+			[
+				":mark",
+				"Set Syntax: Markdown"
+			],
+			[
+				":python",
+				"Set Syntax: Python"
+			],
+			[
+				":disa",
+				"Package Control: Disable Package"
+			],
+			[
+				":disable",
+				"Package Control: Disable Package"
+			],
+			[
+				":enable",
+				"Package Control: Enable Package"
+			],
+			[
+				":comm",
+				"Git: Commit"
+			],
+			[
+				":paka",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Enable Package"
+			],
+			[
+				":jaa",
+				"Set Syntax: Java"
+			],
+			[
+				":commit",
+				"Set Syntax: Git Commit Message"
+			],
+			[
+				":commi",
+				"Git: Commit"
+			],
+			[
+				":pac",
+				"Package Control: Upgrade Package"
+			],
+			[
+				":java",
+				"Set Syntax: Java"
+			],
+			[
+				":w",
+				":w - Save"
+			]
+		],
+		"width": 444.0
+	},
+	"console":
+	{
+		"height": 260.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/murphyra/Github/hit/src/model/item/Item.java",
+		"/Users/murphyra/Github/hit/.git/COMMIT_EDITMSG",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/StorageUnit.java",
+		"/Users/murphyra/Github/hit/src/model/product/Product.java",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/ProductContainer.java",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/ProductGroup.java",
+		"/Users/murphyra/Github/hit/test-src/model/productcontainer/ProductGroupTest.java",
+		"/Users/murphyra/Github/hit/src/model/common/Size.java",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/murphyra/Github/hit/test-reports/TEST-model.product.ProductTest.txt",
+		"/Users/murphyra/Github/hit/test-src/model/product/ProductTest.java",
+		"/Users/murphyra/Github/hit/src/model/common/Barcode.java",
+		"/Users/murphyra/Github/hit/test-src/model/productcontainer/ProductGroupVaultTest.java",
+		"/Users/murphyra/Github/hit/test-src/model/item/ItemVaultTest.java",
+		"/Users/murphyra/Github/hit/test-src/model/common/BarcodeTest.java",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/murphyra/Github/hit/src/common/Result.java",
+		"/Users/murphyra/Github/hit/src/model/common/Unit.java",
+		"/Users/murphyra/Github/hit/documents/DataIntegrity.md",
+		"/Users/murphyra/Github/hit/test-reports/TEST-common.util.QueryParserTest.txt",
+		"/Users/murphyra/Github/hit/DataIntegrity.md",
+		"/Users/murphyra/Github/hit/hit.sublime-project",
+		"/Users/murphyra/Github/hit/test-src/model/item/ItemTest.java",
+		"/Users/murphyra/Github/hit/test-src/model/productcontainer/StorageUnitVaultTest.java",
+		"/Users/murphyra/Github/hit/src/model/common/Vault.java",
+		"/Users/murphyra/Github/hit/src/common/util/QueryParser.java",
+		"/Users/murphyra/Github/hit/src/model/product/ProductVault.java",
+		"/Users/murphyra/Github/hit/test-src/model/productcontainer/StorageUnitTest.java",
+		"/Users/murphyra/.zshrc",
+		"/Users/murphyra/.gitconfig",
+		"/Users/murphyra/Github/hit/.git/MERGE_MSG",
+		"/Users/murphyra/Github/hit/src/model/common/Model.java",
+		"/Users/murphyra/Github/hit/test-src/model/productcontainer/ProductContainerTest.java",
+		"/Users/murphyra/Github/hit/src/model/tempmain/TempMain.java",
+		"/Users/murphyra/Github/hit/test-reports/TEST-model.common.BarcodeTest.txt",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/murphyra/Github/hit/src/gui/productgroup/AddProductGroupController.java",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/murphyra/Github/hit/src/model/item/ItemVault.java",
+		"/Users/murphyra/Github/hit/build.xml",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/ProductGroupVault.java",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/StorageUnitVault.java",
+		"/Users/murphyra/Github/hit/src/model/productgroup/ProductGroupVault.java",
+		"/Users/murphyra/Github/hit/src/model/common/IModel.java",
+		"/Users/murphyra/Github/hit/src/gui/main/GUI.java",
+		"/Users/murphyra/Github/hit/src/model/storageunit/StorageUnit.java",
+		"/Users/murphyra/Github/hit/lib/junit-4.8.2/junit-4.8.2.jar",
+		"/Users/murphyra/Github/hit/test-reports/TEST-model.productcontainer.ProductContainerTest.txt",
+		"/Users/murphyra/Github/hit/.gitignore",
+		"/Users/murphyra/Github/hit/src/model/productcontainer/ProductContainer.java.orig",
+		"/Users/murphyra/Github/hit/README.md",
+		"/Users/murphyra/Github/Squid-vizuals/blendtest.py",
+		"/Users/murphyra/Github/Squid-vizuals/jsobject.py",
+		"/Users/murphyra/Github/Squid-vizuals/Makefile",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/Blender.sublime-build",
+		"/Users/murphyra/Github/Squid-vizuals/Jsobject.py",
+		"/Users/murphyra/Github/Squid-vizuals/read.py",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/untitled.sublime-build",
+		"/Users/murphyra/Github/Squid-vizuals/sampleBeam.json",
+		"/Users/murphyra/Github/murphyrandle.github.com/source/_posts/2012-09-18-scons-change-build-executable.markdown",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/MathStar.sublime-snippet",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/MarkdownBoldLetterList.sublime-snippet",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/BlockMath.sublime-snippet",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/MarkdownBoldLetterList",
+		"/Users/murphyra/Github/hit/src/gui/product/ProductVault.java",
+		"/Users/murphyra/Github/hit/src/gui/reports/common/Grid.java",
+		"/Users/murphyra/Github/hit/src/gui/common/ButtonBankPanel.java",
+		"/Users/murphyra/Github/hit/src/gui/common/Vault.java",
+		"/Users/murphyra/Github/hit/src/gui/product/ProductView.java",
+		"/Users/murphyra/Dropbox/Homework/strings.py",
+		"/Users/murphyra/Workbench/BlenderPlug/hello.py",
+		"/Users/murphyra/Dropbox/Homework/strings",
+		"/Users/murphyra/Downloads/first-latex-doc.tex",
+		"/Users/murphyra/Workbench/BlenderPlug/Makefile",
+		"/Users/murphyra/Github/Andy/SConstruct",
+		"/Users/murphyra/Github/Andy/.git/COMMIT_EDITMSG",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/SCons.sublime-build",
+		"/Users/murphyra/Workbench/ruby/test.rb",
+		"/Users/murphyra/Dropbox/Sublime Text 2/Packages/User/MacRuby.sublime-build",
+		"/Users/murphyra/Documents/MacRubyExamples/Scripts/hello_world.rb",
+		"/Users/murphyra/Downloads/koans/about_objects.rb",
+		"/Users/murphyra/Downloads/koans/about_nil.rb",
+		"/Users/murphyra/Downloads/koans/about_asserts.rb",
+		"/Users/murphyra/Downloads/koans/path_to_enlightenment.rb",
+		"/Users/murphyra/Downloads/rubykoans-2012-02-02.zip",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/model.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/buddies_widget.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/DB_tool.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/ingestor.py",
+		"/Users/murphyra/Github/Powertrain/utils/video_tools/videoInfo.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/texture_dialog.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/Makefile",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/resource.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/file_info.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/file_ingestor.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/custom_list_view.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/factoryLogin.py",
+		"/Users/murphyra/Github/Powertrain/.git/MERGE_MSG",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/ui/resources/style.qss",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/rpcserver_SIMPLE/mongo_services_class_based.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/stage_widget.py",
+		"/Users/murphyra/Downloads/PyQt-mac-gpl-4.9.4/examples/layouts/basiclayouts.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/PT_style.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/ui/ingestor_UI.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/meta_item.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/meta_edit.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/user_settings.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/data_state_saver.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/state_machine.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/setup.py",
+		"/Users/murphyra/Github/Powertrain/.git/COMMIT_EDITMSG",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/image_drop_label.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/dist/ingestor.app/Contents/Resources/qt.conf",
+		"/Users/murphyra/Workbench/paintover.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/preloader_overlay.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/ui/resources.qrc",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/mongo_services.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/imports.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/factoryLoginSide.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/__init__.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/utils/seq_tools.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/buddy_item.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/app.out",
+		"/Users/murphyra/Github/Powertrain/utils/mongo_services.py",
+		"/Users/murphyra/Github/Powertrain/ingestionTool/lib/preloader.py",
+		"/Users/murphyra/Github/Powertrain/maya/scripts/startup/PowerTrain/save/powerTrain_save.py",
+		"/Users/murphyra/Github/Powertrain/maya/scripts/startup/powerTrain_simple.py",
+		"/Users/murphyra/Github/Powertrain/maya/scripts/startup/PowerTrain/open/powerTrain_open.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"",
+			"-screen.css",
+			"",
+			"/Users/Murphy/Sites/octopress/source, /Users/Murphy/Sites/octopress/sass, -screen.css",
+			"/Users/Murphy/Sites/octopress/source, /Users/Murphy/Sites/octopress/sass",
+			"<open folders>",
+			"",
+			"/Users/Murphy/field3d-1.3.2",
+			"/Users/Murphy/github/local/TuttleOFX"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"assert",
+			"<",
+			"id<",
+			"id <",
+			"overrid",
+			"!\";\n",
+			"centere",
+			"Size.",
+			"Size.Measure",
+			"isValid",
+			"Measure",
+			"setShelfLife",
+			"\"oz\")",
+			"_unit",
+			"Measurement",
+			"*/",
+			"ProductGroupVault",
+			"StorageUnitVault",
+			"\n        ",
+			"ItemVault",
+			"Barcode",
+			" Barcode(",
+			"Barcode(",
+			"Barcode.newFromId",
+			"creationDate",
+			"verify",
+			"verified",
+			"makeAndSetCodeFromId",
+			"_code",
+			"println",
+			"pane",
+			"group",
+			"view",
+			"window",
+			"col",
+			"layout",
+			"split",
+			"next",
+			"vault",
+			"dataVault",
+			"Resul",
+			"splitInt",
+			"font",
+			"barcode",
+			"Barcode",
+			"barcode",
+			"verify",
+			"stripped",
+			"generateFromId",
+			"id",
+			"font",
+			"100",
+			"num",
+			"odds",
+			"system.out.",
+			"System.out",
+			"string",
+			"_digits",
+			"100",
+			"font",
+			"int",
+			"_number",
+			"junit",
+			"etclasspath",
+			"junit",
+			"theme",
+			"80",
+			"Barcode",
+			"context",
+			"primitive_cube_add",
+			"mesh",
+			"object",
+			"ruby",
+			"pdf",
+			"rule",
+			"80",
+			"return",
+			"current",
+			"max",
+			"src",
+			"suffix",
+			"static",
+			"CXX",
+			"conf",
+			"build_tools",
+			"g++",
+			"gcc",
+			"sayHello",
+			"__",
+			"tags_dict",
+			"asset_assigned",
+			"self.files",
+			"it",
+			"librar",
+			"sel",
+			"model",
+			"r.sequence",
+			"r.image",
+			".image",
+			"image",
+			"codec_name",
+			"_set_self_variables",
+			"ingest_files",
+			"Image",
+			"image",
+			"ext",
+			"buddies",
+			"GetValue",
+			"clear_edit",
+			"deselect",
+			"asset_assigned",
+			"pelem_selected",
+			"dept",
+			"dept_selected",
+			"dept_sele",
+			"sele",
+			"dept",
+			"pt_style",
+			"otheredit",
+			"tree",
+			"buttons",
+			"AttrDict",
+			"attrdict",
+			"resource_clicked",
+			"edit_name",
+			"Name in Lib",
+			"MetaItem",
+			"meta_item"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Size.Unit",
+			"validate",
+			"Unit.Measure.oz)",
+			"_measure",
+			"Measure",
+			"Barcode",
+			"validate",
+			"validated",
+			"setCodeFromId",
+			"validate",
+			"_code",
+			"Size",
+			"r._is_sequence()",
+			"r._is_image()",
+			"self.DSS",
+			"DataStateSaver",
+			"mongo",
+			"file_copying",
+			"\"Thumbnail",
+			"r.url",
+			"self.company_id",
+			"    ",
+			"BuddyDisplayWidget",
+			"buddy_display_widget",
+			"BuddiesWidget",
+			"buddies_widget",
+			"url",
+			"urls",
+			"r.asn_id",
+			"r.catid",
+			"r.dept_id",
+			"r.user_id",
+			"r.asset_id",
+			"self.catid",
+			"import user_settings as G",
+			"Exo-Regular",
+			"bg_darkest",
+			"red",
+			"blue",
+			"@bg_light",
+			"@bg_dark",
+			"bg",
+			"@bg_color",
+			"@blue_color",
+			"@bg_color",
+			"font-size: @base_font;",
+			"seq_tools",
+			"_get_mongo_data",
+			"_write_preview",
+			"image_drop_label",
+			"ImageDropLabel",
+			"DropLabel",
+			"image_drop_label",
+			"ImageDropLabel",
+			"ImageDropLabel\nImageDropLabel\nImageDropLabel",
+			"\nImageDropLabel",
+			"16px",
+			"MetaEdit",
+			"ClientEdit",
+			"client_edit",
+			"date_field",
+			"self.osiz",
+			"w",
+			"",
+			"StageWidget",
+			"QTreeWidget",
+			"_assign_other_cat",
+			"url",
+			"client_date",
+			"category",
+			"s.category",
+			"_catedit_key_press_event",
+			"self.catbutton",
+			"catedit",
+			"to_closed_state",
+			"to_close_state",
+			"to_closed_state\nto_state_1",
+			"to_state_1",
+			"open_categories",
+			"add_url",
+			"_soft_clear_files",
+			"ignore",
+			"self_layout",
+			"BuddyItem",
+			"BuddyListItem",
+			"BuddyList",
+			"BuddyWidgetItem",
+			"BuddeWidgetItem",
+			"_selection_changed_slot",
+			"MyUi",
+			"",
+			"catla",
+			"catl",
+			"catf",
+			"caylayout",
+			"butlayout",
+			"categories",
+			"_fit_fi",
+			"build_anim",
+			"anim",
+			"anim_prop_on_all",
+			"setup_animation",
+			"blue_color",
+			"red_color",
+			"$red_color",
+			"doneWithResource",
+			"resources",
+			"set_self_variables",
+			"ingest_resource",
+			"set_preview",
+			"tagRemoved",
+			"tagAdded",
+			"do_close",
+			"show_tags",
+			"add_tag",
+			"text_changed_slot",
+			"deep_clear",
+			"remove_tag_item",
+			"clear",
+			"tags",
+			"stage_item_clicked",
+			"item",
+			"key_activated",
+			"use_default_state",
+			"get_macro_state_from_sources",
+			"sources",
+			"elements",
+			"map_state_for_item"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 360.0
+	},
+	"replace":
+	{
+		"height": 94.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"it",
+				"src/model/item/Item.java"
+			],
+			[
+				"item",
+				"src/model/item/Item.java"
+			],
+			[
+				"storau",
+				"src/model/productcontainer/StorageUnit.java"
+			],
+			[
+				"prodct",
+				"src/model/product/Product.java"
+			],
+			[
+				"stoun",
+				"src/model/productcontainer/StorageUnit.java"
+			],
+			[
+				"storun",
+				"src/model/productcontainer/StorageUnit.java"
+			],
+			[
+				"prodcon",
+				"src/model/productcontainer/ProductContainer.java"
+			],
+			[
+				"productt",
+				"test-src/model/product/ProductTest.java"
+			],
+			[
+				"prodctjava",
+				"src/model/product/Product.java"
+			],
+			[
+				"siz",
+				"src/model/common/Size.java"
+			],
+			[
+				"prodgrt",
+				"test-src/model/productcontainer/ProductGroupTest.java"
+			],
+			[
+				"product",
+				"src/model/product/Product.java"
+			],
+			[
+				"prodgr",
+				"src/model/productcontainer/ProductGroup.java"
+			],
+			[
+				"bc",
+				"src/model/common/Barcode.java"
+			],
+			[
+				"barc",
+				"test-src/model/common/BarcodeTest.java"
+			],
+			[
+				"prodtes",
+				"test-src/model/product/ProductTest.java"
+			],
+			[
+				"resu",
+				"src/common/Result.java"
+			],
+			[
+				"un",
+				"src/model/common/Unit.java"
+			],
+			[
+				"unit",
+				"src/model/common/Unit.java"
+			],
+			[
+				"uint",
+				"documents/DataIntegrity.md"
+			],
+			[
+				"prodt",
+				"test-reports/TEST-model.product.ProductTest.txt"
+			],
+			[
+				"producttest",
+				"test-src/model/product/ProductTest.java"
+			],
+			[
+				"bard",
+				"src/model/common/Barcode.java"
+			],
+			[
+				"da",
+				"documents/DataIntegrity.md"
+			],
+			[
+				"product.ja",
+				"src/model/product/Product.java"
+			],
+			[
+				"bar",
+				"src/model/common/Barcode.java"
+			],
+			[
+				"itemt",
+				"test-src/model/item/ItemTest.java"
+			],
+			[
+				"qu",
+				"src/common/util/QueryParser.java"
+			],
+			[
+				"quert",
+				"test-reports/TEST-common.util.QueryParserTest.txt"
+			],
+			[
+				"prodvaul",
+				"src/model/product/ProductVault.java"
+			],
+			[
+				"prvautest",
+				"test-src/model/productcontainer/ProductGroupVaultTest.java"
+			],
+			[
+				"vaul",
+				"src/model/common/Vault.java"
+			],
+			[
+				"stunte",
+				"test-src/model/productcontainer/StorageUnitTest.java"
+			],
+			[
+				"model",
+				"src/model/common/Model.java"
+			],
+			[
+				"storageu",
+				"src/model/productcontainer/StorageUnit.java"
+			],
+			[
+				"tem",
+				"src/model/tempmain/TempMain.java"
+			],
+			[
+				"bactes",
+				"test-src/model/common/BarcodeTest.java"
+			],
+			[
+				"test",
+				"test-src/model/productcontainer/ProductContainerTest.java"
+			],
+			[
+				"res",
+				"src/common/Result.java"
+			],
+			[
+				"tempm",
+				"src/model/tempmain/TempMain.java"
+			],
+			[
+				"barco",
+				"test-reports/TEST-model.common.BarcodeTest.txt"
+			],
+			[
+				"pag",
+				"src/gui/productgroup/AddProductGroupController.java"
+			],
+			[
+				"barct",
+				"test-src/model/common/BarcodeTest.java"
+			],
+			[
+				"prdtes",
+				"test-src/model/product/ProductTest.java"
+			],
+			[
+				"prva",
+				"src/model/product/ProductVault.java"
+			],
+			[
+				"itemva",
+				"src/model/item/ItemVault.java"
+			],
+			[
+				"vault",
+				"src/model/common/Vault.java"
+			],
+			[
+				"itemv",
+				"src/model/item/ItemVault.java"
+			],
+			[
+				"imod",
+				"src/model/common/IModel.java"
+			],
+			[
+				"mo",
+				"src/model/common/Model.java"
+			],
+			[
+				"prodva",
+				"src/model/product/ProductVault.java"
+			],
+			[
+				"stora",
+				"src/model/productcontainer/StorageUnitVault.java"
+			],
+			[
+				"itemvaul",
+				"src/model/item/ItemVault.java"
+			],
+			[
+				"barcodte",
+				"test-src/model/common/BarcodeTest.java"
+			],
+			[
+				"itemtes",
+				"test-src/model/item/ItemTest.java"
+			],
+			[
+				"bcte",
+				"test-src/model/common/BarcodeTest.java"
+			],
+			[
+				"gui",
+				"src/gui/main/GUI.java"
+			],
+			[
+				"barcode",
+				"src/model/common/Barcode.java"
+			],
+			[
+				"produtest",
+				"test-src/model/productcontainer/ProductContainerTest.java"
+			],
+			[
+				"orig",
+				"src/model/productcontainer/ProductContainer.java.orig"
+			],
+			[
+				"storage",
+				"src/model/storageunit/StorageUnit.java"
+			],
+			[
+				"prodcontes",
+				"test-src/model/productcontainer/ProductContainerTest.java"
+			],
+			[
+				"build",
+				"build.xml"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"readme",
+				"README.md"
+			],
+			[
+				"mak",
+				"Makefile"
+			],
+			[
+				"",
+				"sampleBeam.json"
+			],
+			[
+				"jso",
+				"jsobject.py"
+			],
+			[
+				"render",
+				"src/gui/reports/common/Renderer.java"
+			],
+			[
+				"grid",
+				"src/gui/reports/common/Grid.java"
+			],
+			[
+				"view.java",
+				"src/gui/common/View.java"
+			],
+			[
+				"prodvault",
+				"src/gui/product/ProductVault.java"
+			],
+			[
+				"produ",
+				"src/gui/product/ProductView.java"
+			],
+			[
+				"ma",
+				"Makefile"
+			],
+			[
+				"scon",
+				"SConstruct"
+			],
+			[
+				"obj",
+				"about_objects.rb"
+			],
+			[
+				"nil",
+				"about_nil.rb"
+			],
+			[
+				"aboutass",
+				"about_asserts.rb"
+			],
+			[
+				"path",
+				"path_to_enlightenment.rb"
+			],
+			[
+				"ing",
+				"ingestor.py"
+			],
+			[
+				"budd",
+				"lib/buddies_widget.py"
+			],
+			[
+				"db",
+				"lib/DB_tool.py"
+			],
+			[
+				"text",
+				"lib/texture_dialog.py"
+			],
+			[
+				"mode",
+				"lib/model.py"
+			],
+			[
+				"fileinfo",
+				"lib/file_info.py"
+			],
+			[
+				"filein",
+				"lib/file_ingestor.py"
+			],
+			[
+				"mod",
+				"lib/model.py"
+			],
+			[
+				"d",
+				"lib/DB_tool.py"
+			],
+			[
+				"view",
+				"lib/custom_list_view.py"
+			],
+			[
+				"fa",
+				"utils/factoryLogin.py"
+			],
+			[
+				"stage",
+				"lib/stage_widget.py"
+			],
+			[
+				"qss",
+				"ui/resources/style.qss"
+			],
+			[
+				"cus",
+				"lib/custom_list_view.py"
+			],
+			[
+				"pt",
+				"utils/PT_style.py"
+			],
+			[
+				"ui",
+				"ui/ingestor_UI.py"
+			],
+			[
+				"fac",
+				"utils/factoryLogin.py"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"ingestor",
+				"ingestor.py"
+			],
+			[
+				"inges",
+				"lib/file_ingestor.py"
+			],
+			[
+				"metaed",
+				"lib/meta_edit.py"
+			],
+			[
+				"me",
+				"lib/meta_item.py"
+			],
+			[
+				"resouce",
+				"lib/resource.py"
+			],
+			[
+				"fileing",
+				"lib/file_ingestor.py"
+			],
+			[
+				"user",
+				"utils/user_settings.py"
+			],
+			[
+				"login",
+				"utils/factoryLogin.py"
+			],
+			[
+				"buddies",
+				"lib/buddies_widget.py"
+			],
+			[
+				"in",
+				"ingestor.py"
+			],
+			[
+				"set",
+				"setup.py"
+			],
+			[
+				"lab",
+				"lib/image_drop_label.py"
+			],
+			[
+				"meta",
+				"lib/meta_item.py"
+			],
+			[
+				"mon",
+				"utils/mongo_services.py"
+			],
+			[
+				"state",
+				"lib/state_machine.py"
+			],
+			[
+				"list",
+				"lib/custom_list_view.py"
+			],
+			[
+				"m",
+				"Makefile"
+			],
+			[
+				"buddie",
+				"lib/buddies_widget.py"
+			],
+			[
+				"userse",
+				"utils/user_settings.py"
+			],
+			[
+				"seq",
+				"utils/seq_tools.py"
+			],
+			[
+				"file",
+				"lib/file_info.py"
+			],
+			[
+				"buddy",
+				"lib/buddies_widget.py"
+			],
+			[
+				"stag",
+				"lib/stage_widget.py"
+			],
+			[
+				"im",
+				"lib/imports.py"
+			],
+			[
+				"imports",
+				"lib/imports.py"
+			],
+			[
+				"resou",
+				"ingestionTool/lib/resource.py"
+			],
+			[
+				"mongo",
+				"utils/mongo_services.py"
+			],
+			[
+				"resources",
+				"ui/resources.qrc"
+			],
+			[
+				"label",
+				"lib/image_drop_label.py"
+			],
+			[
+				"ingesto",
+				"ingestor.py"
+			],
+			[
+				"mayapowertrain",
+				"maya/scripts/startup/powerTrain_simple.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/Murphy/github/murphyrandle.github.com/blog.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 353.0,
+	"status_bar_visible": true
+}

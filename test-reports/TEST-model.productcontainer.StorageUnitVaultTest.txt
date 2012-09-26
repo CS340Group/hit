@@ -1,0 +1,7 @@
+Testsuite: model.productcontainer.StorageUnitVaultTest
+Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.034 sec
+
+Testcase: testFind took 0.017 sec
+Testcase: testFindAll took 0.002 sec
+Testcase: testGet took 0.002 sec
+Testcase: testDuplicateNames took 0.002 sec
