@@ -52,6 +52,7 @@ public class ProductContainer extends Model{
      * Copy Constructor
      */
     public ProductContainer(ProductContainer p){
+        assert p != null : "I wanted a ProductContainer, and I found a null!";
         _id = p.getId();
         _valid = p.isValid();
         _saved = p.isSaved();
@@ -59,16 +60,23 @@ public class ProductContainer extends Model{
         _name = p.getName();
     }
 
+    /**
+     * Returns the deleted status of this instance.
+     */
     @Override
     public boolean isDeleted() {
         return _deleted;
     }
 
+    /**
+     * Returns the ID associated with the class as an int.
+     */
     public int getId(){
         return _id;
     }
 
     protected Result setId(int id){
+        assert id > 0 : "An ID shouldn't be nagative, if you think about it.";
         _id = id;
         return new Result(true);
     }
@@ -94,6 +102,7 @@ public class ProductContainer extends Model{
      * subsequent save must be validated first.
      */
     public Result setName(String _name) {
+        assert _name != null;
         this._name = _name;
         invalidate();
         return new Result(_name==this._name);
@@ -117,6 +126,7 @@ public class ProductContainer extends Model{
      * If the ProductContainer is valid it is saved into the vault.
      */
     public Result save(){
+        assert true;
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
     }
 
@@ -124,24 +134,42 @@ public class ProductContainer extends Model{
      * Validate that the ProductContainer is able to be saved into the vault.
      */
     public Result validate(){
+        assert true;
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
     }
 
+    /**
+     * Sets the internal state of this instance to deleted.
+     */
     public Result delete(){
+        assert true;
 		this._deleted = true;
 		return new Result(true);
 	}
+
+    /**
+     * Resets the internal state of this instance to not deleted.
+     */
     public Result unDelete(){
+        assert true;
 		this._deleted = false;
 		return new Result(true);
 	}
 
+    /**
+     * Indicates that this instance has been validated.
+     */
     protected Result setValid(boolean v){
+        assert true;
         _valid = v;
         return new Result(true);
     }
 
+    /**
+     * Indicates that this instance has been saved.
+     */
     protected Result setSaved(boolean b){
+        assert true;
         _saved = b;
         return new Result(true);
     }
