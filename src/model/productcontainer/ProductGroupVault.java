@@ -8,6 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import model.common.IModel;
+import model.common.Vault;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
 import model.product.ProductVault;
@@ -23,7 +24,7 @@ import common.util.QueryParser;
  * </PRE>
  * Other findBy* methods may be implemented.
  */
-public class ProductGroupVault {
+public class ProductGroupVault extends Vault {
 	static ProductGroupVault currentInstance;
 	private ProductGroupVault(){
 		currentInstance = this;
@@ -33,18 +34,8 @@ public class ProductGroupVault {
 		return currentInstance;
 	}
 
-    protected static SortedMap<Integer, ProductGroup> dataVault =
-            new TreeMap<Integer, ProductGroup>();
 
-    public static int size(){
-        return dataVault.size();
-    }
-
-    public static void clear(){
-        dataVault.clear();
-    }
-
-	public static ProductGroup find(String query)  {
+	public ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -71,7 +62,7 @@ public class ProductGroupVault {
 	 * @param value
 	 * 
 	 */
-	public static ArrayList<ProductGroup> findAll(String query) {
+	public ArrayList<ProductGroup> findAll(String query) {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -87,7 +78,7 @@ public class ProductGroupVault {
 		return null;
 	}
 	
-	private static ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
+	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<ProductGroup> results = new ArrayList<ProductGroup>();
@@ -107,7 +98,7 @@ public class ProductGroupVault {
 
 		
 		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, ProductGroup> entry : dataVault.entrySet()) {
+		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myPG = (ProductGroup) entry.getValue();
 			String myProductValue; 
 			
@@ -131,7 +122,7 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateNew(ProductGroup model){
+	protected Result validateNew(ProductGroup model){
 		Result result = new Result();
 		result = checkUniqueName(model);
 		if(result.getStatus() == false)
@@ -141,7 +132,7 @@ public class ProductGroupVault {
 		return result;
 	}
 	
-	private static Result checkUniqueName(ProductGroup model){
+	private Result checkUniqueName(ProductGroup model){
         //Null check
         if(model.getName() == null)
             return new Result(false, "Name can't be null");
@@ -150,7 +141,10 @@ public class ProductGroupVault {
         if(model.getName() == "")
             return new Result(false, "Name can't be empty");
 
-		ArrayList<ProductGroup> myPGs = findAll("Name = " + model.getName());
+        //Checks that the product group has a unique name in it's container
+        //Return all the ProductGroups in the current level
+		ArrayList<ProductGroup> myPGs = findAll("ParentIdString = " + model.getParentIdString());
+		//Loop through those results and make sure the name is unique
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
 				return new Result(false,"Duplicate product in container");
@@ -162,7 +156,7 @@ public class ProductGroupVault {
 
 
     public  ProductGroup get(int id){
-        ProductGroup pg = dataVault.get(id);
+        ProductGroup pg = (ProductGroup) dataVault.get(id);
     	if(pg == null)
     		return null;
 
@@ -175,12 +169,12 @@ public class ProductGroupVault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected static Result validateModified(ProductGroup model){
+	protected Result validateModified(ProductGroup model){
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		ProductGroup currentModel = dataVault.get(model.getId());
+		ProductGroup currentModel = (ProductGroup) dataVault.get(model.getId());
 		currentModel.delete();
 		//Validate passed in model
 		Result result = validateNew(model);

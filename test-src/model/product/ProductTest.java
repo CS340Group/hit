@@ -2,6 +2,7 @@ package model.product;
 
 import model.common.Barcode;
 import model.common.Size;
+import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
@@ -13,8 +14,8 @@ import static org.junit.Assert.*;
 
 public class ProductTest {
 
-    public static Product product;
-    public static StorageUnit su;
+    public Product product;
+    public StorageUnit su;
     @Before
     public void setup(){
         su = new StorageUnit();
@@ -36,7 +37,6 @@ public class ProductTest {
     @After
     public void teardown(){
         StorageUnitVault.getInstance().clear();
-        ProductVault.getInstance().clear();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ProductTest {
         assertNotSame("Vault returns a copy", product, product.productVault.get(product.getId()));
         assertEquals("Vault copy and local copy have same ids", product.getId(), product.productVault.get(product.getId()).getId());
     }
-
+    
     @Test
     public void testProductModification(){
         Product productCopy = product.productVault.get(product.getId());
@@ -73,14 +73,14 @@ public class ProductTest {
     }
 
     @Test 
-    void testSetShelfLife(){
+    public void testSetShelfLife(){
         Product p = new Product();
         assertEquals(false, p.setShelfLife(-5).getStatus());
         assertEquals(true, p.setShelfLife(5).getStatus());
     }
 
     @Test 
-    void testSet3MonthSupply(){
+    public void testSet3MonthSupply(){
         Product p = new Product();
         assertEquals(false, p.set3MonthSupply(-5).getStatus());
         assertEquals(true, p.set3MonthSupply(5).getStatus());

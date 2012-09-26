@@ -206,4 +206,15 @@ public class Item extends Model{
         _saved = false;
         _valid = false;
     }
+    
+    
+    public String getProductBarcode(){
+    	return this.getProduct().getBarcodeString();
+    }
+    public String getProductDescription(){
+    	return this.getProduct().getDescription();
+    }
+    public String getProductStorageUnitId(){
+    	return Integer.toString(this.getProduct().getStorageUnitId());
+    }
 }

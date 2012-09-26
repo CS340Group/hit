@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.joda.time.DateTime;
+
 import model.common.IModel;
 import model.common.Vault;
 import model.productcontainer.ProductGroup;
@@ -31,9 +33,7 @@ public class ProductVault extends Vault{
 		if(currentInstance == null) currentInstance = new ProductVault();
 		return currentInstance;
 	}
-    public void clear(){
-        dataVault.clear();
-    }
+
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -139,7 +139,10 @@ public class ProductVault extends Vault{
 		result = validateUniqueBarcode(model);
 		if(result.getStatus() != true)
 			return result;
-
+		result = validateCreationDate(model);
+		if(result.getStatus() != true)
+			return result;
+		
         model.setValid(true);
 		return new Result(true);
 	}
@@ -179,7 +182,21 @@ public class ProductVault extends Vault{
 		}
 		return new Result(true);
 	}
-
+	private Result validateCreationDate(Product model){
+		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
+			return new Result(false,"The creation date does now match the existing creation date");
+		return new Result(true);
+	}
+	private Product setCreationDate(Product model){
+		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
+			model.setCreationDate(existingProduct.getCreationDate());
+		else
+			model.setCreationDate(new DateTime());
+		return model;
+	}
+	
     public  Product get(int id){
     	Product p = (Product)dataVault.get(id);
     	if(p == null)
@@ -206,6 +223,10 @@ public class ProductVault extends Vault{
             id = dataVault.lastKey()+1;
 
         model.setId(id);
+        
+        //If the creation date hasn't been set
+        if(model.getCreationDate() == null)
+        	model = this.setCreationDate(model);
         model.setSaved(true);
         dataVault.put(id,model);
         return new Result(true);
