@@ -69,7 +69,9 @@ public class ProductGroup extends ProductContainer{
     public int getParentId(){
         return _parentId;
     }
-
+    public String getParentIdString(){
+    	return Integer.toString(_parentId);
+    }
     public ProductContainer getParent(){
         return this.productGroupVault.get(_parentId);
     }

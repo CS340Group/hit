@@ -88,7 +88,6 @@ public class ItemVaultTest {
     @After
     public void tearDown() throws Exception {
         ItemVault.getInstance().clear();
-        ProductVault.getInstance().clear();
     }
 
     @Test
@@ -97,9 +96,9 @@ public class ItemVaultTest {
         assertEquals("Find by entry date", item2.getId(), ItemVault.getInstance().find("EntryDate = "+item2.getEntryDate()).getId());
         assertEquals("Find by exit date", item3.getId(), ItemVault.getInstance().find("ExitDate = "+item3.getExitDate()).getId());
         assertEquals("Find by expiration date", item4.getId(), ItemVault.getInstance().find("ExpirationDate = "+item4.getExpirationDate()).getId());
-        assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("product.Barcode = "+p1.getBarcode().toString()).getId());
-        assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("product.Description = "+p2.getDescription()).getId());
-        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("product.StorageUnitId = "+p1.getStorageUnitId()).getId());
+        assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("ProductBarcode = "+p1.getBarcode().toString()).getId());
+        assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("ProductDescription = "+p2.getDescription()).getId());
+        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("ProductStorageUnitId = "+p1.getStorageUnitId()).getId());
     }
 
     @Test

@@ -6,6 +6,8 @@ import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
 import model.common.Barcode;
 import model.common.Model;
+import model.common.Size.Unit;
+
 import org.joda.time.DateTime;
 
 /**
@@ -157,6 +159,9 @@ public class Product extends Model{
     public Barcode getBarcode(){
         return _barcode;
     }
+    public String getBarcodeString(){
+    	return _barcode.toString();
+    }
 
     public Result setBarcode(Barcode b){
         _barcode = b;
@@ -246,10 +251,23 @@ public class Product extends Model{
         if (_3MonthSupply<0){
             return new Result(false, "The 3 mo. supply must be non-negative.");
         }
+        
         if(getId() == -1)
             return productVault.validateNew(this);
         else
             return productVault.validateModified(this);
+	}
+	
+	/*
+	 * Sets all the product attributes to defaults which
+	 * pass validation
+	 */
+	public void setToBlankProduct(){
+		_barcode = new Barcode("1");
+		_description = "A Description";
+		this._size = new Size(1,Unit.count);
+		
+		
 	}
 	
 	public Result delete(){
