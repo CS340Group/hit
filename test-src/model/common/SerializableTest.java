@@ -40,19 +40,16 @@ public class SerializableTest {
 
 	@Test
     public void SerialTest(){
-		try
-	      {
-	         FileOutputStream fileOut =
-	         new FileOutputStream("D:\\_Programs\\xampp\\htdocs\\github\\hit\\src\\employee.ser");
-	         ObjectOutputStream out =
-	                            new ObjectOutputStream(fileOut);
-	         out.writeObject(su);
-	         out.close();
-	          fileOut.close();
-	      }catch(IOException i)
-	      {
-	          i.printStackTrace();
-	      }
+		StorageUnit su2;
+		VaultPickler vp = new VaultPickler();
+		vp.SerializeMe();
+		su2 = new StorageUnit();
+        su2.setName("Test2s");
+        su2.validate();
+        su2.save();
+        assertTrue("", vp.allVaults.storageUnitVault.size()==2);
+        vp.DeSerializeMe();
+        assertTrue("",vp.allVaults.storageUnitVault.size()==1);
     }
 
 }
