@@ -16,6 +16,7 @@ public class BaseModel {
 	public transient  ProductVault productVault = ProductVault.getInstance();
 	public transient  StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
 	public transient  ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
+	public VaultPickler vp = new VaultPickler();
 	
 	public Result MoveItem(StorageUnit targetSU, ProductGroup targetPG, Item item){
 		RemoveItem(item);
@@ -89,10 +90,10 @@ public class BaseModel {
 	}
 	
 	public Result Serialize(){
-		return null;
+		return vp.SerializeMe();
 	}
 
 	public Result Deserialize(){
-		return null;
+		return vp.DeSerializeMe();
 	}
 }
