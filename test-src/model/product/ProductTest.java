@@ -37,7 +37,6 @@ public class ProductTest {
     @After
     public void teardown(){
         StorageUnitVault.getInstance().clear();
-        ProductVault.getInstance().clear();
     }
 
     @Test
@@ -56,32 +55,7 @@ public class ProductTest {
         assertNotSame("Vault returns a copy", product, product.productVault.get(product.getId()));
         assertEquals("Vault copy and local copy have same ids", product.getId(), product.productVault.get(product.getId()).getId());
     }
-    /*
-     * This tests that "At Most one product container 
-     * in a Storage Unit may contain a particular Product"
-     */
-    @Test
-    public void testOneProductPer(){
-    	//Get an existing product
-    	Product productCopy = product.productVault.get(product.getId());
-    	
-    	//Create a new product group
-    	ProductGroup pg1 = new ProductGroup();
-        pg1.setName("Group A");
-        pg1.setParentId(su.getId());
-        pg1.setRootParentId(su.getId());
-        //pg1.set3MonthSupply(new Unit(3, "oz"));
-        pg1.validate();
-        pg1.save();
-        
-        //Create a new product with the same name and barcode as the original
-        Product newProduct = new Product();
-        newProduct.setBarcode(productCopy.getBarcode());
-        //Save the product into a sub product container
-        newProduct.setContainerId(pg1.productGroupVault.size());
-        //Validate it, it should be false
-        assertFalse(newProduct.validate().getStatus());
-    }
+    
     @Test
     public void testProductModification(){
         Product productCopy = product.productVault.get(product.getId());

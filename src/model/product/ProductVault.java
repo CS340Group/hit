@@ -31,9 +31,7 @@ public class ProductVault extends Vault{
 		if(currentInstance == null) currentInstance = new ProductVault();
 		return currentInstance;
 	}
-    public void clear(){
-        dataVault.clear();
-    }
+
 	/**
 	 * Returns just one item based on the query sent in. 
 	 * If you need more than one item returned use FindAll
@@ -139,7 +137,8 @@ public class ProductVault extends Vault{
 		result = validateUniqueBarcode(model);
 		if(result.getStatus() != true)
 			return result;
-
+		result = validateCreationDate(model);
+		
         model.setValid(true);
 		return new Result(true);
 	}
@@ -179,7 +178,13 @@ public class ProductVault extends Vault{
 		}
 		return new Result(true);
 	}
-
+	private Result validateCreationDate(Product model){
+		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
+			return new Result(false,"The creation date does now match the existing creation date");
+		return new Result(true);
+	}
+	
     public  Product get(int id){
     	Product p = (Product)dataVault.get(id);
     	if(p == null)
