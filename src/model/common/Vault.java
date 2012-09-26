@@ -1,11 +1,12 @@
 package model.common;
 
+import java.io.Serializable;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import common.Result;
 
-public abstract class Vault{
+public abstract class Vault implements Serializable{
 
 	
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();

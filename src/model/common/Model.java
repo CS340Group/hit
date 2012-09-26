@@ -1,18 +1,20 @@
 package model.common;
 
+import java.io.Serializable;
+
 import model.item.ItemVault;
 import model.product.ProductVault;
 import model.productcontainer.ProductGroupVault;
 import model.productcontainer.StorageUnitVault;
 import common.Result;
 
-public abstract class Model implements IModel{
+public abstract class Model implements IModel, Serializable {
 	private int _id;
 
-	public ItemVault itemVault = ItemVault.getInstance();
-	public ProductVault productVault = ProductVault.getInstance();
-	public StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
-	public ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
+	public transient  ItemVault itemVault = ItemVault.getInstance();
+	public transient  ProductVault productVault = ProductVault.getInstance();
+	public transient  StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
+	public transient  ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
 	
 	
 	private boolean _valid;

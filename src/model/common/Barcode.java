@@ -2,6 +2,7 @@ package model.common;
 
 import common.Result;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * integer, and is capable of rendering the graphical representation of the 
  * barcode for printing.
  */
-public class Barcode{
+public class Barcode implements Serializable{
 	private String _code;
 	private boolean _set;
 	private boolean _valid;

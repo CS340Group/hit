@@ -1,8 +1,10 @@
 package model.common;
 
+import java.io.Serializable;
+
 import common.Result;
 
-public class Size {
+public class Size implements Serializable{
     // This is to be able to set the units with consistency. 
     public enum Unit {count, lbs, oz, g, kg, gallons, quarts, pints,
     floz, liters}
