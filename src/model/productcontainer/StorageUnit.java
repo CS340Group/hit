@@ -21,8 +21,8 @@ public class StorageUnit extends ProductContainer{
      * Copy Constructor.
      */
     public StorageUnit(StorageUnit su){
-        assert su != null;
         super(su);
+        assert su != null;
     }
 
     /**
