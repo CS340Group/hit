@@ -26,15 +26,38 @@ import common.util.QueryParser;
  */
 public class ProductGroupVault extends Vault {
 	static ProductGroupVault currentInstance;
+	
+	/**
+	 * Private constructor, for the singleton design pattern.
+	 */
 	private ProductGroupVault(){
 		currentInstance = this;
 	}
+
+	/**
+	 * Returns a reference to the only instance allowed for this class.
+	 */
 	public static synchronized ProductGroupVault getInstance(){
 		if(currentInstance == null) currentInstance = new ProductGroupVault();
 		return currentInstance;
 	}
 
-
+	/**
+	 * Returns just one ProductGroup based on the query sent in. 
+	 * If you need more than one returned use FindAll
+	 * 
+	 * @param query of form obj.attr = value
+	 * 
+	 * product.id = 5
+	 * name = 'cancer'
+	 * id = 2
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * 
+	 */
 	public ProductGroup find(String query)  {
 		QueryParser MyQuery = new QueryParser(query);
 
