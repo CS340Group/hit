@@ -76,7 +76,6 @@ public class ProductContainer extends Model{
     }
 
     protected Result setId(int id){
-        assert id > 0 : "An ID shouldn't be nagative, if you think about it.";
         _id = id;
         return new Result(true);
     }
