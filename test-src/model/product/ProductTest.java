@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 
 public class ProductTest {
 
-    public static Product product;
-    public static StorageUnit su;
+    public Product product;
+    public StorageUnit su;
     @Before
     public void setup(){
         su = new StorageUnit();
@@ -73,14 +73,14 @@ public class ProductTest {
     }
 
     @Test 
-    void testSetShelfLife(){
+    public void testSetShelfLife(){
         Product p = new Product();
         assertEquals(false, p.setShelfLife(-5).getStatus());
         assertEquals(true, p.setShelfLife(5).getStatus());
     }
 
     @Test 
-    void testSet3MonthSupply(){
+    public void testSet3MonthSupply(){
         Product p = new Product();
         assertEquals(false, p.set3MonthSupply(-5).getStatus());
         assertEquals(true, p.set3MonthSupply(5).getStatus());
