@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import common.Result;
+
 
 public class VaultPickler {
 	public AllVaults allVaults;
@@ -15,7 +17,7 @@ public class VaultPickler {
 		allVaults = new AllVaults();
 	}
 	
-	public void SerializeMe(){
+	public Result SerializeMe(){
 		try
 	      {
 	         FileOutputStream fileOut =
@@ -29,8 +31,9 @@ public class VaultPickler {
 	      {
 	          i.printStackTrace();
 	      }
+		return new Result(true);
 	}
-	public void DeSerializeMe(){
+	public Result DeSerializeMe(){
 		try {
 		    // Deserialize from a file
 		    File file = new File("myvaults.ser");
@@ -42,5 +45,6 @@ public class VaultPickler {
 		} catch (ClassNotFoundException e) {
 		} catch (IOException e) {
 		}
+		return new Result(true);
 	}
 }
