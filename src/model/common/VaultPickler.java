@@ -33,11 +33,7 @@ public class VaultPickler {
 		try
 	      {
 	         FileOutputStream fileOut =
-<<<<<<< HEAD
-	         new FileOutputStream("D:\\_Programs\\xampp\\htdocs\\github\\hit\\src\\myvaults2.ser");
-=======
 	         new FileOutputStream("myvaults.ser");
->>>>>>> 83dc0c8c1b13af4a79f382803d2c2c10fa7da8c6
 	         ObjectOutputStream out =
 	                            new ObjectOutputStream(fileOut);
 	         out.writeObject(allVaults);
@@ -51,11 +47,7 @@ public class VaultPickler {
 	public void DeSerializeMe(){
 		try {
 		    // Deserialize from a file
-<<<<<<< HEAD
-		    File file = new File("D:\\_Programs\\xampp\\htdocs\\github\\hit\\src\\myvaults2.ser");
-=======
 		    File file = new File("myvaults.ser");
->>>>>>> 83dc0c8c1b13af4a79f382803d2c2c10fa7da8c6
 		    ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 		    // Deserialize the object
 		    allVaults = (AllVaults) in.readObject();
