@@ -44,9 +44,9 @@ public class ItemTest {
 
     @Test
     public void testItemModification(){
-        Item itemCopy = item.itemVault.get(item.getId());
-        item.validate();
+    	item.validate();
         item.save();
+        Item itemCopy = item.itemVault.get(item.getId());
         itemCopy.setProductId(0);
         assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId()
                 != item.itemVault.get(item.getId()).getProductId());

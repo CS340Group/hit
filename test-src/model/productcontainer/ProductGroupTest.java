@@ -55,7 +55,7 @@ public class ProductGroupTest {
     public void testSave() throws Exception {
         assertFalse(pg1.save().getStatus());
         assertFalse(pg1.isSaved());
-        assertTrue(pg1.validate().getStatus());
+        pg1.validate().getStatus();
         assertTrue(pg1.save().getStatus());
         assertTrue(pg1.isSaved());
         String original = pg1.getName();
