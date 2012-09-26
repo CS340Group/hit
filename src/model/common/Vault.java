@@ -20,8 +20,10 @@ public abstract class Vault implements Serializable{
 		return;
 	}
 	
-	
-	public  int size(){
+	/**
+	 * Returns the size of the vault.
+	 */
+	public int size(){
         return dataVault.size();
     }
 	
