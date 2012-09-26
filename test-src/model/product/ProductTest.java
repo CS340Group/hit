@@ -107,4 +107,5 @@ public class ProductTest {
         p.setDescription("A description.");
         assertEquals(true, p.validate().getStatus());
     }
+    
 }
