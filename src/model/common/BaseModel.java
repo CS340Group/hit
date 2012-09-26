@@ -10,7 +10,11 @@ import model.productcontainer.*;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class is the controller for the complicated actions to be done with the
+ * model data. Here is where you can do all of your adding, deleting, moving 
+ * etc...
+ */
 public class BaseModel {
 	public transient  ItemVault itemVault = ItemVault.getInstance();
 	public transient  ProductVault productVault = ProductVault.getInstance();
@@ -18,12 +22,24 @@ public class BaseModel {
 	public transient  ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
 	public VaultPickler vp = new VaultPickler();
 	
+    /**
+     * Moves an item from one storage unit to another.
+     */
 	public Result MoveItem(StorageUnit targetSU, ProductGroup targetPG, Item item){
+        assert targetSU != null;
+        assert targetPG != null;
+        assert item != null;
 		RemoveItem(item);
         return AddItem(targetSU, targetPG, item);
 	}
 
+    /**
+     * Adds an Item to a StorageUnit and ProductGroup.
+     */
 	public Result AddItem(StorageUnit targetSU, ProductGroup targetPG, Item item){
+        assert targetSU != null;
+        assert targetPG != null;
+        assert item != null;
         Product p = item.getProduct();
         assert p != null : "Product should be in vault";
 
@@ -44,11 +60,22 @@ public class BaseModel {
         return item.save();
 	}
 
+    /**
+     * Removes an Item from its StorageUnit and ProductGroup.
+     */
     public Result RemoveItem(Item item){
+        assert item != null;
 		return item.delete();
 	}
 
-	public Result MoveProduct(StorageUnit targetSU, ProductGroup targetPC, Product product){
+    /**
+     * Moves a Product from one StorageUnit / ProductGroup to another.
+     */
+    public Result MoveProduct(StorageUnit targetSU, ProductGroup targetPC,
+    Product product){
+        assert targetSU != null;
+        assert targetPC != null;
+        assert product != null;
 		ArrayList<Product> products = productVault.findAll("Barcode = " + product.getBarcode());
         Product p = null;
 
@@ -81,7 +108,11 @@ public class BaseModel {
         return new Result(true);
 	}
 
+    /**
+     * Deletes a Product from the vaults.
+     */
 	public Result DeleteProduct(Product product){
+        assert product != null; 
 		if(product.isDeleteable().getStatus())
             product.delete();
         else
@@ -89,10 +120,16 @@ public class BaseModel {
         return new Result(true);
 	}
 	
+    /**
+     * Serializes the data in the vaults to a file on disk.
+     */
 	public Result Serialize(){
 		return vp.SerializeMe();
 	}
 
+    /**
+     * Reads the serialized data from a file on disk into the vaults.
+     */
 	public Result Deserialize(){
 		return vp.DeSerializeMe();
 	}

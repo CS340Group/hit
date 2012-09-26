@@ -10,13 +10,23 @@ import java.io.ObjectOutputStream;
 import common.Result;
 
 
+/**
+ * Responsible for pickling the data, and writing it out to a file on disk. Also responsible for
+ * reading from a file back into memory.
+ */
 public class VaultPickler {
 	public AllVaults allVaults;
 	
+	/**
+	 * Constructor.
+	 */
 	public VaultPickler(){
 		allVaults = new AllVaults();
 	}
 	
+	/**
+	 * Saves out the serialized data to disk.
+	 */
 	public Result SerializeMe(){
 		try
 	      {
@@ -33,6 +43,10 @@ public class VaultPickler {
 	      }
 		return new Result(true);
 	}
+
+	/**
+	 *  Reads in the serialized data from disk.
+	 */
 	public Result DeSerializeMe(){
 		try {
 		    // Deserialize from a file
