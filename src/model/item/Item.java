@@ -91,7 +91,6 @@ public class Item extends Model{
      *  Sets the ID of the Item.
      */
     protected Result setId(int id){
-        assert id != null;
         _id = id;
         return new Result(true);
     }
@@ -100,7 +99,6 @@ public class Item extends Model{
      *  Stores in the Item the ID of the Product to which the Item belongs.
      */
     public Result setProductId(int id){
-        assert != null;
         _productId = id;
         invalidate();
         return new Result(true);
