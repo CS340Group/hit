@@ -13,7 +13,7 @@ import model.productcontainer.StorageUnitVault;
 
 
 
-public abstract class BaseModel {
+public class BaseModel {
 	public transient  ItemVault itemVault = ItemVault.getInstance();
 	public transient  ProductVault productVault = ProductVault.getInstance();
 	public transient  StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
