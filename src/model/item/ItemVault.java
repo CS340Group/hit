@@ -24,13 +24,25 @@ import common.util.QueryParser;
  */
 public class ItemVault extends Vault{
 	static ItemVault currentInstance;
+
+	/**
+	 * Private constructor, for the singleton design pattern.
+	 */
 	private ItemVault(){
 		currentInstance = this;
 	}
+
+	/**
+	 * Returns a reference to the only instance allowed for this class.
+	 */
 	public static synchronized ItemVault getInstance(){
 		if(currentInstance == null) currentInstance = new ItemVault();
 		return currentInstance;
 	}
+
+	/**
+	 * Resets the vault.
+	 */
     public void clear(){
         dataVault.clear();
     }

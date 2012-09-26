@@ -26,9 +26,17 @@ import common.util.QueryParser;
  */
 public class ProductVault extends Vault{
 	static ProductVault currentInstance;
+	
+	/**
+	 * Private constructor, for the singleton design pattern.
+	 */	
 	private ProductVault(){
 		currentInstance = this;
 	}
+	
+	/**
+	 * Returns a reference to the only instance allowed for this class.
+	 */
 	public static synchronized ProductVault getInstance(){
 		if(currentInstance == null) currentInstance = new ProductVault();
 		return currentInstance;

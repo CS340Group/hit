@@ -25,16 +25,29 @@ import model.productcontainer.StorageUnit;
  */
 public class StorageUnitVault extends Vault{
 	static StorageUnitVault currentInstance;
+	
+	/**
+	 * Private constructor, for the singleton design pattern.
+	 */
 	private StorageUnitVault(){
 		currentInstance = this;
 	}
+
+	/**
+	 * Returns a reference to the only instance allowed for this class.
+	 */
 	public static synchronized StorageUnitVault getInstance(){
 		if(currentInstance == null) currentInstance = new StorageUnitVault();
 		return currentInstance;
 	}
+
+	/**
+	 * Resets the vault.
+	 */
     public void clear(){
         dataVault.clear();
     }
+    
 	/**
 	 * Returns just one StorageUnit based on the query sent in. 
 	 * If you need more than one StorageUnit returned use FindAll
