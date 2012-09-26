@@ -44,9 +44,12 @@ public class ProductGroup extends ProductContainer{
 		_3MonthSupply = threeMonthSupply;
     }
 
-
+    /**
+     * Copy constructor.
+     */
     public ProductGroup(ProductGroup container) {
         super(container);
+        assert container != null;
         _parentId = container.getParentId();
         _rootParentId = container.getRootParentId();
         _3MonthSupply = container.get3MonthSupply();
@@ -70,36 +73,65 @@ public class ProductGroup extends ProductContainer{
         return new Result(true, "Successfully set.");
 	}
 
+    /**
+     * Returns the parent ID
+     */
     public int getParentId(){
         return _parentId;
     }
+
+    /**
+     * Return the parent ID as a string.
+     */
     public String getParentIdString(){
     	return Integer.toString(_parentId);
     }
+
+    /**
+     * Return a copy of the Parent.
+     */
     public ProductContainer getParent(){
         return this.productGroupVault.get(_parentId);
     }
 
+    /**
+     * Set this to the ID of the desired parent for this ProductGroup.
+     */
     public Result setParentId(int id){
+        assert true;
         _parentId = id;
         invalidate();
         return new Result(true);
     }
 
+    /**
+     * Return the ID of the StorageUnit.
+     */
     public int getRootParentId(){
         return _rootParentId;
     }
 
+    /**
+     * Returns a copy of the storage unit that this ProductGroup is contained 
+     * in.
+     */
     public ProductContainer getRootParent(){
         return storageUnitVault.get(_rootParentId);
     }
 
+    /**
+     * Set this to the ID of the StorageUnit that this ProductGroup belongs to.
+     */
     public Result setRootParentId(int id){
+        assert true;
         _rootParentId = id;
         invalidate();
         return new Result(true);
     }
 
+    /**
+     * Checks if this is a valid ProductGroup.
+     */
     public Result validate(){
         if(getId() == -1)
             return productGroupVault.validateNew(this);
@@ -107,6 +139,10 @@ public class ProductGroup extends ProductContainer{
             return productGroupVault.validateModified(this);
     }
 
+    /**
+     * Saves the ProductGroup to its vault.
+     * @Pre The ProductGroup must be validated before it can be saved.
+     */
     public Result save(){
         if(!isValid())
             return new Result(false, "Item must be valid before saving.");
@@ -116,6 +152,9 @@ public class ProductGroup extends ProductContainer{
             return productGroupVault.saveModified(this);
     }
 
+    /**
+     * Checks to see if the ProductGroup is in a state where it can be deleted.
+     */
     public Result isDeleteable(){
         ArrayList<Product> products = productVault.findAll("ContainerId = "+getId());
         for(Product product : products){
