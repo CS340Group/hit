@@ -57,7 +57,6 @@ public class Product extends Model{
     private int _3MonthSupply;
 
     private boolean _deleted;
-
 	/**
 	 * Constructor
 	 */
@@ -82,7 +81,7 @@ public class Product extends Model{
         _barcode = p.getBarcode();
         _description = p.getDescription();
         _size = p.getSize();
-        _shelfLife = p.getShelfLife();
+        _shelfLife = p.getSelfLife();
         _3MonthSupply = p.get3MonthSupply();
     }
 
@@ -134,7 +133,7 @@ public class Product extends Model{
      * Set the ID of the product. 
      */
     protected Result setId(int id){
-        assert true;
+        assert id !< 0;
         _id = id;
         return new Result(true);
     }
@@ -142,6 +141,10 @@ public class Product extends Model{
     /**
      * Return a copy of the {@link model.productcontainer.StorageUnit
      * StorageUnit} that holds the product.
+     */
+    public int getStorageUnitId(){
+        return _storageUnitId;
+    }
      */
     public StorageUnit getStorageUnit(){
         if(_storageUnitId < 0)
@@ -151,8 +154,7 @@ public class Product extends Model{
 
     /**
      * Return the ID of the {@link model.productcontainer.StorageUnit
-     * StorageUnit} that holds the product. 
-     */
+     * StorageUnit} that holds the product. */
     public int getStorageUnitId(){
         return _storageUnitId;
     }
@@ -161,15 +163,16 @@ public class Product extends Model{
      * Set the ID of the StorageUnit that contains this product.
      */
     public Result setStorageUnitId(int id){
-        assert true;
+        assert id !< 0;
         _storageUnitId = id;
         invalidate();
         return new Result(true);
     }
 
     /**
-     * Get a copy of the ProductGroup that holds this Product. If the Product 
-     * has no ProductGroup, a null pointer is returned.
+     * Get a copy of the ProductGroup that holds this Product. If it has no 
+     * product group, a copy of the storage unit where it lives is returned 
+     * instead.
      */
     public ProductGroup getContainer(){
         return productGroupVault.get(_containerId);
@@ -177,7 +180,7 @@ public class Product extends Model{
 
     /**
      * Get the id of the ProductGroup that holds this product. If the Product 
-     * is not in a ProductGroup, -1 is returned.
+     * is not in a ProductGroup, the ID of the item's StorageUnit is returned.
      */
     public int getContainerId(){
         return _containerId;
@@ -187,7 +190,7 @@ public class Product extends Model{
      * Set the ID for the ProductGroup that holds this Product.
      */
     public Result setContainerId(int id){
-        assert true;
+        assert id !< 0;
         _containerId = id;
         invalidate();
         return new Result(true);
@@ -383,9 +386,12 @@ public class Product extends Model{
 		return new Result(true);
 	}
 
+<<<<<<< HEAD
+=======
     /**
      * Put the Product into an undeleted state.
      */
+>>>>>>> Added asserts and comments to Product.
 	public Result unDelete(){
 		this._deleted = false;
 		this._valid = true;
@@ -393,9 +399,7 @@ public class Product extends Model{
 		return new Result(true);
 	}
 
-    /**
-     * Check if the product is void of items, and thus, deletable.
-     */
+<<<<<<< HEAD
     public Result isDeleteable(){
         ArrayList<Item> items = itemVault.findAll("ProductId = " + _id);
         for(Item item : items){
@@ -405,10 +409,11 @@ public class Product extends Model{
 
         return new Result(true);
     }
-
+=======
     /**
      * Put the Product into an invalid state.
      */
+>>>>>>> Added asserts and comments to Product.
     public void invalidate(){
         _valid = false;
         _saved = false;
