@@ -40,12 +40,7 @@ public class ItemVault extends Vault{
 		return currentInstance;
 	}
 
-	/**
-	 * Resets the vault.
-	 */
-    public void clear(){
-        dataVault.clear();
-    }
+
 	
 	
 	/**

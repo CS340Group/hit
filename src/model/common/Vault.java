@@ -5,6 +5,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import common.Result;
+import static ch.lambdaj.Lambda.*;
 
 public abstract class Vault implements Serializable{
 

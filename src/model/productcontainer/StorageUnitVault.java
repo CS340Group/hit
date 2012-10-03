@@ -41,12 +41,6 @@ public class StorageUnitVault extends Vault{
 		return currentInstance;
 	}
 
-	/**
-	 * Resets the vault.
-	 */
-    public void clear(){
-        dataVault.clear();
-    }
     
 	/**
 	 * Returns just one StorageUnit based on the query sent in. 
