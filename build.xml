@@ -89,7 +89,12 @@
             <include name="joda-time-2.1.jar" />
         </fileset>
     </path>
-
+	<path id="lamdaj-classpath">
+        <fileset dir="${lib}">
+            <include name="lambdaj-2.4-with-dependencies.jar" />
+        </fileset>
+    </path>
+	
 	<!-- ***************** -->
 	<!-- task definintions -->
 	<!-- ***************** -->
@@ -132,6 +137,7 @@
 		<javac srcdir="${src}" destdir="${build}" debug="true" includeantruntime="true">
 			<classpath refid="itext-classpath" />
 			<classpath refid="joda-classpath" />
+			<classpath refid="lamdaj-classpath" />
             <classpath refid="sqlite-classpath" />
         </javac>
 	</target>
@@ -275,6 +281,8 @@
 			<classpath refid="junit-classpath" />
             <classpath refid="cobertura-classpath" />
             <classpath refid="joda-classpath" />
+			
+			<classpath refid="lamdaj-classpath" />
         </javac>
 	</target>
 	
@@ -292,7 +300,7 @@
 			<classpath refid="itext-classpath" />
 			<classpath refid="sqlite-classpath" />
 			<classpath refid="joda-classpath" />
-
+			<classpath refid="lamdaj-classpath" />
 			<sysproperty key="net.sourceforge.cobertura.datafile"
 				value="${coverage-data-file}"/>
 			
