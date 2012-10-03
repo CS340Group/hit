@@ -4,16 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import org.joda.time.DateTime;
 
 import model.common.IModel;
 import model.common.Vault;
-import model.productcontainer.ProductGroup;
-import model.productcontainer.StorageUnit;
-import model.item.ItemVault;
 import common.Result;
 import common.util.QueryParser;
 
@@ -25,6 +19,10 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ProductVault extends Vault{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	static ProductVault currentInstance;
 	
 	/**
@@ -97,12 +95,9 @@ public class ProductVault extends Vault{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Product> results = new ArrayList<Product>();
-		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
 		String value = MyQuery.getValue();
 		
-		ProductGroup myPG = new ProductGroup();
-		StorageUnit mySU = new StorageUnit();
 		Product myProduct = new Product();
 		
 		//Class associated with the product model
@@ -228,7 +223,7 @@ public class ProductVault extends Vault{
         if(dataVault.isEmpty())
             id = 0;
         else
-            id = dataVault.lastKey()+1;
+            id = (int)dataVault.lastKey()+1;
 
         model.setId(id);
         
@@ -249,8 +244,6 @@ public class ProductVault extends Vault{
 	protected  Result saveModified(Product model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
-
-        int id = model.getId();
         model.setSaved(true);
         this.addModel(new Product(model));
         return new Result(true);

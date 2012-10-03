@@ -11,6 +11,10 @@ import static ch.lambdaj.Lambda.*;
 public abstract class Vault extends Observable implements Serializable {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
 	
 	/**
@@ -19,6 +23,7 @@ public abstract class Vault extends Observable implements Serializable {
 	 * 
 	 */
 	public Vault(){
+		
 		return;
 	}
 	
@@ -46,5 +51,5 @@ public abstract class Vault extends Observable implements Serializable {
 		return null;
 	}
 	
-
+	
 }

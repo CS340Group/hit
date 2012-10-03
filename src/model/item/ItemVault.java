@@ -4,10 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import model.product.Product;
 import model.common.IModel;
 import model.common.Vault;
 import common.Result;
@@ -23,6 +19,10 @@ import common.util.QueryParser;
  * Other findBy* methods may be implemented.
  */
 public class ItemVault extends Vault{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	static ItemVault currentInstance;
 
 	/**
@@ -105,12 +105,10 @@ public class ItemVault extends Vault{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<Item> results = new ArrayList<Item>();
-		String objName = MyQuery.getObjName();
 		String attrName = MyQuery.getAttrName();
 		String value = MyQuery.getValue();
 		
 		Item myItem = new Item();
-		Product myProduct = new Product();
 		//Class associated with the item model
 		Class<? extends Item> cls = myItem.getClass();
 		//Method we will call to get the value
@@ -203,7 +201,7 @@ public class ItemVault extends Vault{
         if(dataVault.isEmpty())
             id = 0;
         else
-            id = dataVault.lastKey()+1;
+            id = (int)dataVault.lastKey()+1;
 
         model.setId(id);
         model.setSaved(true);
@@ -220,8 +218,6 @@ public class ItemVault extends Vault{
 	public  Result saveModified(Item model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
-
-        int id = model.getId();
         model.setSaved(true);
         this.addModel(new Item(model));
         return new Result(true);
