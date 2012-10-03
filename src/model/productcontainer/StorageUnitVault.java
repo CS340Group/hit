@@ -4,11 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import model.common.IModel;
-import model.item.ItemVault;
 import model.common.Vault;
 import common.Result;
 import common.util.QueryParser;
@@ -24,6 +21,10 @@ import model.productcontainer.StorageUnit;
  * Other findBy* methods may be implemented.
  */
 public class StorageUnitVault extends Vault{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	static StorageUnitVault currentInstance;
 	
 	/**
@@ -41,12 +42,6 @@ public class StorageUnitVault extends Vault{
 		return currentInstance;
 	}
 
-	/**
-	 * Resets the vault.
-	 */
-    public void clear(){
-        dataVault.clear();
-    }
     
 	/**
 	 * Returns just one StorageUnit based on the query sent in. 
@@ -103,7 +98,7 @@ public class StorageUnitVault extends Vault{
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
-		String objName = MyQuery.getObjName();
+
 		String attrName = MyQuery.getAttrName();
 		String value = MyQuery.getValue();
 		
@@ -207,11 +202,11 @@ public class StorageUnitVault extends Vault{
         if(dataVault.isEmpty())
             id = 0;
         else
-            id = dataVault.lastKey()+1;
+            id = (int)dataVault.lastKey() + 1;
 
         model.setId(id);
         model.setSaved(true);
-        dataVault.put(id,new StorageUnit(model));
+        this.addModel(new StorageUnit(model));
         return new Result(true);
 	}
 
@@ -224,10 +219,8 @@ public class StorageUnitVault extends Vault{
 	protected  Result saveModified(StorageUnit model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
-
-        int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id, new StorageUnit(model));
+        this.addModel(new StorageUnit(model));
         return new Result(true);
 	}
 }

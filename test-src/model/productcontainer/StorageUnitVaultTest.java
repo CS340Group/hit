@@ -63,4 +63,18 @@ public class StorageUnitVaultTest {
     	su2.setName("Unit A");
     	assertFalse("The Vault is allowing for duplicate Storage Unit Names",su2.validate().getStatus());
     }
+    
+    /*
+     * Check modified save
+     */
+    @Test
+    public void testModifiedSave() throws Exception{
+    	su1.setName("NewName");
+    	su1.validate();
+    	su1.save();
+    	StorageUnit su3 = su1.storageUnitVault.find("Name = NewName");
+    	su1 = su1.storageUnitVault.find("Name = Unit A");
+    	assertTrue("Save modified is not working",su1 == null);
+    	assertTrue("Save modified is not working",su3 != null);
+    }
 }

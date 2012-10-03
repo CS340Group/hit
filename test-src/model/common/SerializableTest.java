@@ -41,9 +41,9 @@ public class SerializableTest {
         su2.setName("Test2s");
         su2.validate();
         su2.save();
-        assertTrue("", vp.allVaults.storageUnitVault.size()==2);
+        assertTrue("The vault never updated after serializing", vp.allVaults.storageUnitVault.size()==2);
         vp.DeSerializeMe();
-        assertTrue("",vp.allVaults.storageUnitVault.size()==1);
+        assertTrue("The vault didn't load again from file",vp.allVaults.storageUnitVault.size()==1);
     }
 
 }
