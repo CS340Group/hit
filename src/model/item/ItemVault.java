@@ -207,7 +207,7 @@ public class ItemVault extends Vault{
 
         model.setId(id);
         model.setSaved(true);
-        dataVault.put(id,model);
+        this.addModel(new Item(model));
         return new Result(true);
 	}
 
@@ -223,7 +223,7 @@ public class ItemVault extends Vault{
 
         int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id,model);
+        this.addModel(new Item(model));
         return new Result(true);
 	}
 }

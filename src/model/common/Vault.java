@@ -1,13 +1,14 @@
 package model.common;
 
 import java.io.Serializable;
+import java.util.Observable;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import common.Result;
 import static ch.lambdaj.Lambda.*;
 
-public abstract class Vault implements Serializable{
+public abstract class Vault extends Observable implements Serializable {
 
 	
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
@@ -38,7 +39,10 @@ public abstract class Vault implements Serializable{
 	 * 
 	 * @param newItem
 	 */
-	protected Result addItem(IModel newItem){
+	protected Result addModel(IModel newItem){
+		int id = newItem.getId();
+		this.dataVault.put(id, newItem);
+		this.notifyObservers();
 		return null;
 	}
 	

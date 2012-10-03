@@ -236,7 +236,7 @@ public class ProductVault extends Vault{
         if(model.getCreationDate() == null)
         	model = this.setCreationDate(model);
         model.setSaved(true);
-        dataVault.put(id,model);
+        this.addModel(new Product(model));
         return new Result(true);
 	}
 
@@ -252,7 +252,7 @@ public class ProductVault extends Vault{
 
         int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id,model);
+        this.addModel(new Product(model));
         return new Result(true);
 	}
 

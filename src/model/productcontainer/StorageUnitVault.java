@@ -205,7 +205,7 @@ public class StorageUnitVault extends Vault{
 
         model.setId(id);
         model.setSaved(true);
-        dataVault.put(id,new StorageUnit(model));
+        this.addModel(new StorageUnit(model));
         return new Result(true);
 	}
 
@@ -218,10 +218,8 @@ public class StorageUnitVault extends Vault{
 	protected  Result saveModified(StorageUnit model){
         if(!model.isValid())
             return new Result(false, "Model must be valid prior to saving,");
-
-        int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id, new StorageUnit(model));
+        this.addModel(new StorageUnit(model));
         return new Result(true);
 	}
 }

@@ -227,7 +227,7 @@ public class ProductGroupVault extends Vault {
 
         model.setId(id);
         model.setSaved(true);
-        dataVault.put(id,new ProductGroup(model));
+        this.addModel(new ProductGroup(model));
         return new Result(true);
 	}
 
@@ -243,7 +243,7 @@ public class ProductGroupVault extends Vault {
 
         int id = model.getId();
         model.setSaved(true);
-        dataVault.put(id, new ProductGroup(model));
+        this.addModel(new ProductGroup(model));
         return new Result(true);
 	}
 }
