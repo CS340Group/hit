@@ -1,5 +1,10 @@
 Testsuite: model.item.ItemTest
-Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.096 sec
+Tests run: 2, Failures: 1, Errors: 0, Time elapsed: 0.107 sec
 
-Testcase: testItemCreation took 0.084 sec
-Testcase: testItemModification took 0.002 sec
+Testcase: testItemCreation took 0.089 sec
+Testcase: testItemModification took 0.004 sec
+	FAILED
+Item should pass validation expected:<true> but was:<false>
+junit.framework.AssertionFailedError: Item should pass validation expected:<true> but was:<false>
+	at model.item.ItemTest.testItemModification(ItemTest.java:55)
+

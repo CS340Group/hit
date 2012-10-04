@@ -1,8 +1,23 @@
 Testsuite: model.common.BaseModelTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.015 sec
+Tests run: 5, Failures: 3, Errors: 0, Time elapsed: 0.164 sec
 
-Testcase: testMoveItem took 0.003 sec
-Testcase: testAddItem took 0 sec
-Testcase: testRemoveItem took 0 sec
-Testcase: testMoveProduct took 0 sec
-Testcase: testDeleteProduct took 0 sec
+Testcase: testAddItem took 0.12 sec
+	FAILED
+expected:<0> but was:<3>
+junit.framework.AssertionFailedError: expected:<0> but was:<3>
+	at model.common.BaseModelTest.testAddItem(BaseModelTest.java:199)
+
+Testcase: testMoveItem took 0.011 sec
+	FAILED
+
+junit.framework.AssertionFailedError: 
+	at model.common.BaseModelTest.testMoveItem(BaseModelTest.java:209)
+
+Testcase: testRemoveItem took 0.006 sec
+Testcase: testMoveProduct took 0.006 sec
+	FAILED
+expected:<0> but was:<1>
+junit.framework.AssertionFailedError: expected:<0> but was:<1>
+	at model.common.BaseModelTest.testMoveProduct(BaseModelTest.java:225)
+
+Testcase: testDeleteProduct took 0.007 sec

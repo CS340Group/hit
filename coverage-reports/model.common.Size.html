@@ -40,8 +40,8 @@
   <td class="src"><pre class="src">&nbsp;<span class="keyword">public</span> <span class="keyword">class</span> Size <span class="keyword">implements</span> Serializable{</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;11</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="comment">// This is to be able to set the units with consistency. </span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;12</td>  <td class="nbHitsCovered">&nbsp;60</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> enum Unit {count, lbs, oz, g, kg, gallons, quarts, pints,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;13</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;    floz, liters}</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;12</td>  <td class="nbHitsCovered">&nbsp;72</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> enum Unit {count, lbs, oz, g, kg, gallons, quarts, pints,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;13</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;    floz, liters}</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;14</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;15</td>  <td class="nbHits">&nbsp;</td>
@@ -56,12 +56,12 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * Constructor</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;20</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;21</td>  <td class="nbHitsCovered">&nbsp;46</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> Size(<span class="keyword">float</span> a, Unit u){</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;21</td>  <td class="nbHitsCovered">&nbsp;74</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> Size(<span class="keyword">float</span> a, Unit u){</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;22</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">assert</span> <span class="keyword">true</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;23</td>  <td class="nbHitsCovered">&nbsp;46</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>._amount = a;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;24</td>  <td class="nbHitsCovered">&nbsp;46</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>._unit = u;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;25</td>  <td class="nbHitsCovered">&nbsp;46</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;23</td>  <td class="nbHitsCovered">&nbsp;74</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>._amount = a;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;24</td>  <td class="nbHitsCovered">&nbsp;74</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>._unit = u;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;25</td>  <td class="nbHitsCovered">&nbsp;74</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;26</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;27</td>  <td class="nbHits">&nbsp;</td>
@@ -72,7 +72,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;30</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">float</span> getAmount(){</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;31</td>  <td class="nbHitsCovered">&nbsp;23</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> _amount;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;31</td>  <td class="nbHitsCovered">&nbsp;43</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> _amount;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;32</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;33</td>  <td class="nbHits">&nbsp;</td>
@@ -140,15 +140,15 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;72</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> Result validate(){</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;73</td>  <td class="nbHitsCovered"><a title="Line 73: Conditional coverage 100% (2/2).">&nbsp;61</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 73: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (_amount &lt; 0){</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;73</td>  <td class="nbHitsCovered"><a title="Line 73: Conditional coverage 100% (2/2).">&nbsp;104</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 73: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (_amount &lt; 0){</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;74</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">new</span> Result(<span class="keyword">false</span>, <span class="string">"The amount must not be negative."</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;75</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;76</td>  <td class="nbHitsCovered"><a title="Line 76: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;60</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 76: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (_unit == Unit.count &amp;&amp; _amount != 1.0){</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;76</td>  <td class="nbHitsCovered"><a title="Line 76: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;103</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 76: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (_unit == Unit.count &amp;&amp; _amount != 1.0){</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;77</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">new</span> Result(<span class="keyword">false</span>, <span class="string">"If unit=count, amount must be 1"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;78</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;79</td>  <td class="nbHitsCovered">&nbsp;59</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">new</span> Result(<span class="keyword">true</span>, <span class="string">"You've got yourself a valid unit."</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;79</td>  <td class="nbHitsCovered">&nbsp;102</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">new</span> Result(<span class="keyword">true</span>, <span class="string">"You've got yourself a valid unit."</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;80</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;81</td>  <td class="nbHits">&nbsp;</td>
@@ -170,6 +170,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 9/25/12 11:44 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 10/3/12 10:12 PM.</div>
 </body>
 </html>
