@@ -40,7 +40,7 @@ public abstract class Vault extends Observable implements Serializable {
 	
 	
 	/**
-	 * adds the item to the map
+	 * adds the item to the map and notifies all observers
 	 * 
 	 * @param newItem
 	 */
