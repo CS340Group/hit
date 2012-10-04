@@ -1,4 +1,6 @@
 #!/bin/sh
+git checkout gh-pages
+git pull origin gh-pages
 git checkout master
 rm -rf scratch
 mkdir scratch
