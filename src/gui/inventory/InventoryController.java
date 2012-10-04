@@ -10,7 +10,7 @@ import java.util.*;
  * Controller class for inventory view.
  */
 public class InventoryController extends Controller 
-									implements IInventoryController {
+									implements IInventoryController, Observer {
 
 	/**
 	 * Constructor.
@@ -385,5 +385,14 @@ public class InventoryController extends Controller
 									ProductContainerData containerData) {
 	}
 
+    /**
+     * This method is called when the observed vaults are changes
+     *
+     * @param o Vault that is observed
+     * @param arg Hint
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+    }
 }
 
