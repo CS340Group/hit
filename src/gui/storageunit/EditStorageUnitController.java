@@ -1,13 +1,26 @@
 package gui.storageunit;
 
+import common.Result;
 import gui.common.*;
 import gui.inventory.*;
+import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 
 /**
  * Controller class for the edit storage unit view.
  */
 public class EditStorageUnitController extends Controller 
 										implements IEditStorageUnitController {
+
+    public ProductContainerData getTarget() {
+        return _target;
+    }
+
+    public void setTarget(ProductContainerData _target) {
+        this._target = _target;
+    }
+
+    ProductContainerData _target;
 	
 	/**
 	 * Constructor.
@@ -19,6 +32,7 @@ public class EditStorageUnitController extends Controller
 		super(view);
 
 		construct();
+        _target = target;
 	}
 
 	//
@@ -49,7 +63,12 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
-	}
+
+        int id = ((Number)getTarget().getTag()).intValue();
+        StorageUnit su = StorageUnitVault.getInstance().get(id);
+        su.setName(getView().getStorageUnitName());
+        getView().enableOK(su.validate().getStatus());
+    }
 
 	/**
 	 * Loads data into the controller's view.
@@ -72,6 +91,7 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
 	}
 
 	/**
@@ -80,6 +100,11 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	public void editStorageUnit() {
+        int id = ((Number)getTarget().getTag()).intValue();
+        StorageUnit su = StorageUnitVault.getInstance().get(id);
+        su.setName(getView().getStorageUnitName());
+        su.validate();
+        su.save();
 	}
 
 }

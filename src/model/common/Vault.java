@@ -23,7 +23,6 @@ public abstract class Vault extends Observable implements Serializable {
 	 * 
 	 */
 	public Vault(){
-		
 		return;
 	}
 	
@@ -47,6 +46,7 @@ public abstract class Vault extends Observable implements Serializable {
 	protected Result addModel(IModel newItem){
 		int id = newItem.getId();
 		this.dataVault.put(id, newItem);
+        this.setChanged();
 		this.notifyObservers();
 		return null;
 	}

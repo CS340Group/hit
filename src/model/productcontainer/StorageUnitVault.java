@@ -207,6 +207,7 @@ public class StorageUnitVault extends Vault{
         model.setId(id);
         model.setSaved(true);
         this.addModel(new StorageUnit(model));
+        System.out.println(this.countObservers());
         return new Result(true);
 	}
 
