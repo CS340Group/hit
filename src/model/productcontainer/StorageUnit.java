@@ -36,6 +36,9 @@ public class StorageUnit extends ProductContainer{
      * instance can be saved into the vault. 
      */
     public Result validate(){
+        if(getName().isEmpty())
+            return new Result(false,"Name cannot be empty");
+
         if(getId() == -1)
             return storageUnitVault.validateNew(this);
         else
