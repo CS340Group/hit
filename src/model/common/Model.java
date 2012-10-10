@@ -12,7 +12,7 @@ import common.Result;
  * The base class for the basic data models.
  */
 public abstract class Model implements IModel, Serializable {
-	private int _id;
+	
 
 	public transient  ItemVault itemVault = ItemVault.getInstance();
 	public transient  ProductVault productVault = ProductVault.getInstance();
@@ -20,10 +20,19 @@ public abstract class Model implements IModel, Serializable {
 	public transient  ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
 	
 	
-	private boolean _valid;
+	/**
+     * When a change is made to the data it becomes invalid and 
+     * must be validated before it can be saved.
+     * _valid maintains this state
+     */
+    protected boolean _valid;
 
-	private boolean _saved;	
-
+    /**
+     * _saved maintaines the state of if the instance of the model is the same as the 
+     * persisted model in the vault.
+     */
+    protected boolean _saved;
+    
 	/**
 	 * Constructor
 	 */
