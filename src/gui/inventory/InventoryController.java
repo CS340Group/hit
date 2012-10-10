@@ -9,9 +9,7 @@ import java.util.*;
 import model.common.BaseModel;
 import model.common.Size;
 import model.product.Product;
-import model.productcontainer.ProductContainer;
-import model.productcontainer.ProductGroup;
-import model.productcontainer.StorageUnit;
+import model.productcontainer.*;
 
 /**
  * Controller class for inventory view.
@@ -28,7 +26,8 @@ public class InventoryController extends Controller
 	public InventoryController(IInventoryView view) {
 		super(view);
 		construct();
-		
+        StorageUnitVault.getInstance().addObserver(this);
+        ProductGroupVault.getInstance().addObserver(this);
 	}
 
 	/**
@@ -48,7 +47,9 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
-		this.addSampleItems();
+        System.out.println("LOAD");
+
+		//this.addSampleItems();
 		ProductContainerData root = new ProductContainerData();
 		
 		//Get all available storage units
@@ -57,6 +58,7 @@ public class InventoryController extends Controller
 		//For each storage unit add all it's children productGroups
 		for(StorageUnit su : storageUnits){
 			ProductContainerData tempSU = new ProductContainerData(su.getName());
+            //tempSU.setTag(su.getId());
 			root.addChild(addChildrenProductContainers(su,tempSU));
 		}
 		
@@ -120,7 +122,7 @@ public class InventoryController extends Controller
 			ProductContainerData tempPC = new ProductContainerData(pg.getName());
 			pcData.addChild(addChildrenProductContainers(pg,tempPC));
 		}
-		
+		pcData.setTag(pc.getId());
 		return pcData;
 	}
 	
@@ -456,6 +458,7 @@ public class InventoryController extends Controller
      */
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("UPDATE");
     	this.loadValues();
     }
 }
