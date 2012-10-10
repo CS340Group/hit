@@ -1,10 +1,17 @@
 package gui.inventory;
-
+import static ch.lambdaj.Lambda.*;
 import gui.common.*;
 import gui.item.*;
 import gui.product.*;
 
 import java.util.*;
+
+import model.common.BaseModel;
+import model.common.Size;
+import model.product.Product;
+import model.productcontainer.ProductContainer;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.StorageUnit;
 
 /**
  * Controller class for inventory view.
@@ -12,6 +19,7 @@ import java.util.*;
 public class InventoryController extends Controller 
 									implements IInventoryController, Observer {
 
+	BaseModel bm  = new BaseModel();
 	/**
 	 * Constructor.
 	 *  
@@ -19,8 +27,8 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-
 		construct();
+		
 	}
 
 	/**
@@ -40,30 +48,84 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
+		this.addSampleItems();
 		ProductContainerData root = new ProductContainerData();
 		
-		ProductContainerData basementCloset = new ProductContainerData("Basement Closet");
-		
-		ProductContainerData toothpaste = new ProductContainerData("Toothpaste");
-		toothpaste.addChild(new ProductContainerData("Kids"));
-		toothpaste.addChild(new ProductContainerData("Parents"));
-		basementCloset.addChild(toothpaste);
-		
-		root.addChild(basementCloset);
-		
-		ProductContainerData foodStorage = new ProductContainerData("Food Storage Room");
-		
-		ProductContainerData soup = new ProductContainerData("Soup");
-		soup.addChild(new ProductContainerData("Chicken Noodle"));
-		soup.addChild(new ProductContainerData("Split Pea"));
-		soup.addChild(new ProductContainerData("Tomato"));
-		foodStorage.addChild(soup);
-		
-		root.addChild(foodStorage);
+		//Get all available storage units
+		ArrayList<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
+		storageUnits = bm.storageUnitVault.findAll("Deleted = false");
+		//For each storage unit add all it's children productGroups
+		for(StorageUnit su : storageUnits){
+			ProductContainerData tempSU = new ProductContainerData(su.getName());
+			root.addChild(addChildrenProductContainers(su,tempSU));
+		}
 		
 		getView().setProductContainers(root);
 	}
 
+	private void addSampleItems(){
+		StorageUnit su1 = new StorageUnit();
+        su1.setName("Unit A");
+        StorageUnit su2 = new StorageUnit();
+        su2.setName("Unit B");
+        StorageUnit su3 = new StorageUnit();
+        su3.setName("Unit C");
+        
+        su1.validate();
+        su2.validate();
+        su3.validate();
+        su1.save();
+        su2.save();
+        su3.save();
+        
+        
+        ProductGroup pg1 = new ProductGroup();
+        pg1.setName("Group A");
+        pg1.setParentId(su3.getId());
+        //pg1.setRootParentId(su3.getId());
+        pg1.set3MonthSupply(new Size(3, Size.Unit.oz));
+        
+        ProductGroup pg2 = new ProductGroup();
+        pg2.setName("Group B");
+        pg2.setParentId(su1.getId());
+        //pg2.setRootParentId(su1.getId());
+        pg2.set3MonthSupply(new Size(3, Size.Unit.oz));
+        
+        
+        pg1.validate();
+        pg2.validate();
+        
+        pg1.save();
+        pg2.save();
+        
+        ProductGroup pg3 = new ProductGroup();
+        pg3.setName("Group C");
+        pg3.setParentId(pg2.getId());
+        //pg3.setRootParentId(su1.getId());
+        pg3.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg3.validate();
+        pg3.save();
+	}
+	/*
+	 * Add all children to pc, recursive call
+	 */
+	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
+		//Get list of all productGroups in PC
+		ArrayList<ProductGroup> productGroups = new ArrayList<ProductGroup>();
+		productGroups = bm.productGroupVault.findAll("ParentIdString = "+pc.getId());
+		
+		//Loop through each product group and add it to PC
+		for(ProductGroup pg : productGroups){
+			//Create a new data object from the product group
+			ProductContainerData tempPC = new ProductContainerData(pg.getName());
+			pcData.addChild(addChildrenProductContainers(pg,tempPC));
+		}
+		
+		return pcData;
+	}
+	
+	
+	
 	/**
 	 * Sets the enable/disable state of all components in the controller's view.
 	 * A component should be enabled only if the user is currently
@@ -188,19 +250,20 @@ public class InventoryController extends Controller
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
 		if (selectedContainer != null) {
-			int productCount = rand.nextInt(20) + 1;
-			for (int i = 1; i <= productCount; ++i) {
-				ProductData productData = new ProductData();			
-				productData.setBarcode(getRandomBarcode());
-				int itemCount = rand.nextInt(25) + 1;
-				productData.setCount(Integer.toString(itemCount));
-				productData.setDescription("Item " + i);
-				productData.setShelfLife("3 months");
-				productData.setSize("1 pounds");
-				productData.setSupply("10 count");
-				
-				productDataList.add(productData);
-			}
+			
+//			int productCount = rand.nextInt(20) + 1;
+//			for (int i = 1; i <= productCount; ++i) {
+//				ProductData productData = new ProductData();			
+//				productData.setBarcode(getRandomBarcode());
+//				int itemCount = rand.nextInt(25) + 1;
+//				productData.setCount(Integer.toString(itemCount));
+//				productData.setDescription("Item " + i);
+//				productData.setShelfLife("3 months");
+//				productData.setSize("1 pounds");
+//				productData.setSupply("10 count");
+//				
+//				productDataList.add(productData);
+//			}
 		}
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
 		
@@ -393,6 +456,7 @@ public class InventoryController extends Controller
      */
     @Override
     public void update(Observable o, Object arg) {
+    	this.loadValues();
     }
 }
 

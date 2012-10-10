@@ -24,23 +24,13 @@ public class ProductContainer extends Model{
      */
     private int _id;
 
-    /**
-     * When a change is made to the data it becomes invalid and 
-     * must be validated before it can be saved.
-     * _valid maintains this state
-     */
-    private boolean _valid;
-
-    /**
-     * _saved maintaines the state of if the instance of the model is the same as the 
-     * persisted model in the vault.
-     */
-    private boolean _saved;
+    
     private boolean _deleted;
     /**
      * Constructor
      */
     public ProductContainer(){
+    	super();
         _name = "";
         _id = -1;
         _valid = false;
@@ -94,6 +84,16 @@ public class ProductContainer extends Model{
      */
     public String getName() {
         return _name;
+    }
+    
+    /*
+     * 
+     */
+    public String getDeleted(){
+    	if (this._deleted == false)
+    		return "false";
+    	else
+    		return "true"; 
     }
 
     /**
