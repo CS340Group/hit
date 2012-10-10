@@ -199,10 +199,10 @@ public class StorageUnitVault extends Vault{
             return new Result(false, "Model must be valid prior to saving,");
 
         int id = 0;
-        if(dataVault.isEmpty())
+        if(dataVault.isEmpty() && model.productGroupVault.size() == 0 )
             id = 0;
         else
-            id = (int)dataVault.lastKey() + 1;
+            id = dataVault.size() + 1 +model.productGroupVault.size();
 
         model.setId(id);
         model.setSaved(true);
