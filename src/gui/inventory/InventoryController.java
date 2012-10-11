@@ -12,6 +12,7 @@ import model.common.Barcode;
 import model.common.BaseModel;
 import model.common.Size;
 import model.common.Size.Unit;
+import model.item.Item;
 import model.product.Product;
 import model.productcontainer.*;
 
@@ -124,6 +125,16 @@ public class InventoryController extends Controller
         p1.setSize(new Size(123,Unit.oz));
         p1.validate();
         p1.save();
+        
+        Item i1 = new Item();
+        i1.setBarcode(new Barcode());
+        i1.setEntryDate(new DateTime());
+        i1.setExitDate(new DateTime());
+        i1.setExpirationDate(new DateTime());
+        i1.setProductId(p1.getId());
+        i1.validate();
+        i1.save();
+        
 	}
 	/*
 	 * Add all children to pc, recursive call
@@ -293,13 +304,12 @@ public class InventoryController extends Controller
 				productData.setShelfLife(Integer.toString(tempProduct.getShelfLife()));
 				productData.setSize(tempProduct.getSize().toString());
 				productData.setSupply(Integer.toString(tempProduct.get3MonthSupply()));
-				
+				productData.setTag(tempProduct.getId());
 				productDataList.add(productData);
 			}
 		}
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
-		
-		//getView().setItems(new ItemData[0]);
+		getView().setItems(new ItemData[0]);
 	}
 
 	/**
@@ -308,22 +318,22 @@ public class InventoryController extends Controller
 	@Override
 	public void productSelectionChanged() {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();		
-		ProductData selectedProduct = getView().getSelectedProduct();
+		ProductData selectedProductData = getView().getSelectedProduct();
+		int id = (int) selectedProductData.getTag();
+		Product selectedProduct = bm.productVault.get(id);
+		
+		
 		if (selectedProduct != null) {
-			Date now = new Date();
-			GregorianCalendar cal = new GregorianCalendar();
-			int itemCount = Integer.parseInt(selectedProduct.getCount());
-			for (int i = 1; i <= itemCount; ++i) {
-				cal.setTime(now);
+			ArrayList<Item> items = new ArrayList<Item>();
+			items = bm.itemVault.findAll("ProductId = "+id);
+			for(Item tempItem : items){
 				ItemData itemData = new ItemData();
-				itemData.setBarcode(getRandomBarcode());
-				cal.add(Calendar.MONTH, -rand.nextInt(12));
-				itemData.setEntryDate(cal.getTime());
-				cal.add(Calendar.MONTH, 3);
-				itemData.setExpirationDate(cal.getTime());
-				itemData.setProductGroup("Some Group");
-				itemData.setStorageUnit("Some Unit");
-				
+				itemData.setBarcode(tempItem.getProductBarcode());
+				itemData.setEntryDate(tempItem.getEntryDate().toDate());
+				itemData.setExpirationDate(tempItem.getExpirationDate().toDate());
+				itemData.setProductGroup(tempItem.getProduct().getContainer().getName());
+				itemData.setStorageUnit(tempItem.getProduct().getStorageUnit().getName());
+				itemData.setTag(tempItem.getId());
 				itemDataList.add(itemData);
 			}
 		}
