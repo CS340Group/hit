@@ -1,18 +1,54 @@
 package model.tempmain;
+
+import java.io.IOException;
 import model.common.Barcode;
 import common.Result;
+import common.PdfDocument;
+import java.io.File;
 
 public class TempMain {
 	public static void main(final String[] args) {
 
 		Barcode foo = new Barcode();
 		Result r = foo.setCode("036000291452");
-		System.out.println(r.getMessage());
-		// foo = Barcode.fromId("0360002914591024");
-		// foo = new Barcode();
-		// foo.setCode("036000291452");
-		// System.out.println(foo.validate().getMessage());
-		// foo.setCode("036000291458");
-		// System.out.println(foo.validate().getMessage());
+		String fileloc = "/Users/murphyra/spam.pdf";
+		PdfDocument d = new PdfDocument(fileloc);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.addBarcode(foo);
+		d.finish();
+		try{
+			java.awt.Desktop.getDesktop().open(new File(fileloc));
+		}catch(IOException e){
+			System.out.println("The file was not located on disk.");
+		}
 	}
 }
