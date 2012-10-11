@@ -345,7 +345,7 @@ public class Product extends Model{
         if (_description == null || _description.equals("")){
             return new Result(false, "The description cannot be empty.");
         }
-        if (!_size.validate().getStatus()){
+        if (_size==null || !_size.validate().getStatus()){
             return new Result(false, "The size is invalid.");
         }
         if (_shelfLife<0){
@@ -413,4 +413,8 @@ public class Product extends Model{
         _valid = false;
         _saved = false;
     }
+
+	public String getCount() {
+		return this._size.toString();
+	}
 }

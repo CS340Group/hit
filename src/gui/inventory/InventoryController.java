@@ -6,8 +6,12 @@ import gui.product.*;
 
 import java.util.*;
 
+import org.joda.time.DateTime;
+
+import model.common.Barcode;
 import model.common.BaseModel;
 import model.common.Size;
+import model.common.Size.Unit;
 import model.product.Product;
 import model.productcontainer.*;
 
@@ -25,7 +29,9 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
+		this.addSampleItems();
 		construct();
+		
         StorageUnitVault.getInstance().addObserver(this);
         ProductGroupVault.getInstance().addObserver(this);
 	}
@@ -47,8 +53,6 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
-        System.out.println("LOAD");
-
 		//this.addSampleItems();
 		ProductContainerData root = new ProductContainerData();
 		
@@ -107,6 +111,19 @@ public class InventoryController extends Controller
         pg3.set3MonthSupply(new Size(3, Size.Unit.oz));
         pg3.validate();
         pg3.save();
+        
+        
+        Product p1 = new Product();
+        p1.setStorageUnitId(su1.getId());
+        p1.set3MonthSupply(3);
+        p1.setBarcode(new Barcode("1111"));
+        p1.setContainerId(pg2.getId());
+        p1.setDescription("This is such a great description");
+        p1.setShelfLife(5);
+        p1.setCreationDate(new DateTime());
+        p1.setSize(new Size(123,Unit.oz));
+        p1.validate();
+        p1.save();
 	}
 	/*
 	 * Add all children to pc, recursive call
@@ -250,26 +267,39 @@ public class InventoryController extends Controller
 	@Override
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
-		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if (selectedContainer != null) {
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		
+		if (selectedContainerData != null) {
+			//Get list of all productGroups in PC
+			ArrayList<Product> products = new ArrayList<Product>();
 			
-//			int productCount = rand.nextInt(20) + 1;
-//			for (int i = 1; i <= productCount; ++i) {
-//				ProductData productData = new ProductData();			
-//				productData.setBarcode(getRandomBarcode());
-//				int itemCount = rand.nextInt(25) + 1;
-//				productData.setCount(Integer.toString(itemCount));
-//				productData.setDescription("Item " + i);
-//				productData.setShelfLife("3 months");
-//				productData.setSize("1 pounds");
-//				productData.setSupply("10 count");
-//				
-//				productDataList.add(productData);
-//			}
+			int id = (int) selectedContainerData.getTag();
+			ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+			
+			
+			//Is a storage unit or a product group selected
+			if(selectedStorageUnit != null)
+				products = bm.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
+			else if(selectedProductGroup != null)
+				products = bm.productVault.findAll("ContainerId = "+selectedProductGroup.getId());		
+			
+			
+			for(Product tempProduct : products){
+				ProductData productData = new ProductData();			
+				productData.setBarcode(tempProduct.getBarcodeString());
+				productData.setCount(tempProduct.getCount());
+				productData.setDescription(tempProduct.getDescription());
+				productData.setShelfLife(Integer.toString(tempProduct.getShelfLife()));
+				productData.setSize(tempProduct.getSize().toString());
+				productData.setSupply(Integer.toString(tempProduct.get3MonthSupply()));
+				
+				productDataList.add(productData);
+			}
 		}
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
 		
-		getView().setItems(new ItemData[0]);
+		//getView().setItems(new ItemData[0]);
 	}
 
 	/**
