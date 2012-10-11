@@ -24,6 +24,9 @@ public class ProductContainer extends Model{
      */
     private int _id;
 
+    /* A pointer to the StorageUnit that holds this group. Can be the same
+	 * as _parentId */
+    protected int _rootParentId;
     
     private boolean _deleted;
     /**
@@ -36,6 +39,7 @@ public class ProductContainer extends Model{
         _valid = false;
         _saved = false;
         _deleted = false;
+        _rootParentId = -1;
     }
 
     /**
@@ -48,6 +52,7 @@ public class ProductContainer extends Model{
         _saved = p.isSaved();
         _deleted = p.isDeleted();
         _name = p.getName();
+        _rootParentId = p.getRootParentId();
     }
 
     /**
@@ -77,6 +82,31 @@ public class ProductContainer extends Model{
     public void invalidate(){
         _valid = false;
         _saved = false;
+    }
+
+    /**
+     * Return the ID of the StorageUnit.
+     */
+    public int getRootParentId(){
+        return _rootParentId;
+    }
+
+    /**
+     * Returns a copy of the storage unit that this ProductGroup is contained
+     * in.
+     */
+    public ProductContainer getRootParent(){
+        return storageUnitVault.get(_rootParentId);
+    }
+
+    /**
+     * Set this to the ID of the StorageUnit that this ProductGroup belongs to.
+     */
+    public Result setRootParentId(int id){
+        assert true;
+        _rootParentId = id;
+        invalidate();
+        return new Result(true);
     }
 
     /**

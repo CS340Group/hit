@@ -2,12 +2,19 @@ package gui.productgroup;
 
 import gui.common.*;
 import gui.inventory.*;
+import model.common.Size;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.ProductGroupVault;
+import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 
 /**
  * Controller class for the edit product group view.
  */
 public class EditProductGroupController extends Controller 
 										implements IEditProductGroupController {
+
+    private ProductContainerData target;
 	
 	/**
 	 * Constructor.
@@ -17,7 +24,7 @@ public class EditProductGroupController extends Controller
 	 */
 	public EditProductGroupController(IView view, ProductContainerData target) {
 		super(view);
-
+        this.target = target;
 		construct();
 	}
 
@@ -49,6 +56,17 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+        ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
+        float size = 0;
+        try {
+            size = Float.parseFloat(getView().getSupplyValue());
+        } catch(Exception e ){
+            getView().enableOK(false);
+            return;
+        }
+        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.setName(getView().getProductGroupName());
+        getView().enableOK(pg.validate().getStatus());
 	}
 
 	/**
@@ -80,6 +98,12 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	public void editProductGroup() {
+        ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
+        float size = Float.parseFloat(getView().getSupplyValue());
+        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.setName(getView().getProductGroupName());
+        pg.validate();
+        pg.save();
 	}
 
 }

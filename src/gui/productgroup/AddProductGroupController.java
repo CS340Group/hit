@@ -2,13 +2,16 @@ package gui.productgroup;
 
 import gui.common.*;
 import gui.inventory.*;
+import model.common.Size;
+import model.productcontainer.*;
 
 /**
  * Controller class for the add product group view.
  */
 public class AddProductGroupController extends Controller implements
 		IAddProductGroupController {
-	
+
+    private ProductContainerData containerData;
 	/**
 	 * Constructor.
 	 * 
@@ -17,9 +20,17 @@ public class AddProductGroupController extends Controller implements
 	 */
 	public AddProductGroupController(IView view, ProductContainerData container) {
 		super(view);
-		
+		setContainerData(container);
 		construct();
 	}
+
+    public ProductContainerData getContainerData() {
+        return containerData;
+    }
+
+    public void setContainerData(ProductContainerData containerData) {
+        this.containerData = containerData;
+    }
 
 	//
 	// Controller overrides
@@ -49,6 +60,22 @@ public class AddProductGroupController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+        ProductContainer unit = StorageUnitVault.getInstance().get(((Number)getContainerData().getTag()).intValue());
+        if(unit == null)
+            unit = ProductGroupVault.getInstance().get(((Number)getContainerData().getTag()).intValue());
+        ProductGroup pg = new ProductGroup();
+        pg.setRootParentId(unit.getRootParentId());
+        pg.setParentId(unit.getId());
+        float size = 0;
+        try {
+            size = Float.parseFloat(getView().getSupplyValue());
+        } catch(Exception e ){
+            getView().enableOK(false);
+            return;
+        }
+        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.setName(getView().getProductGroupName());
+        getView().enableOK(pg.validate().getStatus());
 	}
 
 	/**
@@ -72,6 +99,7 @@ public class AddProductGroupController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
 	}
 	
 	/**
@@ -80,6 +108,17 @@ public class AddProductGroupController extends Controller implements
 	 */
 	@Override
 	public void addProductGroup() {
+        ProductContainer unit = StorageUnitVault.getInstance().get(((Number)getContainerData().getTag()).intValue());
+        if(unit == null)
+            unit = ProductGroupVault.getInstance().get(((Number)getContainerData().getTag()).intValue());
+        ProductGroup pg = new ProductGroup();
+        pg.setRootParentId(unit.getId());
+        pg.setParentId(unit.getId());
+        float size = Float.parseFloat(getView().getSupplyValue());
+        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.setName(getView().getProductGroupName());
+        pg.validate();
+        pg.save();
 	}
 
 }
