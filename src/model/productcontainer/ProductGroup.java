@@ -99,7 +99,21 @@ public class ProductGroup extends ProductContainer{
         return new Result(true);
     }
 
-
+    public StorageUnit getStorageUnit(){
+    	ProductGroup tempGroup = this;
+    	int id=-1;
+    	while(tempGroup != null){
+    		if(tempGroup.getParent()!=null){
+	    		id = tempGroup.getParent().getId();
+	    		tempGroup = this.productGroupVault.get(id);
+    		} else {
+    			id = this.getParentId();
+    			tempGroup = null;
+    		}
+    	}
+    	return this.storageUnitVault.get(id);
+    	
+    }
 
     /**
      * Checks if this is a valid ProductGroup.
