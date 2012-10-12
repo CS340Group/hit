@@ -71,8 +71,7 @@ public class StorageUnitTest {
 
     @Test
     public void testIsDeleteable() throws Exception {
-        assertTrue(su1.isDeleteable().getStatus());
-    }
+        assertTrue(su1.isDeletable().getStatus());    }
 
 
 }
