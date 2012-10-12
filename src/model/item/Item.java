@@ -122,10 +122,9 @@ public class Item extends Model{
     /**
      *  Sets the Barcode instance belonging to this Item.
      */
-    public Result setBarcode(Barcode b){
+    protected Result setBarcode(Barcode b){
         assert b != null;
         _barcode = b;
-        invalidate();
         return new Result(true, "Barcode set successfully.");
     }
 

@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+
+import model.common.Barcode;
 import model.common.IModel;
 import model.common.Vault;
 import common.Result;
@@ -153,7 +155,8 @@ public class ItemVault extends Vault{
 	public Result validateNew(Item model){
 		assert(model!=null);
 
-		int count = findAll("Barcode = " + model.getBarcode().toString()).size();
+        //Since we set the barcode at save we don't need to check it here
+		int count = 0;//findAll("Barcode = " + model.getBarcode().toString()).size();
 		if(count ==0){
             model.setValid(true);
 			return new Result(true);
@@ -204,6 +207,7 @@ public class ItemVault extends Vault{
             id = (int)dataVault.lastKey()+1;
 
         model.setId(id);
+        model.setBarcode(new Barcode(String.valueOf(id)));
         model.setSaved(true);
         this.addModel(new Item(model));
         return new Result(true);
