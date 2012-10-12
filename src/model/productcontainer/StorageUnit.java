@@ -19,6 +19,7 @@ public class StorageUnit extends ProductContainer{
      */
     public StorageUnit(){
         super();
+
     }
 
     /**
@@ -70,5 +71,20 @@ public class StorageUnit extends ProductContainer{
         }
 
         return new Result(true);
+    }
+
+    /**
+     * Returns a copy of the storage unit that this ProductGroup is contained
+     * in.
+     */
+    public ProductContainer getRootParent(){
+        return this;
+    }
+
+    /**
+     * Set this to the ID of the StorageUnit that this ProductGroup belongs to.
+     */
+    public Result setRootParentId(int id){
+        return new Result(false, "Root Parent of a Storage Unit is immutable");
     }
 }

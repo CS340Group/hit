@@ -144,7 +144,8 @@
 	
 	<property name="itext.jar" value="lib/itext-5.1.0/itextpdf-5.1.0.jar"/>
 	<property name="sqlite.jar" value="lib/sqlitejdbc-v056/sqlitejdbc-v056.jar"/>
-	
+	<property name="joda.jar" value="lib/joda-time-2.1.jar"/>
+
 	<target name="package" depends="compile"
         description="package the jar file" >
 		<mkdir dir="${dist}/lib"/>
@@ -162,7 +163,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="gui.main.GUI"/>
 				<attribute name="Class-Path" 
-					value="${sqlite.jar} ${itext.jar}" />
+					value="${sqlite.jar} ${itext.jar} ${joda.jar}" />
 			</manifest>
 		</jar>
 	</target>
