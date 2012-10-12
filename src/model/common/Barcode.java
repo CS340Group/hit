@@ -168,6 +168,7 @@ public class Barcode implements Serializable{
 		}
 		_code = generateCodeFromId(id);
 		_set = true;
+		_valid = true;
 		return new Result(true, "Code generated and set successfully.");
 	}
 
