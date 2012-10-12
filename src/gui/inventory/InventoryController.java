@@ -30,7 +30,7 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		this.addSampleItems();
+		//this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
@@ -289,7 +289,7 @@ public class InventoryController extends Controller
 		if (selectedContainerData != null) {
 			//Get list of all productGroups in PC
 			ArrayList<Product> products = new ArrayList<Product>();
-			
+
 			int id = -1;
 			if(selectedContainerData.getTag() != null)
 			  id = ((Number) selectedContainerData.getTag()).intValue();
@@ -508,7 +508,6 @@ public class InventoryController extends Controller
      */
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("UPDATE");
     	this.loadValues();
     }
 }

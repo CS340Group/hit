@@ -90,6 +90,7 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
 	}
 	
 	/**
