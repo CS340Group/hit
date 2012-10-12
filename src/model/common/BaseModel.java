@@ -71,7 +71,7 @@ public class BaseModel {
     /**
      * Moves a Product from one StorageUnit / ProductGroup to another.
      */
-    public Result MoveProduct(StorageUnit targetSU, ProductGroup targetPC,
+    public Result MoveProduct(StorageUnit targetSU, ProductContainer targetPC,
     Product product){
         assert targetSU != null;
         assert targetPC != null;
@@ -86,10 +86,10 @@ public class BaseModel {
 
         if(p == null){
             //Target Product does not exist
-            p = new Product(product);
-            p.setStorageUnitId(targetSU.getId());
+            p = product;
             p.setContainerId(targetPC.getId());
-            assert p.validate().getStatus();
+            p.setStorageUnitId(targetSU.getId());
+            p.validate();
             p.save();
         }
 
