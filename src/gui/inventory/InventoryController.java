@@ -177,6 +177,8 @@ public class InventoryController extends Controller
 
 	/**
 	 * Returns true if and only if the "Add Storage Unit" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canAddStorageUnit() {
@@ -209,6 +211,8 @@ public class InventoryController extends Controller
 
 	/**
 	 * Returns true if and only if the "Delete Storage Unit" menu item should be enabled.
+	 * 
+	 * *Can only be deleted if there are no items
 	 */
 	@Override
 	public boolean canDeleteStorageUnit() {
@@ -217,6 +221,8 @@ public class InventoryController extends Controller
 	
 	/**
 	 * This method is called when the user selects the "Delete Storage Unit" menu item.
+	 * 
+	 * Must delete it's self as well as all sum children
 	 */
 	@Override
 	public void deleteStorageUnit() {
@@ -284,7 +290,9 @@ public class InventoryController extends Controller
 			//Get list of all productGroups in PC
 			ArrayList<Product> products = new ArrayList<Product>();
 			
-			int id = (int) selectedContainerData.getTag();
+			int id = -1;
+			if(selectedContainerData.getTag() != null)
+			  id = ((Number) selectedContainerData.getTag()).intValue();
 			ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
 			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
 			
@@ -319,7 +327,9 @@ public class InventoryController extends Controller
 	public void productSelectionChanged() {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();		
 		ProductData selectedProductData = getView().getSelectedProduct();
-		int id = (int) selectedProductData.getTag();
+		int id = -1;
+		if(selectedProductData.getTag() != null)
+		  id = ((Number) selectedProductData.getTag()).intValue();
 		Product selectedProduct = bm.productVault.get(id);
 		
 		
