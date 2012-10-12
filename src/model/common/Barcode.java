@@ -146,6 +146,7 @@ public class Barcode implements Serializable{
 		}
 		_code = code;
 		_set = true;
+		_valid = true;
 		return new Result(true, "Code is valid and set.");
 	}
 
@@ -167,6 +168,7 @@ public class Barcode implements Serializable{
 		}
 		_code = generateCodeFromId(id);
 		_set = true;
+		_valid = true;
 		return new Result(true, "Code generated and set successfully.");
 	}
 
@@ -197,5 +199,12 @@ public class Barcode implements Serializable{
 	public Result validate(){
 		Result r = setCode(_code);
 		return r;
+	}
+
+	/**
+	 * Returns whether the barcode is valid or not.
+	 */
+	public boolean isValid() {
+		return _valid;
 	}
 }
