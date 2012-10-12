@@ -3,6 +3,7 @@ package gui.batches;
 import java.util.*;
 
 import gui.common.IView;
+import gui.inventory.ProductContainerData;
 import gui.item.ItemData;
 import gui.product.ProductData;
 
@@ -138,8 +139,9 @@ public interface IAddItemBatchView extends IView {
 	
 	/**
 	 * Displays the add item view.
-	 */
-	void displayAddProductView();
+     * @param target
+     */
+	void displayAddProductView(ProductContainerData target);
 
 }
 

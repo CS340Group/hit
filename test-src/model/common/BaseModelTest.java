@@ -133,42 +133,42 @@ public class BaseModelTest {
         i6 = new Item();
 
         i1.setProductId(p1.getId());
-        i1.setBarcode(new Barcode("0110"));
+        //i1.setBarcode(new Barcode("0110"));
         i1.setEntryDate(DateTime.now());
         i1.setExpirationDate(DateTime.now().plusMonths(2));
         i1.validate();
         i1.save();
 
         i2.setProductId(p1.getId());
-        i2.setBarcode(new Barcode("0111"));
+        //i2.setBarcode(new Barcode("0111"));
         i2.setEntryDate(DateTime.now());
         i2.setExpirationDate(DateTime.now().plusMonths(2));
         i2.validate();
         i2.save();
 
         i3.setProductId(p2.getId());
-        i3.setBarcode(new Barcode("0210"));
+        //i3.setBarcode(new Barcode("0210"));
         i3.setEntryDate(DateTime.now());
         i3.setExpirationDate(DateTime.now().plusMonths(2));
         i3.validate();
         i3.save();
 
         i4.setProductId(p2.getId());
-        i4.setBarcode(new Barcode("0310"));
+        //i4.setBarcode(new Barcode("0310"));
         i4.setEntryDate(DateTime.now());
         i4.setExpirationDate(DateTime.now().plusMonths(2));
         i4.validate();
         i4.save();
 
         i5.setProductId(p3.getId());
-        i5.setBarcode(new Barcode("0111222"));
+        //i5.setBarcode(new Barcode("0111222"));
         i5.setEntryDate(DateTime.now());
         i5.setExpirationDate(DateTime.now().plusMonths(2));
         i5.validate();
         i5.save();
 
         i6.setProductId(p3.getId());
-        i6.setBarcode(new Barcode("01199"));
+        //i6.setBarcode(new Barcode("01199"));
         i6.setEntryDate(DateTime.now());
         i6.setExpirationDate(DateTime.now().plusMonths(2));
         i6.validate();
@@ -189,7 +189,7 @@ public class BaseModelTest {
     public void testAddItem() throws Exception {
         BaseModel c = new BaseModel();
         Item i = new Item();
-        i.setBarcode(new Barcode("2345"));
+        //i.setBarcode(new Barcode("2345"));
         i.setEntryDate(DateTime.now());
         i.setExpirationDate(DateTime.now().plusYears(1));
         i.setProductId(p4.getId());

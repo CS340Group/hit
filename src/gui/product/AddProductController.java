@@ -1,24 +1,45 @@
 package gui.product;
 
 import gui.common.*;
+import gui.inventory.ProductContainerData;
+import model.common.Barcode;
+import model.common.Size;
+import model.product.Product;
+import org.joda.time.DateTime;
 
 /**
  * Controller class for the add item view.
  */
 public class AddProductController extends Controller implements
 		IAddProductController {
-	
+
+    private Barcode barcode;
+    private ProductContainerData target;
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param view Reference to the add product view
 	 * @param barcode Barcode for the product being added
 	 */
-	public AddProductController(IView view, String barcode) {
+	public AddProductController(IView view, String barcode, ProductContainerData target) {
 		super(view);
-		
+		this.barcode = new Barcode(barcode);
+        this.target = target;
 		construct();
-	}
+        getView().setBarcode(this.barcode.toString());
+        getView().enableBarcode(false);
+        getView().setSizeValue("1");
+        getView().enableSizeValue(false);
+    }
+
+    public Barcode getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(Barcode barcode) {
+        this.barcode = barcode;
+    }
 
 	//
 	// Controller overrides
@@ -48,6 +69,22 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+        getView().enableSizeValue(true);
+        if(getView().getSizeUnit().name() == "count"){
+            getView().enableSizeValue(false);
+            getView().setSizeValue("1");
+        }
+        try{
+            Float.parseFloat(getView().getSizeValue());
+            Integer.parseInt(getView().getShelfLife());
+            Integer.parseInt(getView().getSupply());
+        } catch (Exception e){
+            getView().enableOK(false);
+        }
+        getView().enableOK(!getView().getDescription().isEmpty());
+
+
+
 	}
 
 	/**
@@ -59,6 +96,7 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+
 	}
 
 	//
@@ -71,6 +109,7 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
 	}
 	
 	/**
@@ -79,6 +118,18 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void addProduct() {
+        Product product = new Product();
+        product.set3MonthSupply(Integer.parseInt(getView().getSupply()));
+        product.setBarcode(this.barcode);
+        product.setContainerId((Integer) target.getTag());
+        product.setCreationDate(DateTime.now());
+        product.setDescription(getView().getDescription());
+        product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
+        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
+                Size.Unit.values()[getView().getSizeUnit().ordinal()]));
+        product.setStorageUnitId((Integer) target.getTag());
+        product.validate();
+        product.save();
 	}
 
 }
