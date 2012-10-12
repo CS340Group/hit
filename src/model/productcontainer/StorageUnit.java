@@ -60,9 +60,6 @@ public class StorageUnit extends ProductContainer{
             return storageUnitVault.saveModified(this);
     }
 
-
-    }
-
     /**
      * Returns a copy of the storage unit that this ProductGroup is contained
      * in.
@@ -76,4 +73,5 @@ public class StorageUnit extends ProductContainer{
      */
     public Result setRootParentId(int id){
         return new Result(false, "Root Parent of a Storage Unit is immutable");
+    }
 }
