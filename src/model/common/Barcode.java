@@ -146,6 +146,7 @@ public class Barcode implements Serializable{
 		}
 		_code = code;
 		_set = true;
+		_valid = true;
 		return new Result(true, "Code is valid and set.");
 	}
 
