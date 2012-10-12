@@ -175,8 +175,8 @@ public class ProductContainer extends Model{
      */
     public Result delete(){
         assert true;
-        if(!isDeletable().getStatus())
-		this._deleted = true;
+        if(isDeletable().getStatus())
+        	this._deleted = true;
 		return new Result(true);
 	}
 

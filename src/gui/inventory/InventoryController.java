@@ -30,7 +30,7 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		//this.addSampleItems();
+		this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
@@ -126,14 +126,14 @@ public class InventoryController extends Controller
         p1.validate();
         p1.save();
         
-        Item i1 = new Item();
-        i1.setBarcode(new Barcode());
-        i1.setEntryDate(new DateTime());
-        i1.setExitDate(new DateTime());
-        i1.setExpirationDate(new DateTime());
-        i1.setProductId(p1.getId());
-        i1.validate();
-        i1.save();
+//        Item i1 = new Item();
+//        i1.setBarcode(new Barcode());
+//        i1.setEntryDate(new DateTime());
+//        i1.setExitDate(new DateTime());
+//        i1.setExpirationDate(new DateTime());
+//        i1.setProductId(p1.getId());
+//        i1.validate();
+//        i1.save();
         
 	}
 	/*
@@ -246,6 +246,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteStorageUnit() {
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		int id = -1;
+		if(selectedContainerData.getTag() != null)
+		  id = ((Number) selectedContainerData.getTag()).intValue();
+		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		
+		selectedStorageUnit.delete();
+		selectedStorageUnit.save();
 	}
 
 	/**
@@ -293,6 +301,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProductGroup() {
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		int id = -1;
+		if(selectedContainerData.getTag() != null)
+		  id = ((Number) selectedContainerData.getTag()).intValue();
+		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+		
+		selectedProductGroup.delete();
+		selectedProductGroup.save();
 	}
 
 	private Random rand = new Random();
@@ -406,6 +422,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProduct() {
+		ProductData selectedProductData = getView().getSelectedProduct();
+		int id = -1;
+		if(selectedProductData.getTag() != null)
+		  id = ((Number) selectedProductData.getTag()).intValue();
+		Product selectedProduct = bm.productVault.get(id);
+		
+		selectedProduct.delete();
+		selectedProduct.save();
 	}
 
 	/**
