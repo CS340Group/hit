@@ -132,7 +132,7 @@ public class InventoryController extends Controller
         p1.save();
         
         Item i1 = new Item();
-        i1.setBarcode(new Barcode());
+        //i1.setBarcode(new Barcode());
         i1.setEntryDate(new DateTime());
         i1.setExitDate(new DateTime());
         i1.setExpirationDate(new DateTime());
