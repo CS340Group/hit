@@ -61,19 +61,6 @@ public class StorageUnit extends ProductContainer{
     }
 
     /**
-     * Checks whether this StorageUnit is in a deletable state.
-     */
-    public Result isDeleteable(){
-        ArrayList<Product> products = productVault.findAll("StorageUnitId = "+getId());
-        for(Product product : products){
-            if(!product.isDeleteable().getStatus())
-                return product.isDeleteable();
-        }
-
-        return new Result(true);
-    }
-
-    /**
      * Returns a copy of the storage unit that this ProductGroup is contained
      * in.
      */

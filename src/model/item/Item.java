@@ -65,6 +65,7 @@ public class Item extends Model{
         _id = i.getId();
         _valid = false;
         _saved = false;
+        _deleted = i.isDeleted();
         _productId = i.getProductId();
         _barcode = i.getBarcode();
         _entryDate = i.getEntryDate();

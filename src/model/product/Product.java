@@ -27,19 +27,6 @@ public class Product extends Model{
 	 */
 	private int _id;
 
-	/**
-	 * When a change is made to the data it becomes invalid and 
-	 * must be validated before it can be saved.
-	 * _valid maintains this state
-	 */
-	private boolean _valid;
-
-	/**
-	 * _saved maintaines the state of if the instance of the model is the same as the 
-	 * persisted model in the vault.
-	 */
-	private boolean _saved;
-
     private int _storageUnitId;
 
     private int _containerId;
@@ -76,6 +63,7 @@ public class Product extends Model{
         _id = p.getId();
         _valid = true;
         _saved = true;
+        _deleted = p.isDeleted();
         _storageUnitId = p.getStorageUnitId();
         _containerId = p.getContainerId();
         _creationDate = p.getCreationDate();
@@ -84,6 +72,7 @@ public class Product extends Model{
         _size = p.getSize();
         _shelfLife = p.getShelfLife();
         _3MonthSupply = p.get3MonthSupply();
+        
     }
 
 	/**
@@ -379,7 +368,6 @@ public class Product extends Model{
             return new Result(false, "Must be deleteable");
 		this._deleted = true;
 		this._valid = true;
-		this.save();
 		return new Result(true);
 	}
 
