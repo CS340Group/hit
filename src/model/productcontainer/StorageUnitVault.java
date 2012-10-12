@@ -205,9 +205,9 @@ public class StorageUnitVault extends Vault{
             id = dataVault.size() + 1 +model.productGroupVault.size();
 
         model.setId(id);
+        model._rootParentId = id;
         model.setSaved(true);
         this.addModel(new StorageUnit(model));
-        System.out.println(this.countObservers());
         return new Result(true);
 	}
 

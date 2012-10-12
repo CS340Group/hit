@@ -16,9 +16,7 @@ public class ProductGroup extends ProductContainer{
 
 	/* A pointer to the ProductContainer that this group belongs to */
 	private int _parentId;
-	/* A pointer to the StorageUnit that holds this group. Can be the same
-	 * as _parentId */
-	private int _rootParentId;
+
 	/* A variable representing the three month supply for this group. */
 	private Size _3MonthSupply;
 	private boolean _deleted;
@@ -28,7 +26,6 @@ public class ProductGroup extends ProductContainer{
 	public ProductGroup(){
 		super();
 		_parentId = -1;
-		_rootParentId = -1;
 	}
 
 	/**
@@ -40,7 +37,6 @@ public class ProductGroup extends ProductContainer{
 	                    Size threeMonthSupply){
 		super();
 		_parentId = parent.getId();
-		_rootParentId = rootParent.getId();
 		_3MonthSupply = threeMonthSupply;
     }
 
@@ -51,7 +47,6 @@ public class ProductGroup extends ProductContainer{
         super(container);
         assert container != null;
         _parentId = container.getParentId();
-        _rootParentId = container.getRootParentId();
         _3MonthSupply = container.get3MonthSupply();
     }
 
@@ -104,30 +99,7 @@ public class ProductGroup extends ProductContainer{
         return new Result(true);
     }
 
-    /**
-     * Return the ID of the StorageUnit.
-     */
-    public int getRootParentId(){
-        return _rootParentId;
-    }
 
-    /**
-     * Returns a copy of the storage unit that this ProductGroup is contained 
-     * in.
-     */
-    public ProductContainer getRootParent(){
-        return storageUnitVault.get(_rootParentId);
-    }
-
-    /**
-     * Set this to the ID of the StorageUnit that this ProductGroup belongs to.
-     */
-    public Result setRootParentId(int id){
-        assert true;
-        _rootParentId = id;
-        invalidate();
-        return new Result(true);
-    }
 
     /**
      * Checks if this is a valid ProductGroup.

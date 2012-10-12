@@ -13,14 +13,14 @@ public class EditStorageUnitController extends Controller
 										implements IEditStorageUnitController {
 
     public ProductContainerData getTarget() {
-        return _target;
+        return target;
     }
 
     public void setTarget(ProductContainerData _target) {
-        this._target = _target;
+        this.target = _target;
     }
 
-    ProductContainerData _target;
+    ProductContainerData target;
 	
 	/**
 	 * Constructor.
@@ -32,7 +32,7 @@ public class EditStorageUnitController extends Controller
 		super(view);
 
 		construct();
-        _target = target;
+        this.target = target;
 	}
 
 	//
@@ -63,6 +63,8 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+        if(target == null)
+            return;
 
         int id = ((Number)getTarget().getTag()).intValue();
         StorageUnit su = StorageUnitVault.getInstance().get(id);
