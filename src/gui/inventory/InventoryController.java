@@ -390,7 +390,11 @@ public class InventoryController extends Controller
 				itemData.setBarcode(tempItem.getProductBarcode());
 				itemData.setEntryDate(tempItem.getEntryDate().toDate());
 				itemData.setExpirationDate(tempItem.getExpirationDate().toDate());
-				itemData.setProductGroup(tempItem.getProduct().getContainer().getName());
+				
+				Product pro = tempItem.getProduct();
+				ProductContainer cd = pro.getContainer();
+				if(cd!=null)
+					itemData.setProductGroup(cd.getName());
 				itemData.setStorageUnit(tempItem.getProduct().getStorageUnit().getName());
 				itemData.setTag(tempItem.getId());
 				itemDataList.add(itemData);
@@ -565,7 +569,23 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductToContainer(ProductData productData, 
-										ProductContainerData containerData) {		
+										ProductContainerData containerData) {	
+		int id = -1;
+		if(productData.getTag() != null)
+		  id = ((Number) productData.getTag()).intValue();
+		Product selectedProduct = bm.productVault.get(id);
+		
+		id = -1;
+		if(containerData.getTag() != null)
+		  id = ((Number) containerData.getTag()).intValue();
+		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		if(selectedProductGroup!=null){
+			bm.MoveProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
+		} else {
+			bm.MoveProduct(selectedStorageUnit, selectedStorageUnit, selectedProduct);
+		}
+		
 	}
 
 	/**
