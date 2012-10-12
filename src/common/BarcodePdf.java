@@ -1,5 +1,6 @@
 package common;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -21,6 +22,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 
 
+/**
+ * A class for printing out the barcode, description, and dates of items to a PDF on disk.
+ * The class should be instantiated, Items added, and then finish() should be called 
+ * in order for all of the changes to be written.
+ */
 public class BarcodePdf{
 
 	private Document _d;
@@ -30,37 +36,42 @@ public class BarcodePdf{
 	private PdfPTable _table;
 
 
-	public BarcodePdf(String fname){
+	/**
+	 * Constructor. Takes in a string representing where the file should be written to disk.
+	 * @param filepath
+	 * @throws DocumentException 
+	 * @throws FileNotFoundException 
+	 */
+	public BarcodePdf(String fname) throws FileNotFoundException, DocumentException{
 
 		_d = new Document();
 		
-		try{
-			_writer = PdfWriter.getInstance(_d, new FileOutputStream(fname));
-			
-			_d.setMargins(25, 25, 25, 25);
-			_d.open();
-			
-			_open = true;
-			_rawContent = _writer.getDirectContent();
-			
-			_table = new PdfPTable(4);
-			_table.setHorizontalAlignment(Element.ALIGN_CENTER);
-			
-		} catch (DocumentException dexc){
-			System.out.println("A new document could not be created.");
-		} catch (IOException e) {
-			System.out.println("Sorry, that's not a valid file path.");
-		}
+		_writer = PdfWriter.getInstance(_d, new FileOutputStream(fname));
+		
+		_d.setMargins(25, 25, 25, 25);
+		_d.open();
+		
+		_open = true;
+		_rawContent = _writer.getDirectContent();
+		
+		_table = new PdfPTable(4);
+		_table.setHorizontalAlignment(Element.ALIGN_CENTER);
 
 	}
 	
+	/**
+	 * Adds an item to the page for printing.
+	 * If the document was not successfully opened, or if the item has an invalid barcode,
+	 * no action will be taken and a negative Result will be returned.
+	 * @param item
+	 */
 	public Result addItem(Item item){
 		if (!_open){
 			return new Result(false, "Cannot add a product to an unopened file.");
 		}
-//		if (!product.isValid()){
-//			return new Result(false, "Cannot print an invalid product.");
-//		}
+		if (!item.getBarcode().isValid()){
+			return new Result(false, "Cannot print an invalid barcode.");
+		}
 
 		// Generate the barcode image:
 		BarcodeEAN codeEAN = new BarcodeEAN();
@@ -85,16 +96,22 @@ public class BarcodePdf{
 		return new Result(true, "Barcode added successfully.");
 	}
 	
-	public void finish(){
+	/**
+	 * Writes out the information and PDF file to disk, and closes the stream.
+	 * Returns a negative Result if there was an error creating the document, and 
+	 * a positive result if the document was successfully written and closed.
+	 */
+	public Result finish(){
 		if (_open){
 			try {
 				_d.add(_table);
 			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return new Result(false, "The document was not successfully constructed.");
 			}
 			_d.close();
 			_open = false;
 		}
+		
+		return new Result(true, "The document is closed.");
 	}
 }
