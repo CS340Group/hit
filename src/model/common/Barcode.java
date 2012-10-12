@@ -198,4 +198,11 @@ public class Barcode implements Serializable{
 		Result r = setCode(_code);
 		return r;
 	}
+
+	/**
+	 * Returns whether the barcode is valid or not.
+	 */
+	public boolean isValid() {
+		return _valid;
+	}
 }

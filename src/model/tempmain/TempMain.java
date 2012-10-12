@@ -3,7 +3,7 @@ package model.tempmain;
 import java.io.IOException;
 import model.common.Barcode;
 import common.Result;
-import common.PdfDocument;
+import common.BarcodePdf;
 import java.io.File;
 
 public class TempMain {
@@ -12,7 +12,7 @@ public class TempMain {
 		Barcode foo = new Barcode();
 		Result r = foo.setCode("036000291452");
 		String fileloc = "/Users/murphyra/spam.pdf";
-		PdfDocument d = new PdfDocument(fileloc);
+		BarcodePdf d = new BarcodePdf(fileloc);
 		d.addBarcode(foo);
 		d.addBarcode(foo);
 		d.addBarcode(foo);
