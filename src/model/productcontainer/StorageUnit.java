@@ -60,17 +60,7 @@ public class StorageUnit extends ProductContainer{
             return storageUnitVault.saveModified(this);
     }
 
-    /**
-     * Checks whether this StorageUnit is in a deletable state.
-     */
-    public Result isDeleteable(){
-        ArrayList<Product> products = productVault.findAll("StorageUnitId = "+getId());
-        for(Product product : products){
-            if(!product.isDeleteable().getStatus())
-                return product.isDeleteable();
-        }
 
-        return new Result(true);
     }
 
     /**
@@ -86,5 +76,4 @@ public class StorageUnit extends ProductContainer{
      */
     public Result setRootParentId(int id){
         return new Result(false, "Root Parent of a Storage Unit is immutable");
-    }
 }

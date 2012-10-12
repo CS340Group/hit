@@ -124,16 +124,4 @@ public class ProductGroup extends ProductContainer{
             return productGroupVault.saveModified(this);
     }
 
-    /**
-     * Checks to see if the ProductGroup is in a state where it can be deleted.
-     */
-    public Result isDeleteable(){
-        ArrayList<Product> products = productVault.findAll("ContainerId = "+getId());
-        for(Product product : products){
-            if(!product.isDeleteable().getStatus())
-                return product.isDeleteable();
-        }
-
-        return new Result(true);
-    }
 }

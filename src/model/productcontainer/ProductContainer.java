@@ -1,7 +1,10 @@
 package model.productcontainer;
 
+import java.util.ArrayList;
+
 import model.common.IModel;
 import model.common.Model;
+import model.product.Product;
 import common.Result;
 
 /**
@@ -204,11 +207,29 @@ public class ProductContainer extends Model{
         return new Result(true);
     }
 
+    
+    public ArrayList<ProductGroup> getChildProductGroups(){
+    	ArrayList<ProductGroup> childProductGroups = productGroupVault.findAll("ParentIdString = "+this.getId());
+    	return childProductGroups;
+    }
     /**
      * Indicates if the object is able to be deleted
      */
     public Result isDeletable(){
-        assert false : "You should probably override me";
-        return new Result(false);
+    	//Product Container can not have items
+    	ArrayList<Product> products;
+    	products = productVault.findAll("ContainerId = "+this.getId());
+    	for(Product tempProduct : products){
+    		if(itemVault.find("ProductId = "+tempProduct.getId()) != null)
+    			return new Result(false);
+    	}
+    	for(ProductGroup tempPG : this.getChildProductGroups()){
+    		if(tempPG.isDeletable().getStatus() == false)
+    			return new Result(false);;
+    	}
+    	
+    	
+    	
+        return new Result(true);
     }
 }
