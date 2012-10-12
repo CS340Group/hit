@@ -11,6 +11,7 @@ public class TempMain {
 
 		Barcode foo = new Barcode();
 		Result r = foo.setCode("036000291452");
+		r = foo.validate();
 		String fileloc = "/Users/murphyra/spam.pdf";
 		BarcodePdf d = new BarcodePdf(fileloc);
 		d.addBarcode(foo);
