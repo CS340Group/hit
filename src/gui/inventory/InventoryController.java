@@ -13,7 +13,9 @@ import model.common.BaseModel;
 import model.common.Size;
 import model.common.Size.Unit;
 import model.item.Item;
+import model.item.ItemVault;
 import model.product.Product;
+import model.product.ProductVault;
 import model.productcontainer.*;
 
 /**
@@ -30,11 +32,13 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		//this.addSampleItems();
+		this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
         ProductGroupVault.getInstance().addObserver(this);
+        ProductVault.getInstance().addObserver(this);
+        ItemVault.getInstance().addObserver(this);
 	}
 
 	/**
@@ -68,6 +72,7 @@ public class InventoryController extends Controller
 		}
 		
 		getView().setProductContainers(root);
+		this.productContainerSelectionChanged();
 	}
 
 	private void addSampleItems(){
@@ -187,6 +192,8 @@ public class InventoryController extends Controller
 	
 	/**
 	 * Returns true if and only if the "Add Items" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canAddItems() {
@@ -195,6 +202,8 @@ public class InventoryController extends Controller
 	
 	/**
 	 * Returns true if and only if the "Transfer Items" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canTransferItems() {
@@ -203,6 +212,8 @@ public class InventoryController extends Controller
 	
 	/**
 	 * Returns true if and only if the "Remove Items" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canRemoveItems() {
@@ -216,7 +227,21 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteStorageUnit() {
-		return true;
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		
+		if (selectedContainerData != null) {	
+			int id = -1;
+			if(selectedContainerData.getTag() != null)
+			  id = ((Number) selectedContainerData.getTag()).intValue();
+			ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+			if(selectedProductGroup!=null){
+				return selectedProductGroup.isDeletable().getStatus();
+			} else {
+				return selectedStorageUnit.isDeletable().getStatus();
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -226,10 +251,20 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteStorageUnit() {
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		int id = -1;
+		if(selectedContainerData.getTag() != null)
+		  id = ((Number) selectedContainerData.getTag()).intValue();
+		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		
+		selectedStorageUnit.delete();
+		selectedStorageUnit.save();
 	}
 
 	/**
 	 * Returns true if and only if the "Edit Storage Unit" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canEditStorageUnit() {
@@ -238,6 +273,8 @@ public class InventoryController extends Controller
 
 	/**
 	 * Returns true if and only if the "Add Product Group" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canAddProductGroup() {
@@ -246,14 +283,18 @@ public class InventoryController extends Controller
 
 	/**
 	 * Returns true if and only if the "Delete Product Group" menu item should be enabled.
+	 * 
+	 * * Same as storage unit
 	 */
 	@Override
 	public boolean canDeleteProductGroup() {
-		return true;
+		return this.canDeleteStorageUnit();
 	}
 
 	/**
 	 * Returns true if and only if the "Edit Product Group" menu item should be enabled.
+	 * 
+	 * This is always enabled
 	 */
 	@Override
 	public boolean canEditProductGroup() {
@@ -265,6 +306,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProductGroup() {
+		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
+		int id = -1;
+		if(selectedContainerData.getTag() != null)
+		  id = ((Number) selectedContainerData.getTag()).intValue();
+		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+		
+		selectedProductGroup.delete();
+		selectedProductGroup.save();
 	}
 
 	private Random rand = new Random();
@@ -363,7 +412,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteProduct() {
-		return true;
+		if(this.getView().getSelectedProduct() == null)
+			return false;
+		ProductData selectedProductData = getView().getSelectedProduct();
+		int id = -1;
+		if(selectedProductData.getTag() != null)
+		  id = ((Number) selectedProductData.getTag()).intValue();	
+		Product selectedProduct = bm.productVault.get(id);
+		return selectedProduct.isDeleteable().getStatus();
 	}
 
 	/**
@@ -371,13 +427,25 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProduct() {
+		ProductData selectedProductData = getView().getSelectedProduct();
+		int id = -1;
+		if(selectedProductData.getTag() != null)
+		  id = ((Number) selectedProductData.getTag()).intValue();
+		Product selectedProduct = bm.productVault.get(id);
+		
+		selectedProduct.delete();
+		selectedProduct.save();
 	}
 
 	/**
 	 * Returns true if and only if the "Edit Item" menu item should be enabled.
+	 * 
+	 * 
 	 */
 	@Override
 	public boolean canEditItem() {
+		if(this.getView().getSelectedItem() == null)
+			return false;
 		return true;
 	}
 
@@ -394,6 +462,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canRemoveItem() {
+		if(this.getView().getSelectedItem() == null)
+			return false;
 		return true;
 	}
 
@@ -402,6 +472,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void removeItem() {
+		ItemData selectedItemData = getView().getSelectedItem();
+		int id = -1;
+		if(selectedItemData.getTag() != null)
+		  id = ((Number) selectedItemData.getTag()).intValue();
+		Item selectedItem = bm.itemVault.get(id);
+		
+		selectedItem.delete();
+		selectedItem.save();
 	}
 
 	/**
@@ -409,6 +487,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canEditProduct() {
+		if(this.getView().getSelectedProduct() == null)
+			return false;
 		return true;
 	}
 
