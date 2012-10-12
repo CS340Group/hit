@@ -13,7 +13,9 @@ import model.common.BaseModel;
 import model.common.Size;
 import model.common.Size.Unit;
 import model.item.Item;
+import model.item.ItemVault;
 import model.product.Product;
+import model.product.ProductVault;
 import model.productcontainer.*;
 
 /**
@@ -35,6 +37,8 @@ public class InventoryController extends Controller
 		
         StorageUnitVault.getInstance().addObserver(this);
         ProductGroupVault.getInstance().addObserver(this);
+        ProductVault.getInstance().addObserver(this);
+        ItemVault.getInstance().addObserver(this);
 	}
 
 	/**
@@ -68,6 +72,7 @@ public class InventoryController extends Controller
 		}
 		
 		getView().setProductContainers(root);
+		this.productContainerSelectionChanged();
 	}
 
 	private void addSampleItems(){
@@ -126,14 +131,14 @@ public class InventoryController extends Controller
         p1.validate();
         p1.save();
         
-//        Item i1 = new Item();
-//        i1.setBarcode(new Barcode());
-//        i1.setEntryDate(new DateTime());
-//        i1.setExitDate(new DateTime());
-//        i1.setExpirationDate(new DateTime());
-//        i1.setProductId(p1.getId());
-//        i1.validate();
-//        i1.save();
+        Item i1 = new Item();
+        i1.setBarcode(new Barcode());
+        i1.setEntryDate(new DateTime());
+        i1.setExitDate(new DateTime());
+        i1.setExpirationDate(new DateTime());
+        i1.setProductId(p1.getId());
+        i1.validate();
+        i1.save();
         
 	}
 	/*
@@ -467,6 +472,14 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void removeItem() {
+		ItemData selectedItemData = getView().getSelectedItem();
+		int id = -1;
+		if(selectedItemData.getTag() != null)
+		  id = ((Number) selectedItemData.getTag()).intValue();
+		Item selectedItem = bm.itemVault.get(id);
+		
+		selectedItem.delete();
+		selectedItem.save();
 	}
 
 	/**
