@@ -150,6 +150,13 @@ public class Item extends Model{
     public DateTime getEntryDate(){
         return _entryDate;
     }
+    
+    /**
+     * Return the entry date in a shortened string format.
+     */
+    public String getShortEntryDateString(){
+    		return _entryDate.toLocalDate().toString("MM-dd-yy");
+    }
 
     /**
      *  Set the exit date for this Item.
@@ -183,6 +190,13 @@ public class Item extends Model{
      */
     public DateTime getExpirationDate(){
         return _expirationDate;
+    }
+    
+    /**
+     * Return the expiration date in a shortened string format.
+     */
+    public String getShortExpirationDateString(){
+    		return _expirationDate.toLocalDate().toString("MM-dd-yy");
     }
 
 	/**
