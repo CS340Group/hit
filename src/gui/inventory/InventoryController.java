@@ -90,7 +90,8 @@ public class InventoryController extends Controller
 		getView().setProductContainers(root);
 		if(currentlySelectedPC != null)
 			getView().selectProductContainer(currentlySelectedPC);
-		this.productContainerSelectionChanged();
+		if(getView().getSelectedProductContainer() != null)
+			this.productContainerSelectionChanged();
 	}
 
 	private void addSampleItems(){
@@ -417,10 +418,15 @@ public class InventoryController extends Controller
 					this.currentlySelectedP = productData;
 			}
 		}
-		getView().setProducts(productDataList.toArray(new ProductData[0]));
-		if(currentlySelectedP != null)
-			getView().selectProduct(this.currentlySelectedP);
 		getView().setItems(new ItemData[0]);
+		getView().setProducts(productDataList.toArray(new ProductData[0]));
+		if(currentlySelectedP != null){
+			getView().selectProduct(this.currentlySelectedP);
+			if(getView().getSelectedProduct() != null)
+				this.productSelectionChanged();
+		}
+			
+		
 	}
 
 	/**
