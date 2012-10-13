@@ -90,7 +90,8 @@ public class InventoryController extends Controller
 		getView().setProductContainers(root);
 		if(currentlySelectedPC != null)
 			getView().selectProductContainer(currentlySelectedPC);
-		this.productContainerSelectionChanged();
+		if(getView().getSelectedProductContainer() != null)
+			this.productContainerSelectionChanged();
 	}
 
 	private void addSampleItems(){
@@ -382,7 +383,7 @@ public class InventoryController extends Controller
 			
 			//Is a storage unit or a product group selected
 			if(selectedStorageUnit != null){
-				products = bm.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
+				products = bm.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
 				getView().setContextUnit(selectedStorageUnit.getName());
 				getView().setContextGroup("");
 				getView().setContextSupply("");
@@ -393,6 +394,7 @@ public class InventoryController extends Controller
 				getView().setContextGroup(selectedProductGroup.getName());
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
+				products = bm.productVault.findAll("Deleted = false");
 				getView().setContextUnit("All");
 				getView().setContextGroup("");
 				getView().setContextSupply("");
@@ -416,10 +418,15 @@ public class InventoryController extends Controller
 					this.currentlySelectedP = productData;
 			}
 		}
-		getView().setProducts(productDataList.toArray(new ProductData[0]));
-		if(currentlySelectedP != null)
-			getView().selectProduct(this.currentlySelectedP);
 		getView().setItems(new ItemData[0]);
+		getView().setProducts(productDataList.toArray(new ProductData[0]));
+		if(currentlySelectedP != null){
+			getView().selectProduct(this.currentlySelectedP);
+			if(getView().getSelectedProduct() != null)
+				this.productSelectionChanged();
+		}
+			
+		
 	}
 
 	/**
@@ -664,10 +671,14 @@ public class InventoryController extends Controller
 		id = -1;
 		if(containerData.getTag() != null)
 		  id = ((Number) containerData.getTag()).intValue();
+		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
 		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
 		
-		bm.MoveItem(selectedStorageUnit, selectedItem);
-		
+		if(selectedProductGroup!=null){
+			bm.MoveItem(selectedProductGroup.getStorageUnit(), selectedItem);
+		} else {
+			bm.MoveItem(selectedStorageUnit, selectedItem);
+		}
 		
 	}
 
