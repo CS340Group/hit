@@ -1,6 +1,20 @@
 package gui.batches;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
+
+import model.common.BaseModel;
+import model.item.Item;
+import model.item.ItemVault;
+import model.product.Product;
+import model.product.ProductVault;
+
 import gui.common.*;
+import gui.item.ItemData;
 import gui.product.*;
 
 /**
@@ -9,6 +23,16 @@ import gui.product.*;
 public class RemoveItemBatchController extends Controller implements
 		IRemoveItemBatchController {
 	
+	private ProductVault _productVault;
+	private ItemVault _itemVault;
+	private ItemData currentItem;
+	private ArrayList<ProductData> _removedProducts;
+	private Map<ProductData, ArrayList<ItemData>> _removedItems;
+	
+    boolean scanner = true;
+    Timer timer;
+    BaseModel _baseModel;
+	
 	/**
 	 * Constructor.
 	 * 
@@ -16,7 +40,10 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	public RemoveItemBatchController(IView view) {
 		super(view);
-
+		_productVault = ProductVault.getInstance();
+		_itemVault = ItemVault.getInstance();
+		timer = new Timer();
+		_baseModel = new BaseModel();
 		construct();
 	}
 	
@@ -37,6 +64,21 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+//		this.getView().setProducts(this._removedProducts.toArray());
+//		this.getView().setItems(this.getItems());
+//		this.getView().setBarcode("");
+	}
+	
+	private ItemData[] getItems() {
+		ArrayList<Item> items = new ArrayList<Item>();
+		items = _itemVault.findAll("Deleted = false");
+		return GuiModelConverter.wrapItems(items);
+	}
+	
+	private ProductData[] getProducts() {
+		ArrayList<Product> products = new ArrayList<Product>();
+		products = _productVault.findAll("Deleted = false");
+		return GuiModelConverter.wrapProducts(products);
 	}
 
 	/**
@@ -59,6 +101,14 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
+        enableComponents();
+        try {
+            timer.cancel();
+            timer = new Timer();
+        }
+        catch(IllegalStateException e){ }
+        if(scanner)
+            timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
 	}
 	
 	/**
@@ -67,6 +117,7 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
+        scanner = getView().getUseScanner();
 	}
 	
 	/**
@@ -83,6 +134,17 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void removeItem() {
+		String bcs = this.getView().getBarcode();
+		Item item = ItemVault.getInstance().find("BarcodeString = " + bcs);
+		common.Result r = _baseModel.RemoveItem(item);
+		if (!r.getStatus()) {
+			this.getView().displayInformationMessage("There is no item with that barcode.");
+		}else{
+			Product p = ProductVault.getInstance().get(item.getProductId());
+			ProductData pData = GuiModelConverter.wrapProduct(p);
+			_removedProducts.add(pData);
+		}
+		this.loadValues();
 	}
 	
 	/**
@@ -109,6 +171,16 @@ public class RemoveItemBatchController extends Controller implements
 	public void done() {
 		getView().close();
 	}
+	
+    private class ScannerTimer extends TimerTask {
+
+        @Override
+        public void run() {
+            if(!getView().getBarcode().isEmpty())
+                removeItem();
+            timer.cancel();
+        }
+    }
 
 }
 
