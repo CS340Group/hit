@@ -55,7 +55,7 @@ public class BaseModel {
 	
 	            
 	            p2.setStorageUnitId(targetSU.getId());
-	            
+	            p2.setContainerId(-1);
 	            p2.validate();
 	            p2.save();
 	            targetP = p2;
