@@ -48,8 +48,19 @@ public class InventoryController extends Controller
 	protected IInventoryView getView() {
 		return (IInventoryView)super.getView();
 	}
+	
+	
 	private ProductContainerData currentlySelectedPC;
+	private ProductData currentlySelectedP;
+	private int currentlySelectedPId = -1;
 	private int currentlySelectedPCId = -1;
+	
+	public void setCurrentlySelectedProduct(int i){
+		this.currentlySelectedPId = i;
+	}
+	public void setCurrentlySelectedProductContainer(int i){
+		this.currentlySelectedPCId = i;
+	}
 	/**
 	 * Loads data into the controller's view.
 	 * 
@@ -60,9 +71,9 @@ public class InventoryController extends Controller
 	@Override
 	protected void loadValues() {
 		ProductContainerData root = new ProductContainerData();
-		currentlySelectedPC = getView().getSelectedProductContainer();
-		if(currentlySelectedPC != null)
-			currentlySelectedPCId = ((Number) currentlySelectedPC.getTag()).intValue();
+		//currentlySelectedPC = getView().getSelectedProductContainer();
+		//if(currentlySelectedPC != null)
+		//	currentlySelectedPCId = ((Number) currentlySelectedPC.getTag()).intValue();
 		
 		//Get all available storage units
 		ArrayList<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
@@ -78,7 +89,7 @@ public class InventoryController extends Controller
 		
 		getView().setProductContainers(root);
 		if(currentlySelectedPC != null)
-		getView().selectProductContainer(currentlySelectedPC);
+			getView().selectProductContainer(currentlySelectedPC);
 		this.productContainerSelectionChanged();
 	}
 
@@ -355,6 +366,7 @@ public class InventoryController extends Controller
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
 		
+		
 		if (selectedContainerData != null) {
 			//Get list of all productGroups in PC
 			ArrayList<Product> products = new ArrayList<Product>();
@@ -366,26 +378,47 @@ public class InventoryController extends Controller
 			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
 			
 			
+			this.currentlySelectedPCId = id;
+			
 			//Is a storage unit or a product group selected
-			if(selectedStorageUnit != null)
-				products = bm.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
-			else if(selectedProductGroup != null)
-				products = bm.productVault.findAll("ContainerId = "+selectedProductGroup.getId());		
+			if(selectedStorageUnit != null){
+				products = bm.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
+				getView().setContextUnit(selectedStorageUnit.getName());
+				getView().setContextGroup("");
+				getView().setContextSupply("");
+			}
+			else if(selectedProductGroup != null){
+				products = bm.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
+				getView().setContextUnit(selectedProductGroup.getStorageUnit().getName());
+				getView().setContextGroup(selectedProductGroup.getName());
+				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
+			} else {
+				getView().setContextUnit("All");
+				getView().setContextGroup("");
+				getView().setContextSupply("");
+			}
 			
 			
 			for(Product tempProduct : products){
+				
+					
 				ProductData productData = new ProductData();			
 				productData.setBarcode(tempProduct.getBarcodeString());
-				productData.setCount(tempProduct.getCount());
+				productData.setCount(Integer.toString(tempProduct.getItemCount()));
 				productData.setDescription(tempProduct.getDescription());
 				productData.setShelfLife(Integer.toString(tempProduct.getShelfLife()));
 				productData.setSize(tempProduct.getSize().toString());
 				productData.setSupply(Integer.toString(tempProduct.get3MonthSupply()));
 				productData.setTag(tempProduct.getId());
 				productDataList.add(productData);
+				
+				if(tempProduct.getId() == this.currentlySelectedPId)
+					this.currentlySelectedP = productData;
 			}
 		}
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
+		if(currentlySelectedP != null)
+			getView().selectProduct(this.currentlySelectedP);
 		getView().setItems(new ItemData[0]);
 	}
 
@@ -400,6 +433,8 @@ public class InventoryController extends Controller
 		if(selectedProductData.getTag() != null)
 		  id = ((Number) selectedProductData.getTag()).intValue();
 		Product selectedProduct = bm.productVault.get(id);
+		
+		this.currentlySelectedPId = id;
 		
 		
 		if (selectedProduct != null) {
@@ -600,6 +635,9 @@ public class InventoryController extends Controller
 		  id = ((Number) containerData.getTag()).intValue();
 		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
 		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		
+		this.currentlySelectedPC = null;
+		this.currentlySelectedPCId = id;
 		if(selectedProductGroup!=null){
 			bm.MoveProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
 		} else {
@@ -629,6 +667,8 @@ public class InventoryController extends Controller
 		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
 		
 		bm.MoveItem(selectedStorageUnit, selectedItem);
+		
+		
 	}
 
     /**
