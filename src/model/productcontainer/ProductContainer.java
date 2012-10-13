@@ -119,15 +119,7 @@ public class ProductContainer extends Model{
         return _name;
     }
     
-    /*
-     * 
-     */
-    public String getDeleted(){
-    	if (this._deleted == false)
-    		return "false";
-    	else
-    		return "true"; 
-    }
+    
 
     /**
      * Sets the name of the ProductContainer, invalidating it as well so that a 

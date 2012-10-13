@@ -54,6 +54,16 @@ public abstract class Model implements IModel, Serializable {
 		return this._valid;
 	}
 
+	
+	/*
+     * 
+     */
+    public String getDeleted(){
+    	if (this._deleted == false)
+    		return "false";
+    	else
+    		return "true"; 
+    }
 	/**
 	 * This function should be overridden by subclasses. If you're calling this directly, you're in
 	 * trouble.
