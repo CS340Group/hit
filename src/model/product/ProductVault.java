@@ -167,6 +167,7 @@ public class ProductVault extends Vault{
 		//Delete current model
 		Product currentModel = this.get(model.getId());
 		currentModel.delete();
+		currentModel.save();
 		//Validate passed in model
 		Result result = this.validateNew(model);
 		//Add current model back
