@@ -34,6 +34,7 @@ public class BarcodePdf{
 	private Boolean _open;
 	private PdfContentByte _rawContent;
 	private PdfPTable _table;
+	private int _itemsAdded; // Keeps track of how many items have been added, in case we need to fill up dummy items.
 
 
 	/**
@@ -56,6 +57,8 @@ public class BarcodePdf{
 		
 		_table = new PdfPTable(4);
 		_table.setHorizontalAlignment(Element.ALIGN_CENTER);
+		
+		_itemsAdded = 0;
 
 	}
 	
@@ -92,6 +95,8 @@ public class BarcodePdf{
 		cell.setPadding(10);
 		cell.setBorder(0);
 		_table.addCell(cell);
+		
+		_itemsAdded++;
 
 		return new Result(true, "Barcode added successfully.");
 	}
@@ -103,6 +108,7 @@ public class BarcodePdf{
 	 */
 	public Result finish(){
 		if (_open){
+			fillNullCells();
 			try {
 				_d.add(_table);
 			} catch (DocumentException e) {
@@ -113,5 +119,20 @@ public class BarcodePdf{
 		}
 		
 		return new Result(true, "The document is closed.");
+	}
+	
+	/**
+	 * This is a convenience function to make it easy to fill up the remaining table cells.
+	 */
+	private void fillNullCells(){
+		if (_itemsAdded < 4){
+			int itemsToAdd = 4 - _itemsAdded;
+			while(itemsToAdd > 0){
+				PdfPCell c = new PdfPCell();
+				c.setBorder(0);
+				_table.addCell(c);
+				itemsToAdd--;
+			}
+		}
 	}
 }
