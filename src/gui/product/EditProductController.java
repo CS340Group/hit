@@ -16,7 +16,13 @@ public class EditProductController extends Controller
 	 */
 	public EditProductController(IView view, ProductData target) {
 		super(view);
-
+        getView().setBarcode(target.getBarcode());
+        getView().enableBarcode(false);
+        getView().setDescription(target.getDescription());
+        getView().setShelfLife(target.getShelfLife());
+        //getView().setSizeUnit();
+        //getView().setSizeValue();
+        getView().setSupply(target.getSupply());
 		construct();
 	}
 
