@@ -27,6 +27,8 @@ package gui.common;
 	 */
 	protected IView _view;
 
+    public final int SCANNER_SECONDS = 1000;
+
 	/**
 	 * Constructor.
 	 * 
