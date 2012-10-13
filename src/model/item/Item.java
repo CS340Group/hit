@@ -306,4 +306,8 @@ public class Item extends Model{
     public String getProductProductGroupName() {
     		return this.getProduct().getProductContainerName();
     }
+
+	public String getBarcodeString() {
+		return this.getBarcode().toString();
+	}
 }

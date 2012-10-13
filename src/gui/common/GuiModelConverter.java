@@ -8,32 +8,22 @@ import java.util.ArrayList;
 import model.item.Item;
 import model.product.Product;
 
-public class GuiModelConverter implements IGuiModelConverter {
+public class GuiModelConverter {
 
-	@Override
-	public ProductData[] wrapProducts(ArrayList<Product> products) {
+	public static ProductData[] wrapProducts(ArrayList<Product> products) {
 		
 		int numProducts = products.size();
 		ProductData[] pDatas = new ProductData[numProducts];
 		
 		int count = 0;
 		for (Product p : products) {
-			ProductData pData = new ProductData();
-			pData.setDescription(p.getDescription());
-			pData.setSize(p.getSize().toString());
-			pData.setCount(p.getItemCount());
-			pData.setShelfLife(Integer.toString(p.getShelfLife()));
-			pData.setSupply(Integer.toString(p.get3MonthSupply()));
-			pData.setBarcode(p.getBarcodeString());
-			pData.setTag(p.getId());
-			pDatas[count] = pData;
+			pDatas[count] = wrapProduct(p);
 		}
 		
 		return pDatas;
 	}
 
-	@Override
-	public ItemData[] wrapItems(ArrayList<Item> items) {
+	public static ItemData[] wrapItems(ArrayList<Item> items) {
 		
 		int numItems = items.size();
 		ItemData[] iDatas = new ItemData[numItems];
@@ -51,6 +41,18 @@ public class GuiModelConverter implements IGuiModelConverter {
 		}
 		
 		return iDatas;
+	}
+
+	public static ProductData wrapProduct(Product p) {
+		ProductData pData = new ProductData();
+		pData.setDescription(p.getDescription());
+		pData.setSize(p.getSize().toString());
+		pData.setCount(Integer.toString(p.getItemCount()));
+		pData.setShelfLife(Integer.toString(p.getShelfLife()));
+		pData.setSupply(Integer.toString(p.get3MonthSupply()));
+		pData.setBarcode(p.getBarcodeString());
+		pData.setTag(p.getId());
+		return pData;
 	}
 
 }
