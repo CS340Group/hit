@@ -48,7 +48,8 @@ public class InventoryController extends Controller
 	protected IInventoryView getView() {
 		return (IInventoryView)super.getView();
 	}
-
+	private ProductContainerData currentlySelectedPC;
+	private int currentlySelectedPCId = -1;
 	/**
 	 * Loads data into the controller's view.
 	 * 
@@ -58,8 +59,10 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
-		//this.addSampleItems();
 		ProductContainerData root = new ProductContainerData();
+		currentlySelectedPC = getView().getSelectedProductContainer();
+		if(currentlySelectedPC != null)
+			currentlySelectedPCId = ((Number) currentlySelectedPC.getTag()).intValue();
 		
 		//Get all available storage units
 		ArrayList<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
@@ -67,11 +70,15 @@ public class InventoryController extends Controller
 		//For each storage unit add all it's children productGroups
 		for(StorageUnit su : storageUnits){
 			ProductContainerData tempSU = new ProductContainerData(su.getName());
+			if(su.getId() == this.currentlySelectedPCId)
+				this.currentlySelectedPC = tempSU;
             //tempSU.setTag(su.getId());
 			root.addChild(addChildrenProductContainers(su,tempSU));
 		}
 		
 		getView().setProductContainers(root);
+		if(currentlySelectedPC != null)
+		getView().selectProductContainer(currentlySelectedPC);
 		this.productContainerSelectionChanged();
 	}
 
@@ -160,9 +167,13 @@ public class InventoryController extends Controller
 		
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
+			
 			//Create a new data object from the product group
 			ProductContainerData tempPC = new ProductContainerData(pg.getName());
 			pcData.addChild(addChildrenProductContainers(pg,tempPC));
+			
+			if(pg.getId() == this.currentlySelectedPCId)
+				this.currentlySelectedPC = tempPC;
 		}
 		pcData.setTag(pc.getId());
 		return pcData;

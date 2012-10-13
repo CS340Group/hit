@@ -26,7 +26,7 @@ public abstract class Model implements IModel, Serializable {
      * _valid maintains this state
      */
     protected boolean _valid;
-
+    protected boolean _deleted;
     /**
      * _saved maintaines the state of if the instance of the model is the same as the 
      * persisted model in the vault.
@@ -54,6 +54,16 @@ public abstract class Model implements IModel, Serializable {
 		return this._valid;
 	}
 
+	
+	/*
+     * 
+     */
+    public String getDeleted(){
+    	if (this._deleted == false)
+    		return "false";
+    	else
+    		return "true"; 
+    }
 	/**
 	 * This function should be overridden by subclasses. If you're calling this directly, you're in
 	 * trouble.

@@ -31,7 +31,7 @@ public class ProductContainer extends Model{
 	 * as _parentId */
     protected int _rootParentId;
     
-    private boolean _deleted;
+    
     /**
      * Constructor
      */
@@ -119,15 +119,7 @@ public class ProductContainer extends Model{
         return _name;
     }
     
-    /*
-     * 
-     */
-    public String getDeleted(){
-    	if (this._deleted == false)
-    		return "false";
-    	else
-    		return "true"; 
-    }
+    
 
     /**
      * Sets the name of the ProductContainer, invalidating it as well so that a 
