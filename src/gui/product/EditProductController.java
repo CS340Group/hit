@@ -1,13 +1,20 @@
 package gui.product;
 
+import common.Result;
 import gui.common.*;
+import model.common.Size;
+import model.product.Product;
+import model.product.ProductVault;
+import org.joda.time.DateTime;
 
 /**
  * Controller class for the edit product view.
  */
 public class EditProductController extends Controller 
 										implements IEditProductController {
-	
+
+    ProductData target;
+
 	/**
 	 * Constructor.
 	 * 
@@ -23,6 +30,7 @@ public class EditProductController extends Controller
         //getView().setSizeUnit();
         //getView().setSizeValue();
         getView().setSupply(target.getSupply());
+        this.target = target;
 		construct();
 	}
 
@@ -54,6 +62,19 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+        getView().enableSizeValue(true);
+        if(getView().getSizeUnit().name().equals( "Count" )){
+            getView().enableSizeValue(false);
+            getView().setSizeValue("1");
+        }
+        try{
+            Float.parseFloat(getView().getSizeValue());
+            Integer.parseInt(getView().getShelfLife());
+            Integer.parseInt(getView().getSupply());
+        } catch (Exception e){
+            getView().enableOK(false);
+        }
+        getView().enableOK(!getView().getDescription().isEmpty());
 	}
 
 	/**
@@ -77,6 +98,7 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
 	}
 	
 	/**
@@ -85,7 +107,20 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	public void editProduct() {
-	}
+        Product product = ProductVault.getInstance().get((Integer) target.getTag());
+        product.set3MonthSupply(Integer.parseInt(getView().getSupply()));
+        product.setDescription(getView().getDescription());
+        product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
+        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
+                Size.Unit.values()[Math.abs(getView().getSizeUnit().ordinal() - 9)]));
+        Result r = product.validate();
+        if(!r.getStatus())
+            getView().displayErrorMessage(r.getMessage());
+        r = product.save();
+        if(!r.getStatus())
+            getView().displayErrorMessage(r.getMessage());
+
+    }
 
 }
 

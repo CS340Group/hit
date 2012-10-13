@@ -126,7 +126,7 @@ public class AddProductController extends Controller implements
         product.setDescription(getView().getDescription());
         product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
         product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
-                Size.Unit.values()[getView().getSizeUnit().ordinal()]));
+                Size.Unit.values()[Math.abs(getView().getSizeUnit().ordinal()-9)]));
         product.setStorageUnitId((Integer) target.getTag());
         product.validate();
         product.save();
