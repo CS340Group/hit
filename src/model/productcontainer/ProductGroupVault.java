@@ -244,5 +244,14 @@ public class ProductGroupVault extends Vault {
         this.addModel(new ProductGroup(model));
         return new Result(true);
 	}
+
+	public String getName(int id) {
+		ProductGroup pg = this.get(id);
+		if (pg != null) {
+			return pg.getName();
+		}else{
+			return "";
+		}
+	}
 }
 

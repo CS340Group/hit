@@ -3,6 +3,7 @@ package model.product;
 import common.Result;
 import model.common.Size;
 import model.item.Item;
+import model.productcontainer.ProductContainer;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
 import model.common.Barcode;
@@ -408,5 +409,9 @@ public class Product extends Model{
 
 	public String getCount() {
 		return this._size.toString();
+	}
+
+	public String getProductContainerName() {
+		return productGroupVault.getName(_containerId);
 	}
 }
