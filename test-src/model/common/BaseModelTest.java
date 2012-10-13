@@ -194,7 +194,7 @@ public class BaseModelTest {
         i.setExpirationDate(DateTime.now().plusYears(1));
         i.setProductId(p4.getId());
 
-        Result r = c.AddItem(su1, pg1, i);
+        Result r = c.AddItem(su1, i);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(), i.getProduct().getStorageUnitId());
         assertEquals(pg1.getId(),i.getProduct().getContainerId());
@@ -205,7 +205,7 @@ public class BaseModelTest {
     public void testMoveItem() throws Exception {
         BaseModel c = new BaseModel();
 
-        Result r = c.MoveItem(su1, pg1, i6);
+        Result r = c.MoveItem(su1, i6);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(),i6.getProduct().getStorageUnitId());
         assertEquals(pg1.getId(),i6.getProduct().getContainerId());
