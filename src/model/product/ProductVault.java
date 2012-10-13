@@ -165,16 +165,17 @@ public class ProductVault extends Vault{
         assert(!dataVault.isEmpty());
 		
 		//Delete current model
-		Product currentModel = this.get(model.getId());
-		currentModel.delete();
-		currentModel.save();
+        //FROM NICK: This does not work because to delete there must not be any items
+		//Product currentModel = this.get(model.getId());
+		//currentModel.delete();
+		//currentModel.save();
 		//Validate passed in model
-		Result result = this.validateNew(model);
+		//Result result = this.validateNew(model);
 		//Add current model back
-		currentModel.unDelete();
-		if(result.getStatus() == true)
-			model.setValid(true);
-        return result;
+		//currentModel.unDelete();
+		//if(result.getStatus() == true)
+	    model.setValid(true);
+        return new Result(true);
 	}
 
 	private  Result validateUniqueBarcode(Product model){
