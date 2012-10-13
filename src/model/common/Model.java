@@ -26,7 +26,7 @@ public abstract class Model implements IModel, Serializable {
      * _valid maintains this state
      */
     protected boolean _valid;
-
+    protected boolean _deleted;
     /**
      * _saved maintaines the state of if the instance of the model is the same as the 
      * persisted model in the vault.

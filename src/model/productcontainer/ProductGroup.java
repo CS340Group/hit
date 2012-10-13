@@ -19,7 +19,7 @@ public class ProductGroup extends ProductContainer{
 
 	/* A variable representing the three month supply for this group. */
 	private Size _3MonthSupply;
-	private boolean _deleted;
+	
 	/**
 	 * No-args constructor.
 	 */

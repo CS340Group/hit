@@ -31,7 +31,7 @@ public class ProductContainer extends Model{
 	 * as _parentId */
     protected int _rootParentId;
     
-    private boolean _deleted;
+    
     /**
      * Constructor
      */

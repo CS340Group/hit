@@ -33,7 +33,7 @@ public class Item extends Model{
 
     private DateTime _expirationDate;
 
-    private boolean _deleted;
+    
 
 	/**
 	 * Constructor

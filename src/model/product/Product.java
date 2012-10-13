@@ -43,7 +43,7 @@ public class Product extends Model{
 
     private int _3MonthSupply;
 
-    private boolean _deleted;
+    
 
 	/**
 	 * Constructor
