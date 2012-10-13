@@ -292,4 +292,18 @@ public class Item extends Model{
     public String getProductStorageUnitId(){
     	return Integer.toString(this.getProduct().getStorageUnitId());
     }
+    
+    /**
+     * Return the name of the name of the storage unit that holds this item.
+     */
+    public String getProductStorageUnitName() {
+    		return this.getProduct().getStorageUnit().getName();
+    }
+    
+    /**
+     * Return the name of the product group that holds this item.
+     */
+    public String getProductProductGroupName() {
+    		return this.getProduct().getProductContainerName();
+    }
 }

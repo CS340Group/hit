@@ -1,5 +1,12 @@
 package gui.batches;
 
+import java.util.ArrayList;
+
+import model.item.Item;
+import model.item.ItemVault;
+import model.product.Product;
+import model.product.ProductVault;
+
 import gui.common.*;
 import gui.product.*;
 
@@ -9,6 +16,9 @@ import gui.product.*;
 public class RemoveItemBatchController extends Controller implements
 		IRemoveItemBatchController {
 	
+	private ProductVault _productVault;
+	private ItemVault _itemVault;
+	
 	/**
 	 * Constructor.
 	 * 
@@ -16,7 +26,8 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	public RemoveItemBatchController(IView view) {
 		super(view);
-
+		_productVault = ProductVault.getInstance();
+		_itemVault = ItemVault.getInstance();
 		construct();
 	}
 	
@@ -37,6 +48,11 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		ArrayList<Product> products = new ArrayList<Product>();
+		products = _productVault.findAll("Deleted = false");
+		ArrayList<Item> items = new ArrayList<Item>();
+		items = _itemVault.findAll("Deleted = false");
+		return;
 	}
 
 	/**
