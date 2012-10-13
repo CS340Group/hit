@@ -93,7 +93,6 @@ public class ProductGroup extends ProductContainer{
      * Set this to the ID of the desired parent for this ProductGroup.
      */
     public Result setParentId(int id){
-        assert true;
         _parentId = id;
         invalidate();
         return new Result(true);
@@ -107,7 +106,7 @@ public class ProductGroup extends ProductContainer{
 	    		id = tempGroup.getParent().getId();
 	    		tempGroup = this.productGroupVault.get(id);
     		} else {
-    			id = this.getParentId();
+    			id = tempGroup.getParentId();
     			tempGroup = null;
     		}
     	}

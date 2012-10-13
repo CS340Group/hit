@@ -140,6 +140,15 @@ public class InventoryController extends Controller
         i1.validate();
         i1.save();
         
+        Item i2 = new Item();
+        //i1.setBarcode(new Barcode());
+        i2.setEntryDate(new DateTime());
+        i2.setExitDate(new DateTime());
+        i2.setExpirationDate(new DateTime());
+        i2.setProductId(p1.getId());
+        i2.validate();
+        i2.save();
+        
 	}
 	/*
 	 * Add all children to pc, recursive call
@@ -598,6 +607,17 @@ public class InventoryController extends Controller
 	@Override
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
+		int id = -1;
+		if(itemData.getTag() != null)
+		  id = ((Number) itemData.getTag()).intValue();
+		Item selectedItem = bm.itemVault.get(id);
+		
+		id = -1;
+		if(containerData.getTag() != null)
+		  id = ((Number) containerData.getTag()).intValue();
+		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		
+		bm.MoveItem(selectedStorageUnit, selectedItem);
 	}
 
     /**
