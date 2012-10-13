@@ -25,7 +25,10 @@ public class EditProductGroupController extends Controller
 	public EditProductGroupController(IView view, ProductContainerData target) {
 		super(view);
         this.target = target;
-		construct();
+		getView().setProductGroupName(target.getName());
+
+        construct();
+
 	}
 
 	//

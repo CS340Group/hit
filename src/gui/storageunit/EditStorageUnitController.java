@@ -33,6 +33,7 @@ public class EditStorageUnitController extends Controller
 
 		construct();
         this.target = target;
+        getView().setStorageUnitName(getTarget().getName());
 	}
 
 	//
