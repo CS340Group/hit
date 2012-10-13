@@ -2,14 +2,30 @@ package gui.batches;
 
 import gui.common.*;
 import gui.inventory.*;
+import gui.item.ItemData;
 import gui.product.*;
+import model.item.Item;
+import model.item.ItemVault;
+import model.product.Product;
+import model.product.ProductVault;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Controller class for the transfer item batch view.
  */
 public class TransferItemBatchController extends Controller implements
 		ITransferItemBatchController {
-	
+
+    ProductContainerData target;
+    boolean scanner;
+    Timer timer;
+
+    ArrayList<ProductData> productDatas;
+    ArrayList<ItemData> itemDatas;
 	/**
 	 * Constructor.
 	 * 
@@ -18,9 +34,14 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	public TransferItemBatchController(IView view, ProductContainerData target) {
 		super(view);
+        this.target = target;
+        getView().setUseScanner(scanner = true);
+        this.timer = new Timer();
+        this.productDatas = new ArrayList<ProductData>();
+        this.itemDatas = new ArrayList<ItemData>();
+        construct();
 
-		construct();
-	}
+    }
 	
 	/**
 	 * Returns a reference to the view for this controller.
@@ -39,6 +60,9 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+        getView().setProducts(getProducts());
+        getView().setItems(getItems());
+        getView().setBarcode("");
 	}
 
 	/**
@@ -53,6 +77,10 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+        getView().enableItemAction(
+                !getView().getBarcode().isEmpty()
+                 && !scanner
+        );
 	}
 
 	/**
@@ -61,6 +89,14 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
+        enableComponents();
+        try {
+            timer.cancel();
+            timer = new Timer();
+        }
+        catch(IllegalStateException e){ }
+        if(scanner)
+            timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
 	}
 	
 	/**
@@ -69,6 +105,7 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
+        scanner = getView().getUseScanner();
 	}
 	
 	/**
@@ -85,6 +122,61 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void transferItem() {
+        Item item = ItemVault.getInstance().find("Barcode = "+getView().getBarcode());
+        if(item == null){
+            getView().displayErrorMessage("Item not found");
+            return;
+        }
+
+        Product product = item.getProduct();
+
+        ArrayList<Product> products = ProductVault.getInstance().findAll("Barcode = " + item.getProduct().getBarcode());
+
+        boolean flag = true;
+        for(Product p : products){
+            if(p.getStorageUnitId() == (Integer) target.getTag())
+                flag = false;
+        }
+
+        if(flag){
+            product = new Product(item.getProduct());
+            product.setStorageUnitId((Integer) target.getTag());
+            product.validate();
+            product.save();
+        }
+
+        item.setProductId(product.getId());
+        item.validate();
+        item.save();
+
+        ProductData pd = findProduct(getView().getBarcode());
+        if(pd == null){
+            pd = new ProductData();
+            pd.setCount("0");
+            pd.setSize(product.getSize().toString());
+            pd.setSupply(String.valueOf(product.get3MonthSupply()));
+            pd.setBarcode(product.getBarcode().toString());
+            pd.setDescription(product.getDescription());
+            pd.setShelfLife(String.valueOf(product.getShelfLife()));
+            pd.setTag(product.getId());
+        }
+
+        ItemData id = new ItemData();
+        id.setBarcode(item.getBarcode().toString());
+        id.setEntryDate(item.getEntryDate().toDate());
+        id.setExpirationDate(item.getExpirationDate().toDate());
+        try{id.setProductGroup(product.getContainer().getName());}
+        catch(NullPointerException e){ id.setProductGroup(""); }
+        id.setStorageUnit(product.getStorageUnit().getName());
+        id.setTag(item.getId());
+        itemDatas.add(id);
+
+        int count = Integer.parseInt(pd.getCount())+1;
+        pd.setCount(String.valueOf(count));
+
+        productDatas.add(pd);
+
+        loadValues();
 	}
 	
 	/**
@@ -112,5 +204,46 @@ public class TransferItemBatchController extends Controller implements
 		getView().close();
 	}
 
+    private class ScannerTimer extends TimerTask {
+
+        @Override
+        public void run() {
+            if(!getView().getBarcode().isEmpty())
+                transferItem();
+            timer.cancel();
+        }
+    }
+
+    private ProductData[] getProducts(){
+        Iterator<ProductData> i = productDatas.iterator();
+        ProductData[] p = new ProductData[productDatas.size()];
+        int c = 0;
+        while(i.hasNext()){
+            p[c] = i.next();
+            c++;
+        }
+        return p;
+    }
+
+    private ProductData findProduct(String barcode){
+        Iterator<ProductData> i = productDatas.iterator();
+        while(i.hasNext()){
+            ProductData p = i.next();
+            if(p.getBarcode().contentEquals(barcode))
+                return p;
+        }
+        return null;
+    }
+
+    private ItemData[] getItems(){
+        Iterator<ItemData> i = itemDatas.iterator();
+        ItemData[] p = new ItemData[itemDatas.size()];
+        int c = 0;
+        while(i.hasNext()){
+            p[c] = i.next();
+            c++;
+        }
+        return p;
+    }
 }
 

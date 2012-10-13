@@ -1,15 +1,20 @@
 package gui.batches;
 
+import common.BarcodePdf;
 import gui.common.*;
 import gui.inventory.*;
 import gui.item.ItemData;
 import gui.product.*;
 import model.common.Barcode;
 import model.item.Item;
+import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
 import org.joda.time.DateTime;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -85,6 +90,7 @@ public class AddItemBatchController extends Controller implements
         getView().enableItemAction(
                 !getView().getBarcode().isEmpty()
                 && count > 0
+                && !scanner
         );
 	}
 
@@ -118,7 +124,7 @@ public class AddItemBatchController extends Controller implements
         }
         catch(IllegalStateException e){ }
         if(scanner)
-            timer.schedule(new ScannerTimer(), 1000);
+            timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
 	}
 
 	/**
@@ -216,6 +222,27 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void done() {
 		getView().close();
+        if(!items.isEmpty()){
+            try{
+                BarcodePdf pdf = new BarcodePdf("items.pdf");
+                Iterator<ItemData> i = items.iterator();
+                while(i.hasNext()){
+                    int id = (Integer) i.next().getTag();
+                    pdf.addItem(ItemVault.getInstance().get(id));
+                }
+                pdf.finish();
+            } catch (Exception e){
+                getView().displayErrorMessage(e.getMessage()    );
+            }
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    File myFile = new File("items.pdf");
+                    Desktop.getDesktop().open(myFile);
+                } catch (IOException ex) {
+                    // no application registered for PDFs
+                }
+            }
+        }
 	}
 
     private ProductData[] getProducts(){
