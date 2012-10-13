@@ -22,18 +22,6 @@ public class Item extends Model{
 	 * _id can be -1 if it is new and has not been saved
 	 */
 	private int _id;
-	/**
-	 * When a change is made to the data it becomes invalid and 
-	 * must be validated before it can be saved.
-	 * _valid maintains this state
-	 */
-	private boolean _valid;
-
-	/**
-	 * _saved maintaines the state of if the instance of the model is the same as the 
-	 * persisted model in the vault.
-	 */
-	private boolean _saved;
 
     private int _productId;
 
