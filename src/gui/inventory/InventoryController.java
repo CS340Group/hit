@@ -9,7 +9,7 @@ import java.util.*;
 import org.joda.time.DateTime;
 
 import model.common.Barcode;
-import model.common.BaseModel;
+import model.common.ModelFacade;
 import model.common.Size;
 import model.common.Size.Unit;
 import model.item.Item;
@@ -24,7 +24,7 @@ import model.productcontainer.*;
 public class InventoryController extends Controller 
 									implements IInventoryController, Observer {
 
-	BaseModel bm  = new BaseModel();
+	ModelFacade bm  = new ModelFacade();
 	/**
 	 * Constructor.
 	 *  
