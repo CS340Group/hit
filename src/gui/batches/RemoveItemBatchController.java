@@ -1,6 +1,8 @@
 package gui.batches;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +19,14 @@ import gui.common.*;
 import gui.item.ItemData;
 import gui.product.*;
 
+/* TODO:
+ * Main view needs to update when a product is removed from this view.
+ * Enable / Disable needs to work.
+ * Product needs to show the count of its items that have been removed.
+ * The changes to the actual data should not take effect until the done button is pressed.
+ * Make sure keyboard focus works properly.
+ */
+
 /**
  * Controller class for the remove item batch view.
  */
@@ -25,13 +35,13 @@ public class RemoveItemBatchController extends Controller implements
 	
 	private ProductVault _productVault;
 	private ItemVault _itemVault;
-	private ItemData currentItem;
 	private ArrayList<ProductData> _removedProducts;
-	private Map<ProductData, ArrayList<ItemData>> _removedItems;
+	private Hashtable<ProductData, ArrayList<ItemData>> _removedItems;
 	
-    boolean scanner = true;
-    Timer timer;
+    boolean _scanner = true;
+    Timer _timer;
     ModelFacade _ModelFacade;
+    ProductData _currentProduct;
 	
 	/**
 	 * Constructor.
@@ -42,9 +52,15 @@ public class RemoveItemBatchController extends Controller implements
 		super(view);
 		_productVault = ProductVault.getInstance();
 		_itemVault = ItemVault.getInstance();
-		timer = new Timer();
+		_timer = new Timer();
 		_ModelFacade = new ModelFacade();
+		_removedProducts = new ArrayList<ProductData>();
+		_removedItems = new Hashtable<ProductData, ArrayList<ItemData>>();
 		construct();
+
+		// Give the barcode field focus:
+		this.getView().giveBarcodeFocus();
+		this.getView().setUseScanner(true);
 	}
 	
 	/**
@@ -64,9 +80,10 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-//		this.getView().setProducts(this._removedProducts.toArray());
-//		this.getView().setItems(this.getItems());
-//		this.getView().setBarcode("");
+		this.getView().setProducts(GuiModelConverter.PDArrayListToArray(_removedProducts));
+		if(_currentProduct != null){
+			this.getView().setItems(GuiModelConverter.IDArrayListToArray(_removedItems.get(_currentProduct)));
+		}
 	}
 	
 	private ItemData[] getItems() {
@@ -103,12 +120,12 @@ public class RemoveItemBatchController extends Controller implements
 	public void barcodeChanged() {
         enableComponents();
         try {
-            timer.cancel();
-            timer = new Timer();
+            _timer.cancel();
+            _timer = new Timer();
         }
         catch(IllegalStateException e){ }
-        if(scanner)
-            timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
+        if(_scanner)
+            _timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
 	}
 	
 	/**
@@ -117,7 +134,7 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
-        scanner = getView().getUseScanner();
+        _scanner = getView().getUseScanner();
 	}
 	
 	/**
@@ -126,6 +143,8 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
+		_currentProduct = this.getView().getSelectedProduct();
+		this.loadValues();
 	}
 	
 	/**
@@ -140,11 +159,23 @@ public class RemoveItemBatchController extends Controller implements
 		if (!r.getStatus()) {
 			this.getView().displayInformationMessage("There is no item with that barcode.");
 		}else{
-			Product p = ProductVault.getInstance().get(item.getProductId());
-			ProductData pData = GuiModelConverter.wrapProduct(p);
-			_removedProducts.add(pData);
+			Product product = ProductVault.getInstance().get(item.getProductId());
+			recordRemoved(item, product);
 		}
 		this.loadValues();
+	}
+
+	private void recordRemoved(Item i, Product p){
+		ItemData iData = GuiModelConverter.wrapItem(i);
+		ProductData pData = GuiModelConverter.wrapProduct(p);
+		_removedProducts.add(pData);
+		if (_removedItems.containsKey(pData)){
+			_removedItems.get(pData).add(iData);
+		} else {
+			ArrayList<ItemData> its = new ArrayList<ItemData>();
+			its.add(iData);
+			_removedItems.put(pData, its);
+		}
 	}
 	
 	/**
@@ -178,7 +209,7 @@ public class RemoveItemBatchController extends Controller implements
         public void run() {
             if(!getView().getBarcode().isEmpty())
                 removeItem();
-            timer.cancel();
+            _timer.cancel();
         }
     }
 

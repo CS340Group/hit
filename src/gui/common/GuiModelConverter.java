@@ -30,14 +30,7 @@ public class GuiModelConverter {
 		
 		int count = 0;
 		for (Item i : items) {
-			ItemData iData = new ItemData();
-			iData.setEntryDate(i.getEntryDate().toDate());
-			iData.setExpirationDate(i.getExpirationDate().toDate());
-			iData.setBarcode(i.getBarcode().toString());
-			iData.setStorageUnit(i.getProductStorageUnitName());
-			iData.setProductGroup(i.getProductProductGroupName());
-			iData.setTag(i.getId());
-			iDatas[count] = iData;
+			iDatas[count] = wrapItem(i);
 		}
 		
 		return iDatas;
@@ -53,6 +46,37 @@ public class GuiModelConverter {
 		pData.setBarcode(p.getBarcodeString());
 		pData.setTag(p.getId());
 		return pData;
+	}
+
+	public static ItemData wrapItem(Item i) {
+		ItemData iData = new ItemData();
+		iData.setEntryDate(i.getEntryDate().toDate());
+		iData.setExpirationDate(i.getExpirationDate().toDate());
+		iData.setBarcode(i.getBarcode().toString());
+		iData.setStorageUnit(i.getProductStorageUnitName());
+		iData.setProductGroup(i.getProductProductGroupName());
+		iData.setTag(i.getId());
+		return iData;
+	}
+	
+	public static ProductData[] PDArrayListToArray(ArrayList<ProductData> list){
+		ProductData[] parray = new ProductData[list.size()];
+		int count = 0;
+		for (ProductData i : list){
+			parray[count] = i;
+			count++;
+		}
+		return parray;
+	}
+	
+	public static ItemData[] IDArrayListToArray(ArrayList<ItemData> list){
+		ItemData[] parray = new ItemData[list.size()];
+		int count = 0;
+		for (ItemData i : list){
+			parray[count] = i;
+			count++;
+		}
+		return parray;
 	}
 
 }

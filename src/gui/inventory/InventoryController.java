@@ -449,7 +449,7 @@ public class InventoryController extends Controller
 			items = bm.itemVault.findAll("ProductId = "+id);
 			for(Item tempItem : items){
 				ItemData itemData = new ItemData();
-				itemData.setBarcode(tempItem.getProductBarcode());
+				itemData.setBarcode(tempItem.getBarcodeString());
 				itemData.setEntryDate(tempItem.getEntryDate().toDate());
 				itemData.setExpirationDate(tempItem.getExpirationDate().toDate());
 				
