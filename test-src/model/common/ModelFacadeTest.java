@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
  * Time: 10:37 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BaseModelTest {
+public class ModelFacadeTest {
     StorageUnit su1,su2,su3,su4,su5;
     ProductGroup pg1,pg2,pg3;
     Product p1,p2,p3,p4;
@@ -187,7 +187,7 @@ public class BaseModelTest {
 
     @Test
     public void testAddItem() throws Exception {
-        BaseModel c = new BaseModel();
+        ModelFacade c = new ModelFacade();
         Item i = new Item();
         //i.setBarcode(new Barcode("2345"));
         i.setEntryDate(DateTime.now());
@@ -203,7 +203,7 @@ public class BaseModelTest {
 
     @Test
     public void testMoveItem() throws Exception {
-        BaseModel c = new BaseModel();
+        ModelFacade c = new ModelFacade();
 
         Result r = c.MoveItem(su1, i6);
         assertTrue(r.getStatus());
@@ -218,7 +218,7 @@ public class BaseModelTest {
 
     @Test
     public void testMoveProduct() throws Exception {
-        BaseModel c = new BaseModel();
+        ModelFacade c = new ModelFacade();
 
         Result r = c.MoveProduct(su1, pg1, p3);
         assertTrue(r.getStatus());
@@ -228,7 +228,7 @@ public class BaseModelTest {
 
     @Test
     public void testDeleteProduct() throws Exception {
-        BaseModel c = new BaseModel();
+        ModelFacade c = new ModelFacade();
 
         Result r = c.DeleteProduct(p3);
         assertFalse(r.getStatus());
