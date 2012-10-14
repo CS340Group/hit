@@ -7,7 +7,7 @@ import java.util.TimerTask;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
-import model.common.BaseModel;
+import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -31,7 +31,7 @@ public class RemoveItemBatchController extends Controller implements
 	
     boolean scanner = true;
     Timer timer;
-    BaseModel _baseModel;
+    ModelFacade _baseModel;
 	
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ public class RemoveItemBatchController extends Controller implements
 		_productVault = ProductVault.getInstance();
 		_itemVault = ItemVault.getInstance();
 		timer = new Timer();
-		_baseModel = new BaseModel();
+		_baseModel = new ModelFacade();
 		construct();
 	}
 	

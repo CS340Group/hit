@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * model data. Here is where you can do all of your adding, deleting, moving 
  * etc...
  */
-public class BaseModel {
+public class ModelFacade {
 	public transient  ItemVault itemVault = ItemVault.getInstance();
 	public transient  ProductVault productVault = ProductVault.getInstance();
 	public transient  StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
