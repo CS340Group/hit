@@ -7,7 +7,7 @@ import java.util.TimerTask;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
-import model.common.BaseModel;
+import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -31,7 +31,7 @@ public class RemoveItemBatchController extends Controller implements
 	
     boolean scanner = true;
     Timer timer;
-    BaseModel _baseModel;
+    ModelFacade _ModelFacade;
 	
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ public class RemoveItemBatchController extends Controller implements
 		_productVault = ProductVault.getInstance();
 		_itemVault = ItemVault.getInstance();
 		timer = new Timer();
-		_baseModel = new BaseModel();
+		_ModelFacade = new ModelFacade();
 		construct();
 	}
 	
@@ -136,7 +136,7 @@ public class RemoveItemBatchController extends Controller implements
 	public void removeItem() {
 		String bcs = this.getView().getBarcode();
 		Item item = ItemVault.getInstance().find("BarcodeString = " + bcs);
-		common.Result r = _baseModel.RemoveItem(item);
+		common.Result r = _ModelFacade.RemoveItem(item);
 		if (!r.getStatus()) {
 			this.getView().displayInformationMessage("There is no item with that barcode.");
 		}else{
