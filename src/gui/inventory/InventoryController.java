@@ -76,8 +76,10 @@ public class InventoryController extends Controller
 		//	currentlySelectedPCId = ((Number) currentlySelectedPC.getTag()).intValue();
 		
 		//Get all available storage units
-		ArrayList<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
+		List<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
 		storageUnits = bm.storageUnitVault.findAll("Deleted = false");
+		storageUnits = sort(storageUnits, (on(ProductContainer.class).getLowerCaseName()));
+		
 		//For each storage unit add all it's children productGroups
 		for(StorageUnit su : storageUnits){
 			ProductContainerData tempSU = new ProductContainerData(su.getName());
@@ -174,9 +176,9 @@ public class InventoryController extends Controller
 	 */
 	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
 		//Get list of all productGroups in PC
-		ArrayList<ProductGroup> productGroups = new ArrayList<ProductGroup>();
+		List<ProductGroup> productGroups = new ArrayList<ProductGroup>();
 		productGroups = bm.productGroupVault.findAll("ParentIdString = "+pc.getId());
-		
+		productGroups = sort(productGroups, (on(ProductContainer.class).getLowerCaseName()));
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
 			
