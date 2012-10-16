@@ -3,6 +3,7 @@ package gui.batches;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,8 +36,7 @@ public class RemoveItemBatchController extends Controller implements
 	
 	private ProductVault _productVault;
 	private ItemVault _itemVault;
-	private ArrayList<ProductData> _removedProducts;
-	private Hashtable<ProductData, ArrayList<ItemData>> _removedItems;
+	private Hashtable<String, ArrayList<ItemData>> _removedItems;
 	
     boolean _scanner = true;
     Timer _timer;
@@ -54,13 +54,14 @@ public class RemoveItemBatchController extends Controller implements
 		_itemVault = ItemVault.getInstance();
 		_timer = new Timer();
 		_ModelFacade = new ModelFacade();
-		_removedProducts = new ArrayList<ProductData>();
-		_removedItems = new Hashtable<ProductData, ArrayList<ItemData>>();
+		_removedItems = new Hashtable<String, ArrayList<ItemData>>();
 		construct();
 
 		// Give the barcode field focus:
 		this.getView().giveBarcodeFocus();
 		this.getView().setUseScanner(true);
+
+		enableComponents();
 	}
 	
 	/**
@@ -80,22 +81,20 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-		this.getView().setProducts(GuiModelConverter.PDArrayListToArray(_removedProducts));
-		if(_currentProduct != null){
-			this.getView().setItems(GuiModelConverter.IDArrayListToArray(_removedItems.get(_currentProduct)));
+		ArrayList<ProductData> products = new ArrayList<ProductData>();
+		for (String barcode : _removedItems.keySet()){
+			Product p = _productVault.find("BarcodeString = " + barcode);
+			if (p == null) {
+				continue;	
+			}
+			ProductData pd = GuiModelConverter.wrapProduct(p);
+			pd.setCount(Integer.toString(_removedItems.get(barcode).size()));
+			products.add(pd);
 		}
-	}
-	
-	private ItemData[] getItems() {
-		ArrayList<Item> items = new ArrayList<Item>();
-		items = _itemVault.findAll("Deleted = false");
-		return GuiModelConverter.wrapItems(items);
-	}
-	
-	private ProductData[] getProducts() {
-		ArrayList<Product> products = new ArrayList<Product>();
-		products = _productVault.findAll("Deleted = false");
-		return GuiModelConverter.wrapProducts(products);
+		this.getView().setProducts(GuiModelConverter.productDataListToArray(products));
+		if(_currentProduct != null){
+			this.getView().setItems(GuiModelConverter.itemDataListToArray(_removedItems.get(_currentProduct.getBarcode())));
+		}
 	}
 
 	/**
@@ -110,6 +109,11 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		if (getView().getUseScanner() || getView().getBarcode().isEmpty()) {
+			getView().enableItemAction(false);
+		} else {
+			getView().enableItemAction(true);
+		}
 	}
 
 	/**
@@ -118,7 +122,6 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
-        enableComponents();
         try {
             _timer.cancel();
             _timer = new Timer();
@@ -126,6 +129,7 @@ public class RemoveItemBatchController extends Controller implements
         catch(IllegalStateException e){ }
         if(_scanner)
             _timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
+        enableComponents();
 	}
 	
 	/**
@@ -135,6 +139,7 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	public void useScannerChanged() {
         _scanner = getView().getUseScanner();
+        enableComponents();
 	}
 	
 	/**
@@ -155,26 +160,25 @@ public class RemoveItemBatchController extends Controller implements
 	public void removeItem() {
 		String bcs = this.getView().getBarcode();
 		Item item = ItemVault.getInstance().find("BarcodeString = " + bcs);
-		common.Result r = _ModelFacade.RemoveItem(item);
-		if (!r.getStatus()) {
-			this.getView().displayInformationMessage("There is no item with that barcode.");
+		if (item == null) {
+			this.getView().displayErrorMessage("There is no item with that barcode.");
 		}else{
+			_ModelFacade.RemoveItem(item);
 			Product product = ProductVault.getInstance().get(item.getProductId());
 			recordRemoved(item, product);
 		}
 		this.loadValues();
+		getView().giveBarcodeFocus();
 	}
 
 	private void recordRemoved(Item i, Product p){
 		ItemData iData = GuiModelConverter.wrapItem(i);
-		ProductData pData = GuiModelConverter.wrapProduct(p);
-		_removedProducts.add(pData);
-		if (_removedItems.containsKey(pData)){
-			_removedItems.get(pData).add(iData);
+		if (_removedItems.containsKey(p.getBarcodeString())){
+			_removedItems.get(p.getBarcodeString()).add(iData);
 		} else {
 			ArrayList<ItemData> its = new ArrayList<ItemData>();
 			its.add(iData);
-			_removedItems.put(pData, its);
+			_removedItems.put(p.getBarcodeString(), its);
 		}
 	}
 	
