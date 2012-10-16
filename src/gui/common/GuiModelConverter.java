@@ -4,6 +4,8 @@ import gui.item.ItemData;
 import gui.product.ProductData;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import model.item.Item;
 import model.product.Product;
@@ -59,7 +61,7 @@ public class GuiModelConverter {
 		return iData;
 	}
 	
-	public static ProductData[] PDArrayListToArray(ArrayList<ProductData> list){
+	public static ProductData[] productDataListToArray(List<ProductData> list){
 		ProductData[] parray = new ProductData[list.size()];
 		int count = 0;
 		for (ProductData i : list){
@@ -69,10 +71,10 @@ public class GuiModelConverter {
 		return parray;
 	}
 	
-	public static ItemData[] IDArrayListToArray(ArrayList<ItemData> list){
-		ItemData[] parray = new ItemData[list.size()];
+	public static ItemData[] itemDataListToArray(List<ItemData> arrayList){
+		ItemData[] parray = new ItemData[arrayList.size()];
 		int count = 0;
-		for (ItemData i : list){
+		for (ItemData i : arrayList){
 			parray[count] = i;
 			count++;
 		}
