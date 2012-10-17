@@ -20,14 +20,6 @@ import gui.common.*;
 import gui.item.ItemData;
 import gui.product.*;
 
-/* TODO:
- * Main view needs to update when a product is removed from this view.
- * Enable / Disable needs to work.
- * Product needs to show the count of its items that have been removed.
- * The changes to the actual data should not take effect until the done button is pressed.
- * Make sure keyboard focus works properly.
- */
-
 /**
  * Controller class for the remove item batch view.
  */
@@ -168,7 +160,9 @@ public class RemoveItemBatchController extends Controller implements
 			recordRemoved(item, product);
 		}
 		this.loadValues();
+		getView().setBarcode("");
 		getView().giveBarcodeFocus();
+		this.enableComponents();
 	}
 
 	private void recordRemoved(Item i, Product p){
