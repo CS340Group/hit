@@ -8,7 +8,7 @@ import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
 import model.common.Barcode;
 import model.common.Model;
-import model.common.Size.Unit;
+import model.common.Size;
 
 import org.joda.time.DateTime;
 
@@ -34,7 +34,7 @@ public class Product extends Model{
 
     private DateTime _creationDate;
 
-    private Barcode _barcode;
+    private String _barcode;
 
     private String _description;
 
@@ -207,7 +207,7 @@ public class Product extends Model{
     /**
      * Get a reference to the Barcode object that belongs to this Product.
      */
-    public Barcode getBarcode(){
+    public String getBarcode(){
         return _barcode;
     }
 
@@ -222,7 +222,7 @@ public class Product extends Model{
     /**
      * Assign a Barcode object as this Product's Barcode.
      */
-    public Result setBarcode(Barcode b){
+    public Result setBarcode(String b){
         assert b != null;
         _barcode = b;
         invalidate();
@@ -333,7 +333,7 @@ public class Product extends Model{
      * validated state.
 	 */
 	public Result validate(){
-        if (_barcode == null || !_barcode.validate().getStatus()) {
+        if (_barcode == null || _barcode.isEmpty()) {
             return new Result(false, "The barcode must be set and valid.");
         }
         if (_description == null || _description.equals("")){
@@ -360,9 +360,9 @@ public class Product extends Model{
 	 * pass validation.
 	 */
 	public void setToBlankProduct(){
-		_barcode = new Barcode("1");
+		_barcode = "1";
 		_description = "A Description";
-		this._size = new Size(1,Unit.count);
+		this._size = new Size(1,"count");
 	}
 	
     /**

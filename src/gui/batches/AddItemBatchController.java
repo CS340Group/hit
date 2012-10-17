@@ -6,19 +6,18 @@ import gui.inventory.*;
 import gui.item.ItemData;
 import gui.product.*;
 import model.common.Barcode;
+import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
+import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Controller class for the add item batch view.
@@ -26,11 +25,12 @@ import java.util.TimerTask;
 public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
 
-    ArrayList<ProductData> products = new ArrayList<ProductData>();
-    ArrayList<ItemData> items = new ArrayList<ItemData>();
+    HashMap<ProductData,ArrayList<ItemData>> products = new HashMap<ProductData, ArrayList<ItemData>>();
     boolean scanner = true;
     Timer timer;
     ProductContainerData target;
+
+    ModelFacade facade;
 	/**
 	 * Constructor.
 	 * 
@@ -40,8 +40,10 @@ public class AddItemBatchController extends Controller implements
 	public AddItemBatchController(IView view, ProductContainerData target) {
 		super(view);
         getView().setUseScanner(scanner);
+        getView().setCount("1");
         timer = new Timer();
         this.target = target;
+        this.facade = new ModelFacade();
 		construct();
 	}
 
@@ -62,10 +64,9 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+        ProductData selected = getView().getSelectedProduct();
         getView().setProducts(getProducts());
-        getView().setItems(getItems());
-        getView().setBarcode("");
-        getView().setCount("1");
+        getView().setItems(getItems(selected));
 	}
 
 	/**
@@ -134,6 +135,7 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void useScannerChanged() {
         scanner = getView().getUseScanner();
+        getView().setBarcode("");
 	}
 
 	/**
@@ -142,6 +144,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
+        getView().setItems(getItems(getView().getSelectedProduct()));
 	}
 
 	/**
@@ -150,14 +153,24 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void addItem() {
-        Barcode barcode = new Barcode(getView().getBarcode());
-        Product product = ProductVault.getInstance().find("Barcode = " + barcode.toString());
+        int count = 0;
+        try {
+            count = Integer.parseInt(getView().getCount());
+        } catch (Exception e) {
+            getView().displayErrorMessage("Invalid Count!");
+            return;
+        }
+        String barcode = getView().getBarcode();
+        Product product = ProductVault.getInstance().find("Barcode = " + barcode);
         if(product == null){
             getView().displayAddProductView(target);
-            product = ProductVault.getInstance().find("Barcode = " + barcode.toString());
+            product = ProductVault.getInstance().find("Barcode = " + barcode);
         }
         if(product == null){
             loadValues();
+            getView().setBarcode("");
+            getView().setUseScanner(true);
+            scanner = true;
             return;
         }
 
@@ -171,16 +184,16 @@ public class AddItemBatchController extends Controller implements
             pd.setSize(product.getSize().toString());
             pd.setSupply(String.valueOf(product.get3MonthSupply()));
             pd.setTag(product.getId());
-            products.add(pd);
         }
 
-        for(int i = 0; i < Integer.parseInt(getView().getCount()); i++){
+        for(int i = 0; i < count; i++){
             Item item = new Item();
             item.setEntryDate(new DateTime(getView().getEntryDate()));
             item.setExpirationDate(item.getEntryDate().plusMonths(product.getShelfLife()));
             item.setProductId(product.getId());
             item.validate();
             item.save();
+            facade.AddItem(StorageUnitVault.getInstance().get((Integer) target.getTag()), item);
 
             ItemData id = new ItemData();
             id.setBarcode(item.getBarcode().toString());
@@ -190,12 +203,16 @@ public class AddItemBatchController extends Controller implements
             catch(NullPointerException e){ id.setProductGroup(""); }
             id.setStorageUnit(product.getStorageUnit().getName());
             id.setTag(item.getId());
-            items.add(id);
 
-            int count = Integer.parseInt(pd.getCount())+1;
-            pd.setCount(String.valueOf(count));
+            if(!products.containsKey(pd))
+                products.put(pd, new ArrayList<ItemData>());
+
+            products.get(pd).add(id);
+
+            pd.setCount(String.valueOf(products.get(pd).size()));
 
         }
+        getView().setBarcode("");
         loadValues();
 	}
 	
@@ -222,13 +239,14 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void done() {
 		getView().close();
-        if(!items.isEmpty()){
+        if(!products.isEmpty()){
             try{
                 BarcodePdf pdf = new BarcodePdf("items.pdf");
-                Iterator<ItemData> i = items.iterator();
-                while(i.hasNext()){
-                    int id = (Integer) i.next().getTag();
-                    pdf.addItem(ItemVault.getInstance().get(id));
+                for(ArrayList<ItemData> i : products.values()){
+                    for(ItemData data : i){
+                        int id = (Integer) data.getTag();
+                        pdf.addItem(ItemVault.getInstance().get(id));
+                    }
                 }
                 pdf.finish();
             } catch (Exception e){
@@ -246,35 +264,23 @@ public class AddItemBatchController extends Controller implements
 	}
 
     private ProductData[] getProducts(){
-        Iterator<ProductData> i = products.iterator();
-        ProductData[] p = new ProductData[products.size()];
-        int c = 0;
-        while(i.hasNext()){
-            p[c] = i.next();
-            c++;
-        }
-        return p;
+        if(products.isEmpty())
+            return new ProductData[0];
+        return products.keySet().toArray(new ProductData[products.keySet().size()]);
     }
 
     private ProductData findProduct(String barcode){
-        Iterator<ProductData> i = products.iterator();
-        while(i.hasNext()){
-            ProductData p = i.next();
+        for(ProductData p: products.keySet()){
             if(p.getBarcode().contentEquals(barcode))
                 return p;
         }
         return null;
     }
 
-    private ItemData[] getItems(){
-        Iterator<ItemData> i = items.iterator();
-        ItemData[] p = new ItemData[items.size()];
-        int c = 0;
-        while(i.hasNext()){
-            p[c] = i.next();
-            c++;
-        }
-        return p;
+    private ItemData[] getItems(ProductData pd){
+        if(products.containsKey(pd))
+            return products.get(pd).toArray(new ItemData[products.get(pd).size()]);
+        return new ItemData[0];
     }
 
     private class ScannerTimer extends TimerTask {

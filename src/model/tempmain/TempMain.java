@@ -27,11 +27,11 @@ public class TempMain {
         Product product = new Product();
         product.setDescription("Spam and Eggs");
         product.set3MonthSupply(3);
-        product.setBarcode(new Barcode("1323"));
+        product.setBarcode("1323");
         product.setContainerId(su.getId());
         product.setCreationDate(new DateTime());
         product.setShelfLife(2);
-        product.setSize(new Size(3, Size.Unit.oz));
+        product.setSize(new Size(3, "oz"));
         product.setStorageUnitId(su.getId());
         Result valid = product.validate();
         Result saved = product.save();

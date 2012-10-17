@@ -67,7 +67,7 @@ public class EditProductGroupController extends Controller
             getView().enableOK(false);
             return;
         }
-        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         getView().enableOK(pg.validate().getStatus());
 	}
@@ -104,7 +104,7 @@ public class EditProductGroupController extends Controller
 	public void editProductGroup() {
         ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
         float size = Float.parseFloat(getView().getSupplyValue());
-        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         pg.validate();
         pg.save();
