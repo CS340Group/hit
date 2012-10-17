@@ -31,7 +31,7 @@ public class ProductGroupVaultTest {
         pg1.setName("Group A");
         pg1.setParentId(-1);
         pg1.setRootParentId(su.getId());
-        pg1.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg1.set3MonthSupply(new Size(3, "oz"));
         pg1.validate();
         pg1.save();
 
@@ -39,7 +39,7 @@ public class ProductGroupVaultTest {
         pg2.setName("Group B");
         pg2.setParentId(pg1.getId());
         pg2.setRootParentId(su.getId());
-        pg2.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg2.set3MonthSupply(new Size(3, "oz"));
     }
 
     @After
