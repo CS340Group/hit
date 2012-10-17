@@ -119,6 +119,10 @@ public class ProductContainer extends Model{
         return _name;
     }
     
+    public String getLowerCaseName(){
+    	return _name.toLowerCase();
+    }
+    
     
 
     /**
