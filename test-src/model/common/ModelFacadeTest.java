@@ -57,13 +57,13 @@ public class ModelFacadeTest {
         pg1 = new ProductGroup();
         pg2 = new ProductGroup();
         pg3 = new ProductGroup();
-        pg1.set3MonthSupply(new Size(1, Size.Unit.count));
+        pg1.set3MonthSupply(new Size(1, "Count"));
         pg1.setRootParentId(su1.getId());
         pg1.setName("Group 1");
         pg1.validate();
         pg1.save();
 
-        pg2.set3MonthSupply(new Size(1, Size.Unit.count));
+        pg2.set3MonthSupply(new Size(1, "Count"));
         pg2.setName("Group B");
         pg2.setRootParentId(su1.getId());
         pg2.setParentId(pg1.getId());
@@ -71,7 +71,7 @@ public class ModelFacadeTest {
         pg2.save();
 
         pg3.setName("Group C");
-        pg3.set3MonthSupply(new Size(1, Size.Unit.count));
+        pg3.set3MonthSupply(new Size(1, "Count"));
         pg3.setRootParentId(su2.getId());
         pg3.setParentId(-1);
         pg3.validate();
@@ -83,44 +83,44 @@ public class ModelFacadeTest {
         p4 = new Product();
         p1.setContainerId(pg1.getId());
         p1.set3MonthSupply(1);
-        p1.setBarcode(new Barcode("0002"));
+        p1.setBarcode("0002");
         p1.setCreationDate(new DateTime());
         p1.setDescription("Item A");
         p1.setShelfLife(3);
-        p1.setSize(new Size(1, Size.Unit.count));
+        p1.setSize(new Size(1, "Count"));
         p1.setStorageUnitId(su1.getId());
         assert p1.validate().getStatus();
         assert p1.save().getStatus();
 
         p2.setContainerId(pg2.getId());
         p2.set3MonthSupply(2);
-        p2.setBarcode(new Barcode("0202"));
+        p2.setBarcode("0202");
         p2.setCreationDate(new DateTime());
         p2.setDescription("Item B");
         p2.setShelfLife(4);
-        p2.setSize(new Size(1, Size.Unit.count));
+        p2.setSize(new Size(1, "Count"));
         p2.setStorageUnitId(su1.getId());
         p2.validate();
         p2.save();
 
         p3.setContainerId(pg3.getId());
         p3.set3MonthSupply(9);
-        p3.setBarcode(new Barcode("0003"));
+        p3.setBarcode("0003");
         p3.setCreationDate(new DateTime());
         p3.setDescription("Item C");
         p3.setShelfLife(9);
-        p3.setSize(new Size(1, Size.Unit.count));
+        p3.setSize(new Size(1, "Count"));
         p3.setStorageUnitId(su2.getId());
         p3.validate();
         p3.save();
 
         p4.setContainerId(-1);
         p4.set3MonthSupply(5);
-        p4.setBarcode(new Barcode("0008"));
+        p4.setBarcode("0008");
         p4.setCreationDate(new DateTime());
         p4.setDescription("Item X");
         p4.setShelfLife(4);
-        p4.setSize(new Size(1, Size.Unit.count));
+        p4.setSize(new Size(1, "Count"));
         p4.setStorageUnitId(su4.getId());
         p4.validate();
         p4.save();

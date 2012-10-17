@@ -73,7 +73,7 @@ public class AddProductGroupController extends Controller implements
             getView().enableOK(false);
             return;
         }
-        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         getView().enableOK(pg.validate().getStatus());
 	}
@@ -115,7 +115,7 @@ public class AddProductGroupController extends Controller implements
         pg.setRootParentId(unit.getId());
         pg.setParentId(unit.getId());
         float size = Float.parseFloat(getView().getSupplyValue());
-        pg.set3MonthSupply(new Size(size, Size.Unit.values()[getView().getSupplyUnit().ordinal()]));
+        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         pg.validate();
         pg.save();

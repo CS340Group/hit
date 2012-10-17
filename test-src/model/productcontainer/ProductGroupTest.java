@@ -30,19 +30,19 @@ public class ProductGroupTest {
         pg1.setName("Group A");
         pg1.setParentId(su.getId());
         pg1.setRootParentId(su.getId());
-        pg1.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg1.set3MonthSupply(new Size(3, "oz"));
 
         pg2 = new ProductGroup();
         pg2.setName("Group B");
         pg2.setParentId(su.getId());
         pg2.setRootParentId(su.getId());
-        pg2.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg2.set3MonthSupply(new Size(3, "oz"));
 
         pg3 = new ProductGroup();
         pg3.setName("Group A");
         pg3.setParentId(su.getId());
         pg3.setRootParentId(su.getId());
-        pg3.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg3.set3MonthSupply(new Size(3, "oz"));
 
     }
 
@@ -87,12 +87,12 @@ public class ProductGroupTest {
     @Test
     public void testSet3MonthSupply(){
         // Should fail due to a negative size. 
-        assertFalse(pg1.set3MonthSupply(new Size(-5, Size.Unit.oz)).getStatus());
+        assertFalse(pg1.set3MonthSupply(new Size(-5, "oz")).getStatus());
         // A zero in this context should be fine:
-        assertTrue(pg1.set3MonthSupply(new Size(0, Size.Unit.oz)).getStatus());
+        assertTrue(pg1.set3MonthSupply(new Size(0, "oz")).getStatus());
         // Should fail. If the unit is count, the amt should be 1.
-        assertFalse(pg1.set3MonthSupply(new Size(5, Size.Unit.count)).getStatus());
-        assertTrue(pg1.set3MonthSupply(new Size(1, Size.Unit.count)).getStatus());
+        assertFalse(pg1.set3MonthSupply(new Size(5, "Count")).getStatus());
+        assertTrue(pg1.set3MonthSupply(new Size(1, "Count")).getStatus());
     }
 
     @Test

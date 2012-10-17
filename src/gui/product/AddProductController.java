@@ -13,7 +13,6 @@ import org.joda.time.DateTime;
 public class AddProductController extends Controller implements
 		IAddProductController {
 
-    private Barcode barcode;
     private ProductContainerData target;
 
 	/**
@@ -24,21 +23,14 @@ public class AddProductController extends Controller implements
 	 */
 	public AddProductController(IView view, String barcode, ProductContainerData target) {
 		super(view);
-		this.barcode = new Barcode(barcode);
         this.target = target;
 		construct();
-        getView().setBarcode(this.barcode.toString());
+        getView().setBarcode(barcode);
         getView().enableBarcode(false);
         getView().setSizeValue("1");
         getView().enableSizeValue(false);
-    }
-
-    public Barcode getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(Barcode barcode) {
-        this.barcode = barcode;
+        getView().setShelfLife("0");
+        getView().setSupply("0");
     }
 
 	//
@@ -70,7 +62,7 @@ public class AddProductController extends Controller implements
 	@Override
 	protected void enableComponents() {
         getView().enableSizeValue(true);
-        if(getView().getSizeUnit().name() == "count"){
+        if(getView().getSizeUnit().name() == "Count"){
             getView().enableSizeValue(false);
             getView().setSizeValue("1");
         }
@@ -80,6 +72,7 @@ public class AddProductController extends Controller implements
             Integer.parseInt(getView().getSupply());
         } catch (Exception e){
             getView().enableOK(false);
+            return;
         }
         getView().enableOK(!getView().getDescription().isEmpty());
 
@@ -120,13 +113,12 @@ public class AddProductController extends Controller implements
 	public void addProduct() {
         Product product = new Product();
         product.set3MonthSupply(Integer.parseInt(getView().getSupply()));
-        product.setBarcode(this.barcode);
+        product.setBarcode(getView().getBarcode());
         product.setContainerId((Integer) target.getTag());
         product.setCreationDate(DateTime.now());
         product.setDescription(getView().getDescription());
         product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
-        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
-                Size.Unit.values()[Math.abs(getView().getSizeUnit().ordinal()-9)]));
+        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()), getView().getSizeUnit().toString()));
         product.setStorageUnitId((Integer) target.getTag());
         product.validate();
         product.save();

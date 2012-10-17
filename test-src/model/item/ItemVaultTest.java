@@ -27,11 +27,11 @@ public class ItemVaultTest {
         p1 = new Product();
         p1.setDescription("MyProduct1");
         p1.set3MonthSupply(1);
-        p1.setBarcode(new Barcode("94890002844"));
+        p1.setBarcode("94890002844");
         p1.setContainerId(-1);
         p1.setCreationDate(new DateTime(2012,6,1,12,0));
         p1.setShelfLife(2);
-        p1.setSize(new Size(3, Size.Unit.oz));
+        p1.setSize(new Size(3, "oz"));
         p1.setStorageUnitId(-1);
         p1.validate();
         p1.save();
@@ -39,11 +39,11 @@ public class ItemVaultTest {
         p2 = new Product();
         p2.setDescription("MyProduct2");
         p2.set3MonthSupply(2);
-        p2.setBarcode(new Barcode("76063005135"));
+        p2.setBarcode("76063005135");
         p2.setContainerId(-1);
         p2.setCreationDate(new DateTime(2012,6,2,12,0));
         p2.setShelfLife(2);
-        p2.setSize(new Size(2, Size.Unit.oz));
+        p2.setSize(new Size(2, "oz"));
         p2.setStorageUnitId(-1);
         p2.validate();
         p2.save();

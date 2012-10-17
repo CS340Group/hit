@@ -9,16 +9,14 @@ import common.Result;
  */
 public class Size implements Serializable{
     // This is to be able to set the units with consistency. 
-    public enum Unit {count, lbs, oz, g, kg, gallons, quarts, pints,
-    floz, liters}
 
     private float _amount;
-    private Unit _unit;
+    private String _unit;
 
     /**
      * Constructor
      */
-    public Size(float a, Unit u){
+    public Size(float a, String u){
         assert true;
         this._amount = a;
         this._unit = u;
@@ -48,15 +46,15 @@ public class Size implements Serializable{
     /**
      * Returns the unit for this Size.
      */
-    public Unit getUnit(){
+    public String getUnit(){
         return _unit;
     }
 
     /**
      * Sets the Unit for the Size. Can be found in Size.Unit
      */
-    public Result setUnit(Unit u){
-        Unit oldUnit = _unit;
+    public Result setUnit(String u){
+        String oldUnit = _unit;
         _unit = u;
         Result valid = validate();
         if (!valid.getStatus()){
@@ -73,7 +71,7 @@ public class Size implements Serializable{
         if (_amount < 0){
             return new Result(false, "The amount must not be negative.");
         }
-        if (_unit == Unit.count && _amount != 1.0){
+        if (_unit.toLowerCase().contentEquals("count") && _amount != 1.0){
             return new Result(false, "If unit=count, amount must be 1");
         }
         return new Result(true, "You've got yourself a valid unit.");

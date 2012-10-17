@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import model.common.Barcode;
 import model.common.ModelFacade;
 import model.common.Size;
-import model.common.Size.Unit;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -117,13 +116,13 @@ public class InventoryController extends Controller
         pg1.setName("Group A");
         pg1.setParentId(su3.getId());
         //pg1.setRootParentId(su3.getId());
-        pg1.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg1.set3MonthSupply(new Size(3, "oz"));
         
         ProductGroup pg2 = new ProductGroup();
         pg2.setName("Group B");
         pg2.setParentId(su1.getId());
         //pg2.setRootParentId(su1.getId());
-        pg2.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg2.set3MonthSupply(new Size(3, "oz"));
         
         
         pg1.validate();
@@ -136,7 +135,7 @@ public class InventoryController extends Controller
         pg3.setName("Group C");
         pg3.setParentId(pg2.getId());
         //pg3.setRootParentId(su1.getId());
-        pg3.set3MonthSupply(new Size(3, Size.Unit.oz));
+        pg3.set3MonthSupply(new Size(3, "oz"));
         pg3.validate();
         pg3.save();
         
@@ -144,12 +143,12 @@ public class InventoryController extends Controller
         Product p1 = new Product();
         p1.setStorageUnitId(su1.getId());
         p1.set3MonthSupply(3);
-        p1.setBarcode(new Barcode("1111"));
+        p1.setBarcode("1111");
         p1.setContainerId(pg2.getId());
         p1.setDescription("This is such a great description");
         p1.setShelfLife(5);
         p1.setCreationDate(new DateTime());
-        p1.setSize(new Size(123,Unit.oz));
+        p1.setSize(new Size(123,"oz"));
         p1.validate();
         p1.save();
         

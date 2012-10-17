@@ -111,8 +111,7 @@ public class EditProductController extends Controller
         product.set3MonthSupply(Integer.parseInt(getView().getSupply()));
         product.setDescription(getView().getDescription());
         product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
-        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
-                Size.Unit.values()[Math.abs(getView().getSizeUnit().ordinal() - 9)]));
+        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),getView().getSizeUnit().toString()));
         Result r = product.validate();
         if(!r.getStatus())
             getView().displayErrorMessage(r.getMessage());
