@@ -71,6 +71,9 @@ public class InventoryController extends Controller
 	@Override
 	protected void loadValues() {
 		ProductContainerData root = new ProductContainerData();
+		if (this.currentlySelectedPCId == -2)
+			this.currentlySelectedPC = root;
+
 		//currentlySelectedPC = getView().getSelectedProductContainer();
 		//if(currentlySelectedPC != null)
 		//	currentlySelectedPCId = ((Number) currentlySelectedPC.getTag()).intValue();
@@ -395,6 +398,8 @@ public class InventoryController extends Controller
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
 				products = bm.productVault.findAll("Deleted = false");
+				// This means that the root is selected.
+				this.currentlySelectedPCId = -2;
 				getView().setContextUnit("All");
 				getView().setContextGroup("");
 				getView().setContextSupply("");
