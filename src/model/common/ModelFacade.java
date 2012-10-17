@@ -1,7 +1,7 @@
 package model.common;
 
 import common.Result;
-
+import static ch.lambdaj.Lambda.*;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -9,6 +9,7 @@ import model.product.ProductVault;
 import model.productcontainer.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is the controller for the complicated actions to be done with the
@@ -43,7 +44,16 @@ public class ModelFacade {
 
         if(targetP.getStorageUnitId() != targetSU.getId()){
         	//Check that a product does not exist already
-        	Product existingProduct = this.productVault.find("StorageUnitId = "+targetSU.getId());
+        	List<Product> possibleExistingProducts;
+        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
+        	Product existingProduct = null;
+        	if(possibleExistingProducts.size() != 0)
+        		existingProduct = 
+        			select(possibleExistingProducts, 
+        					having(
+        							on(Product.class).getBarcodeString().equals("hey")
+        							)
+        						  ).get(0);
         	if(existingProduct==null){
 	            Product p2 = new Product();
 	            p2.set3MonthSupply(targetP.get3MonthSupply());
