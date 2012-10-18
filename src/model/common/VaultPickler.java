@@ -54,6 +54,7 @@ public class VaultPickler {
 		    ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 		    // Deserialize the object
 		    allVaults = (AllVaults) in.readObject();
+		    allVaults.UseDataFromTheseVaults();
 		    in.close(); 
 		    
 		} catch (ClassNotFoundException e) {

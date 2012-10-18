@@ -51,5 +51,13 @@ public abstract class Vault extends Observable implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Configures this vault to use the data from another vault instance.
+	 * @param v
+	 */
+	public void useDataFromOtherVault(Vault v){
+		this.dataVault = v.dataVault;
+	}
+	
 	
 }
