@@ -26,10 +26,35 @@ public class ModelFacade {
     /**
      * Moves an item from one storage unit to another.
      */
-	public Result MoveItem(StorageUnit targetSU, Item item){
-        assert targetSU != null;
-        assert item != null;
-		AddItem(targetSU, item);
+	public Result MoveItem(ProductContainer targetPC, Item item){
+		//Create a new product
+		//Add the one item to that product
+		//Call the move product method
+		Product currentProduct = item.getProduct();
+		
+		Product newProduct = new Product();
+        newProduct.set3MonthSupply(currentProduct.get3MonthSupply());
+        newProduct.setBarcode(currentProduct.getBarcode());
+        newProduct.setCreationDate(currentProduct.getCreationDate());
+        newProduct.setDescription(currentProduct.getDescription());
+        newProduct.setShelfLife(currentProduct.getShelfLife());
+        newProduct.setSize(currentProduct.getSize());
+
+        
+        newProduct.setStorageUnitId(-1);
+        newProduct.setContainerId(-1);
+        newProduct.validate();
+        newProduct.save();
+
+        item.setProductId(newProduct.getId());
+        item.validate();
+        item.save();
+        
+        ProductGroup possiblePG = this.productGroupVault.get(targetPC.getId());
+        if(possiblePG != null)
+        	this.MoveProduct(possiblePG.getStorageUnit(), targetPC, newProduct);
+        else
+        	this.MoveProduct((StorageUnit)targetPC, targetPC, newProduct);
         return new Result(true);
 	}
 
@@ -47,13 +72,12 @@ public class ModelFacade {
         	List<Product> possibleExistingProducts;
         	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
         	Product existingProduct = null;
-        	if(possibleExistingProducts.size() != 0)
-        		existingProduct = 
-        			select(possibleExistingProducts, 
-        					having(
-        							on(Product.class).getBarcodeString().equals("hey")
-        							)
-        						  ).get(0);
+    		for(Product tempP : possibleExistingProducts){
+    			if(tempP.getBarcodeString().equals(targetP.getBarcodeString()))
+    				existingProduct = tempP;
+    		}
+    		
+    		//If there isn't a product, create a new one
         	if(existingProduct==null){
 	            Product p2 = new Product();
 	            p2.set3MonthSupply(targetP.get3MonthSupply());
@@ -69,8 +93,9 @@ public class ModelFacade {
 	            p2.validate();
 	            p2.save();
 	            targetP = p2;
-        	} else 
+        	} else{
         		targetP = existingProduct;
+        	}
             
         }
 

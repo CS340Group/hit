@@ -209,6 +209,10 @@ public class ProductGroupVault extends Vault {
         return result;
 	}
 
+	public int getLastIndex(){
+		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
+	}
+	
 	/**
 	 * Adds the ProductGroup to the map if it's new.  Should check before doing so.
 	 * 
