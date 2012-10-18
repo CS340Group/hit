@@ -1,5 +1,6 @@
 package gui.productgroup;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import gui.common.*;
 import gui.inventory.*;
 import model.common.Size;
@@ -26,7 +27,9 @@ public class EditProductGroupController extends Controller
 		super(view);
         this.target = target;
 		getView().setProductGroupName(target.getName());
-
+        ProductGroup pg = ProductGroupVault.getInstance().get((Integer)target.getTag());
+        getView().setSupplyValue(String.valueOf(pg.get3MonthSupply().getAmount()));
+        getView().setSupplyUnit(SizeUnits.valueOf(StringUtils.capitalize(pg.get3MonthSupply().getUnit())));
         construct();
 
 	}
