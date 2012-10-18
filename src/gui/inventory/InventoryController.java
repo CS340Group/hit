@@ -575,7 +575,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductGroup() {
-		this.currentlySelectedPCId = bm.productGroupVault.getLastIndex()+1;
+		this.currentlySelectedPCId = _mf.productGroupVault.getLastIndex()+1;
 		getView().displayAddProductGroupView();
 	}
 	
@@ -608,7 +608,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addStorageUnit() {
-		this.currentlySelectedPCId = bm.storageUnitVault.getLastIndex()+1;
+		this.currentlySelectedPCId = _mf.storageUnitVault.getLastIndex()+1;
 		getView().displayAddStorageUnitView();
 	}
 
@@ -687,12 +687,14 @@ public class InventoryController extends Controller
 		  id = ((Number) containerData.getTag()).intValue();
 		ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
 		StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
-		
+		this.currentlySelectedPC = null;
+		this.currentlySelectedPCId = id;
 		if(selectedProductGroup!=null){
 			_mf.MoveItem(selectedProductGroup, selectedItem);
 		} else {
 			_mf.MoveItem(selectedStorageUnit, selectedItem);
 		}
+		
 		
 	}
 

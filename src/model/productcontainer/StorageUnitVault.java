@@ -128,7 +128,7 @@ public class StorageUnitVault extends Vault{
 	}
 	
 	public int getLastIndex(){
-		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
+		return (int)dataVault.size()+ProductGroupVault.getInstance().size();
 	}
 	/**
 	 * Checks if the model passed in already exists in the current map
