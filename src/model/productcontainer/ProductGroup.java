@@ -118,6 +118,9 @@ public class ProductGroup extends ProductContainer{
      * Checks if this is a valid ProductGroup.
      */
     public Result validate(){
+        if(getName().isEmpty())
+            return new Result(false, "Name cannot be empty");
+
         if(getId() == -1)
             return productGroupVault.validateNew(this);
         else
