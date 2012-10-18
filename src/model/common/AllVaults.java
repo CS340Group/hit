@@ -25,4 +25,15 @@ public class AllVaults implements Serializable {
 		productVault = ProductVault.getInstance();
 		productGroupVault = ProductGroupVault.getInstance();
 	}
+	
+	public void UseDataFromTheseVaults(){
+		ItemVault.getInstance().useDataFromOtherVault(itemVault);
+		ItemVault.getInstance().notifyObservers();
+		StorageUnitVault.getInstance().useDataFromOtherVault(storageUnitVault);
+		StorageUnitVault.getInstance().notifyObservers();
+		ProductVault.getInstance().useDataFromOtherVault(productVault);
+		ProductVault.getInstance().notifyObservers();
+		ProductGroupVault.getInstance().useDataFromOtherVault(productGroupVault);
+		ProductGroupVault.getInstance().notifyObservers();
+	}
 }
