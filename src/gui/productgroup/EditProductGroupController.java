@@ -1,6 +1,6 @@
 package gui.productgroup;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import common.util.StringUtils;
 import gui.common.*;
 import gui.inventory.*;
 import model.common.Size;
