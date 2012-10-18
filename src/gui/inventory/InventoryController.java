@@ -379,7 +379,7 @@ public class InventoryController extends Controller
 		
 		if (selectedContainerData != null) {
 			//Get list of all productGroups in PC
-			ArrayList<Product> products = new ArrayList<Product>();
+			List<Product> products = new ArrayList<Product>();
 
 			int id = -1;
 			if(selectedContainerData.getTag() != null)
@@ -392,7 +392,7 @@ public class InventoryController extends Controller
 			
 			//Is a storage unit or a product group selected
 			if(selectedStorageUnit != null){
-				products = _mf.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
+				products = _mf.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
 				getView().setContextUnit(selectedStorageUnit.getName());
 				getView().setContextGroup("");
 				getView().setContextSupply("");
@@ -411,7 +411,7 @@ public class InventoryController extends Controller
 				getView().setContextSupply("");
 			}
 			
-			
+			products = sort(products, (on(Product.class).getDescriptionSort()));
 			for(Product tempProduct : products){
 				
 					
@@ -456,8 +456,9 @@ public class InventoryController extends Controller
 		
 		
 		if (selectedProduct != null) {
-			ArrayList<Item> items = new ArrayList<Item>();
+			List<Item> items = new ArrayList<Item>();
 			items = _mf.itemVault.findAll("ProductId = "+id);
+			items = sort(items, (on(Item.class).getEntryDate()));
 			for(Item tempItem : items){
 				ItemData itemData = new ItemData();
 				itemData.setBarcode(tempItem.getBarcodeString());
@@ -688,7 +689,7 @@ public class InventoryController extends Controller
 		StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 		
 		if(selectedProductGroup!=null){
-			_mf.MoveItem(selectedProductGroup.getStorageUnit(), selectedItem);
+			_mf.MoveItem(selectedProductGroup, selectedItem);
 		} else {
 			_mf.MoveItem(selectedStorageUnit, selectedItem);
 		}

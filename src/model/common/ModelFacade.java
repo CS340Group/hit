@@ -26,26 +26,51 @@ public class ModelFacade {
     /**
      * Moves an item from one storage unit to another.
      */
-	public Result MoveItem(StorageUnit targetSU, Item item){
-        assert targetSU != null;
-        assert item != null;
-		AddItem(targetSU, item);
+	public Result MoveItem(ProductContainer targetPC, Item item){
+		//Create a new product
+		//Add the one item to that product
+		//Call the move product method
+		Product currentProduct = item.getProduct();
+		
+		Product newProduct = new Product();
+        newProduct.set3MonthSupply(currentProduct.get3MonthSupply());
+        newProduct.setBarcode(currentProduct.getBarcode());
+        newProduct.setCreationDate(currentProduct.getCreationDate());
+        newProduct.setDescription(currentProduct.getDescription());
+        newProduct.setShelfLife(currentProduct.getShelfLife());
+        newProduct.setSize(currentProduct.getSize());
+
+        
+        newProduct.setStorageUnitId(-1);
+        newProduct.setContainerId(-1);
+        newProduct.validate();
+        newProduct.save();
+
+        item.setProductId(newProduct.getId());
+        item.validate();
+        item.save();
+        
+        ProductGroup possiblePG = this.productGroupVault.get(targetPC.getId());
+        if(possiblePG != null)
+        	this.MoveProduct(possiblePG.getStorageUnit(), targetPC, newProduct);
+        else
+        	this.MoveProduct((StorageUnit)targetPC, targetPC, newProduct);
         return new Result(true);
 	}
 
     /**
      * Adds an Item to a StorageUnit and ProductGroup.
      */
-	public Result AddItem(ProductContainer targetPC, Item item){
-        assert targetPC != null;
+	public Result AddItem(StorageUnit targetSU, Item item){
+        assert targetSU != null;
         assert item != null;
         Product targetP = item.getProduct();
         assert targetP != null : "Product should be in vault";
 
-        if(targetP.getStorageUnitId() != targetPC.getId()){
+        if(targetP.getStorageUnitId() != targetSU.getId()){
         	//Check that a product does not exist already
         	List<Product> possibleExistingProducts;
-        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetPC.getId());
+        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
         	Product existingProduct = null;
     		for(Product tempP : possibleExistingProducts){
     			if(tempP.getBarcodeString().equals(targetP.getBarcodeString()))
@@ -63,8 +88,7 @@ public class ModelFacade {
 	            p2.setSize(targetP.getSize());
 	
 	            
-	            p2.setStorageUnitId(targetPC.getId());
-	            p2.setContainerId(targetPC.getContainerId());
+	            p2.setStorageUnitId(targetSU.getId());
 	            p2.setContainerId(-1);
 	            p2.validate();
 	            p2.save();

@@ -236,6 +236,9 @@ public class Product extends Model{
     public String getDescription(){
         return _description;
     }
+    public String getDescriptionSort(){
+    	return _description.toLowerCase();
+    }
 
     /**
      * Set the description of the product. 
