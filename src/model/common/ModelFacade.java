@@ -36,24 +36,23 @@ public class ModelFacade {
     /**
      * Adds an Item to a StorageUnit and ProductGroup.
      */
-	public Result AddItem(StorageUnit targetSU, Item item){
-        assert targetSU != null;
+	public Result AddItem(ProductContainer targetPC, Item item){
+        assert targetPC != null;
         assert item != null;
         Product targetP = item.getProduct();
         assert targetP != null : "Product should be in vault";
 
-        if(targetP.getStorageUnitId() != targetSU.getId()){
+        if(targetP.getStorageUnitId() != targetPC.getId()){
         	//Check that a product does not exist already
         	List<Product> possibleExistingProducts;
-        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
+        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetPC.getId());
         	Product existingProduct = null;
-        	if(possibleExistingProducts.size() != 0)
-        		existingProduct = 
-        			select(possibleExistingProducts, 
-        					having(
-        							on(Product.class).getBarcodeString().equals("hey")
-        							)
-        						  ).get(0);
+    		for(Product tempP : possibleExistingProducts){
+    			if(tempP.getBarcodeString().equals(targetP.getBarcodeString()))
+    				existingProduct = tempP;
+    		}
+    		
+    		//If there isn't a product, create a new one
         	if(existingProduct==null){
 	            Product p2 = new Product();
 	            p2.set3MonthSupply(targetP.get3MonthSupply());
@@ -64,13 +63,15 @@ public class ModelFacade {
 	            p2.setSize(targetP.getSize());
 	
 	            
-	            p2.setStorageUnitId(targetSU.getId());
+	            p2.setStorageUnitId(targetPC.getId());
+	            p2.setContainerId(targetPC.getContainerId());
 	            p2.setContainerId(-1);
 	            p2.validate();
 	            p2.save();
 	            targetP = p2;
-        	} else 
+        	} else{
         		targetP = existingProduct;
+        	}
             
         }
 

@@ -574,6 +574,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductGroup() {
+		this.currentlySelectedPCId = bm.productGroupVault.getLastIndex()+1;
 		getView().displayAddProductGroupView();
 	}
 	
@@ -606,6 +607,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addStorageUnit() {
+		this.currentlySelectedPCId = bm.storageUnitVault.getLastIndex()+1;
 		getView().displayAddStorageUnitView();
 	}
 
