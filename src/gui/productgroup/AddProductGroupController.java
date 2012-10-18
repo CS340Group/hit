@@ -21,6 +21,8 @@ public class AddProductGroupController extends Controller implements
 	public AddProductGroupController(IView view, ProductContainerData container) {
 		super(view);
 		setContainerData(container);
+        getView().setSupplyUnit(SizeUnits.Count);
+        getView().setSupplyValue("1");
 		construct();
 	}
 
@@ -75,7 +77,7 @@ public class AddProductGroupController extends Controller implements
         }
         pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
-        getView().enableOK(pg.validate().getStatus());
+        getView().enableOK(pg.validate().getStatus() && size > 0);
 	}
 
 	/**

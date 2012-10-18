@@ -68,11 +68,23 @@ public class EditProductController extends Controller
             getView().setSizeValue("1");
         }
         try{
-            Float.parseFloat(getView().getSizeValue());
-            Integer.parseInt(getView().getShelfLife());
-            Integer.parseInt(getView().getSupply());
+            if(Float.parseFloat(getView().getSizeValue()) < 0){
+                getView().enableOK(false);
+                return;
+            }
+
+            if(Integer.parseInt(getView().getShelfLife()) < 0){
+                getView().enableOK(false);
+                return;
+            }
+
+            if(Integer.parseInt(getView().getSupply()) < 0){
+                getView().enableOK(false);
+                return;
+            }
         } catch (Exception e){
             getView().enableOK(false);
+            return;
         }
         getView().enableOK(!getView().getDescription().isEmpty());
 	}
