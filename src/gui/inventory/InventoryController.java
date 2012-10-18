@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import model.common.Barcode;
 import model.common.ModelFacade;
 import model.common.Size;
+import model.common.VaultPickler;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -23,7 +24,9 @@ import model.productcontainer.*;
 public class InventoryController extends Controller 
 									implements IInventoryController, Observer {
 
-	ModelFacade bm  = new ModelFacade();
+	ModelFacade _mf  = new ModelFacade();
+	VaultPickler _pickler;
+
 	/**
 	 * Constructor.
 	 *  
@@ -31,7 +34,9 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		this.addSampleItems();
+		_pickler = new VaultPickler();	
+		_pickler.DeSerializeMe();
+//		this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
@@ -79,7 +84,7 @@ public class InventoryController extends Controller
 		
 		//Get all available storage units
 		List<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
-		storageUnits = bm.storageUnitVault.findAll("Deleted = false");
+		storageUnits = _mf.storageUnitVault.findAll("Deleted = false");
 		storageUnits = sort(storageUnits, (on(ProductContainer.class).getLowerCaseName()));
 		
 		//For each storage unit add all it's children productGroups
@@ -179,7 +184,7 @@ public class InventoryController extends Controller
 	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
 		//Get list of all productGroups in PC
 		List<ProductGroup> productGroups = new ArrayList<ProductGroup>();
-		productGroups = bm.productGroupVault.findAll("ParentIdString = "+pc.getId());
+		productGroups = _mf.productGroupVault.findAll("ParentIdString = "+pc.getId());
 		productGroups = sort(productGroups, (on(ProductContainer.class).getLowerCaseName()));
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
@@ -269,8 +274,8 @@ public class InventoryController extends Controller
 			int id = -1;
 			if(selectedContainerData.getTag() != null)
 			  id = ((Number) selectedContainerData.getTag()).intValue();
-			ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
-			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+			ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
+			StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 			if(selectedProductGroup!=null){
 				return selectedProductGroup.isDeletable().getStatus();
 			} else {
@@ -291,7 +296,7 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedContainerData.getTag() != null)
 		  id = ((Number) selectedContainerData.getTag()).intValue();
-		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 		
 		selectedStorageUnit.delete();
 		selectedStorageUnit.save();
@@ -346,7 +351,7 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedContainerData.getTag() != null)
 		  id = ((Number) selectedContainerData.getTag()).intValue();
-		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
+		ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
 		
 		selectedProductGroup.delete();
 		selectedProductGroup.save();
@@ -379,26 +384,26 @@ public class InventoryController extends Controller
 			int id = -1;
 			if(selectedContainerData.getTag() != null)
 			  id = ((Number) selectedContainerData.getTag()).intValue();
-			ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
-			StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+			ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
+			StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 			
 			
 			this.currentlySelectedPCId = id;
 			
 			//Is a storage unit or a product group selected
 			if(selectedStorageUnit != null){
-				products = bm.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
+				products = _mf.productVault.findAll("StorageUnitId = "+selectedStorageUnit.getId());
 				getView().setContextUnit(selectedStorageUnit.getName());
 				getView().setContextGroup("");
 				getView().setContextSupply("");
 			}
 			else if(selectedProductGroup != null){
-				products = bm.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
+				products = _mf.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
 				getView().setContextUnit(selectedProductGroup.getStorageUnit().getName());
 				getView().setContextGroup(selectedProductGroup.getName());
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
-				products = bm.productVault.findAll("Deleted = false");
+				products = _mf.productVault.findAll("Deleted = false");
 				// This means that the root is selected.
 				this.currentlySelectedPCId = -2;
 				getView().setContextUnit("All");
@@ -445,14 +450,14 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedProductData.getTag() != null)
 		  id = ((Number) selectedProductData.getTag()).intValue();
-		Product selectedProduct = bm.productVault.get(id);
+		Product selectedProduct = _mf.productVault.get(id);
 		
 		this.currentlySelectedPId = id;
 		
 		
 		if (selectedProduct != null) {
 			ArrayList<Item> items = new ArrayList<Item>();
-			items = bm.itemVault.findAll("ProductId = "+id);
+			items = _mf.itemVault.findAll("ProductId = "+id);
 			for(Item tempItem : items){
 				ItemData itemData = new ItemData();
 				itemData.setBarcode(tempItem.getBarcodeString());
@@ -490,7 +495,7 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedProductData.getTag() != null)
 		  id = ((Number) selectedProductData.getTag()).intValue();	
-		Product selectedProduct = bm.productVault.get(id);
+		Product selectedProduct = _mf.productVault.get(id);
 		return selectedProduct.isDeleteable().getStatus();
 	}
 
@@ -503,7 +508,7 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedProductData.getTag() != null)
 		  id = ((Number) selectedProductData.getTag()).intValue();
-		Product selectedProduct = bm.productVault.get(id);
+		Product selectedProduct = _mf.productVault.get(id);
 		
 		selectedProduct.delete();
 		selectedProduct.save();
@@ -548,7 +553,7 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(selectedItemData.getTag() != null)
 		  id = ((Number) selectedItemData.getTag()).intValue();
-		Item selectedItem = bm.itemVault.get(id);
+		Item selectedItem = _mf.itemVault.get(id);
 		
 		selectedItem.delete();
 		selectedItem.save();
@@ -641,20 +646,20 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(productData.getTag() != null)
 		  id = ((Number) productData.getTag()).intValue();
-		Product selectedProduct = bm.productVault.get(id);
+		Product selectedProduct = _mf.productVault.get(id);
 		
 		id = -1;
 		if(containerData.getTag() != null)
 		  id = ((Number) containerData.getTag()).intValue();
-		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
-		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
+		StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 		
 		this.currentlySelectedPC = null;
 		this.currentlySelectedPCId = id;
 		if(selectedProductGroup!=null){
-			bm.MoveProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
+			_mf.MoveProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
 		} else {
-			bm.MoveProduct(selectedStorageUnit, selectedStorageUnit, selectedProduct);
+			_mf.MoveProduct(selectedStorageUnit, selectedStorageUnit, selectedProduct);
 		}
 		
 	}
@@ -672,18 +677,18 @@ public class InventoryController extends Controller
 		int id = -1;
 		if(itemData.getTag() != null)
 		  id = ((Number) itemData.getTag()).intValue();
-		Item selectedItem = bm.itemVault.get(id);
+		Item selectedItem = _mf.itemVault.get(id);
 		
 		id = -1;
 		if(containerData.getTag() != null)
 		  id = ((Number) containerData.getTag()).intValue();
-		ProductGroup selectedProductGroup = bm.productGroupVault.get(id);
-		StorageUnit selectedStorageUnit = bm.storageUnitVault.get(id);
+		ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
+		StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 		
 		if(selectedProductGroup!=null){
-			bm.MoveItem(selectedProductGroup.getStorageUnit(), selectedItem);
+			_mf.MoveItem(selectedProductGroup.getStorageUnit(), selectedItem);
 		} else {
-			bm.MoveItem(selectedStorageUnit, selectedItem);
+			_mf.MoveItem(selectedStorageUnit, selectedItem);
 		}
 		
 	}
