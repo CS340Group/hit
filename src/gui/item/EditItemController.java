@@ -1,5 +1,14 @@
 package gui.item;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import org.joda.time.DateTime;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
+import model.item.Item;
+import model.item.ItemVault;
 import gui.common.*;
 
 /**
@@ -8,6 +17,12 @@ import gui.common.*;
 public class EditItemController extends Controller 
 										implements IEditItemController {
 	
+
+	ItemData _itemData;
+	Item _realItem;
+	ItemVault _iVault;
+	Date _minDate;
+
 	/**
 	 * Constructor.
 	 * 
@@ -17,7 +32,14 @@ public class EditItemController extends Controller
 	public EditItemController(IView view, ItemData target) {
 		super(view);
 
+		_iVault = ItemVault.getInstance();
+		_itemData = target;
+		_realItem = _iVault.find("Id = " + _itemData.getTag());
+		Calendar cal = Calendar.getInstance();
+		cal.set(2000, 1, 1);
+		_minDate = cal.getTime();
 		construct();
+		enableComponents();
 	}
 
 	//
@@ -48,6 +70,21 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+		getView().enableBarcode(false);
+		getView().enableDescription(false);
+
+		Date entered = getView().getEntryDate();
+		if (entered == null)
+			return;
+		Date now = new Date();
+		if(entered.after(now)){
+			getView().enableOK(false);
+		} else if (entered.before(_minDate)){
+			getView().enableOK(false);
+		}else{
+			getView().enableOK(true);
+		}
+
 	}
 
 	/**
@@ -59,6 +96,9 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
+		getView().setDescription(_realItem.getProductDescription());
+		getView().setBarcode(_itemData.getBarcode());
+		getView().setEntryDate(_itemData.getEntryDate());
 	}
 
 	//
@@ -71,6 +111,7 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+		enableComponents();
 	}
 	
 	/**
@@ -79,6 +120,10 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	public void editItem() {
+		Date newDate = getView().getEntryDate();
+		_realItem.setEntryDate(new DateTime(newDate));
+		common.Result result = _realItem.validate();
+		result = _realItem.save();
 	}
 
 }
