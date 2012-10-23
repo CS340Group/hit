@@ -5,7 +5,6 @@ import gui.common.*;
 import gui.inventory.*;
 import gui.item.ItemData;
 import gui.product.*;
-import model.common.Barcode;
 import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
@@ -214,6 +213,7 @@ public class AddItemBatchController extends Controller implements
         }
         getView().setBarcode("");
         loadValues();
+        getView().giveBarcodeFocus();
 	}
 	
 	/**
