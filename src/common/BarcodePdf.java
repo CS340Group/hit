@@ -125,14 +125,12 @@ public class BarcodePdf{
 	 * This is a convenience function to make it easy to fill up the remaining table cells.
 	 */
 	private void fillNullCells(){
-		if (_itemsAdded < 4){
-			int itemsToAdd = 4 - _itemsAdded;
-			while(itemsToAdd > 0){
-				PdfPCell c = new PdfPCell();
-				c.setBorder(0);
-				_table.addCell(c);
-				itemsToAdd--;
-			}
+		int itemsToAdd = 4 - (_itemsAdded % 4);
+		while(itemsToAdd > 0){
+			PdfPCell c = new PdfPCell();
+			c.setBorder(0);
+			_table.addCell(c);
+			itemsToAdd--;
 		}
 	}
 }
