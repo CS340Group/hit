@@ -175,14 +175,9 @@ public class AddItemBatchController extends Controller implements
 
         ProductData pd = findProduct(getView().getBarcode());
         if(pd == null){
-            pd = new ProductData();
+            pd = GuiModelConverter.wrapProduct(product);
             pd.setBarcode(getView().getBarcode());
             pd.setCount("0");
-            pd.setDescription(product.getDescription());
-            pd.setShelfLife(String.valueOf(product.getShelfLife()));
-            pd.setSize(product.getSize().toString());
-            pd.setSupply(String.valueOf(product.get3MonthSupply()));
-            pd.setTag(product.getId());
         }
 
         for(int i = 0; i < count; i++){
@@ -194,14 +189,7 @@ public class AddItemBatchController extends Controller implements
             item.save();
             facade.AddItem(StorageUnitVault.getInstance().get((Integer) target.getTag()), item);
 
-            ItemData id = new ItemData();
-            id.setBarcode(item.getBarcode().toString());
-            id.setEntryDate(item.getEntryDate().toDate());
-            id.setExpirationDate(item.getExpirationDate().toDate());
-            try{id.setProductGroup(product.getContainer().getName());}
-            catch(NullPointerException e){ id.setProductGroup(""); }
-            id.setStorageUnit(product.getStorageUnit().getName());
-            id.setTag(item.getId());
+            ItemData id = GuiModelConverter.wrapItem(item);
 
             if(!products.containsKey(pd))
                 products.put(pd, new ArrayList<ItemData>());

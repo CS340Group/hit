@@ -12,32 +12,31 @@ import model.product.Product;
 
 public class GuiModelConverter {
 
-	public static ProductData[] wrapProducts(ArrayList<Product> products) {
-		
-		int numProducts = products.size();
-		ProductData[] pDatas = new ProductData[numProducts];
-		
-		int count = 0;
+	/**
+	 * Takes a list of Products, and wraps them in ProducData classes, returning a list.
+	 */
+	public static List<ProductData> wrapProducts(List<Product> products) {
+		ArrayList<ProductData> l = new ArrayList<ProductData>();
 		for (Product p : products) {
-			pDatas[count] = wrapProduct(p);
+			l.add(wrapProduct(p));
 		}
-		
-		return pDatas;
+		return l;
 	}
 
-	public static ItemData[] wrapItems(ArrayList<Item> items) {
-		
-		int numItems = items.size();
-		ItemData[] iDatas = new ItemData[numItems];
-		
-		int count = 0;
+	/**
+	 * Takes a list of Items, and wraps them in ItemData classes, returning a list.
+	 */
+	public static List<ItemData> wrapItems(List<Item> items) {
+		ArrayList<ItemData> l = new ArrayList<ItemData>();
 		for (Item i : items) {
-			iDatas[count] = wrapItem(i);
+			l.add(wrapItem(i));
 		}
-		
-		return iDatas;
+		return l;
 	}
 
+	/**
+	 * Converts the data from a Product to a ProductData.
+	 */
 	public static ProductData wrapProduct(Product p) {
 		ProductData pData = new ProductData();
 		pData.setDescription(p.getDescription());
@@ -50,6 +49,9 @@ public class GuiModelConverter {
 		return pData;
 	}
 
+	/**
+	 * Converts the data from an Item to an ItemData.
+	 */
 	public static ItemData wrapItem(Item i) {
 		ItemData iData = new ItemData();
 		iData.setEntryDate(i.getEntryDate().toDate());
@@ -59,26 +61,6 @@ public class GuiModelConverter {
 		iData.setProductGroup(i.getProductProductGroupName());
 		iData.setTag(i.getId());
 		return iData;
-	}
-	
-	public static ProductData[] productDataListToArray(List<ProductData> list){
-		ProductData[] parray = new ProductData[list.size()];
-		int count = 0;
-		for (ProductData i : list){
-			parray[count] = i;
-			count++;
-		}
-		return parray;
-	}
-	
-	public static ItemData[] itemDataListToArray(List<ItemData> arrayList){
-		ItemData[] parray = new ItemData[arrayList.size()];
-		int count = 0;
-		for (ItemData i : arrayList){
-			parray[count] = i;
-			count++;
-		}
-		return parray;
 	}
 
 }
