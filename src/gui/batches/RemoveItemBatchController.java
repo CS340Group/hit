@@ -83,10 +83,21 @@ public class RemoveItemBatchController extends Controller implements
 			pd.setCount(Integer.toString(_removedItems.get(barcode).size()));
 			products.add(pd);
 		}
-		this.getView().setProducts(GuiModelConverter.productDataListToArray(products));
+		this.getView().setProducts(products.toArray(new ProductData[0]));
 		if(_currentProduct != null){
-			this.getView().setItems(GuiModelConverter.itemDataListToArray(_removedItems.get(_currentProduct.getBarcode())));
+			this.getView().setItems(getRemovedItemsAsList(_currentProduct));
 		}
+	}
+
+	/**
+	 * This is a helper function to avoid long lines:
+	 */
+	private ArrayList<ItemData> getRemovedItemsForProduct(ProductData p){
+		return _removedItems.get(p.getBarcode());
+	}
+
+	private ItemData[] getRemovedItemsAsList(ProductData p){
+		return getRemovedItemsForProduct(p).toArray(new ItemData[0]);
 	}
 
 	/**

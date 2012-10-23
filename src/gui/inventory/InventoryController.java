@@ -373,7 +373,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void productContainerSelectionChanged() {
-		List<ProductData> productDataList = new ArrayList<ProductData>();		
+		List<ProductData> productDataList = new ArrayList<ProductData>();
 		ProductContainerData selectedContainerData = getView().getSelectedProductContainer();
 		
 		
@@ -412,22 +412,9 @@ public class InventoryController extends Controller
 			}
 			
 			products = sort(products, (on(Product.class).getDescriptionSort()));
-			for(Product tempProduct : products){
-				
-					
-				ProductData productData = new ProductData();			
-				productData.setBarcode(tempProduct.getBarcodeString());
-				productData.setCount(Integer.toString(tempProduct.getItemCount()));
-				productData.setDescription(tempProduct.getDescription());
-				productData.setShelfLife(Integer.toString(tempProduct.getShelfLife()));
-				productData.setSize(tempProduct.getSize().toString());
-				productData.setSupply(Integer.toString(tempProduct.get3MonthSupply()));
-				productData.setTag(tempProduct.getId());
-				productDataList.add(productData);
-				
-				if(tempProduct.getId() == this.currentlySelectedPId)
-					this.currentlySelectedP = productData;
-			}
+			productDataList = GuiModelConverter.wrapProducts(products);
+			ProductData selP = findSelectedP(productDataList);
+			currentlySelectedP = (selP != null) ? selP : currentlySelectedP;
 		}
 		getView().setItems(new ItemData[0]);
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
@@ -436,8 +423,19 @@ public class InventoryController extends Controller
 			if(getView().getSelectedProduct() != null)
 				this.productSelectionChanged();
 		}
-			
-		
+	}
+
+	/**
+	 * This just looks through the list to find the currently selected product.
+	 * Returns null if none is found.
+	 */
+	private ProductData findSelectedP(List<ProductData> plist){
+		for (ProductData p : plist){
+			if (((Number)p.getTag()).intValue() == this.currentlySelectedPId){
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -445,7 +443,6 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void productSelectionChanged() {
-		List<ItemData> itemDataList = new ArrayList<ItemData>();		
 		ProductData selectedProductData = getView().getSelectedProduct();
 		int id = -1;
 		if(selectedProductData.getTag() != null)
@@ -455,24 +452,15 @@ public class InventoryController extends Controller
 		this.currentlySelectedPId = id;
 		
 		
+		/* The purpose of declaring this outside of the conditional statement is that we want the 
+		item list to be empty if no product is selected. */
+		List<ItemData> itemDataList = new ArrayList<ItemData>();
+
 		if (selectedProduct != null) {
 			List<Item> items = new ArrayList<Item>();
 			items = _mf.itemVault.findAll("ProductId = "+id);
 			items = sort(items, (on(Item.class).getEntryDate()));
-			for(Item tempItem : items){
-				ItemData itemData = new ItemData();
-				itemData.setBarcode(tempItem.getBarcodeString());
-				itemData.setEntryDate(tempItem.getEntryDate().toDate());
-				itemData.setExpirationDate(tempItem.getExpirationDate().toDate());
-				
-				Product pro = tempItem.getProduct();
-				ProductContainer cd = pro.getContainer();
-				if(cd!=null)
-					itemData.setProductGroup(cd.getName());
-				itemData.setStorageUnit(tempItem.getProduct().getStorageUnit().getName());
-				itemData.setTag(tempItem.getId());
-				itemDataList.add(itemData);
-			}
+			itemDataList = GuiModelConverter.wrapItems(items);
 		}
 		getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
