@@ -60,8 +60,8 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-        getView().setProducts(getProducts());
-        getView().setItems(getItems());
+        getView().setProducts(productDatas.toArray(new ProductData[0]));
+        getView().setItems(itemDatas.toArray(new ItemData[0]));
         getView().setBarcode("");
 	}
 
@@ -151,24 +151,11 @@ public class TransferItemBatchController extends Controller implements
 
         ProductData pd = findProduct(getView().getBarcode());
         if(pd == null){
-            pd = new ProductData();
+            pd = GuiModelConverter.wrapProduct(product);
             pd.setCount("0");
-            pd.setSize(product.getSize().toString());
-            pd.setSupply(String.valueOf(product.get3MonthSupply()));
-            pd.setBarcode(product.getBarcode().toString());
-            pd.setDescription(product.getDescription());
-            pd.setShelfLife(String.valueOf(product.getShelfLife()));
-            pd.setTag(product.getId());
         }
 
-        ItemData id = new ItemData();
-        id.setBarcode(item.getBarcode().toString());
-        id.setEntryDate(item.getEntryDate().toDate());
-        id.setExpirationDate(item.getExpirationDate().toDate());
-        try{id.setProductGroup(product.getContainer().getName());}
-        catch(NullPointerException e){ id.setProductGroup(""); }
-        id.setStorageUnit(product.getStorageUnit().getName());
-        id.setTag(item.getId());
+        ItemData id = GuiModelConverter.wrapItem(item);
         itemDatas.add(id);
 
         int count = Integer.parseInt(pd.getCount())+1;
@@ -214,17 +201,6 @@ public class TransferItemBatchController extends Controller implements
         }
     }
 
-    private ProductData[] getProducts(){
-        Iterator<ProductData> i = productDatas.iterator();
-        ProductData[] p = new ProductData[productDatas.size()];
-        int c = 0;
-        while(i.hasNext()){
-            p[c] = i.next();
-            c++;
-        }
-        return p;
-    }
-
     private ProductData findProduct(String barcode){
         Iterator<ProductData> i = productDatas.iterator();
         while(i.hasNext()){
@@ -233,17 +209,6 @@ public class TransferItemBatchController extends Controller implements
                 return p;
         }
         return null;
-    }
-
-    private ItemData[] getItems(){
-        Iterator<ItemData> i = itemDatas.iterator();
-        ItemData[] p = new ItemData[itemDatas.size()];
-        int c = 0;
-        while(i.hasNext()){
-            p[c] = i.next();
-            c++;
-        }
-        return p;
     }
 }
 
