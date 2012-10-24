@@ -22,7 +22,7 @@ public class AddProductGroupController extends Controller implements
 		super(view);
 		setContainerData(container);
         getView().setSupplyUnit(SizeUnits.Count);
-        getView().setSupplyValue("1");
+        getView().setSupplyValue("0");
 		construct();
 	}
 
