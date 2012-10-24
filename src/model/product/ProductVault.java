@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 
 import model.common.IModel;
 import model.common.Vault;
+import model.item.Item;
 import common.Result;
 import common.util.QueryParser;
 
@@ -49,22 +50,7 @@ public class ProductVault extends Vault{
 	 * 
 	 */
 	public  Product find(String query)  {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-            ArrayList<Product> results = linearSearch(MyQuery,1);
-            if(results.size() == 0)
-                return null;
-            return results.get(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return null;
+		return (Product)findPrivateCall(query);
 	}
 	
 	
@@ -75,56 +61,16 @@ public class ProductVault extends Vault{
 	 * @param value
 	 * 
 	 */
-	public  ArrayList<Product> findAll(String query) {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-			ArrayList<Product> results = linearSearch(MyQuery,0);
-			return results;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+	public ArrayList<Product> findAll(String query) {
+		return (ArrayList)this.findAllPrivateCall(query);
 	}
 	
-	private  ArrayList<Product> linearSearch(QueryParser MyQuery,int count)
-            throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException{
-		ArrayList<Product> results = new ArrayList<Product>();
-		String attrName = MyQuery.getAttrName();
-		String value = MyQuery.getValue();
-		
-		Product myProduct = new Product();
-		
-		//Class associated with the product model
-		Class<? extends Product> prdCls = myProduct.getClass();
-		//Method we will call to get the value
-		Method method;
-		
-		
-		method = prdCls.getMethod("get"+attrName);
-
-		
-		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
-			myProduct = (Product) entry.getValue();
-			String myProductValue; 
-			
-			myProductValue = method.invoke(myProduct).toString();
-
-		    if(myProductValue.equals(value) && !myProduct.isDeleted()){
-		    	results.add(new Product(myProduct));
-		    }
-		    if(count != 0 && results.size() == count )
-		    	return results;
-		}
-		return results;
+	protected Product getNewObject(){
+		return new Product();
 	}
-		
+	protected Product getCopiedObject(IModel model){
+		return new Product((Product)model);
+	}
 	
 	/**
 	 * Checks if a new model will fit in the vault

@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 
 import model.common.IModel;
 import model.common.Vault;
+import model.item.Item;
+import model.product.Product;
 import model.productcontainer.ProductGroup;
 import common.Result;
 import common.util.QueryParser;
@@ -59,22 +61,7 @@ public class ProductGroupVault extends Vault {
 	 * 
 	 */
 	public ProductGroup find(String query)  {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-            ArrayList<ProductGroup> results = linearSearch(MyQuery,1);
-            if(results.size() == 0)
-                return null;
-            return results.get(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return null;
+		return (ProductGroup)findPrivateCall(query);
 	}
 	
 	
@@ -86,56 +73,15 @@ public class ProductGroupVault extends Vault {
 	 * 
 	 */
 	public ArrayList<ProductGroup> findAll(String query) {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-			ArrayList<ProductGroup> results = linearSearch(MyQuery,0);
-			return results;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		return (ArrayList)this.findAllPrivateCall(query);
 	}
 	
-	private ArrayList<ProductGroup> linearSearch(QueryParser MyQuery,int count)
-            throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException{
-		ArrayList<ProductGroup> results = new ArrayList<ProductGroup>();
-
-		String attrName = MyQuery.getAttrName();
-		String value = MyQuery.getValue();
-		
-		ProductGroup myPG = new ProductGroup();
-		
-		//Class associated with the product model
-		Class<? extends ProductGroup> pgCls = myPG.getClass();
-		//Method we will call to get the value
-		Method method;
-		
-		
-		method = pgCls.getMethod("get"+attrName);
-
-		
-		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
-			myPG = (ProductGroup) entry.getValue();
-			String myProductValue; 
-			
-			myProductValue = (String) method.invoke(myPG);
-
-		    if(myProductValue.equals(value) && !myPG.isDeleted()){
-		    	results.add(new ProductGroup(myPG));
-		    }
-		    if(count != 0 && results.size() == count )
-		    	return results;
-		}
-		return results;
+	protected ProductGroup getNewObject(){
+		return new ProductGroup();
 	}
-	
+	protected ProductGroup getCopiedObject(IModel model){
+		return new ProductGroup((ProductGroup)model);
+	}
 	
 	
 	/**

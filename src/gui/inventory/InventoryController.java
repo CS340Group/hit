@@ -84,7 +84,7 @@ public class InventoryController extends Controller
 		
 		//Get all available storage units
 		List<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
-		storageUnits = _mf.storageUnitVault.findAll("Deleted = false");
+		storageUnits = (List)_mf.storageUnitVault.findAll("Deleted = false");
 		storageUnits = sort(storageUnits, (on(ProductContainer.class).getLowerCaseName()));
 		
 		//For each storage unit add all it's children productGroups
@@ -182,7 +182,7 @@ public class InventoryController extends Controller
 	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
 		//Get list of all productGroups in PC
 		List<ProductGroup> productGroups = new ArrayList<ProductGroup>();
-		productGroups = _mf.productGroupVault.findAll("ParentIdString = "+pc.getId());
+		productGroups = (List)_mf.productGroupVault.findAll("ParentIdString = "+pc.getId());
 		productGroups = sort(productGroups, (on(ProductContainer.class).getLowerCaseName()));
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
@@ -390,18 +390,18 @@ public class InventoryController extends Controller
 			
 			//Is a storage unit or a product group selected
 			if(selectedStorageUnit != null){
-				products = _mf.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
+				products = (List)_mf.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
 				getView().setContextUnit(selectedStorageUnit.getName());
 				getView().setContextGroup("");
 				getView().setContextSupply("");
 			}
 			else if(selectedProductGroup != null){
-				products = _mf.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
+				products = (List)_mf.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
 				getView().setContextUnit(selectedProductGroup.getStorageUnit().getName());
 				getView().setContextGroup(selectedProductGroup.getName());
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
-				products = _mf.productVault.findAll("Deleted = false");
+				products = (List)_mf.productVault.findAll("Deleted = false");
 				// This means that the root is selected.
 				this.currentlySelectedPCId = -2;
 				getView().setContextUnit("All");
@@ -456,7 +456,7 @@ public class InventoryController extends Controller
 
 		if (selectedProduct != null) {
 			List<Item> items = new ArrayList<Item>();
-			items = _mf.itemVault.findAll("ProductId = "+id);
+			items = (List)_mf.itemVault.findAll("ProductId = "+id);
 			items = sort(items, (on(Item.class).getEntryDate()));
 			itemDataList = GuiModelConverter.wrapItems(items);
 		}

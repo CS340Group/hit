@@ -62,22 +62,7 @@ public class ItemVault extends Vault{
 	 * 
 	 */
 	public Item find(String query)  {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-            ArrayList<Item> results = linearSearch(MyQuery,1);
-            if(results.size() == 0)
-                return null;
-            return results.get(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return null;
+		return (Item)findPrivateCall(query);
 	}
 	
 	/**
@@ -87,54 +72,15 @@ public class ItemVault extends Vault{
 	 * 
 	 */
 	public ArrayList<Item> findAll(String query) {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-			ArrayList<Item> results = linearSearch(MyQuery,0);
-			return results;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	
+	protected Item getNewObject(){
+		return new Item();
+	}
+	protected Item getCopiedObject(IModel model){
+		return new Item((Item)model);
+	}
 	//Search an ordered hashmap one at a time
-	private ArrayList<Item> linearSearch(QueryParser MyQuery,int count)
-            throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException{
-		ArrayList<Item> results = new ArrayList<Item>();
-		String attrName = MyQuery.getAttrName();
-		String value = MyQuery.getValue();
-		
-		Item myItem = new Item();
-		//Class associated with the item model
-		Class<? extends Item> cls = myItem.getClass();
-		//Method we will call to get the value
-		Method method;
-		
-		
-		method = cls.getMethod("get"+attrName);
-
-		
-		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
-			myItem = (Item) entry.getValue();
-			String myItemValue; 
-
-			myItemValue = method.invoke(myItem).toString();
-		    
-		    if(myItemValue.equals(value) && !myItem.isDeleted()){
-		    	results.add(new Item(myItem));
-		    }
-		    if(count != 0 && results.size() == count )
-		    	return results;
-		}
-		return results;
-	}
 
     public Item get(int id){
     	Item i = (Item)dataVault.get(id);
