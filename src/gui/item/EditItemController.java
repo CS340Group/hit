@@ -74,17 +74,20 @@ public class EditItemController extends Controller
 		getView().enableDescription(false);
 
 		Date entered = getView().getEntryDate();
+		/* Cop out early if we can. */
 		if (entered == null)
 			return;
-		Date now = new Date();
-		if(entered.after(now)){
-			getView().enableOK(false);
-		} else if (entered.before(_minDate)){
+		
+		checkValidityOfEnteredDate(entered);
+	}
+
+	private void checkValidityOfEnteredDate(Date entered) {
+		_realItem.setEntryDate(new DateTime(entered));
+		if (!_realItem.validate().getStatus()){
 			getView().enableOK(false);
 		}else{
 			getView().enableOK(true);
 		}
-
 	}
 
 	/**
