@@ -21,8 +21,6 @@ public class Item extends Model{
 	 * _id is not set by the user, but by the vault when it is saved.
 	 * _id can be -1 if it is new and has not been saved
 	 */
-	private int _id;
-
     private int _productId;
 
     private Barcode _barcode;
@@ -30,9 +28,6 @@ public class Item extends Model{
     private DateTime _entryDate;
 
     private DateTime _exitDate;
-
-    private DateTime _expirationDate;
-
     
 
 	/**
@@ -58,30 +53,6 @@ public class Item extends Model{
         _barcode = i.getBarcode();
         _entryDate = i.getEntryDate();
         _exitDate = i.getExitDate();
-        _expirationDate = i.getExpirationDate();
-    }
-
-    /**
-     *  Checks if the Item is in a deleted state.
-     */
-    @Override
-    public boolean isDeleted() {
-        return _deleted;
-    }
-
-    /**
-     *  Returns the ID of the Item.
-     */
-    public int getId(){
-        return _id;
-    }
-
-    /**
-     *  Sets the ID of the Item.
-     */
-    protected Result setId(int id){
-        _id = id;
-        return new Result(true);
     }
 
     /**
@@ -164,61 +135,17 @@ public class Item extends Model{
     }
 
     /**
-     *  Set the expiration date of this Item.
-     */
-    public Result setExpirationDate(DateTime d){
-        assert d != null;
-        _expirationDate = d;
-        invalidate();
-        return new Result(true);
-    }
-
-    /**
      *  Return the expiration date for the Item.
      */
     public DateTime getExpirationDate(){
-        return _expirationDate;
+        return getEntryDate().plusMonths(getProduct().getShelfLife());
     }
     
     /**
      * Return the expiration date in a shortened string format.
      */
     public String getShortExpirationDateString(){
-    		return _expirationDate.toLocalDate().toString("MM-dd-yy");
-    }
-
-	/**
-	 * Is the Item saved?
-	 */
-	public boolean isSaved(){
-		return this._saved;
-	}
-
-    /**
-     *  Put the item in a saved state.
-     *  @Pre Item must be validated before saving.
-     */
-    protected Result setSaved(boolean saved){
-        if (!isValid()){
-            return new Result(false, "Item must be saved first, y'know?");
-        }
-        _saved = saved;
-        return new Result(true);
-    }
-
-	/**
-	 * Is the Item valid?
-	 */
-	public boolean isValid(){
-		return this._valid;
-	}
-
-    /**
-     *  Puts the item in a valid state.
-     */
-    protected Result setValid(boolean valid){
-        _valid = valid;
-        return new Result(true);
+    		return getExpirationDate().toLocalDate().toString("MM-dd-yy");
     }
 
 	/**
@@ -242,34 +169,6 @@ public class Item extends Model{
         else
             return itemVault.validateModified(this);
 	}
-	
-    /**
-     * Put the item into a deleted state.
-     */
-	public Result delete(){
-		this._deleted = true;
-		this._valid = true;
-		this.save();
-		return new Result(true);
-	}
-
-    /**
-     * Put the item into an un-deleted state.
-     */
-	public Result unDelete(){
-		this._deleted = false;
-		this._valid = true;
-		this.save();
-		return new Result(true);
-	}
-
-    /**
-     * Put the item into an invalid state.
-     */
-    public void invalidate(){
-        _saved = false;
-        _valid = false;
-    }
     
     /**
      * Return the string of the Barcode for the Product that this Item belongs

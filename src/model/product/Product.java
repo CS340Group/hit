@@ -26,8 +26,6 @@ public class Product extends Model{
 	 * _id is not set by the user, but by the vault when it is saved.
 	 * _id can be -1 if it is new and has not been saved
 	 */
-	private int _id;
-
     private int _storageUnitId;
 
     private int _containerId;
@@ -80,58 +78,8 @@ public class Product extends Model{
     	ArrayList<Item> items = this.itemVault.findAll("ProductId = "+this.getId());
     	return items.size();
     }
-	/**
-	 * Is the Product saved?
-	 */
-	public boolean isSaved(){
-		return _saved;
-	}
 
-    /**
-     * Is the Product deleted?
-     */
-	public boolean isDeleted(){
-		return _deleted;
-	}
-	
-    /**
-     * Set the product to saved.
-     */
-    protected Result setSaved(boolean saved){
-        _saved = saved;
-        return new Result(true);
-    }
 
-	/**
-	 * Is the Product valid?
-	 */
-	public boolean isValid(){
-		return _valid;
-	}
-
-    /**
-     * Set the product's state to valid.
-     */
-    protected Result setValid(boolean valid){
-        _valid = valid;
-        return new Result(true);
-    }
-
-    /**
-     * Return the ID of the product.
-     */
-    public int getId(){
-        return _id;
-    }
-
-    /**
-     * Set the ID of the product. 
-     */
-    protected Result setId(int id){
-        assert true;
-        _id = id;
-        return new Result(true);
-    }
 
     /**
      * Return a copy of the {@link model.productcontainer.StorageUnit
@@ -367,27 +315,6 @@ public class Product extends Model{
 		_description = "A Description";
 		this._size = new Size(1,"count");
 	}
-	
-    /**
-     * Put the Product into a deleted state.
-     */
-	public Result delete(){
-        if(!isDeleteable().getStatus())
-            return new Result(false, "Must be deleteable");
-		this._deleted = true;
-		this._valid = true;
-		return new Result(true);
-	}
-
-    /**
-     * Put the Product into an undeleted state.
-     */
-	public Result unDelete(){
-		this._deleted = false;
-		this._valid = true;
-		this.save();
-		return new Result(true);
-	}
 
     /**
      * Check if the product is void of items, and thus, deletable.
@@ -400,14 +327,6 @@ public class Product extends Model{
         }
 
         return new Result(true);
-    }
-
-    /**
-     * Put the Product into an invalid state.
-     */
-    public void invalidate(){
-        _valid = false;
-        _saved = false;
     }
 
 	public String getCount() {
