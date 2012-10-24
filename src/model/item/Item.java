@@ -29,6 +29,9 @@ public class Item extends Model{
 
     private DateTime _exitDate;
     
+    /* This is the earliest date that the entry date can be. */
+    private static DateTime _entryDateLowerLimit = new DateTime(1999, 12, 31, 23, 59, 59);
+    
 
 	/**
 	 * Constructor
@@ -164,12 +167,26 @@ public class Item extends Model{
 	 * Validate that the Item is able to be saved into the vault.
 	 */
 	public Result validate(){
+        if (!isValidEntryDate()){
+        	return new Result(false);
+        }
         if(getId() == -1)
             return itemVault.validateNew(this);
         else
             return itemVault.validateModified(this);
 	}
-    
+	
+	private boolean isValidEntryDate() {
+		DateTime d = getEntryDate();
+		if (d.isBefore(_entryDateLowerLimit)){
+			return false;
+		}else if(d.isAfter(new DateTime())){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
     /**
      * Return the string of the Barcode for the Product that this Item belongs
      * to.
@@ -208,5 +225,15 @@ public class Item extends Model{
 
 	public String getBarcodeString() {
 		return this.getBarcode().toString();
+	}
+	
+	/**
+	 * Fills this item with some test data to prepare it for JUnit tests.
+	 */
+	public void generateTestData(){
+        setBarcode(new Barcode());
+        setProductId(-1);
+        setEntryDate(new DateTime());
+        setExitDate(new DateTime());
 	}
 }
