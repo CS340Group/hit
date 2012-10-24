@@ -193,9 +193,6 @@ public class Product extends Model{
      */
     public Result setDescription(String d){
         assert d != null;
-        if (d.length() == 0){
-            return new Result(false, "Description cannon be empty");
-        }
         _description = d;
         invalidate();
         return new Result(true);
@@ -215,12 +212,6 @@ public class Product extends Model{
      */
     public Result setSize(Size u){
         assert u != null;
-        if(u.getAmount() == 0){
-            return new Result(false, "The size of a product cannot be 0.");
-        }
-        if(!u.validate().getStatus()){
-            return new Result(false, "That's an invlaid size.");
-        }
         _size = u;
         invalidate();
         return new Result(true);
@@ -238,9 +229,6 @@ public class Product extends Model{
      * @Pre The shelf life must be a non-negative number.
      */
     public Result setShelfLife(int i){
-        if (i<0){
-            return new Result(false, "The shelf life must be non-negative.");
-        }
         _shelfLife = i;
         invalidate();
         return new Result(true);
@@ -258,9 +246,6 @@ public class Product extends Model{
      * @Pre Must be non-negative.
      */
     public Result set3MonthSupply(int i){
-        if (i<0){
-            return new Result(false, "The 3 mo. supply must be non-negative.");
-        }
         _3MonthSupply = i;
         invalidate();
         return new Result(true);
