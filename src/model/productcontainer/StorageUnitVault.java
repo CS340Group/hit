@@ -52,22 +52,7 @@ public class StorageUnitVault extends Vault{
 	 * 
 	 */
 	public  StorageUnit find(String query)  {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-            ArrayList<StorageUnit> results = linearSearch(MyQuery,1);
-            if(results.size() == 0)
-                return null;
-            return results.get(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return null;
+		return (StorageUnit)findPrivateCall(query);
 	}
 	
 	
@@ -79,54 +64,14 @@ public class StorageUnitVault extends Vault{
 	 * 
 	 */
 	public  ArrayList<StorageUnit> findAll(String query) {
-		QueryParser MyQuery = new QueryParser(query);
-
-		
-		//Do a linear Search first
-		//TODO: Add ability to search by index
-		try {
-			ArrayList<StorageUnit> results = linearSearch(MyQuery,0);
-			return results;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	
-	private  ArrayList<StorageUnit> linearSearch(QueryParser MyQuery,int count)
-            throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException{
-		ArrayList<StorageUnit> results = new ArrayList<StorageUnit>();
-
-		String attrName = MyQuery.getAttrName();
-		String value = MyQuery.getValue();
-		
-
-		StorageUnit mySU = new StorageUnit();
-		
-		//Class associated with the product model
-		Class<? extends StorageUnit> suCls = mySU.getClass();
-		//Method we will call to get the value
-		Method method;
-		method = suCls.getMethod("get"+attrName);
-
-		
-		//Loop through entire hashmap and check values one at a time
-		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
-			mySU = (StorageUnit) entry.getValue();
-			String mySUValue; 
-			mySUValue = (String) method.invoke(mySU);
-
-		    if(mySUValue.equals(value) && !mySU.isDeleted()){
-		    	results.add(new StorageUnit(mySU));
-		    }
-		    if(count != 0 && results.size() == count )
-		    	return results;
-		}
-		return results;
+	protected StorageUnit getNewObject(){
+		return new StorageUnit();
 	}
-	
+	protected StorageUnit getCopiedObject(IModel model){
+		return new StorageUnit((StorageUnit)model);
+	}
 	public int getLastIndex(){
 		return (int)dataVault.size()+ProductGroupVault.getInstance().size();
 	}
