@@ -183,7 +183,6 @@ public class AddItemBatchController extends Controller implements
         for(int i = 0; i < count; i++){
             Item item = new Item();
             item.setEntryDate(new DateTime(getView().getEntryDate()));
-            item.setExpirationDate(item.getEntryDate().plusMonths(product.getShelfLife()));
             item.setProductId(product.getId());
             item.validate();
             item.save();

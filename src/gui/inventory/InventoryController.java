@@ -163,7 +163,6 @@ public class InventoryController extends Controller
         //i1.setBarcode(new Barcode());
         i1.setEntryDate(new DateTime());
         i1.setExitDate(new DateTime());
-        i1.setExpirationDate(new DateTime());
         i1.setProductId(p1.getId());
         i1.validate();
         i1.save();
@@ -172,7 +171,6 @@ public class InventoryController extends Controller
         //i1.setBarcode(new Barcode());
         i2.setEntryDate(new DateTime());
         i2.setExitDate(new DateTime());
-        i2.setExpirationDate(new DateTime());
         i2.setProductId(p1.getId());
         i2.validate();
         i2.save();

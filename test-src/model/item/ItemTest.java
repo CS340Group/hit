@@ -17,7 +17,6 @@ public class ItemTest {
         item.setProductId(-1);
         item.setEntryDate(new DateTime());
         item.setExitDate(new DateTime());
-        item.setExpirationDate(new DateTime());
     }
 
     @After
