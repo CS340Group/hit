@@ -62,19 +62,25 @@ public class AddProductController extends Controller implements
 	@Override
 	protected void enableComponents() {
         getView().enableSizeValue(true);
+        Product p = new Product();
         if(getView().getSizeUnit().name() == "Count"){
             getView().enableSizeValue(false);
             getView().setSizeValue("1");
         }
         try{
-            Float.parseFloat(getView().getSizeValue());
-            Integer.parseInt(getView().getShelfLife());
-            Integer.parseInt(getView().getSupply());
+            p.setSize(new Size(Float.parseFloat(getView().getSizeValue()),getView().getSizeUnit().toString()));
+            p.setShelfLife(Integer.parseInt(getView().getShelfLife()));
+            p.set3MonthSupply(Integer.parseInt(getView().getSupply()));
+            p.setBarcode(getView().getBarcode());
+            p.setDescription(getView().getDescription());
+            p.setContainerId((Integer) target.getTag());
+            p.setCreationDate(DateTime.now());
+            p.setStorageUnitId((Integer) target.getTag());
         } catch (Exception e){
             getView().enableOK(false);
             return;
         }
-        getView().enableOK(!getView().getDescription().isEmpty());
+        getView().enableOK(p.validate().getStatus());
 
 
 
