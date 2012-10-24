@@ -1,6 +1,9 @@
 package model.item;
 
 import model.common.Barcode;
+import model.item.Item;
+import model.item.ItemVault;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.After;
@@ -13,10 +16,7 @@ public class ItemTest {
     @Before
     public void setup(){
         item = new Item();
-        item.setBarcode(new Barcode());
-        item.setProductId(-1);
-        item.setEntryDate(new DateTime());
-        item.setExitDate(new DateTime());
+        item.generateTestData();
     }
 
     @After
@@ -55,4 +55,25 @@ public class ItemTest {
         assertEquals("Item should save", true, itemCopy.save().getStatus());
         assertEquals("Vault should not have created a new item", 1, item.itemVault.size());
     }
+    
+    @Test
+    public void testValidateEntryDate() throws Exception {
+    	/* These should be true. */
+		item.setEntryDate(new DateTime(2012, 1, 1, 1, 1));
+		assertTrue(item.validate().getStatus());
+		
+		item.setEntryDate(new DateTime(2000, 1, 1, 1, 1));
+		assertTrue(item.validate().getStatus());
+		
+		item.setEntryDate(new DateTime());
+		assertTrue(item.validate().getStatus());
+		
+		/* These should be false. */
+		item.setEntryDate(new DateTime(1999, 1, 1, 1, 1));
+		assertFalse(item.validate().getStatus());
+		
+		item.setEntryDate(new DateTime(2084, 1, 1, 1, 1));
+		assertFalse(item.validate().getStatus());
+		
+	}
 }
