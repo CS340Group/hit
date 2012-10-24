@@ -53,7 +53,6 @@ public class ItemVaultTest {
         item1.setProductId(p1.getId());
         item1.setEntryDate(new DateTime(2012,6,1,12,0));
         item1.setExitDate(DateTime.now());
-        item1.setExpirationDate(new DateTime(2012,7,1,12,0));
         item1.validate();
         item1.save();
 
@@ -62,7 +61,6 @@ public class ItemVaultTest {
         item2.setProductId(p1.getId());
         item2.setEntryDate(new DateTime(2012,6,5,12,0));
         item2.setExitDate(DateTime.now());
-        item2.setExpirationDate(new DateTime(2012,7,3,12,0));
         item2.validate();
         item2.save();
 
@@ -71,7 +69,6 @@ public class ItemVaultTest {
         item3.setProductId(p2.getId());
         item3.setEntryDate(new DateTime(2012,6,2,12,0));
         item3.setExitDate(DateTime.now().minusHours(6));
-        item3.setExpirationDate(new DateTime(2013,6,1,12,0));
         item3.validate();
         item3.save();
 
@@ -80,7 +77,6 @@ public class ItemVaultTest {
         item4.setProductId(p2.getId());
         item4.setEntryDate(new DateTime(2012,6,3,12,0));
         item4.setExitDate(DateTime.now().minusHours(4));
-        item4.setExpirationDate(new DateTime(2014,6,1,12,0));
         item4.validate();
         item4.save();
     }

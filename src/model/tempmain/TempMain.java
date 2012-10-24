@@ -40,7 +40,6 @@ public class TempMain {
         item.setProductId(product.getId());
         item.setEntryDate(new DateTime());
         item.setExitDate(new DateTime());
-        item.setExpirationDate(new DateTime().plusMonths(4)); 
         valid = item.validate();
         saved = item.save();
 		

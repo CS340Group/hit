@@ -25,7 +25,6 @@ public class ProductContainer extends Model{
      * _id is not set by the user, but by the vault when it is saved.
      * _id can be -1 if it is new and has not been saved
      */
-    private int _id;
 
     /* A pointer to the StorageUnit that holds this group. Can be the same
 	 * as _parentId */
@@ -58,34 +57,6 @@ public class ProductContainer extends Model{
         _rootParentId = p.getRootParentId();
     }
 
-    /**
-     * Returns the deleted status of this instance.
-     */
-    @Override
-    public boolean isDeleted() {
-        return _deleted;
-    }
-
-    /**
-     * Returns the ID associated with the class as an int.
-     */
-    public int getId(){
-        return _id;
-    }
-
-    protected Result setId(int id){
-        _id = id;
-        return new Result(true);
-    }
-
-    /**
-     * This method should be called whenever an attribute is changed so that 
-     * validation must happen again.
-     */
-    public void invalidate(){
-        _valid = false;
-        _saved = false;
-    }
 
     /**
      * Return the ID of the StorageUnit.
@@ -136,19 +107,6 @@ public class ProductContainer extends Model{
         return new Result(_name==this._name);
     }
 
-    /**
-     * Is the ProductContainer saved?
-     */
-    public boolean isSaved(){
-        return this._saved;
-    }
-
-    /**
-     * Is the ProductContainer valid?
-     */
-    public boolean isValid(){
-        return this._valid;
-    }
 
     /**
      * If the ProductContainer is valid it is saved into the vault.
@@ -164,43 +122,6 @@ public class ProductContainer extends Model{
     public Result validate(){
         assert true;
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
-    }
-
-    /**
-     * Sets the internal state of this instance to deleted.
-     */
-    public Result delete(){
-        assert true;
-        if(isDeletable().getStatus())
-        	this._deleted = true;
-		return new Result(true);
-	}
-
-    /**
-     * Resets the internal state of this instance to not deleted.
-     */
-    public Result unDelete(){
-        assert true;
-		this._deleted = false;
-		return new Result(true);
-	}
-
-    /**
-     * Indicates that this instance has been validated.
-     */
-    protected Result setValid(boolean v){
-        assert true;
-        _valid = v;
-        return new Result(true);
-    }
-
-    /**
-     * Indicates that this instance has been saved.
-     */
-    protected Result setSaved(boolean b){
-        assert true;
-        _saved = b;
-        return new Result(true);
     }
 
     
