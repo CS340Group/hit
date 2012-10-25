@@ -1,16 +1,10 @@
 package model.item;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import model.common.Barcode;
 import model.common.IModel;
-import model.common.Model;
 import model.common.Vault;
 import common.Result;
-import common.util.QueryParser;
 
 
 /**
@@ -51,16 +45,6 @@ public class ItemVault extends Vault{
 	 * If you need more than one item returned use FindAll
 	 * 
 	 * @param query of form obj.attr = value
-	 * 
-	 * product.id = 5
-	 * name = 'cancer'
-	 * id = 2
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * 
 	 */
 	public Item find(String query)  {
 		return (Item)findPrivateCall(query);
@@ -75,12 +59,7 @@ public class ItemVault extends Vault{
 	public ArrayList<Item> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	protected Item getNewObject(){
-		return new Item();
-	}
-	protected Item getCopiedObject(IModel model){
-		return new Item((Item)model);
-	}
+	
 
 
 	/**
@@ -132,7 +111,12 @@ public class ItemVault extends Vault{
 	public Item get(int id){
 		return (Item) this.getPrivateCall(id);
 	}
-
+	protected Item getNewObject(){
+		return new Item();
+	}
+	protected Item getCopiedObject(IModel model){
+		return new Item((Item)model);
+	}
 
 }
 

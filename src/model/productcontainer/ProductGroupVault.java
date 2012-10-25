@@ -1,18 +1,11 @@
 package model.productcontainer;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import model.common.IModel;
-import model.common.Model;
 import model.common.Vault;
-import model.item.Item;
-import model.product.Product;
 import model.productcontainer.ProductGroup;
 import common.Result;
-import common.util.QueryParser;
 
 
 /**
@@ -76,14 +69,26 @@ public class ProductGroupVault extends Vault {
 	public ArrayList<ProductGroup> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	
+	public int getLastIndex(){
+		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
+	}
+	public String getName(int id) {
+		ProductGroup pg = this.get(id);
+		if (pg != null) {
+			return pg.getName();
+		}else{
+			return "";
+		}
+	}
+	public ProductGroup get(int id){
+		return (ProductGroup) this.getPrivateCall(id);
+	}
 	protected ProductGroup getNewObject(){
 		return new ProductGroup();
 	}
 	protected ProductGroup getCopiedObject(IModel model){
 		return new ProductGroup((ProductGroup)model);
 	}
-	
 	
 	/**
 	 * Checks if the model passed in already exists in the current map
@@ -100,6 +105,27 @@ public class ProductGroupVault extends Vault {
 
         model.setValid(true);
 		return result;
+	}	
+	/**
+	 * Adds the ProductGroup to the map if it's new.  Should check before doing so.
+	 * 
+	 * @param model ProductGroup to add
+	 * @return Result of request
+	 */
+	protected  Result saveNew(ProductGroup model){
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+
+        int id = 0;
+        if(dataVault.isEmpty() && model.storageUnitVault.size()==0)
+            id = 0;
+        else
+            id = (int)dataVault.size()+1+model.storageUnitVault.size();
+
+        model.setId(id);
+        model.setSaved(true);
+        this.addModel(new ProductGroup(model));
+        return new Result(true);
 	}
 	
 	private Result checkUniqueName(ProductGroup model){
@@ -123,49 +149,5 @@ public class ProductGroupVault extends Vault {
         model.setValid(true);
         return new Result(true);
 	}
-
-
-	public int getLastIndex(){
-		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
-	}
-	
-	/**
-	 * Adds the ProductGroup to the map if it's new.  Should check before doing so.
-	 * 
-	 * @param model ProductGroup to add
-	 * @return Result of request
-	 */
-	protected  Result saveNew(ProductGroup model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-
-        int id = 0;
-        if(dataVault.isEmpty() && model.storageUnitVault.size()==0)
-            id = 0;
-        else
-            id = (int)dataVault.size()+1+model.storageUnitVault.size();
-
-        model.setId(id);
-        model.setSaved(true);
-        this.addModel(new ProductGroup(model));
-        return new Result(true);
-	}
-
-
-
-	public String getName(int id) {
-		ProductGroup pg = this.get(id);
-		if (pg != null) {
-			return pg.getName();
-		}else{
-			return "";
-		}
-	}
-	
-	public ProductGroup get(int id){
-		return (ProductGroup) this.getPrivateCall(id);
-	}
-
-
 }
 

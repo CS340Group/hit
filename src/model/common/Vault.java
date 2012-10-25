@@ -10,19 +10,12 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import model.item.Item;
-import model.product.Product;
-import model.productcontainer.ProductGroup;
-
 import common.Result;
 import common.util.QueryParser;
 
 
 public abstract class Vault extends Observable implements Serializable {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
 	
@@ -108,9 +101,9 @@ public abstract class Vault extends Observable implements Serializable {
 		}
 		return null;
 	}
-	protected abstract IModel getNewObject();
-	protected abstract IModel getCopiedObject(IModel model);
 	
+	protected abstract IModel getNewObject();
+	protected abstract IModel getCopiedObject(IModel model);	
 	protected ArrayList<IModel> linearSearch(QueryParser MyQuery,int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
@@ -144,6 +137,7 @@ public abstract class Vault extends Observable implements Serializable {
 		}
 		return results;
 	}
+	
 	/**
 	 * Adds the Model to the map if it already exists.  Should check before doing so.
 	 * 

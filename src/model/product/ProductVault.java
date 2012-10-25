@@ -1,16 +1,11 @@
 package model.product;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
 import org.joda.time.DateTime;
 
 import model.common.IModel;
 import model.common.Vault;
-import model.item.Item;
 import common.Result;
-import common.util.QueryParser;
 
 /**
  * The ProductVault class provides a way to query for Products within the select data backend
@@ -64,7 +59,9 @@ public class ProductVault extends Vault{
 	public ArrayList<Product> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	
+	public Product get(int id){
+		return (Product) this.getPrivateCall(id);
+	}
 	protected Product getNewObject(){
 		return new Product();
 	}
@@ -113,34 +110,6 @@ public class ProductVault extends Vault{
 	    model.setValid(true);
         return new Result(true);
 	}
-
-	private  Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
-		String barcode = model.getBarcode().toString();
-		for(Product testProd : allProducts){
-			if(testProd.getBarcode().toString().equals(barcode))
-				return new Result(false,"Duplicate product in container");
-		}
-		return new Result(true);
-	}
-	private Result validateCreationDate(Product model){
-		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
-		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
-			return new Result(false,"The creation date does now match the existing creation date");
-		return new Result(true);
-	}
-	private Product setCreationDate(Product model){
-		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
-		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
-			model.setCreationDate(existingProduct.getCreationDate());
-		else
-			model.setCreationDate(new DateTime());
-		return model;
-	}
-	
-
-
-    
 	
 	/**
 	 * Adds the product to the map if it's new.  Should check before doing so.
@@ -165,10 +134,28 @@ public class ProductVault extends Vault{
         model.setSaved(true);
         this.addModel(new Product(model));
         return new Result(true);
+	}	
+	private  Result validateUniqueBarcode(Product model){
+		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
+		String barcode = model.getBarcode().toString();
+		for(Product testProd : allProducts){
+			if(testProd.getBarcode().toString().equals(barcode))
+				return new Result(false,"Duplicate product in container");
+		}
+		return new Result(true);
 	}
-
-	public Product get(int id){
-		return (Product) this.getPrivateCall(id);
+	private Result validateCreationDate(Product model){
+		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
+			return new Result(false,"The creation date does now match the existing creation date");
+		return new Result(true);
 	}
-
+	private Product setCreationDate(Product model){
+		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
+			model.setCreationDate(existingProduct.getCreationDate());
+		else
+			model.setCreationDate(new DateTime());
+		return model;
+	}
 }
