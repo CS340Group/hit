@@ -1,16 +1,11 @@
 package model.product;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
 import org.joda.time.DateTime;
 
 import model.common.IModel;
 import model.common.Vault;
-import model.item.Item;
 import common.Result;
-import common.util.QueryParser;
 
 /**
  * The ProductVault class provides a way to query for Products within the select data backend
@@ -64,7 +59,9 @@ public class ProductVault extends Vault{
 	public ArrayList<Product> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	
+	public Product get(int id){
+		return (Product) this.getPrivateCall(id);
+	}
 	protected Product getNewObject(){
 		return new Product();
 	}
@@ -110,20 +107,34 @@ public class ProductVault extends Vault{
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
-		//Delete current model
-        //FROM NICK: This does not work because to delete there must not be any items
-		//Product currentModel = this.get(model.getId());
-		//currentModel.delete();
-		//currentModel.save();
-		//Validate passed in model
-		//Result result = this.validateNew(model);
-		//Add current model back
-		//currentModel.unDelete();
-		//if(result.getStatus() == true)
 	    model.setValid(true);
         return new Result(true);
 	}
+	
+	/**
+	 * Adds the product to the map if it's new.  Should check before doing so.
+	 * 
+	 * @param model Product to add
+	 * @return Result of request
+	 */
+	protected  Result saveNew(Product model){
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
 
+        int id = 0;
+        if(dataVault.isEmpty())
+            id = 0;
+        else
+            id = (int)dataVault.lastKey()+1;
+
+        model.setId(id);
+        //If the creation date hasn't been set
+        if(model.getCreationDate() == null)
+        	model = this.setCreationDate(model);
+        model.setSaved(true);
+        this.addModel(new Product(model));
+        return new Result(true);
+	}	
 	private  Result validateUniqueBarcode(Product model){
 		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
@@ -147,55 +158,4 @@ public class ProductVault extends Vault{
 			model.setCreationDate(new DateTime());
 		return model;
 	}
-	
-    public  Product get(int id){
-    	Product p = (Product)dataVault.get(id);
-    	if(p == null)
-    		return null;
-        return new Product(p);
-    }
-
-    
-	
-	/**
-	 * Adds the product to the map if it's new.  Should check before doing so.
-	 * 
-	 * @param model Product to add
-	 * @return Result of request
-	 */
-	protected  Result saveNew(Product model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-
-        int id = 0;
-        if(dataVault.isEmpty())
-            id = 0;
-        else
-            id = (int)dataVault.lastKey()+1;
-
-        model.setId(id);
-        
-        //If the creation date hasn't been set
-        if(model.getCreationDate() == null)
-        	model = this.setCreationDate(model);
-        model.setSaved(true);
-        this.addModel(new Product(model));
-        return new Result(true);
-	}
-
-	/**
-	 * Adds the product to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model Product to add
-	 * @return Result of request
-	 */
-	protected  Result saveModified(Product model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new Product(model));
-        return new Result(true);
-	}
-
-
 }

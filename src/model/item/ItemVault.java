@@ -1,15 +1,10 @@
 package model.item;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import model.common.Barcode;
 import model.common.IModel;
 import model.common.Vault;
 import common.Result;
-import common.util.QueryParser;
 
 
 /**
@@ -50,16 +45,6 @@ public class ItemVault extends Vault{
 	 * If you need more than one item returned use FindAll
 	 * 
 	 * @param query of form obj.attr = value
-	 * 
-	 * product.id = 5
-	 * name = 'cancer'
-	 * id = 2
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * 
 	 */
 	public Item find(String query)  {
 		return (Item)findPrivateCall(query);
@@ -74,21 +59,7 @@ public class ItemVault extends Vault{
 	public ArrayList<Item> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
-	protected Item getNewObject(){
-		return new Item();
-	}
-	protected Item getCopiedObject(IModel model){
-		return new Item((Item)model);
-	}
-	//Search an ordered hashmap one at a time
-
-    public Item get(int id){
-    	Item i = (Item)dataVault.get(id);
-    	if(i == null)
-    		return null;
-
-        return new Item(i);
-    }
+	
 
 
 	/**
@@ -111,29 +82,7 @@ public class ItemVault extends Vault{
 			return new Result(false,"Duplicate barcode");
 	}
 
-	/**
-	 * Checks if the model already exists in the map
-	 * - Retrieve current model by index
-	 * - If barcode is the same do nothing, if it's changed check
-	 * 
-	 * @param model
-	 * @return Result of the check
-	 */
-	public  Result validateModified(Item model){
-		assert(model!=null);
-        assert(!dataVault.isEmpty());
-		
-		//Delete current model
-		Item currentModel = this.get(model.getId());
-		currentModel.delete();
-		//Validate passed in model
-		Result result = this.validateNew(model);
-		//Add current model back
-		currentModel.unDelete();
-		if(result.getStatus() == true)
-			model.setValid(true);
-        return result;
-	}
+	
 
 	
 	/**
@@ -159,18 +108,15 @@ public class ItemVault extends Vault{
         return new Result(true);
 	}
 
-	/**
-	 * Adds the Item to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model Item to add
-	 * @return Result of request
-	 */
-	public  Result saveModified(Item model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new Item(model));
-        return new Result(true);
+	public Item get(int id){
+		return (Item) this.getPrivateCall(id);
 	}
+	protected Item getNewObject(){
+		return new Item();
+	}
+	protected Item getCopiedObject(IModel model){
+		return new Item((Item)model);
+	}
+
 }
 
