@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import model.common.IModel;
+import model.common.Model;
 import model.common.Vault;
 import common.Result;
 import common.util.QueryParser;
@@ -106,34 +107,6 @@ public class StorageUnitVault extends Vault{
 		return new Result(true);
 	}
 
-    public  StorageUnit get(int id){
-    	StorageUnit su = (StorageUnit)dataVault.get(id);
-    	if(su == null)
-    		return null;
-        return new StorageUnit(su);
-    }
-	/**
-	 * Checks if the model already exists in the map
-	 * 
-	 * @param model
-	 * @return Result of the check
-	 */
-	protected Result validateModified(StorageUnit model){
-		assert(model!=null);
-        assert(!dataVault.isEmpty());
-		
-		//Delete current model
-		StorageUnit currentModel = (StorageUnit)dataVault.get(model.getId());
-		currentModel.delete();
-		//Validate passed in model
-		Result result = validateNew(model);
-		//Add current model back
-		currentModel.unDelete();
-		
-		if(result.getStatus() == true)
-			model.setValid(true);
-        return result;
-	}
 
 	/**
 	 * Adds the StorageUnit to the map if it's new.  Should check before doing so.
@@ -158,18 +131,9 @@ public class StorageUnitVault extends Vault{
         return new Result(true);
 	}
 
-	/**
-	 * Adds the StorageUnit to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model StorageUnit to add
-	 * @return Result of request
-	 */
-	protected  Result saveModified(StorageUnit model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new StorageUnit(model));
-        return new Result(true);
+	public StorageUnit get(int id){
+		return (StorageUnit) this.getPrivateCall(id);
 	}
+
 }
 

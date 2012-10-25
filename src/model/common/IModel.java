@@ -34,4 +34,12 @@ public interface IModel {
 	 */
 	Result save();
 
+	public Result setValid(boolean b);
+
+	public Result delete();
+
+	public Result unDelete();
+
+	public Result setSaved(boolean b);
+
 }

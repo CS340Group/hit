@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import model.common.IModel;
+import model.common.Model;
 import model.common.Vault;
 import model.item.Item;
 import model.product.Product;
@@ -124,37 +125,6 @@ public class ProductGroupVault extends Vault {
 	}
 
 
-    public  ProductGroup get(int id){
-        ProductGroup pg = (ProductGroup) dataVault.get(id);
-    	if(pg == null)
-    		return null;
-
-        return new ProductGroup(pg);
-    }
-
-	/**
-	 * Checks if the model already exists in the map
-	 * 
-	 * @param model
-	 * @return Result of the check
-	 */
-	protected Result validateModified(ProductGroup model){
-		assert(model!=null);
-        assert(!dataVault.isEmpty());
-		
-		//Delete current model
-		ProductGroup currentModel = (ProductGroup) dataVault.get(model.getId());
-		currentModel.delete();
-		//Validate passed in model
-		Result result = validateNew(model);
-		//Add current model back
-		currentModel.unDelete();
-		
-		if(result.getStatus() == true)
-			model.setValid(true);
-        return result;
-	}
-
 	public int getLastIndex(){
 		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
 	}
@@ -181,19 +151,7 @@ public class ProductGroupVault extends Vault {
         return new Result(true);
 	}
 
-	/**
-	 * Adds the ProductGroup to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model ProductGroup to add
-	 * @return Result of request
-	 */
-	protected  Result saveModified(ProductGroup model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new ProductGroup(model));
-        return new Result(true);
-	}
+
 
 	public String getName(int id) {
 		ProductGroup pg = this.get(id);
@@ -203,5 +161,11 @@ public class ProductGroupVault extends Vault {
 			return "";
 		}
 	}
+	
+	public ProductGroup get(int id){
+		return (ProductGroup) this.getPrivateCall(id);
+	}
+
+
 }
 

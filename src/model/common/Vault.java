@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import model.item.Item;
 import model.product.Product;
+import model.productcontainer.ProductGroup;
 
 import common.Result;
 import common.util.QueryParser;
@@ -143,5 +144,50 @@ public abstract class Vault extends Observable implements Serializable {
 		}
 		return results;
 	}
+	/**
+	 * Adds the Model to the map if it already exists.  Should check before doing so.
+	 * 
+	 * @param model Item to add
+	 * @return Result of request
+	 */
+	public  Result saveModified(IModel model){
+        if(!model.isValid())
+            return new Result(false, "Model must be valid prior to saving,");
+        model.setSaved(true);
+        this.addModel(getCopiedObject(model));
+        return new Result(true);
+	}
 	
+	public abstract IModel get(int id);
+	protected  IModel getPrivateCall(int id){
+        IModel m = dataVault.get(id);
+    	if(m == null)
+    		return null;
+
+        return this.getCopiedObject(m);
+    }
+	
+	/**
+	 * Checks if the model already exists in the map
+	 * - Retrieve current model by index
+	 * - If barcode is the same do nothing, if it's changed check
+	 * 
+	 * @param model
+	 * @return Result of the check
+	 */
+	public  Result validateModified(IModel model){
+		assert(model!=null);
+        assert(!dataVault.isEmpty());
+		
+		//Delete current model
+        IModel currentModel = this.get(model.getId());
+		currentModel.delete();
+		//Validate passed in model
+		Result result = this.validateModified(model);
+		//Add current model back
+		currentModel.unDelete();
+		if(result.getStatus() == true)
+			model.setValid(true);
+        return result;
+	}
 }

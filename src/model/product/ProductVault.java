@@ -110,16 +110,6 @@ public class ProductVault extends Vault{
 		assert(model!=null);
         assert(!dataVault.isEmpty());
 		
-		//Delete current model
-        //FROM NICK: This does not work because to delete there must not be any items
-		//Product currentModel = this.get(model.getId());
-		//currentModel.delete();
-		//currentModel.save();
-		//Validate passed in model
-		//Result result = this.validateNew(model);
-		//Add current model back
-		//currentModel.unDelete();
-		//if(result.getStatus() == true)
 	    model.setValid(true);
         return new Result(true);
 	}
@@ -148,12 +138,7 @@ public class ProductVault extends Vault{
 		return model;
 	}
 	
-    public  Product get(int id){
-    	Product p = (Product)dataVault.get(id);
-    	if(p == null)
-    		return null;
-        return new Product(p);
-    }
+
 
     
 	
@@ -174,7 +159,6 @@ public class ProductVault extends Vault{
             id = (int)dataVault.lastKey()+1;
 
         model.setId(id);
-        
         //If the creation date hasn't been set
         if(model.getCreationDate() == null)
         	model = this.setCreationDate(model);
@@ -183,19 +167,8 @@ public class ProductVault extends Vault{
         return new Result(true);
 	}
 
-	/**
-	 * Adds the product to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model Product to add
-	 * @return Result of request
-	 */
-	protected  Result saveModified(Product model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new Product(model));
-        return new Result(true);
+	public Product get(int id){
+		return (Product) this.getPrivateCall(id);
 	}
-
 
 }
