@@ -1,14 +1,9 @@
 package model.productcontainer;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import model.common.IModel;
 import model.common.Vault;
 import common.Result;
-import common.util.QueryParser;
 import model.productcontainer.StorageUnit;
 
 
@@ -27,12 +22,7 @@ public class StorageUnitVault extends Vault{
 	private static final long serialVersionUID = 1L;
 	static StorageUnitVault currentInstance;
 	
-	/**
-	 * Private constructor, for the singleton design pattern.
-	 */
-	private StorageUnitVault(){
-		currentInstance = this;
-	}
+	
 
 	/**
 	 * Returns a reference to the only instance allowed for this class.
@@ -66,15 +56,19 @@ public class StorageUnitVault extends Vault{
 	public  ArrayList<StorageUnit> findAll(String query) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
+	public int getLastIndex(){
+		return (int)dataVault.size()+ProductGroupVault.getInstance().size();
+	}
+	public StorageUnit get(int id){
+		return (StorageUnit) this.getPrivateCall(id);
+	}
 	protected StorageUnit getNewObject(){
 		return new StorageUnit();
 	}
 	protected StorageUnit getCopiedObject(IModel model){
 		return new StorageUnit((StorageUnit)model);
 	}
-	public int getLastIndex(){
-		return (int)dataVault.size()+ProductGroupVault.getInstance().size();
-	}
+	
 	/**
 	 * Checks if the model passed in already exists in the current map
 	 * - Must have a unique name
@@ -91,50 +85,6 @@ public class StorageUnitVault extends Vault{
         model.setValid(true);
 		return result;
 	}
-	
-	private  Result checkUniqueName(StorageUnit model){
-        //Null check
-        if(model.getName() == null)
-            return new Result(false, "Name can't be null");
-
-        if(model.getName() == "")
-            return new Result(false, "Name can't be empty");
-
-		int size = findAll("Name = "+model.getName()).size();
-		if(size!=0)
-			return new Result(false,"Duplicate storage container name.");
-		return new Result(true);
-	}
-
-    public  StorageUnit get(int id){
-    	StorageUnit su = (StorageUnit)dataVault.get(id);
-    	if(su == null)
-    		return null;
-        return new StorageUnit(su);
-    }
-	/**
-	 * Checks if the model already exists in the map
-	 * 
-	 * @param model
-	 * @return Result of the check
-	 */
-	protected Result validateModified(StorageUnit model){
-		assert(model!=null);
-        assert(!dataVault.isEmpty());
-		
-		//Delete current model
-		StorageUnit currentModel = (StorageUnit)dataVault.get(model.getId());
-		currentModel.delete();
-		//Validate passed in model
-		Result result = validateNew(model);
-		//Add current model back
-		currentModel.unDelete();
-		
-		if(result.getStatus() == true)
-			model.setValid(true);
-        return result;
-	}
-
 	/**
 	 * Adds the StorageUnit to the map if it's new.  Should check before doing so.
 	 * 
@@ -157,19 +107,29 @@ public class StorageUnitVault extends Vault{
         this.addModel(new StorageUnit(model));
         return new Result(true);
 	}
+	private  Result checkUniqueName(StorageUnit model){
+        //Null check
+        if(model.getName() == null)
+            return new Result(false, "Name can't be null");
 
-	/**
-	 * Adds the StorageUnit to the map if it already exists.  Should check before doing so.
-	 * 
-	 * @param model StorageUnit to add
-	 * @return Result of request
-	 */
-	protected  Result saveModified(StorageUnit model){
-        if(!model.isValid())
-            return new Result(false, "Model must be valid prior to saving,");
-        model.setSaved(true);
-        this.addModel(new StorageUnit(model));
-        return new Result(true);
+        if(model.getName() == "")
+            return new Result(false, "Name can't be empty");
+
+		int size = findAll("Name = "+model.getName()).size();
+		if(size!=0)
+			return new Result(false,"Duplicate storage container name.");
+		return new Result(true);
 	}
+	/**
+	 * Private constructor, for the singleton design pattern.
+	 */
+	private StorageUnitVault(){
+		currentInstance = this;
+	}
+
+	
+
+	
+
 }
 
