@@ -74,4 +74,10 @@ public class StorageUnit extends ProductContainer{
     public Result setRootParentId(int id){
         return new Result(false, "Root Parent of a Storage Unit is immutable");
     }
+
+	public StorageUnit generateTestData() {
+		// TODO Auto-generated method stub
+		this.setName("Test Storage Unit Name");
+		return this;
+	}
 }
