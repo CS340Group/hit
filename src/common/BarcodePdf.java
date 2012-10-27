@@ -39,7 +39,7 @@ public class BarcodePdf{
 
 	/**
 	 * Constructor. Takes in a string representing where the file should be written to disk.
-	 * @param filepath
+	 * @param fname
 	 * @throws DocumentException 
 	 * @throws FileNotFoundException 
 	 */
