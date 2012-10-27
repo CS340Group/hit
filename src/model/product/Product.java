@@ -321,4 +321,15 @@ public class Product extends Model{
 	public String getProductContainerName() {
 		return productGroupVault.getName(_containerId);
 	}
+
+	public Product generateTestData() {
+		this.setBarcode("1");
+		this.setDescription("Spam and eggs");
+		this.setSize(new Size(3, "oz"));
+		this.setShelfLife(4);
+		this.set3MonthSupply(3);
+		this.validate();
+		this.save();
+		return this;
+	}
 }

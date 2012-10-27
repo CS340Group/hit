@@ -229,11 +229,16 @@ public class Item extends Model{
 	
 	/**
 	 * Fills this item with some test data to prepare it for JUnit tests.
+	 * @return 
 	 */
-	public void generateTestData(){
+	public Item generateTestData(){
+		/* Make a product to put this in */
+		Product p = new Product().generateTestData();
         setBarcode(new Barcode());
         setProductId(-1);
         setEntryDate(new DateTime());
         setExitDate(new DateTime());
+        setProductId(p.getId());
+        return this;
 	}
 }
