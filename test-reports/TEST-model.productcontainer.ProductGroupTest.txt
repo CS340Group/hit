@@ -1,5 +1,10 @@
 Testsuite: model.productcontainer.ProductGroupTest
-Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.036 sec
+Tests run: 2, Failures: 1, Errors: 0, Time elapsed: 0.039 sec
 
-Testcase: testSet3MonthSupply took 0.02 sec
+Testcase: testSet3MonthSupply took 0.021 sec
+	FAILED
+
+junit.framework.AssertionFailedError: 
+	at model.productcontainer.ProductGroupTest.testSet3MonthSupply(ProductGroupTest.java:94)
+
 Testcase: testValidate took 0.004 sec

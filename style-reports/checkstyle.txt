@@ -1,2 +1,26 @@
 Starting audit...
+/Users/nethier/Projects/cs340/hit/src/common/BarcodePdf.java:37: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/BarcodePdf.java:87: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:23: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:39: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/AddItemCommand.java:23: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:11: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:25: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:27: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/batches/TransferItemBatchController.java:133: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:182: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:393: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:399: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:649: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductController.java:71: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductController.java:127: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductView.java:11: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/product/EditProductController.java:126: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:65: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:67: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:113: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:115: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/model/common/ModelFacade.java:73: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/model/common/ModelFacade.java:133: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/model/productcontainer/ProductContainer.java:129: Line is longer than 100 characters.
 Audit done.

@@ -1,5 +1,5 @@
 Testsuite: model.product.ProductVaultTest
-Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.122 sec
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.119 sec
 
-Testcase: testCreationDate took 0.084 sec
-Testcase: testOneProductPer took 0.005 sec
+Testcase: testOneProductPer took 0.081 sec
+Testcase: testCreationDate took 0.003 sec
