@@ -3,12 +3,9 @@ package model.product;
 import common.Result;
 import model.common.Size;
 import model.item.Item;
-import model.productcontainer.ProductContainer;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
-import model.common.Barcode;
 import model.common.Model;
-import model.common.Size;
 
 import org.joda.time.DateTime;
 
@@ -42,8 +39,6 @@ public class Product extends Model{
 
     private int _3MonthSupply;
 
-    
-
 	/**
 	 * Constructor
 	 */
@@ -75,11 +70,9 @@ public class Product extends Model{
     }
 
     public int getItemCount(){
-    	ArrayList<Item> items = this.itemVault.findAll("ProductId = "+this.getId());
+    	ArrayList<Item> items = this._itemVault.findAll("ProductId = "+this.getId());
     	return items.size();
     }
-
-
 
     /**
      * Return a copy of the {@link model.productcontainer.StorageUnit
@@ -88,7 +81,7 @@ public class Product extends Model{
     public StorageUnit getStorageUnit(){
         if(_storageUnitId < 0)
             return null;
-        return storageUnitVault.get(_storageUnitId);
+        return _storageUnitVault.get(_storageUnitId);
     }
 
     /**
@@ -114,7 +107,7 @@ public class Product extends Model{
      * has no ProductGroup, a null pointer is returned.
      */
     public ProductGroup getContainer(){
-        return productGroupVault.get(_containerId);
+        return _productGroupVault.get(_containerId);
     }
 
     /**
@@ -256,12 +249,12 @@ public class Product extends Model{
      * @Pre Product must be validated in order to be saved.
 	 */
 	public Result save(){
-        if(!isValid())
+        if(!this.validate().getStatus())
             return new Result(false, "Product must be valid before saving.");
         if(getId() == -1)
-            return productVault.saveNew(this);
+            return _productVault.saveNew(this);
         else
-            return productVault.saveModified(this);
+            return _productVault.saveModified(this);
 	}
 
 	/**
@@ -286,9 +279,9 @@ public class Product extends Model{
         }
         
         if(getId() == -1)
-            return productVault.validateNew(this);
+            return _productVault.validateNew(this);
         else
-            return productVault.validateModified(this);
+            return _productVault.validateModified(this);
 	}
 	
 	/*
@@ -305,7 +298,7 @@ public class Product extends Model{
      * Check if the product is void of items, and thus, deletable.
      */
     public Result isDeleteable(){
-        ArrayList<Item> items = itemVault.findAll("ProductId = " + _id);
+        ArrayList<Item> items = _itemVault.findAll("ProductId = " + _id);
         for(Item item : items){
             if(!item.isDeleted())
                 return new Result(false, "All items must be deleted first");
@@ -319,7 +312,7 @@ public class Product extends Model{
 	}
 
 	public String getProductContainerName() {
-		return productGroupVault.getName(_containerId);
+		return _productGroupVault.getName(_containerId);
 	}
 
 	public Product generateTestData() {
@@ -331,5 +324,14 @@ public class Product extends Model{
 		this.validate();
 		this.save();
 		return this;
+	}
+
+	/**
+	 * Completely removes this item from the vault it sits in.
+	 * Leaves the item in an unsaved state.
+	 */
+	public void obliterate() {
+		this._productVault.obliterate(this);
+		this._saved = false;
 	}
 }

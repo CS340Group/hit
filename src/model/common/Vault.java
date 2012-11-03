@@ -184,4 +184,11 @@ public abstract class Vault extends Observable implements Serializable {
 			model.setValid(true);
         return result;
 	}
+
+	public void obliterate(IModel model) {
+		if (this.dataVault.containsValue(model))
+			this.dataVault.remove(model);
+        this.setChanged();
+		this.notifyObservers();
+	}
 }

@@ -2,8 +2,11 @@ package common.command;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import model.item.Item;
 import model.item.ItemVault;
+import model.product.Product;
 import model.productcontainer.StorageUnit;
 
 import org.junit.After;
@@ -30,9 +33,17 @@ public class AddItemCommandTest {
 		assertEquals(0, _vault.size());
 		
 		/* Create the item and SU to add */
+		ArrayList<Item> itemList = new ArrayList<Item>();
 		Item i = new Item().generateTestData();
+		Product p = new Product().generateTestData();
 		StorageUnit su = new StorageUnit().generateTestData();
-		AddItemCommand cmd = new AddItemCommand(i, su);
+		su.save();
+		
+		p.setStorageUnitId(su.getId());
+		i.setProduct(p);
+		itemList.add(i);
+		
+		AddItemCommand cmd = new AddItemCommand(itemList, p, su);
 		
 		cmd.execute();
 		assertEquals(1, _vault.size());

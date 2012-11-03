@@ -117,10 +117,10 @@ public class ProductGroupVault extends Vault {
             return new Result(false, "Model must be valid prior to saving,");
 
         int id = 0;
-        if(dataVault.isEmpty() && model.storageUnitVault.size()==0)
+        if(dataVault.isEmpty() && model._storageUnitVault.size()==0)
             id = 0;
         else
-            id = (int)dataVault.size()+1+model.storageUnitVault.size();
+            id = (int)dataVault.size()+1+model._storageUnitVault.size();
 
         model.setId(id);
         model.setSaved(true);

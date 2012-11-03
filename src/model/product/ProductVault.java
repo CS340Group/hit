@@ -158,4 +158,17 @@ public class ProductVault extends Vault{
 			model.setCreationDate(new DateTime());
 		return model;
 	}
+
+	/**
+	 * Determines if a product with the specified barcode string is in the vault.
+	 * @param barcode
+	 * @return
+	 */
+	public boolean hasProductWithBarcode(String barcode) {
+		if (this.find("Barcode = " + barcode) == null){
+			return false;
+		}else {
+			return true;
+		}
+	}
 }

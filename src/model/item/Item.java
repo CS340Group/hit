@@ -71,7 +71,7 @@ public class Item extends Model{
      *  Returns a copy of the Product to which this Item belongs.
      */
     public Product getProduct(){
-        return productVault.get(_productId);
+        return _productVault.get(_productId);
     }
 
     /**
@@ -155,12 +155,12 @@ public class Item extends Model{
 	 * If the Item is valid it is saved into the vault.
 	 */
 	public Result save(){
-		if(!isValid())
+		if(!this.validate().getStatus())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return itemVault.saveNew(this);
+            return _itemVault.saveNew(this);
         else
-            return itemVault.saveModified(this);
+            return _itemVault.saveModified(this);
 	}
 
 	/**
@@ -171,9 +171,9 @@ public class Item extends Model{
         	return new Result(false);
         }
         if(getId() == -1)
-            return itemVault.validateNew(this);
+            return _itemVault.validateNew(this);
         else
-            return itemVault.validateModified(this);
+            return _itemVault.validateModified(this);
 	}
 	
 	private boolean isValidEntryDate() {
@@ -240,5 +240,21 @@ public class Item extends Model{
         setExitDate(new DateTime());
         setProductId(p.getId());
         return this;
+	}
+
+	/**
+	 * Associates this item with a product.
+	 * @param product the product to which this item should be associated.
+	 */
+	public void setProduct(Product product) {
+		this.setProductId(product.getId());
+	}
+
+	/**
+	 * Removes this item from its vault completely, and sets it to an unsaved state.
+	 */
+	public void obliterate() {
+		_itemVault.obliterate(this);
+		this._saved = false;
 	}
 }
