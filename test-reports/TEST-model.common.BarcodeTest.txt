@@ -1,6 +1,6 @@
 Testsuite: model.common.BarcodeTest
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.025 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.026 sec
 
-Testcase: testSetCode took 0.011 sec
-Testcase: testsetCodeFromId took 0 sec
-Testcase: testIsSet took 0 sec
+Testcase: testsetCodeFromId took 0.011 sec
+Testcase: testIsSet took 0.001 sec
+Testcase: testSetCode took 0.002 sec

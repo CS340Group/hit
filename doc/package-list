@@ -16,6 +16,7 @@ gui.reports.removed
 gui.reports.supply
 gui.storageunit
 model.common
+model.common.operator
 model.item
 model.product
 model.productcontainer

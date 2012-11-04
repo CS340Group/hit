@@ -3,10 +3,10 @@ Starting audit...
 /Users/nethier/Projects/cs340/hit/src/common/BarcodePdf.java:87: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:23: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:39: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/AddItemCommand.java:23: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/common/command/AddItemCommand.java:24: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:11: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:25: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:27: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:31: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/gui/batches/TransferItemBatchController.java:133: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:182: Line is longer than 100 characters.
 /Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:393: Line is longer than 100 characters.
