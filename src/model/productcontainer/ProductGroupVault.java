@@ -54,7 +54,7 @@ public class ProductGroupVault extends Vault {
 	 * @throws NoSuchMethodException 
 	 * 
 	 */
-	public ProductGroup find(String query)  {
+	public ProductGroup find(String query, Object... params)  {
 		return (ProductGroup)findPrivateCall(query);
 	}
 	
@@ -66,7 +66,7 @@ public class ProductGroupVault extends Vault {
 	 * @param value
 	 * 
 	 */
-	public ArrayList<ProductGroup> findAll(String query) {
+	public ArrayList<ProductGroup> findAll(String query, Object... params) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
 	public int getLastIndex(){

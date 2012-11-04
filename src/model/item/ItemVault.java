@@ -46,7 +46,7 @@ public class ItemVault extends Vault{
 	 * 
 	 * @param query of form obj.attr = value
 	 */
-	public Item find(String query)  {
+	public Item find(String query, Object... params)  {
 		return (Item)findPrivateCall(query);
 	}
 	
@@ -56,7 +56,7 @@ public class ItemVault extends Vault{
 	 * @param query of form obj.attr = value 
 	 * 
 	 */
-	public ArrayList<Item> findAll(String query) {
+	public ArrayList<Item> findAll(String query, Object... params) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
 	
