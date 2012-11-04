@@ -1,11 +1,11 @@
 package common.command;
 
-import com.sun.tools.hat.internal.model.ReachableExcludesImpl;
-
+import gui.batches.IAddItemBatchController;
+import java.util.Collection;
 import common.Result;
-
 import model.common.ModelFacade;
 import model.item.Item;
+import model.product.Product;
 import model.productcontainer.StorageUnit;
 
 /**
@@ -14,9 +14,10 @@ import model.productcontainer.StorageUnit;
  */
 public class AddItemCommand extends AbstractCommand {
 
-	ModelFacade _modelFacade;
-	Item _item;
-	StorageUnit _targetSU;
+	private Collection<Item> _items;
+	private StorageUnit _sUnit;
+	private Product _product;
+	private IAddItemBatchController _controller;
 	
 	/**
 	 * Construct a new command from an item and a storage unit.
@@ -24,23 +25,40 @@ public class AddItemCommand extends AbstractCommand {
 	 * @param i the item to be added. The item must be valid.
 	 * @param su the storage unit to which the item should be added.
 	 */
-	public AddItemCommand(Item i, StorageUnit su){
-		_modelFacade = new ModelFacade();
-		_item = i;
-		_targetSU = su;
+	public AddItemCommand(Collection<Item> newItems, Product product, StorageUnit sUnit) {
+		_items = newItems;
+		_product = product;
+		_sUnit = sUnit;
 	}
 	
+	public AddItemCommand(Collection<Item> newItems, Product product,
+			StorageUnit sUnit, IAddItemBatchController addItemBatchController) {
+		this(newItems, product, sUnit);
+		_controller = addItemBatchController;
+	}
+
 	@Override
 	protected Result executeGuts() {
-		if (!_item.isValid() || !_targetSU.isValid())
-			return new Result(false, "Item and Storage Unit must be valid.");
+		if(_product != null && !_product.isSaved())
+			_product.save();
 		
-		return _modelFacade.AddItem(_targetSU, _item);
+		for (Item item : _items){
+			if (!item.isValid())
+				return new Result(false, "All items must be valid in order to add.");
+		}
+		for (Item item : _items){
+			item.save();
+		}
+		return new Result(true);
 	}
 
 	@Override
 	protected Result undoGuts() {
-		return _modelFacade.RemoveItem(_item);
+		if(_product != null && _product.isSaved())
+			_product.obliterate();
+		for (Item item : _items){
+			item.obliterate();
+		}
+		return new Result(true);
 	}
-
 }

@@ -41,9 +41,9 @@ public class StorageUnit extends ProductContainer{
             return new Result(false,"Name cannot be empty");
 
         if(getId() == -1)
-            return storageUnitVault.validateNew(this);
+            return _storageUnitVault.validateNew(this);
         else
-            return storageUnitVault.validateModified(this);
+            return _storageUnitVault.validateModified(this);
     }
 
     /**
@@ -55,9 +55,9 @@ public class StorageUnit extends ProductContainer{
         if(!isValid())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return storageUnitVault.saveNew(this);
+            return _storageUnitVault.saveNew(this);
         else
-            return storageUnitVault.saveModified(this);
+            return _storageUnitVault.saveModified(this);
     }
 
     /**

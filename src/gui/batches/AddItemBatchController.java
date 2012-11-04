@@ -1,6 +1,8 @@
 package gui.batches;
 
 import common.BarcodePdf;
+import common.command.AddItemCommand;
+import common.command.CommandManager;
 import gui.common.*;
 import gui.inventory.*;
 import gui.item.ItemData;
@@ -10,10 +12,12 @@ import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
+import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
 
 import java.awt.*;
+import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -24,25 +28,29 @@ import java.util.*;
 public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
 
-    HashMap<ProductData,ArrayList<ItemData>> products = new HashMap<ProductData, ArrayList<ItemData>>();
-    boolean scanner = true;
-    Timer timer;
-    ProductContainerData target;
-
-    ModelFacade facade;
+    private HashMap<ProductData,ArrayList<ItemData>> _products = new HashMap<ProductData, ArrayList<ItemData>>();
+    private boolean _scanner = true;
+    private Timer _timer;
+    private ProductContainerData _target;
+    private ProductVault _productVault;
+    private ModelFacade _facade;
+	private CommandManager _commandManager;
+    
 	/**
 	 * Constructor.
 	 * 
 	 * @param view Reference to the add item batch view.
-	 * @param target Reference to the storage unit to which items are being added.
+	 * @param _target Reference to the storage unit to which items are being added.
 	 */
 	public AddItemBatchController(IView view, ProductContainerData target) {
 		super(view);
-        getView().setUseScanner(scanner);
+        getView().setUseScanner(_scanner);
         getView().setCount("1");
-        timer = new Timer();
-        this.target = target;
-        this.facade = new ModelFacade();
+        _timer = new Timer();
+        _target = target;
+        _facade = new ModelFacade();
+        _productVault = ProductVault.getInstance();
+        _commandManager = new CommandManager();
 		construct();
 	}
 
@@ -64,8 +72,8 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	protected void loadValues() {
         ProductData selected = getView().getSelectedProduct();
-        getView().setProducts(getProducts());
-        getView().setItems(getItems(selected));
+        getView().setProducts(getStoredProductDatas());
+        getView().setItems(getStoredItemDatas(selected));
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class AddItemBatchController extends Controller implements
         getView().enableItemAction(
                 !getView().getBarcode().isEmpty()
                 && count > 0
-                && !scanner
+                && !_scanner
         );
 	}
 
@@ -119,12 +127,12 @@ public class AddItemBatchController extends Controller implements
 	public void barcodeChanged() {
         enableComponents();
         try {
-            timer.cancel();
-            timer = new Timer();
+            _timer.cancel();
+            _timer = new Timer();
         }
         catch(IllegalStateException e){ }
-        if(scanner)
-            timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
+        if(_scanner)
+            _timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
 	}
 
 	/**
@@ -133,7 +141,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
-        scanner = getView().getUseScanner();
+        _scanner = getView().getUseScanner();
         getView().setBarcode("");
 	}
 
@@ -143,7 +151,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
-        getView().setItems(getItems(getView().getSelectedProduct()));
+        getView().setItems(getStoredItemDatas(getView().getSelectedProduct()));
 	}
 
 	/**
@@ -152,57 +160,63 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void addItem() {
-        int count = 0;
-        try {
-            count = Integer.parseInt(getView().getCount());
-        } catch (Exception e) {
-            getView().displayErrorMessage("Invalid Count!");
-            return;
-        }
+        int count = getCountFromView();
+        if (count == -1) return;
+
+        // Make sure the product exists to be added to.
         String barcode = getView().getBarcode();
-        Product product = ProductVault.getInstance().find("Barcode = " + barcode);
-        if(product == null){
-            getView().displayAddProductView(target);
-            product = ProductVault.getInstance().find("Barcode = " + barcode);
-        }
-        if(product == null){
-            loadValues();
-            getView().setBarcode("");
-            getView().setUseScanner(true);
-            scanner = true;
-            return;
+        if (!_productVault.hasProductWithBarcode(barcode))
+            getView().displayAddProductView(_target);
+        // If cancel was pressed, there is no product added, reset the view state.
+        if (!_productVault.hasProductWithBarcode(barcode)){
+	        resetViewFields();
+	        return;
         }
 
-        ProductData pd = findProduct(getView().getBarcode());
-        if(pd == null){
-            pd = GuiModelConverter.wrapProduct(product);
-            pd.setBarcode(getView().getBarcode());
-            pd.setCount("0");
-        }
+        Product product = _productVault.find("Barcode = " + barcode);
+        StorageUnit sUnit = StorageUnitVault.getInstance().get((Integer) _target.getTag());
+        Collection<Item> newItems = new ArrayList<Item>();
 
         for(int i = 0; i < count; i++){
             Item item = new Item();
             item.setEntryDate(new DateTime(getView().getEntryDate()));
-            item.setProductId(product.getId());
-            item.validate();
-            item.save();
-            facade.AddItem(StorageUnitVault.getInstance().get((Integer) target.getTag()), item);
-
-            ItemData id = GuiModelConverter.wrapItem(item);
-
-            if(!products.containsKey(pd))
-                products.put(pd, new ArrayList<ItemData>());
-
-            products.get(pd).add(id);
-
-            pd.setCount(String.valueOf(products.get(pd).size()));
-
+            item.setProduct(product);
+            newItems.add(item);
         }
+
+        // Make a new command:
+        AddItemCommand command = new AddItemCommand(newItems, product, sUnit, this);
+        _commandManager.executeCommand(command);
+
         getView().setBarcode("");
         loadValues();
         getView().giveBarcodeFocus();
 	}
+
+	private int getCountFromView() {
+		try {
+            return Integer.parseInt(getView().getCount());
+        } catch (Exception e) {
+            getView().displayErrorMessage("Invalid Count!");
+            return -1;
+        }
+	}
+
+	private void resetViewFields() {
+		loadValues();
+        getView().setBarcode("");
+        getView().setUseScanner(true);
+        _scanner = true;
+	}
 	
+    private ProductData findStoredProductData(String barcode){
+        for(ProductData p: _products.keySet()){
+            if(p.getBarcode().contentEquals(barcode))
+                return p;
+        }
+        return null;
+    }
+
 	/**
 	 * This method is called when the user clicks the "Redo" button
 	 * in the add item batch view.
@@ -226,10 +240,10 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void done() {
 		getView().close();
-        if(!products.isEmpty()){
+        if(!_products.isEmpty()){
             try{
                 BarcodePdf pdf = new BarcodePdf("items.pdf");
-                for(ArrayList<ItemData> i : products.values()){
+                for(ArrayList<ItemData> i : _products.values()){
                     for(ItemData data : i){
                         int id = (Integer) data.getTag();
                         pdf.addItem(ItemVault.getInstance().get(id));
@@ -250,23 +264,15 @@ public class AddItemBatchController extends Controller implements
         }
 	}
 
-    private ProductData[] getProducts(){
-        if(products.isEmpty())
+    private ProductData[] getStoredProductDatas(){
+        if(_products.isEmpty())
             return new ProductData[0];
-        return products.keySet().toArray(new ProductData[products.keySet().size()]);
+        return _products.keySet().toArray(new ProductData[_products.keySet().size()]);
     }
 
-    private ProductData findProduct(String barcode){
-        for(ProductData p: products.keySet()){
-            if(p.getBarcode().contentEquals(barcode))
-                return p;
-        }
-        return null;
-    }
-
-    private ItemData[] getItems(ProductData pd){
-        if(products.containsKey(pd))
-            return products.get(pd).toArray(new ItemData[products.get(pd).size()]);
+    private ItemData[] getStoredItemDatas(ProductData pd){
+        if(_products.containsKey(pd))
+            return _products.get(pd).toArray(new ItemData[_products.get(pd).size()]);
         return new ItemData[0];
     }
 
@@ -276,7 +282,7 @@ public class AddItemBatchController extends Controller implements
         public void run() {
             if(!getView().getBarcode().isEmpty())
                 addItem();
-            timer.cancel();
+            _timer.cancel();
         }
     }
 }

@@ -77,15 +77,15 @@ public class ProductVault extends Vault{
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected  Result validateNew(Product model){
+	protected  Result validateNew(IModel model){
 		Result result = new Result();
 		
 		//Check that the new product is not a duplicate
 		//in the storage container
-		result = validateUniqueBarcode(model);
+		result = validateUniqueBarcode((Product) model);
 		if(result.getStatus() != true)
 			return result;
-		result = validateCreationDate(model);
+		result = validateCreationDate((Product) model);
 		if(result.getStatus() != true)
 			return result;
 		
@@ -157,5 +157,18 @@ public class ProductVault extends Vault{
 		else
 			model.setCreationDate(new DateTime());
 		return model;
+	}
+
+	/**
+	 * Determines if a product with the specified barcode string is in the vault.
+	 * @param barcode
+	 * @return
+	 */
+	public boolean hasProductWithBarcode(String barcode) {
+		if (this.find("Barcode = " + barcode) == null){
+			return false;
+		}else {
+			return true;
+		}
 	}
 }

@@ -86,7 +86,7 @@ public class ProductGroup extends ProductContainer{
      * Return a copy of the Parent.
      */
     public ProductContainer getParent(){
-        return this.productGroupVault.get(_parentId);
+        return this._productGroupVault.get(_parentId);
     }
 
     /**
@@ -104,13 +104,13 @@ public class ProductGroup extends ProductContainer{
     	while(tempGroup != null){
     		if(tempGroup.getParent()!=null){
 	    		id = tempGroup.getParent().getId();
-	    		tempGroup = this.productGroupVault.get(id);
+	    		tempGroup = this._productGroupVault.get(id);
     		} else {
     			id = tempGroup.getParentId();
     			tempGroup = null;
     		}
     	}
-    	return this.storageUnitVault.get(id);
+    	return this._storageUnitVault.get(id);
     	
     }
 
@@ -122,9 +122,9 @@ public class ProductGroup extends ProductContainer{
             return new Result(false, "Name cannot be empty");
 
         if(getId() == -1)
-            return productGroupVault.validateNew(this);
+            return _productGroupVault.validateNew(this);
         else
-            return productGroupVault.validateModified(this);
+            return _productGroupVault.validateModified(this);
     }
 
     /**
@@ -135,9 +135,9 @@ public class ProductGroup extends ProductContainer{
         if(!isValid())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
-            return productGroupVault.saveNew(this);
+            return _productGroupVault.saveNew(this);
         else
-            return productGroupVault.saveModified(this);
+            return _productGroupVault.saveModified(this);
     }
 
 }

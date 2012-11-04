@@ -69,7 +69,7 @@ public class ProductGroupVaultTest {
 */
     @Test
     public void testGet() throws Exception {
-        assertNotSame(pg1, pg1.productGroupVault.get(pg1.getId()));
+        assertNotSame(pg1, pg1._productGroupVault.get(pg1.getId()));
         //assertEquals(pg1.getId(), pg1.productGroupVault.get(pg1.getId()).getId());
     }
 }

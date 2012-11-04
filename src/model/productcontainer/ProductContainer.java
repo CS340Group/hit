@@ -70,7 +70,7 @@ public class ProductContainer extends Model{
      * in.
      */
     public ProductContainer getRootParent(){
-        return storageUnitVault.get(_rootParentId);
+        return _storageUnitVault.get(_rootParentId);
     }
 
     /**
@@ -126,7 +126,7 @@ public class ProductContainer extends Model{
 
     
     public ArrayList<ProductGroup> getChildProductGroups(){
-    	ArrayList<ProductGroup> childProductGroups = productGroupVault.findAll("ParentIdString = "+this.getId());
+    	ArrayList<ProductGroup> childProductGroups = _productGroupVault.findAll("ParentIdString = "+this.getId());
     	return childProductGroups;
     }
     /**
@@ -135,9 +135,9 @@ public class ProductContainer extends Model{
     public Result isDeletable(){
     	//Product Container can not have items
     	ArrayList<Product> products;
-    	products = productVault.findAll("ContainerId = "+this.getId());
+    	products = _productVault.findAll("ContainerId = "+this.getId());
     	for(Product tempProduct : products){
-    		if(itemVault.find("ProductId = "+tempProduct.getId()) != null)
+    		if(_itemVault.find("ProductId = "+tempProduct.getId()) != null)
     			return new Result(false);
     	}
     	for(ProductGroup tempPG : this.getChildProductGroups()){
