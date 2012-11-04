@@ -24,9 +24,10 @@ public abstract class AbstractCommand {
 	 */
 	public Result execute(){
 		if (_executed) return new Result(false, "Must undo before executing again.");
-		executeGuts();
-		_executed = true;
-		return new Result(true);
+		Result result = executeGuts();
+		if (result.getStatus())
+			_executed = true;
+		return result;
 	}
 
 	 protected abstract Result executeGuts();
@@ -40,9 +41,10 @@ public abstract class AbstractCommand {
 	 */
 	public Result undo(){
 		if (!_executed) return new Result(false, "Must execute before undoing.");
-		undoGuts();
-		_executed = false;
-		return new Result(true);
+		Result result = undoGuts();
+		if (result.getStatus())
+			_executed = false;
+		return result;
 	}
 
 	protected abstract Result undoGuts();
