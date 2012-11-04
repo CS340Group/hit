@@ -39,6 +39,6 @@ public interface IPrintObject {
     }
 
     public interface IPrintObjectTable {
-        public String getCell(int x, int y);
+        public String getCell(int row, int column);
     }
 }
