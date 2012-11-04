@@ -249,7 +249,7 @@ public class Product extends Model{
      * @Pre Product must be validated in order to be saved.
 	 */
 	public Result save(){
-        if(!this.validate().getStatus())
+        if(!this._valid && !this.validate().getStatus())
             return new Result(false, "Product must be valid before saving.");
         if(getId() == -1)
             return _productVault.saveNew(this);

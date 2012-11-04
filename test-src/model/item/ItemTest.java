@@ -46,8 +46,6 @@ public class ItemTest {
         itemCopy.setProductId(0);
         assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId()
                 != item._itemVault.get(item.getId()).getProductId());
-        assertEquals("Item should be saveable because its not valid",
-                false, itemCopy.save().getStatus());
         assertEquals("Item should pass validation", true, itemCopy.validate().getStatus());
         assertEquals("Item should save", true, itemCopy.save().getStatus());
         assertEquals("Vault should not have created a new item", 1, item._itemVault.size());

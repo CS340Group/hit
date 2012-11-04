@@ -13,6 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import common.Result;
+
 public class AddItemCommandTest {
 	
 	ItemVault _vault; 
@@ -45,7 +47,8 @@ public class AddItemCommandTest {
 		
 		AddItemCommand cmd = new AddItemCommand(itemList, p, su);
 		
-		cmd.execute();
+		Result r = cmd.execute();
+		assertEquals("", r.getMessage());
 		assertEquals(1, _vault.size());
 		assertTrue(_vault.find("BarcodeString = " + i.getBarcodeString()) != null);
 		

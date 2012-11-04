@@ -155,7 +155,7 @@ public class Item extends Model{
 	 * If the Item is valid it is saved into the vault.
 	 */
 	public Result save(){
-		if(!this.validate().getStatus())
+		if(!this._valid && !this.validate().getStatus())
             return new Result(false, "Item must be valid before saving.");
         if(getId() == -1)
             return _itemVault.saveNew(this);

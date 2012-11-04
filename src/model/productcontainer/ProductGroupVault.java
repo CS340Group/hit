@@ -97,9 +97,9 @@ public class ProductGroupVault extends Vault {
 	 * @param model
 	 * @return Result of the check
 	 */
-	protected Result validateNew(ProductGroup model){
+	protected Result validateNew(IModel model){
 		Result result = new Result();
-		result = checkUniqueName(model);
+		result = checkUniqueName((ProductGroup) model);
 		if(result.getStatus() == false)
 			return result;
 
