@@ -144,7 +144,7 @@ public class ProductVault extends Vault{
         return new Result(true);
 	}	
 	private  Result validateUniqueBarcode(Product model){
-		ArrayList<Product> allProducts = findAll("StorageUnitId = "+model.getStorageUnitId());
+		ArrayList<Product> allProducts = findAll("StorageUnitId = %o", model.getStorageUnitId());
 		String barcode = model.getBarcode().toString();
 		for(Product testProd : allProducts){
 			if(testProd.getBarcode().toString().equals(barcode))
