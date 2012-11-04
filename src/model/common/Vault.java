@@ -94,7 +94,7 @@ public abstract class Vault extends Observable implements Serializable {
 	protected ArrayList<IModel> findAllPrivateCall(String query, Object... params){
 		QueryParser MyQuery = new QueryParser(query);
         if(MyQuery.getValue().equals("%o") && params != null)
-            MyQuery.setValue(params);
+            MyQuery.setValue(params[0]);
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
