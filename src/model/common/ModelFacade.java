@@ -32,6 +32,7 @@ public class ModelFacade {
 		//Call the move product method
 		Product currentProduct = item.getProduct();
 		
+		//
 		Product newProduct = new Product();
         newProduct.set3MonthSupply(currentProduct.get3MonthSupply());
         newProduct.setBarcode(currentProduct.getBarcode());
@@ -59,48 +60,53 @@ public class ModelFacade {
 	}
 
     /**
-     * Adds an Item to a StorageUnit and ProductGroup.
+     * Adds an Item to a StorageUnit.
+     * This is called only when moving items
+     * 
      */
 	public Result AddItem(StorageUnit targetSU, Item item){
+        Product currentProduct = item.getProduct();
+        assert currentProduct != null : "Product should be in vault";
         assert targetSU != null;
         assert item != null;
-        Product targetP = item.getProduct();
-        assert targetP != null : "Product should be in vault";
-
-        if(targetP.getStorageUnitId() != targetSU.getId()){
+        
+        //If we are moving an item then this logic is needed,
+        //if it's a new item this is skipped
+        if(currentProduct.getStorageUnitId() != targetSU.getId()){
         	//Check that a product does not exist already
         	List<Product> possibleExistingProducts;
         	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
         	Product existingProduct = null;
     		for(Product tempP : possibleExistingProducts){
-    			if(tempP.getBarcodeString().equals(targetP.getBarcodeString()))
+    			if(tempP.getBarcodeString().equals(currentProduct.getBarcodeString()))
     				existingProduct = tempP;
     		}
     		
     		//If there isn't a product, create a new one
         	if(existingProduct==null){
 	            Product p2 = new Product();
-	            p2.set3MonthSupply(targetP.get3MonthSupply());
-	            p2.setBarcode(targetP.getBarcode());
-	            p2.setCreationDate(targetP.getCreationDate());
-	            p2.setDescription(targetP.getDescription());
-	            p2.setShelfLife(targetP.getShelfLife());
-	            p2.setSize(targetP.getSize());
+	            p2.set3MonthSupply(currentProduct.get3MonthSupply());
+	            p2.setBarcode(currentProduct.getBarcode());
+	            p2.setCreationDate(currentProduct.getCreationDate());
+	            p2.setDescription(currentProduct.getDescription());
+	            p2.setShelfLife(currentProduct.getShelfLife());
+	            p2.setSize(currentProduct.getSize());
 	
 	            
 	            p2.setStorageUnitId(targetSU.getId());
 	            p2.setContainerId(-1);
 	            p2.validate();
 	            p2.save();
-	            targetP = p2;
+	            currentProduct = p2;
         	} else{
-        		targetP = existingProduct;
+        		currentProduct = existingProduct;
         	}
+        	item.setProductId(currentProduct.getId());
+            item.validate();
             
         }
 
-        item.setProductId(targetP.getId());
-        item.validate();
+        
         Result r = item.validate();
         if(!r.getStatus())
             return r;
@@ -125,7 +131,7 @@ public class ModelFacade {
         assert targetPC != null;
         assert product != null;
         
-        //Delete the current product so we don't find it
+
 		ArrayList<Product> products = productVault.findAll("Barcode = " + product.getBarcode());
         Product p = null;
 
