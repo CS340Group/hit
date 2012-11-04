@@ -1,5 +1,5 @@
 Testsuite: model.productcontainer.StorageUnitVaultTest
-Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.056 sec
+Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.055 sec
 ------------- Standard Error -----------------
 java.lang.NullPointerException
 	at model.common.Vault.linearSearch(Vault.java:135)
@@ -153,7 +153,7 @@ java.lang.NullPointerException
 	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
 ------------- ---------------- ---------------
 
-Testcase: testFindAll took 0.029 sec
+Testcase: testFind took 0.029 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -162,7 +162,16 @@ java.lang.NullPointerException
 	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
 	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:31)
 
-Testcase: testGet took 0.003 sec
+Testcase: testFindAll took 0.002 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
+	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
+	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:31)
+
+Testcase: testGet took 0.002 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -181,15 +190,6 @@ java.lang.NullPointerException
 	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:31)
 
 Testcase: testModifiedSave took 0.002 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
-	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
-	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:31)
-
-Testcase: testFind took 0.002 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException

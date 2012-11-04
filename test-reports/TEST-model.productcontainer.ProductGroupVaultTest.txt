@@ -1,4 +1,4 @@
 Testsuite: model.productcontainer.ProductGroupVaultTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.037 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.036 sec
 
-Testcase: testGet took 0.026 sec
+Testcase: testGet took 0.025 sec

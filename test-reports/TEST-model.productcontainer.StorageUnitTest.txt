@@ -1,5 +1,5 @@
 Testsuite: model.productcontainer.StorageUnitTest
-Tests run: 4, Failures: 0, Errors: 2, Time elapsed: 0.125 sec
+Tests run: 4, Failures: 0, Errors: 2, Time elapsed: 0.116 sec
 ------------- Standard Error -----------------
 java.lang.NullPointerException
 	at model.common.Vault.linearSearch(Vault.java:135)
@@ -66,7 +66,7 @@ java.lang.NullPointerException
 	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
 ------------- ---------------- ---------------
 
-Testcase: testModified took 0.031 sec
+Testcase: testModified took 0.029 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -76,8 +76,8 @@ java.lang.NullPointerException
 	at model.productcontainer.StorageUnit.validate(StorageUnit.java:46)
 	at model.productcontainer.StorageUnitTest.testModified(StorageUnitTest.java:65)
 
-Testcase: testIsDeleteable took 0.072 sec
-Testcase: testValidate took 0.003 sec
+Testcase: testIsDeleteable took 0.068 sec
+Testcase: testValidate took 0.002 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -86,4 +86,4 @@ java.lang.NullPointerException
 	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
 	at model.productcontainer.StorageUnitTest.testValidate(StorageUnitTest.java:40)
 
-Testcase: testSave took 0.002 sec
+Testcase: testSave took 0.001 sec

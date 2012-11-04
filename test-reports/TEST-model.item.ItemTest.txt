@@ -1,11 +1,6 @@
 Testsuite: model.item.ItemTest
-Tests run: 3, Failures: 1, Errors: 0, Time elapsed: 0.121 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.119 sec
 
-Testcase: testItemModification took 0.102 sec
-	FAILED
-Local modification doesn't change item in vault
-junit.framework.AssertionFailedError: Local modification doesn't change item in vault
-	at model.item.ItemTest.testItemModification(ItemTest.java:47)
-
+Testcase: testItemCreation took 0.099 sec
+Testcase: testItemModification took 0.005 sec
 Testcase: testValidateEntryDate took 0.003 sec
-Testcase: testItemCreation took 0.003 sec

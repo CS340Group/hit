@@ -1,5 +1,5 @@
 Testsuite: model.item.ItemVaultTest
-Tests run: 8, Failures: 0, Errors: 1, Time elapsed: 0.162 sec
+Tests run: 8, Failures: 0, Errors: 1, Time elapsed: 0.154 sec
 ------------- Standard Error -----------------
 java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Number
 	at model.common.operator.OperatorFactory$EqualToNumberOperator.execute(OperatorFactory.java:74)
@@ -32,7 +32,7 @@ java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Numbe
 	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
 ------------- ---------------- ---------------
 
-Testcase: testFind took 0.116 sec
+Testcase: testFind took 0.111 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -41,7 +41,7 @@ java.lang.NullPointerException
 Testcase: testFindAll took 0.009 sec
 Testcase: testGet took 0.007 sec
 Testcase: testSize took 0.003 sec
-Testcase: testValidateNew took 0.002 sec
+Testcase: testValidateNew took 0.003 sec
 Testcase: testValidateModified took 0.002 sec
 Testcase: testSaveNew took 0.002 sec
 Testcase: testSaveModified took 0.002 sec
