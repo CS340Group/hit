@@ -1,6 +1,7 @@
 package model.common;
 
 import java.io.Serializable;
+import java.lang.Comparable;
 
 import model.item.ItemVault;
 import model.product.ProductVault;

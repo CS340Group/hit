@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
+import model.product.ProductVault;
 import model.productcontainer.StorageUnit;
 
 import org.junit.After;
@@ -17,11 +18,13 @@ import common.Result;
 
 public class AddItemCommandTest {
 	
-	ItemVault _vault; 
+	ItemVault _vault;
+	private ProductVault _pvault; 
 
 	@Before
 	public void setUp() throws Exception {
 		_vault = ItemVault.getInstance();
+		_pvault = ProductVault.getInstance();
 	}
 
 	@After
@@ -51,10 +54,13 @@ public class AddItemCommandTest {
 		assertEquals("", r.getMessage());
 		assertEquals(1, _vault.size());
 		assertTrue(_vault.find("BarcodeString = " + i.getBarcodeString()) != null);
+		assertEquals(1, _pvault.size());
+		
 		
 		cmd.undo();
 		assertEquals(0, _vault.size());
 		assertEquals(null, _vault.find("BarcodeString = " + i.getBarcodeString()));
+		assertEquals(0, _pvault.size());
 	}
 
 }
