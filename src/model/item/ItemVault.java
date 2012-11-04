@@ -69,7 +69,7 @@ public class ItemVault extends Vault{
 	 * @param model
 	 * @return Result of the check
 	 */
-	public Result validateNew(Item model){
+	public Result validateNew(IModel model){
 		assert(model!=null);
 
         //Since we set the barcode at save we don't need to check it here

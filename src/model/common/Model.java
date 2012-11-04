@@ -14,10 +14,10 @@ import common.Result;
 public abstract class Model implements IModel, Serializable {
 	
 
-	public transient  ItemVault itemVault = ItemVault.getInstance();
-	public transient  ProductVault productVault = ProductVault.getInstance();
-	public transient  StorageUnitVault storageUnitVault = StorageUnitVault.getInstance();
-	public transient  ProductGroupVault productGroupVault = ProductGroupVault.getInstance();
+	public transient  ItemVault _itemVault = ItemVault.getInstance();
+	public transient  ProductVault _productVault = ProductVault.getInstance();
+	public transient  StorageUnitVault _storageUnitVault = StorageUnitVault.getInstance();
+	public transient  ProductGroupVault _productGroupVault = ProductGroupVault.getInstance();
 	
 	
 	/**

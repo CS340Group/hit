@@ -52,7 +52,7 @@ public class ProductTest {
         //assertEquals("Id should be 0", 0, product.getId());
         //assertEquals("Product is saved", false, product.isSaved());
         //assertEquals("Product is Valid", false, product.isValid());
-        assertNotSame("Vault returns a copy", product, product.productVault.get(product.getId()));
+        assertNotSame("Vault returns a copy", product, product._productVault.get(product.getId()));
         //assertEquals("Vault copy and local copy have same ids", product.getId(), product.productVault.get(product.getId()).getId());
     }
     
