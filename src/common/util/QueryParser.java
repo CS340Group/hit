@@ -1,5 +1,7 @@
 package common.util;
 
+import model.common.operator.OperatorFactory;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +14,8 @@ public final class QueryParser {
 	
 	private String objectName;
 	private String objectAttr;
-	private String value;
+	private Object value;
+    private String operator;
 	
 	/**
 	 * Private Constructor.
@@ -28,13 +31,15 @@ public final class QueryParser {
 	 * obj.attr = value
 	 */
 	private void Parse(){
-		Pattern p = Pattern.compile("((\\w*)\\.)?(\\w*)\\s=\\s(.*)");
+		Pattern p = Pattern.compile("((\\w*)\\.)?(\\w*)\\s(.*)\\s(.*)");
 		Matcher m = p.matcher(query);
+        OperatorFactory c = new OperatorFactory();
 		boolean matchFound = m.find();
 		if(matchFound){
 			objectName = m.group(2);
 			objectAttr = m.group(3);
-			value = m.group(4);
+            operator = m.group(4);
+            value = m.group(5);
 		} else {
 			//If match isn't found then the query is in the wrong form.
 			assert(matchFound == true); 
@@ -49,12 +54,17 @@ public final class QueryParser {
 	public String getAttrName(){
 		return this.objectAttr;
 	}
-	public String getValue(){
+	public Object getValue(){
 		return this.value;
 	}
+    public void setValue(Object val){
+        this.value = val;
+    }
 	public String getQuery(){
 		return this.query;
 	}
-
+    public String getOperator() {
+        return this.operator;
+    }
 }
 
