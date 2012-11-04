@@ -1,4 +1,4 @@
-package test.model.common.operator; 
+package model.common.operator;
 
 import model.common.operator.Operator;
 import model.common.operator.OperatorFactory;
