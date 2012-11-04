@@ -9,6 +9,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import model.common.operator.Operator;
+import model.common.operator.OperatorFactory;
 import model.item.Item;
 import common.Result;
 import common.util.QueryParser;
@@ -69,8 +71,8 @@ public abstract class Vault extends Observable implements Serializable {
 	 * @param value
 	 * 
 	 */
-	public abstract IModel find(String query);
-	public IModel findPrivateCall(String query)  {
+	public abstract IModel find(String query, Object... params);
+	public IModel findPrivateCall(String query, Object... params)  {
 		QueryParser MyQuery = new QueryParser(query);
 
 		
@@ -88,9 +90,11 @@ public abstract class Vault extends Observable implements Serializable {
 		
 		return null;
 	}
-	public abstract  ArrayList findAll(String query);
-	protected ArrayList<IModel> findAllPrivateCall(String query){
+	public abstract  ArrayList findAll(String query, Object... params);
+	protected ArrayList<IModel> findAllPrivateCall(String query, Object... params){
 		QueryParser MyQuery = new QueryParser(query);
+        if(MyQuery.getValue().equals("%o") && params != null)
+            MyQuery.setValue(params);
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
@@ -104,13 +108,13 @@ public abstract class Vault extends Observable implements Serializable {
 	
 	protected abstract IModel getNewObject();
 	protected abstract IModel getCopiedObject(IModel model);	
-	protected ArrayList<IModel> linearSearch(QueryParser MyQuery,int count)
+	protected ArrayList<IModel> linearSearch(QueryParser MyQuery, int count)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<IModel> results = new ArrayList<IModel>();
 		String attrName = MyQuery.getAttrName();
-		String value = MyQuery.getValue();
-		
+		Object value = MyQuery.getValue();
+		String op = MyQuery.getOperator();
 		//PushDown
 		IModel myModel = getNewObject();
 		//Class associated with the item model
@@ -124,11 +128,11 @@ public abstract class Vault extends Observable implements Serializable {
 		//Loop through entire hashmap and check values one at a time
 		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myModel = entry.getValue();
-			String myItemValue; 
+			Object myItemValue;
+			myItemValue = method.invoke(myModel);
+            Operator operator = OperatorFactory.getOperator(op, myItemValue.getClass());
 
-			myItemValue = method.invoke(myModel).toString();
-		    
-		    if(myItemValue.equals(value) && !myModel.isDeleted()){
+            if(operator.execute(myItemValue,value) && !myModel.isDeleted()){
 		    	//PushDown
 		    	results.add(getCopiedObject(myModel));
 		    }

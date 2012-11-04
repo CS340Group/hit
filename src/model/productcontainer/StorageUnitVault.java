@@ -41,7 +41,7 @@ public class StorageUnitVault extends Vault{
 	 * @param value What value does the column have
 	 * 
 	 */
-	public  StorageUnit find(String query)  {
+	public  StorageUnit find(String query, Object... params)  {
 		return (StorageUnit)findPrivateCall(query);
 	}
 	
@@ -53,7 +53,7 @@ public class StorageUnitVault extends Vault{
 	 * @param value
 	 * 
 	 */
-	public  ArrayList<StorageUnit> findAll(String query) {
+	public  ArrayList<StorageUnit> findAll(String query, Object... params) {
 		return (ArrayList)this.findAllPrivateCall(query);
 	}
 	public int getLastIndex(){

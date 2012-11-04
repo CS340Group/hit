@@ -44,21 +44,29 @@ public class ProductVault extends Vault{
 	 * @param value What value does the column have
 	 * 
 	 */
-	public  Product find(String query)  {
-		return (Product)findPrivateCall(query);
+	public  Product find(String query, Object... params)  {
+		return (Product)this.findPrivateCall(query, params);
 	}
-	
-	
-	/**
+
+    @Override
+    public ArrayList findAll(String query, Object... params) {
+        return (ArrayList)this.findAllPrivateCall(query, params);
+    }
+
+
+    /**
 	 * Returns a list of Products which match the criteria
 	 * 
 	 * @param attribute 
 	 * @param value
 	 * 
 	 */
-	public ArrayList<Product> findAll(String query) {
-		return (ArrayList)this.findAllPrivateCall(query);
-	}
+	//public ArrayList<Product> findAll(String query) {
+	//	return (ArrayList)this.findAllPrivateCall(query);
+	//}
+
+
+
 	public Product get(int id){
 		return (Product) this.getPrivateCall(id);
 	}
