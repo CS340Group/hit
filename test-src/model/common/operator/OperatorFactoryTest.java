@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 
 import static model.common.operator.OperatorFactory.getOperator;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /** 
@@ -41,9 +42,9 @@ public class OperatorFactoryTest {
         String string3 = "hello ";
 
         Operator op = getOperator("!=", string1.getClass());
-        assertFalse(op.execute(string1,string1));
-        assertTrue(op.execute(string1,string2));
-        assertTrue(op.execute(string1,string3));
+        assertFalse(op.execute(string1, string1));
+        assertTrue(op.execute(string1, string2));
+        assertTrue(op.execute(string1, string3));
     }
 
     @Test
@@ -82,14 +83,14 @@ public class OperatorFactoryTest {
         float f = 1;
         double d = 1.01;
 
-        Operator op1 = getOperator("=", ((Integer)i).getClass());
+        Operator op1 = getOperator("=", ((Integer) i).getClass());
         Operator op2 = getOperator("=", ((Double)d).getClass());
 
         assertTrue(op1.execute(i,f));
-        assertFalse(op1.execute(i,d));
-        assertFalse(op1.execute(f,d));
+        assertFalse(op1.execute(i, d));
+        assertFalse(op1.execute(f, d));
 
-        assertTrue(op2.execute(i,f));
+        assertTrue(op2.execute(i, f));
         assertFalse(op2.execute(i,d));
         assertFalse(op2.execute(f,d));
     }
@@ -122,9 +123,9 @@ public class OperatorFactoryTest {
 
         assertFalse(op.execute(i,f));
         assertFalse(op.execute(f,i));
-        assertTrue(op.execute(i,d));
-        assertTrue(op.execute(f,d));
-        assertFalse(op.execute(d,i));
+        assertTrue(op.execute(i, d));
+        assertTrue(op.execute(f, d));
+        assertFalse(op.execute(d, i));
         assertFalse(op.execute(d,f));
     }
 
@@ -136,14 +137,20 @@ public class OperatorFactoryTest {
 
         Operator op = getOperator(">", ((Object)i).getClass());
 
-        assertFalse(op.execute(i,f));
-        assertFalse(op.execute(f,i));
-        assertFalse(op.execute(i,d));
-        assertFalse(op.execute(f,d));
-        assertTrue(op.execute(d,i));
-        assertTrue(op.execute(d,f));
+        assertFalse(op.execute(i, f));
+        assertFalse(op.execute(f, i));
+        assertFalse(op.execute(i, d));
+        assertFalse(op.execute(f, d));
+        assertTrue(op.execute(d, i));
+        assertTrue(op.execute(d, f));
     }
 
+    @Test
+    public void testNullOperator() throws Exception {
+        Operator op = getOperator("=", ((Object)false).getClass());
+        assertNull(op);
+
+    }
 
 
 
