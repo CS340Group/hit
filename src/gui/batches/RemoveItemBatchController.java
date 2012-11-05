@@ -75,7 +75,7 @@ public class RemoveItemBatchController extends Controller implements
 	protected void loadValues() {
 		ArrayList<ProductData> products = new ArrayList<ProductData>();
 		for (String barcode : _removedItems.keySet()){
-			Product p = _productVault.find("BarcodeString = " + barcode);
+			Product p = _productVault.find("BarcodeString = %o",  barcode);
 			if (p == null) {
 				continue;	
 			}
@@ -162,7 +162,7 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	public void removeItem() {
 		String bcs = this.getView().getBarcode();
-		Item item = ItemVault.getInstance().find("BarcodeString = " + bcs);
+		Item item = ItemVault.getInstance().find("BarcodeString = %o",  bcs);
 		if (item == null) {
 			this.getView().displayErrorMessage("There is no item with that barcode.");
 		}else{

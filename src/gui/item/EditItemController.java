@@ -34,7 +34,7 @@ public class EditItemController extends Controller
 
 		_iVault = ItemVault.getInstance();
 		_itemData = target;
-		_realItem = _iVault.find("Id = " + _itemData.getTag());
+		_realItem = _iVault.find("Id = %o",  _itemData.getTag());
 		Calendar cal = Calendar.getInstance();
 		cal.set(2000, 1, 1);
 		_minDate = cal.getTime();

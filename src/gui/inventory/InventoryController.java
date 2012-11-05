@@ -182,7 +182,7 @@ public class InventoryController extends Controller
 	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
 		//Get list of all productGroups in PC
 		List<ProductGroup> productGroups = new ArrayList<ProductGroup>();
-		productGroups = (List)_mf.productGroupVault.findAll("ParentIdString = "+pc.getId());
+		productGroups = (List)_mf.productGroupVault.findAll("ParentIdString = %o", pc.getId());
 		productGroups = sort(productGroups, (on(ProductContainer.class).getLowerCaseName()));
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
@@ -396,7 +396,7 @@ public class InventoryController extends Controller
 				getView().setContextSupply("");
 			}
 			else if(selectedProductGroup != null){
-				products = (List)_mf.productVault.findAll("ContainerId = "+selectedProductGroup.getId());
+				products = (List)_mf.productVault.findAll("ContainerId = %o", selectedProductGroup.getId());
 				getView().setContextUnit(selectedProductGroup.getStorageUnit().getName());
 				getView().setContextGroup(selectedProductGroup.getName());
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
@@ -456,7 +456,7 @@ public class InventoryController extends Controller
 
 		if (selectedProduct != null) {
 			List<Item> items = new ArrayList<Item>();
-			items = (List)_mf.itemVault.findAll("ProductId = "+id);
+			items = (List)_mf.itemVault.findAll("ProductId = %o", id);
 			items = sort(items, (on(Item.class).getEntryDate()));
 			itemDataList = GuiModelConverter.wrapItems(items);
 		}

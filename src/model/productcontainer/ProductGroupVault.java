@@ -55,7 +55,7 @@ public class ProductGroupVault extends Vault {
 	 * 
 	 */
 	public ProductGroup find(String query, Object... params)  {
-		return (ProductGroup)findPrivateCall(query);
+		return (ProductGroup)findPrivateCall(query, params);
 	}
 	
 	
@@ -67,7 +67,7 @@ public class ProductGroupVault extends Vault {
 	 * 
 	 */
 	public ArrayList<ProductGroup> findAll(String query, Object... params) {
-		return (ArrayList)this.findAllPrivateCall(query);
+		return (ArrayList)this.findAllPrivateCall(query, params);
 	}
 	public int getLastIndex(){
 		return (int)dataVault.size()+StorageUnitVault.getInstance().size();
@@ -139,7 +139,7 @@ public class ProductGroupVault extends Vault {
 
         //Checks that the product group has a unique name in it's container
         //Return all the ProductGroups in the current level
-		ArrayList<ProductGroup> myPGs = findAll("ParentIdString = " + model.getParentIdString());
+		ArrayList<ProductGroup> myPGs = findAll("ParentIdString = %o",  model.getParentIdString());
 		//Loop through those results and make sure the name is unique
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
