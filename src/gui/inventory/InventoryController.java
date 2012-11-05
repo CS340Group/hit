@@ -84,7 +84,7 @@ public class InventoryController extends Controller
 		
 		//Get all available storage units
 		List<StorageUnit> storageUnits = new ArrayList<StorageUnit>();
-		storageUnits = (List)_mf.storageUnitVault.findAll("Deleted = false");
+		storageUnits = (List)_mf.storageUnitVault.findAll("Deleted = %o", false);
 		storageUnits = sort(storageUnits, (on(ProductContainer.class).getLowerCaseName()));
 		
 		//For each storage unit add all it's children productGroups
@@ -182,7 +182,7 @@ public class InventoryController extends Controller
 	private ProductContainerData addChildrenProductContainers(ProductContainer pc, ProductContainerData pcData){
 		//Get list of all productGroups in PC
 		List<ProductGroup> productGroups = new ArrayList<ProductGroup>();
-		productGroups = (List)_mf.productGroupVault.findAll("ParentIdString = %o", pc.getId());
+		productGroups = (List)_mf.productGroupVault.findAll("ParentId = %o", pc.getId());
 		productGroups = sort(productGroups, (on(ProductContainer.class).getLowerCaseName()));
 		//Loop through each product group and add it to PC
 		for(ProductGroup pg : productGroups){
@@ -401,7 +401,7 @@ public class InventoryController extends Controller
 				getView().setContextGroup(selectedProductGroup.getName());
 				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
-				products = (List)_mf.productVault.findAll("Deleted = false");
+				products = (List)_mf.productVault.findAll("Deleted = %o", false);
 				// This means that the root is selected.
 				this.currentlySelectedPCId = -2;
 				getView().setContextUnit("All");

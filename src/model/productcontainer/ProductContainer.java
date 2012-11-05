@@ -126,7 +126,7 @@ public class ProductContainer extends Model{
 
     
     public ArrayList<ProductGroup> getChildProductGroups(){
-	    return _productGroupVault.findAll("ParentIdString = %o", this.getId());
+	    return _productGroupVault.findAll("ParentId = %o", this.getId());
     }
     /**
      * Indicates if the object is able to be deleted
