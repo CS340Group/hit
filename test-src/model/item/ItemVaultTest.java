@@ -88,13 +88,13 @@ public class ItemVaultTest {
 
     @Test
     public void testFind() throws Exception {
-        assertEquals("Find by product id", item1.getId(), ItemVault.getInstance().find("ProductId = "+p1.getId()).getId());
-        assertEquals("Find by entry date", item2.getId(), ItemVault.getInstance().find("EntryDate = "+item2.getEntryDate()).getId());
-        assertEquals("Find by exit date", item3.getId(), ItemVault.getInstance().find("ExitDate = "+item3.getExitDate()).getId());
-        assertEquals("Find by expiration date", item4.getId(), ItemVault.getInstance().find("ExpirationDate = "+item4.getExpirationDate()).getId());
-        assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("ProductBarcode = "+p1.getBarcode().toString()).getId());
-        assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("ProductDescription = "+p2.getDescription()).getId());
-        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("ProductStorageUnitId = "+p1.getStorageUnitId()).getId());
+        assertEquals("Find by product id", item1.getId(), ItemVault.getInstance().find("ProductId = %o", p1.getId()).getId());
+        assertEquals("Find by entry date", item2.getId(), ItemVault.getInstance().find("EntryDate = %o", item2.getEntryDate()).getId());
+        assertEquals("Find by exit date", item3.getId(), ItemVault.getInstance().find("ExitDate = %o", item3.getExitDate()).getId());
+        assertEquals("Find by expiration date", item4.getId(), ItemVault.getInstance().find("ExpirationDate = %o", item4.getExpirationDate()).getId());
+        assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("ProductBarcode = %o", p1.getBarcode().toString()).getId());
+        assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("ProductDescription = %o", p2.getDescription()).getId());
+        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("ProductStorageUnitId = %o", p1.getStorageUnitId()).getId());
     }
 
     @Test

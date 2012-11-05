@@ -39,13 +39,13 @@ public class StorageUnitVaultTest {
 
     @Test
     public void testFind() throws Exception {
-        assertEquals(su1.getId(), StorageUnitVault.getInstance().find("Name = "+su1.getName()).getId());
+        assertEquals(su1.getId(), StorageUnitVault.getInstance().find("Name = %o", su1.getName()).getId());
         assertNull(StorageUnitVault.getInstance().find("Name = blah"));
     }
 
     @Test
     public void testFindAll() throws Exception {
-        assertEquals(1,StorageUnitVault.getInstance().findAll("Name = "+su1.getName()).size());
+        assertEquals(1,StorageUnitVault.getInstance().findAll("Name = %o", su1.getName()).size());
         assertEquals(0,StorageUnitVault.getInstance().findAll("Name = blah").size());
     }
 

@@ -1,20 +1,20 @@
 package common.command;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-
+import common.Result;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
 import model.productcontainer.StorageUnit;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.Result;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AddItemCommandTest {
 	
@@ -46,6 +46,7 @@ public class AddItemCommandTest {
 
 	@Test
 	public void testCreatedProduct() {
+		_pvault.clear();
 		Item i = new Item().generateTestData();
 		
 		i.setProduct(_product);
@@ -56,13 +57,13 @@ public class AddItemCommandTest {
 		Result r = cmd.execute();
 		assertEquals("", r.getMessage());
 		assertEquals(1, _vault.size());
-		assertTrue(_vault.find("BarcodeString = " + i.getBarcodeString()) != null);
+		assertNotNull(_vault.find("BarcodeString = %o", i.getBarcodeString()));
 		assertEquals(1, _pvault.size());
 		
 		
 		cmd.undo();
 		assertEquals(0, _vault.size());
-		assertEquals(null, _vault.find("BarcodeString = " + i.getBarcodeString()));
+		assertEquals(null, _vault.find("BarcodeString = %o",  i.getBarcodeString()));
 		assertEquals(0, _pvault.size());
 	}
 	
@@ -99,13 +100,13 @@ public class AddItemCommandTest {
 		Result r = cmd.execute();
 		assertEquals("", r.getMessage());
 		assertEquals(1, _vault.size());
-		assertTrue(_vault.find("BarcodeString = " + i.getBarcodeString()) != null);
+		assertTrue(_vault.find("BarcodeString = %o",  i.getBarcodeString()) != null);
 		assertEquals(1, _pvault.size());
 		
 		
 		cmd.undo();
 		assertEquals(0, _vault.size());
-		assertEquals(null, _vault.find("BarcodeString = " + i.getBarcodeString()));
+		assertEquals(null, _vault.find("BarcodeString = %o",  i.getBarcodeString()));
 		assertEquals(1, _pvault.size());
 	}
 

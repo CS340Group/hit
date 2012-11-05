@@ -122,11 +122,8 @@ public abstract class Model implements IModel, Serializable, Comparable<IModel>{
 	/*
      * 
      */
-    public String getDeleted(){
-    	if (this._deleted == false)
-    		return "false";
-    	else
-    		return "true"; 
+    public boolean getDeleted(){
+    	return isDeleted();
     }
 
     /*

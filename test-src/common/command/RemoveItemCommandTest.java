@@ -15,12 +15,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.Result;
 
 public class RemoveItemCommandTest {
 
 	ItemVault _vault;
-	private ProductVault _pvault; 
 	ArrayList<Item> _itemList;
 	Product _product;
 	StorageUnit _su;
@@ -28,7 +26,6 @@ public class RemoveItemCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_vault = ItemVault.getInstance();
-		_pvault = ProductVault.getInstance();
 		
 		assertEquals(0, _vault.size());
 		

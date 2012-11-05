@@ -1,12 +1,11 @@
 package model.productcontainer;
 
-import java.util.ArrayList;
-
-import model.common.IModel;
+import common.Result;
 import model.common.Model;
 import model.product.Product;
 import model.reports.Ivisitor;
-import common.Result;
+
+import java.util.ArrayList;
 
 /**
  * The ProductContainer is the base class for 
@@ -105,7 +104,7 @@ public class ProductContainer extends Model{
         assert _name != null;
         this._name = _name;
         invalidate();
-        return new Result(_name==this._name);
+        return new Result(_name.equals(this._name));
     }
 
 
@@ -127,8 +126,7 @@ public class ProductContainer extends Model{
 
     
     public ArrayList<ProductGroup> getChildProductGroups(){
-    	ArrayList<ProductGroup> childProductGroups = _productGroupVault.findAll("ParentIdString = "+this.getId());
-    	return childProductGroups;
+	    return _productGroupVault.findAll("ParentId = %o", this.getId());
     }
     /**
      * Indicates if the object is able to be deleted
@@ -136,14 +134,14 @@ public class ProductContainer extends Model{
     public Result isDeletable(){
     	//Product Container can not have items
     	ArrayList<Product> products;
-    	products = _productVault.findAll("ContainerId = "+this.getId());
+    	products = _productVault.findAll("ContainerId = %o", this.getId());
     	for(Product tempProduct : products){
-    		if(_itemVault.find("ProductId = "+tempProduct.getId()) != null)
+    		if(_itemVault.find("ProductId = %o", tempProduct.getId()) != null)
     			return new Result(false);
     	}
     	for(ProductGroup tempPG : this.getChildProductGroups()){
     		if(tempPG.isDeletable().getStatus() == false)
-    			return new Result(false);;
+    			return new Result(false);
     	}
     	
     	

@@ -45,7 +45,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		ProductVault pv = ProductVault.getInstance();
 		ItemVault iv = ItemVault.getInstance();
 		
-		List<Product> products = pv.findAll("Deleted = false");
+		List<Product> products = pv.findAll("Deleted = %o", false);
 		//Order by description
 		products = sort(products, on(Product.class).getDescription());
 		List<Item> items = new ArrayList<Item>();
@@ -74,7 +74,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	private void SetUpProductGroupGrid(){
 		StorageUnitVault suv = StorageUnitVault.getInstance();
 		
-		List<StorageUnit> storageUnits = suv.findAll("Deleted = false");
+		List<StorageUnit> storageUnits = suv.findAll("Deleted = %o", false);
 		for(StorageUnit storageUnit : storageUnits){
 			storageUnit.accept(this);
 		}

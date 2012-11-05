@@ -75,7 +75,7 @@ public class ModelFacade {
         if(currentProduct.getStorageUnitId() != targetSU.getId()){
         	//Check that a product does not exist already
         	List<Product> possibleExistingProducts;
-        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = "+targetSU.getId());
+        	possibleExistingProducts = this.productVault.findAll("StorageUnitId = %o", targetSU.getId());
         	Product existingProduct = null;
     		for(Product tempP : possibleExistingProducts){
     			if(tempP.getBarcodeString().equals(currentProduct.getBarcodeString()))
@@ -132,7 +132,7 @@ public class ModelFacade {
         assert product != null;
         
 
-		ArrayList<Product> products = productVault.findAll("Barcode = " + product.getBarcode());
+		ArrayList<Product> products = productVault.findAll("Barcode = %o",  product.getBarcode());
         Product p = null;
 
         for(Product possibleProduct : products){
@@ -146,7 +146,7 @@ public class ModelFacade {
         //If there is a product then delete old one and move items
         if(p != null){
         	//For each item in "p" change product Id
-            ArrayList<Item> items = itemVault.findAll("ProductId = " + p.getId());
+            ArrayList<Item> items = itemVault.findAll("ProductId = %o",  p.getId());
 
             for(Item item : items){
                 item.setProductId(product.getId());

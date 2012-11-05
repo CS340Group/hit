@@ -42,7 +42,7 @@ public class StorageUnitVault extends Vault{
 	 * 
 	 */
 	public  StorageUnit find(String query, Object... params)  {
-		return (StorageUnit)findPrivateCall(query);
+		return (StorageUnit)findPrivateCall(query, params);
 	}
 	
 	

@@ -302,7 +302,7 @@ public class Product extends Model{
      * Check if the product is void of items, and thus, deletable.
      */
     public Result isDeleteable(){
-        ArrayList<Item> items = _itemVault.findAll("ProductId = " + _id);
+        ArrayList<Item> items = _itemVault.findAll("ProductId = %o",  _id);
         for(Item item : items){
             if(!item.isDeleted())
                 return new Result(false, "All items must be deleted first");
