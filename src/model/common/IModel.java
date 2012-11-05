@@ -5,7 +5,7 @@ import common.Result;
 /**
  * IModel defines functionality that is supported by all models in the program.
  */
-public interface IModel {
+public interface IModel extends Comparable<IModel>{
 	
 	public boolean isDeleted();
 	
@@ -44,5 +44,7 @@ public interface IModel {
 	public Result setSaved(boolean b);
 	
 	public void accept(Ivisitor visitor);
+	
+	public int compareTo(IModel other);
 
 }

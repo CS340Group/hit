@@ -1,6 +1,7 @@
 package model.common;
 
 import java.io.Serializable;
+import java.lang.Comparable;
 
 import model.item.ItemVault;
 import model.product.ProductVault;
@@ -12,7 +13,7 @@ import common.Result;
 /**
  * The base class for the basic data models.
  */
-public abstract class Model implements IModel, Serializable {
+public abstract class Model implements IModel, Serializable, Comparable<IModel>{
 	
 
 	public transient  ItemVault _itemVault = ItemVault.getInstance();
@@ -162,5 +163,11 @@ public abstract class Model implements IModel, Serializable {
 		return new Result(false, "Validating is not overridden!");
 	}
 	
-	
+	public int compareTo(IModel other) {
+		if (other.getId() < this.getId())
+			return 1;
+		if (other.getId() > this.getId())
+			return -1;
+		return 0;
+	}
 }

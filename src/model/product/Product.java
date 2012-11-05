@@ -250,8 +250,11 @@ public class Product extends Model{
      * @Pre Product must be validated in order to be saved.
 	 */
 	public Result save(){
-        if(!this._valid && !this.validate().getStatus())
-            return new Result(false, "Product must be valid before saving.");
+        if (!this._valid) {
+            Result result = this.validate();
+            if (!result.getStatus())
+                return result;
+        }
         if(getId() == -1)
             return _productVault.saveNew(this);
         else
@@ -319,7 +322,7 @@ public class Product extends Model{
 		return _containerId;
 	}
 	public Product generateTestData() {
-		this.setBarcode("1");
+		this.setBarcode("12345");
 		this.setDescription("Spam and eggs");
 		this.setSize(new Size(3, "oz"));
 		this.setShelfLife(4);
