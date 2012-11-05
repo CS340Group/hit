@@ -49,6 +49,14 @@ public class AddItemCommand extends AbstractCommand {
 		for (Item item : _items){
 			item.save();
 		}
+		
+		if (_controller != null) {
+			for (Item item : _items)
+				_controller.addItemToView(item);
+			if (_product != null)
+				_controller.addProductToView(_product);
+		}
+		
 		return new Result(true);
 	}
 
@@ -59,6 +67,14 @@ public class AddItemCommand extends AbstractCommand {
 		for (Item item : _items){
 			item.obliterate();
 		}
+		
+		if (_controller != null) {
+			for (Item item : _items)
+				_controller.removeItemFromView(item);
+			if (_product != null)
+				_controller.removeProductFromView(_product);
+		}
+		
 		return new Result(true);
 	}
 }

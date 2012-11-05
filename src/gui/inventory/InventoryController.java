@@ -390,7 +390,7 @@ public class InventoryController extends Controller
 			
 			//Is a storage unit or a product group selected
 			if(selectedStorageUnit != null){
-				products = (List)_mf.productVault.findAll("ContainerId = "+selectedStorageUnit.getId());
+				products = (List)_mf.productVault.findAll("ContainerId = %o", selectedStorageUnit.getId());
 				getView().setContextUnit(selectedStorageUnit.getName());
 				getView().setContextGroup("");
 				getView().setContextSupply("");
