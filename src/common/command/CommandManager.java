@@ -16,6 +16,14 @@ import common.Result;
  */
 public class CommandManager {
 	
+	/**
+	 * Makes an instance to start tracking commands.
+	 */
+	public CommandManager() {
+		this._executedCommands = new Stack<AbstractCommand>();
+		this._undoneCommands = new Stack<AbstractCommand>();
+	}
+
 	private Stack<AbstractCommand> _executedCommands;
 	private Stack<AbstractCommand> _undoneCommands;
 	

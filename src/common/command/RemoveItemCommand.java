@@ -13,24 +13,26 @@ import common.Result;
  */
 public class RemoveItemCommand extends AbstractCommand {
 	
+	Item _item;
+	
 	/**
 	 * Construct a command to remove a specified item from the system.
 	 * @param i the Item to b removed.
 	 */
 	public RemoveItemCommand(Item i) {
-		// TODO
+		_item = i;
 	}
 
 	@Override
 	protected Result executeGuts() {
-		// TODO Auto-generated method stub
-		return new Result(false);
+		_item.obliterate();
+		return new Result(true);
 	}
 
 	@Override
 	protected Result undoGuts() {
-		// TODO Auto-generated method stub
-		return new Result(false);
+		_item.save();
+		return new Result(true);
 	}
 
 }
