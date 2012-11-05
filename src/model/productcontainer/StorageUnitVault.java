@@ -54,7 +54,7 @@ public class StorageUnitVault extends Vault{
 	 * 
 	 */
 	public  ArrayList<StorageUnit> findAll(String query, Object... params) {
-		return (ArrayList)this.findAllPrivateCall(query);
+		return (ArrayList)this.findAllPrivateCall(query, params);
 	}
 	public int getLastIndex(){
 		return (int)dataVault.size()+ProductGroupVault.getInstance().size();
@@ -115,7 +115,7 @@ public class StorageUnitVault extends Vault{
         if(model.getName() == "")
             return new Result(false, "Name can't be empty");
 
-		int size = findAll("Name = "+model.getName()).size();
+		int size = findAll("Name = %o", model.getName()).size();
 		if(size!=0)
 			return new Result(false,"Duplicate storage container name.");
 		return new Result(true);
