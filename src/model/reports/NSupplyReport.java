@@ -35,6 +35,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		builder.addHeader("Products");
 		this.SetUpProductGrid();
 		builder.addHeader("Product Groups");
+		this.SetUpProductGroupGrid();
 
 		
 	}
@@ -70,20 +71,25 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 			
 			prevProduct = product;
 		}
+		
+		builder.endTable();
 	}
 	private void SetUpProductGroupGrid(){
 		StorageUnitVault suv = StorageUnitVault.getInstance();
+		builder.startTable();
+		builder.addRow(new String[]{"Product Group","Storage Unit","3-Month Supply","Current Supply"});
 		
 		List<StorageUnit> storageUnits = suv.findAll("Deleted = %o", false);
 		for(StorageUnit storageUnit : storageUnits){
 			storageUnit.accept(this);
 		}
+		
+		builder.endTable();
 	}
 
-	@Override
+
 	public void visit(Item item) {
-		// TODO Auto-generated method stub
-		
+		return;
 	}
 
 	
@@ -104,6 +110,8 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	public void visit(ProductGroup productGroup) {
 		possibleSizes.add(productGroup.get3MonthSupply().getUnit());
 		
+		//Pass all the counts up to the parent
+		//If current productGroup-currentUnit < 3monthsupply
 		for(String possibleSize : possibleSizes){
 			String key = productGroup.getId() + possibleSize;
 			String parentKey = productGroup.getParentIdString() + possibleSize;
@@ -113,13 +121,31 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 				else
 					pgCounts.put(parentKey, pgCounts.get(key));
 			}
+			
+			//If this product groups current supply is less than it's 3 month supply
+			if(possibleSize.equals(productGroup.get3MonthSupply().getUnit())){
+				if(pgCounts.containsKey(key)){
+					if(pgCounts.get(key) < productGroup.get3MonthSupply().getAmount())
+						builder.addRow(new String[]{
+								productGroup.getName(),
+								productGroup.getStorageUnit().getName(),
+								Float.toString(productGroup.get3MonthSupply().getAmount()),
+								Double.toString(pgCounts.get(key))}
+						);
+				} else {
+					builder.addRow(new String[]{
+							productGroup.getName(),
+							productGroup.getStorageUnit().getName(),
+							Float.toString(productGroup.get3MonthSupply().getAmount()),
+							"0"}
+					);
+				}
+			}
 		}
 				
 	}
 
-	@Override
 	public void visit(StorageUnit storageUnit) {
-		// TODO Auto-generated method stub
-		
+		return;
 	}
 }
