@@ -62,7 +62,7 @@ public class ProductVault extends Vault{
 	 * 
 	 */
 	//public ArrayList<Product> findAll(String query) {
-	//	return (ArrayList)this.findAllPrivateCall(query);
+	//	return (ArrayList)this.findAllPrivateCall(query, params);
 	//}
 
 
@@ -153,13 +153,13 @@ public class ProductVault extends Vault{
 		return new Result(true);
 	}
 	private Result validateCreationDate(Product model){
-		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		Product existingProduct = find("BarcodeString = %o", model.getBarcodeString());
 		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
 			return new Result(false,"The creation date does now match the existing creation date");
 		return new Result(true);
 	}
 	private Product setCreationDate(Product model){
-		Product existingProduct = find("BarcodeString = "+model.getBarcodeString());
+		Product existingProduct = find("BarcodeString = %o", model.getBarcodeString());
 		if(existingProduct != null && existingProduct.getCreationDate() != model.getCreationDate())
 			model.setCreationDate(existingProduct.getCreationDate());
 		else
@@ -173,7 +173,7 @@ public class ProductVault extends Vault{
 	 * @return
 	 */
 	public boolean hasProductWithBarcode(String barcode) {
-		if (this.find("Barcode = " + barcode) == null){
+		if (this.find("Barcode = %o",  barcode) == null){
 			return false;
 		}else {
 			return true;

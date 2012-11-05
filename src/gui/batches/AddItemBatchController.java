@@ -17,7 +17,6 @@ import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
 
 import java.awt.*;
-import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -172,7 +171,7 @@ public class AddItemBatchController extends Controller implements
             return;
         }
 
-        Product product = _productVault.find("Barcode = " + barcode);
+        Product product = _productVault.find("Barcode = %o",  barcode);
         StorageUnit sUnit = StorageUnitVault.getInstance().get((Integer) _target.getTag());
         Collection<Item> newItems = new ArrayList<Item>();
 
@@ -287,16 +286,15 @@ public class AddItemBatchController extends Controller implements
 
     @Override
     public void addItemToView(Item item) {
-        // TODO Auto-generated method stub
         ItemData itemData = GuiModelConverter.wrapItem(item);
         Product product = item.getProduct();
-        ProductData productData = GuiModelConverter.wrapProduct(product);
-        
-        if(!_products.containsKey(productData))
+        ProductData productData = findStoredProductData(product.getBarcode());
+        if(productData == null){
+            productData = GuiModelConverter.wrapProduct(product);
             _products.put(productData, new ArrayList<ItemData>());
+        }
 
         _products.get(productData).add(itemData);
-
         productData.setCount(String.valueOf(_products.get(productData).size()));
     }
 
@@ -308,8 +306,15 @@ public class AddItemBatchController extends Controller implements
 
     @Override
     public void removeItemFromView(Item item) {
-        // TODO Auto-generated method stub
-        
+        Product product = item.getProduct();
+        ProductData productData = findStoredProductData(product.getBarcode());
+        if(productData != null){
+            for(ItemData i : _products.get(productData)){
+                if(i.getTag().toString().equals(Integer.toString(item.getId()))){
+                    _products.get(productData).remove(i);
+                }
+            }
+        }
     }
 
     @Override

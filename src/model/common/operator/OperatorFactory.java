@@ -18,6 +18,8 @@ public class OperatorFactory {
         OPERATORS.put("!=Number", new NotEqualToNumberOperator());
         OPERATORS.put("<Number", new LessThanNumberOperator());
         OPERATORS.put(">Number", new GreaterThanNumberOperator());
+        OPERATORS.put("=Boolean", new EqualToBooleanOperator());
+        OPERATORS.put("!=Boolean", new NotEqualToBooleanOperator());
     }
 
     public static Operator<?> getOperator(String someUserSpecifiedOp, Class<?> paramType) {
@@ -26,6 +28,8 @@ public class OperatorFactory {
             key += "DateTime";
         } else if (Number.class.isAssignableFrom(paramType)) {
             key += "Number";
+        } else if(Boolean.class.isAssignableFrom(paramType)) {
+            key += "Boolean";
         } else if (String.class.isAssignableFrom(paramType)) {
             key += "String";
         }
@@ -100,6 +104,22 @@ public class OperatorFactory {
         @Override
         public boolean execute(Number lhs, Number rhs) {
             return lhs.doubleValue() > rhs.doubleValue();
+        }
+    }
+
+    public static class EqualToBooleanOperator implements Operator<Boolean>{
+
+        @Override
+        public boolean execute(Boolean lhs, Boolean rhs){
+            return lhs.booleanValue() == rhs.booleanValue();
+        }
+    }
+
+    public static class NotEqualToBooleanOperator implements Operator<Boolean>{
+
+        @Override
+        public boolean execute(Boolean lhs, Boolean rhs){
+            return lhs.booleanValue() != rhs.booleanValue();
         }
     }
 

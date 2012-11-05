@@ -51,10 +51,10 @@ public class ProductGroupVaultTest {
      
     @Test
     public void testFind() throws Exception {
-        assertEquals(pg1.getId(), pg1.productGroupVault.find("Name = "+pg1.getName()).getId());
-        assertEquals(pg1.getId(), pg1.productGroupVault.getInstance().find("ParentId = "+pg1.getParentId()).getId());
-        assertEquals(pg1.getId(), pg1.productGroupVault.find("RootParentId = "+pg1.getRootParentId()).getId());
-        assertEquals(pg1.getId(), pg1.productGroupVault.find("3MonthSupply = "+pg1.get3MonthSupply()).getId());
+        assertEquals(pg1.getId(), pg1.productGroupVault.find("Name = %o", pg1.getName()).getId());
+        assertEquals(pg1.getId(), pg1.productGroupVault.getInstance().find("ParentId = %o", pg1.getParentId()).getId());
+        assertEquals(pg1.getId(), pg1.productGroupVault.find("RootParentId = %o", pg1.getRootParentId()).getId());
+        assertEquals(pg1.getId(), pg1.productGroupVault.find("3MonthSupply = %o", pg1.get3MonthSupply()).getId());
         assertNull(pg1.productGroupVault.find("Name = blah"));
     }
 */
@@ -63,7 +63,7 @@ public class ProductGroupVaultTest {
      
     @Test
     public void testFindAll() throws Exception {
-        assertEquals(1,pg1.productGroupVault.findAll("Name = "+pg1.getName()).size());
+        assertEquals(1,pg1.productGroupVault.findAll("Name = %o", pg1.getName()).size());
         assertEquals(0,pg1.productGroupVault.findAll("Name = blah").size());
     }
 */

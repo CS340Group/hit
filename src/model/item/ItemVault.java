@@ -1,10 +1,11 @@
 package model.item;
 
-import java.util.ArrayList;
+import common.Result;
 import model.common.Barcode;
 import model.common.IModel;
 import model.common.Vault;
-import common.Result;
+
+import java.util.ArrayList;
 
 
 /**
@@ -47,7 +48,7 @@ public class ItemVault extends Vault{
 	 * @param query of form obj.attr = value
 	 */
 	public Item find(String query, Object... params)  {
-		return (Item)findPrivateCall(query);
+		return (Item)findPrivateCall(query, params);
 	}
 	
 	/**
@@ -73,7 +74,7 @@ public class ItemVault extends Vault{
 		assert(model!=null);
 
         //Since we set the barcode at save we don't need to check it here
-		int count = 0;//findAll("Barcode = " + model.getBarcode().toString()).size();
+		int count = 0;//findAll("Barcode = %o",  model.getBarcode().toString()).size();
 		if(count ==0){
             model.setValid(true);
 			return new Result(true);
