@@ -33,8 +33,7 @@ public class AddItemBatchController extends Controller implements
     private Timer _timer;
     private ProductContainerData _target;
     private ProductVault _productVault;
-    private ModelFacade _facade;
-	private CommandManager _commandManager;
+    private CommandManager _commandManager;
     
 	/**
 	 * Constructor.
@@ -48,7 +47,7 @@ public class AddItemBatchController extends Controller implements
         getView().setCount("1");
         _timer = new Timer();
         _target = target;
-        _facade = new ModelFacade();
+        new ModelFacade();
         _productVault = ProductVault.getInstance();
         _commandManager = new CommandManager();
 		construct();
@@ -285,5 +284,29 @@ public class AddItemBatchController extends Controller implements
             _timer.cancel();
         }
     }
+
+	@Override
+	public void addItemToView(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addProductToView(Product _product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeItemFromView(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeProductFromView(Product _product) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
