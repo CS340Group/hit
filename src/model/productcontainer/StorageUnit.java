@@ -2,6 +2,7 @@ package model.productcontainer;
 
 import common.Result;
 import model.product.Product;
+import model.reports.Ivisitor;
 
 import java.util.ArrayList;
 
@@ -80,4 +81,23 @@ public class StorageUnit extends ProductContainer{
 		this.setName("Test Storage Unit Name");
 		return this;
 	}
+	
+	 public ArrayList<Product> getProducts(){
+			return this._productVault.findAll("ProductGroupId = %o", this.getId());
+	}
+    public ArrayList<ProductGroup> getProductGroups(){
+    	return this._productGroupVault.findAll("ParentIdString = "+this.getId());
+    }
+    
+	public void accept(Ivisitor visitor){
+		for(ProductGroup productGroup : this.getProductGroups() ){
+			productGroup.accept(visitor);
+		}
+		for(Product product : this.getProducts() ){
+			product.accept(visitor);
+		}
+		visitor.visit(this);
+	}
+	
+	
 }

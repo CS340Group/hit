@@ -4,6 +4,7 @@ import common.Result;
 import model.common.Size;
 import model.item.Item;
 import model.product.Product;
+import model.reports.Ivisitor;
 
 import java.util.ArrayList;
 
@@ -140,4 +141,21 @@ public class ProductGroup extends ProductContainer{
             return _productGroupVault.saveModified(this);
     }
 
+    
+    public ArrayList<Product> getProducts(){
+		return this._productVault.findAll("ProductGroupId = %o", this.getId());
+	}
+    public ArrayList<ProductGroup> getProductGroups(){
+    	return this._productGroupVault.findAll("ParentIdString = "+this.getId());
+    }
+    
+	public void accept(Ivisitor visitor){
+		for(ProductGroup productGroup : this.getProductGroups() ){
+			productGroup.accept(visitor);
+		}
+		for(Product product : this.getProducts() ){
+			product.accept(visitor);
+		}
+		visitor.visit(this);
+	}
 }

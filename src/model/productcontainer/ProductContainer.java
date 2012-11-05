@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.common.IModel;
 import model.common.Model;
 import model.product.Product;
+import model.reports.Ivisitor;
 import common.Result;
 
 /**
@@ -149,4 +150,10 @@ public class ProductContainer extends Model{
     	
         return new Result(true);
     }
+
+	@Override
+	public void accept(Ivisitor visitor) {
+		// TODO Auto-generated method stub
+		
+	}
 }
