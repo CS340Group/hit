@@ -6,6 +6,7 @@ import model.item.ItemVault;
 import model.product.ProductVault;
 import model.productcontainer.ProductGroupVault;
 import model.productcontainer.StorageUnitVault;
+import model.reports.Ivisitor;
 import common.Result;
 
 /**
@@ -160,4 +161,6 @@ public abstract class Model implements IModel, Serializable {
 		assert false;
 		return new Result(false, "Validating is not overridden!");
 	}
+	
+	
 }

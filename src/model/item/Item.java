@@ -5,6 +5,7 @@ import model.common.Barcode;
 import model.common.Model;
 import model.product.Product;
 import model.product.ProductVault;
+import model.reports.Ivisitor;
 import common.Result;
 
 import org.joda.time.DateTime;
@@ -256,5 +257,9 @@ public class Item extends Model{
 	public void obliterate() {
 		_itemVault.obliterate(this);
 		this._saved = false;
+	}
+	
+	public void accept(Ivisitor visitor){
+		visitor.visit(this);
 	}
 }
