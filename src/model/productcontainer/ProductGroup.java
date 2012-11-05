@@ -146,7 +146,7 @@ public class ProductGroup extends ProductContainer{
 		return this._productVault.findAll("ProductGroupId = %o", this.getId());
 	}
     public ArrayList<ProductGroup> getProductGroups(){
-    	return this._productGroupVault.findAll("ParentIdString = %o", this.getId());
+    	return this._productGroupVault.findAll("ParentId = %o", this.getId());
     }
     
 	public void accept(Ivisitor visitor){

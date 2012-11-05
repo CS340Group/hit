@@ -139,7 +139,7 @@ public class ProductGroupVault extends Vault {
 
         //Checks that the product group has a unique name in it's container
         //Return all the ProductGroups in the current level
-		ArrayList<ProductGroup> myPGs = findAll("ParentIdString = %o",  model.getParentIdString());
+		ArrayList<ProductGroup> myPGs = findAll("ParentId = %o",  model.getParentId());
 		//Loop through those results and make sure the name is unique
 		for(ProductGroup tempGroup : myPGs){
 			if(tempGroup.getName().equals(model.getName()))
