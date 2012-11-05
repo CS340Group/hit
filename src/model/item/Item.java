@@ -234,12 +234,9 @@ public class Item extends Model{
 	 */
 	public Item generateTestData(){
 		/* Make a product to put this in */
-		Product p = new Product().generateTestData();
         setBarcode(new Barcode());
-        setProductId(-1);
         setEntryDate(new DateTime());
         setExitDate(new DateTime());
-        setProductId(p.getId());
         return this;
 	}
 

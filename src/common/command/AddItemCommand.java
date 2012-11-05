@@ -43,7 +43,7 @@ public class AddItemCommand extends AbstractCommand {
 			_product.save();
 		
 		for (Item item : _items){
-			if (!item.isValid())
+			if (!item.validate().getStatus())
 				return new Result(false, "All items must be valid in order to add.");
 		}
 		for (Item item : _items){
