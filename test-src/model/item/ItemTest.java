@@ -3,6 +3,7 @@ package model.item;
 import model.common.Barcode;
 import model.item.Item;
 import model.item.ItemVault;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -43,9 +44,11 @@ public class ItemTest {
     	item.validate();
         item.save();
         Item itemCopy = item._itemVault.get(item.getId());
-        itemCopy.setProductId(0);
-        assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId()
-                != item._itemVault.get(item.getId()).getProductId());
+        itemCopy.setProductId(2319);
+        // The next two tests are two ways to say the same thing. I leave the for sake of reference.)
+        assertTrue("Local modification doesn't change item in vault", itemCopy.getProductId() != item._itemVault.get(item.getId()).getProductId());
+        assertThat(itemCopy.getProductId(), not(equalTo(item._itemVault.get(item.getId()).getProductId())));
+        //
         assertEquals("Item should pass validation", true, itemCopy.validate().getStatus());
         assertEquals("Item should save", true, itemCopy.save().getStatus());
         assertEquals("Vault should not have created a new item", 1, item._itemVault.size());

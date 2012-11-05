@@ -57,7 +57,7 @@ public class ItemVault extends Vault{
 	 * 
 	 */
 	public ArrayList<Item> findAll(String query, Object... params) {
-		return (ArrayList)this.findAllPrivateCall(query);
+		return (ArrayList)this.findAllPrivateCall(query, params);
 	}
 	
 

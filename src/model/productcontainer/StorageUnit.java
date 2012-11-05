@@ -86,7 +86,7 @@ public class StorageUnit extends ProductContainer{
 			return this._productVault.findAll("ProductGroupId = %o", this.getId());
 	}
     public ArrayList<ProductGroup> getProductGroups(){
-    	return this._productGroupVault.findAll("ParentIdString = "+this.getId());
+    	return this._productGroupVault.findAll("ParentIdString = %o", this.getId());
     }
     
 	public void accept(Ivisitor visitor){

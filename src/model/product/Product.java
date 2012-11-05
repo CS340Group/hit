@@ -71,7 +71,7 @@ public class Product extends Model{
     }
 
     public int getItemCount(){
-    	ArrayList<Item> items = this._itemVault.findAll("ProductId = "+this.getId());
+    	ArrayList<Item> items = this._itemVault.findAll("ProductId = %o", this.getId());
     	return items.size();
     }
 

@@ -1,5 +1,7 @@
 package gui.batches;
 
+import model.item.Item;
+import model.product.Product;
 import gui.common.IController;
 
 /**
@@ -60,6 +62,14 @@ public interface IAddItemBatchController extends IController {
 	 * in the add item batch view.
 	 */
 	void done();
+
+	void addItemToView(Item item);
+
+	void addProductToView(Product _product);
+
+	void removeItemFromView(Item item);
+
+	void removeProductFromView(Product _product);
 
 }
 
