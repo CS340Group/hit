@@ -5,6 +5,7 @@ import model.common.Size;
 import model.item.Item;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
+import model.reports.Ivisitor;
 import model.common.Model;
 
 import org.joda.time.DateTime;
@@ -314,7 +315,9 @@ public class Product extends Model{
 	public String getProductContainerName() {
 		return _productGroupVault.getName(_containerId);
 	}
-
+	public int getProductContainerId() {
+		return _containerId;
+	}
 	public Product generateTestData() {
 		this.setBarcode("1");
 		this.setDescription("Spam and eggs");
@@ -333,5 +336,16 @@ public class Product extends Model{
 	public void obliterate() {
 		this._productVault.obliterate(this);
 		this._saved = false;
+	}
+	
+	public ArrayList<Item> getItems(){
+		return this._itemVault.findAll("ProductId = %o", this.getId());
+	}
+	
+	public void accept(Ivisitor visitor){
+		for(Item item : this.getItems() ){
+			item.accept(visitor);
+		}
+		visitor.visit(this);
 	}
 }
