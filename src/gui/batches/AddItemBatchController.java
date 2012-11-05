@@ -306,8 +306,15 @@ public class AddItemBatchController extends Controller implements
 
     @Override
     public void removeItemFromView(Item item) {
-        // TODO Auto-generated method stub
-        
+        Product product = item.getProduct();
+        ProductData productData = findStoredProductData(product.getBarcode());
+        if(productData != null){
+            for(ItemData i : _products.get(productData)){
+                if(i.getTag().toString().equals(Integer.toString(item.getId()))){
+                    _products.get(productData).remove(i);
+                }
+            }
+        }
     }
 
     @Override
