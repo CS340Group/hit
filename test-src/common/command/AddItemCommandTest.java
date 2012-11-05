@@ -20,11 +20,23 @@ public class AddItemCommandTest {
 	
 	ItemVault _vault;
 	private ProductVault _pvault; 
+	ArrayList<Item> _itemList;
+	Product _product;
+	StorageUnit _su;
 
 	@Before
 	public void setUp() throws Exception {
 		_vault = ItemVault.getInstance();
 		_pvault = ProductVault.getInstance();
+		
+		assertEquals(0, _vault.size());
+		
+		/* Create the item and SU to add */
+		_itemList = new ArrayList<Item>();
+		_product = new Product().generateTestData();
+		_su = new StorageUnit().generateTestData();
+		_su.save();
+		_product.setStorageUnitId(_su.getId());
 	}
 
 	@After
@@ -33,22 +45,13 @@ public class AddItemCommandTest {
 	}
 
 	@Test
-	public void test() {
-		
-		assertEquals(0, _vault.size());
-		
-		/* Create the item and SU to add */
-		ArrayList<Item> itemList = new ArrayList<Item>();
+	public void testCreatedProduct() {
 		Item i = new Item().generateTestData();
-		Product p = new Product().generateTestData();
-		StorageUnit su = new StorageUnit().generateTestData();
-		su.save();
 		
-		p.setStorageUnitId(su.getId());
-		i.setProduct(p);
-		itemList.add(i);
+		i.setProduct(_product);
+		_itemList.add(i);
 		
-		AddItemCommand cmd = new AddItemCommand(itemList, p, su);
+		AddItemCommand cmd = new AddItemCommand(_itemList, _product, _su);
 		
 		Result r = cmd.execute();
 		assertEquals("", r.getMessage());
@@ -61,6 +64,49 @@ public class AddItemCommandTest {
 		assertEquals(0, _vault.size());
 		assertEquals(null, _vault.find("BarcodeString = " + i.getBarcodeString()));
 		assertEquals(0, _pvault.size());
+	}
+	
+	@Test
+	public void addMultipleItems() {
+		for (int i = 0; i < 10; i++) {
+			Item it = new Item().generateTestData();
+			it.setProduct(_product);
+			_itemList.add(it);
+		}
+		
+		AddItemCommand cmd = new AddItemCommand(_itemList, _product, _su);
+		
+		Result r = cmd.execute();
+		assertEquals("", r.getMessage());
+		assertEquals(10, _vault.size());
+		assertEquals(1, _pvault.size());
+		
+		cmd.undo();
+		assertEquals(0, _vault.size());
+		assertEquals(0, _pvault.size());
+	}	
+	
+	@Test
+	public void testProductExisting() {
+		Item i = new Item().generateTestData();
+		_product.save();
+		
+		i.setProduct(_product);
+		_itemList.add(i);
+		
+		AddItemCommand cmd = new AddItemCommand(_itemList, null, _su);
+		
+		Result r = cmd.execute();
+		assertEquals("", r.getMessage());
+		assertEquals(1, _vault.size());
+		assertTrue(_vault.find("BarcodeString = " + i.getBarcodeString()) != null);
+		assertEquals(1, _pvault.size());
+		
+		
+		cmd.undo();
+		assertEquals(0, _vault.size());
+		assertEquals(null, _vault.find("BarcodeString = " + i.getBarcodeString()));
+		assertEquals(1, _pvault.size());
 	}
 
 }
