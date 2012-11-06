@@ -42,12 +42,13 @@ public class RemovedItemsReport implements IReportDirector {
 
 	public void constructReport() {
 		builder.addHeading("Items Removed Since "+sinceWhen.toString());
-		builder.startTable();
+		builder.startTable(5);
+		builder.addRow(new String[]{"Description","Size","Product Barcode","Removed","Current Supply"});
 		ItemVault iv = ItemVault.getInstance();
 		iv.sinceLastRemovedReport = DateTime.now();
 		ProductVault pv = ProductVault.getInstance();
 		
-		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen);
+		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
 		items = sort(items, on(Item.class).getProductBarcode());
 		Item prevItem = null;
 
