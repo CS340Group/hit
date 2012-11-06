@@ -15,6 +15,7 @@ import model.item.Item;
 import model.product.Product;
 import model.product.ProductVault;
 import model.productcontainer.StorageUnit;
+import gui.batches.ITransferItemBatchController;
 import gui.inventory.ProductContainerData;
 import common.Result;
 
@@ -30,6 +31,7 @@ public class TransferItemCommand extends AbstractCommand {
 	private Product _oldProduct;
 	private Product _newProduct;
 	private boolean _createdProduct = false;
+	private ITransferItemBatchController _controller;
 
 	/**
 	 * Moves an item from its current product container to the target product container.
@@ -45,6 +47,12 @@ public class TransferItemCommand extends AbstractCommand {
 		_newProduct = null;
 	}
 
+	public TransferItemCommand(StorageUnit target, Item item,
+			ITransferItemBatchController transferItemBatchController) {
+		this(target, item);
+		_controller = transferItemBatchController;
+	}
+
 	@Override
 	protected Result executeGuts() {
 		// Search for a product in the target storage unit.
@@ -53,6 +61,7 @@ public class TransferItemCommand extends AbstractCommand {
 		for(Product product : psFromTargetUnit){
 			if (product.getBarcode().equals(_oldProduct.getBarcode()))
 				_newProduct = product;
+				_newProduct.save();
 		}
 		
 		// If we didn't find it, make a copy of the old one.
@@ -67,7 +76,16 @@ public class TransferItemCommand extends AbstractCommand {
 		
 		// Move the item over
 		_item.setProduct(_newProduct);
-		return _item.save();
+
+		// Update the view if we have a view.
+		if (_controller != null)
+			_controller.addItemToView(_item);
+
+		Result result = _item.save();
+		_newProduct.save();
+		_oldProduct.save();
+		_targetSU.save();
+		return result;
 	}
 
 	@Override
@@ -77,6 +95,11 @@ public class TransferItemCommand extends AbstractCommand {
 			_newProduct.obliterate();
 		_newProduct = null;
 		_createdProduct = false;
+
+		// Update the view if we have a view.
+		if (_controller != null)
+			_controller.removeItemFromView(_item);
+		
 		return _item.save();
 	}
 
