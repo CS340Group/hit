@@ -1,9 +1,9 @@
 package gui.reports.productstats;
 
 import gui.reports.TestPrintObject;
-import gui.reports.common.IPrintObject;
 import model.product.Product;
 import model.product.ProductVault;
+import model.reports.IPrintObject;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,6 @@ public class ProductStatsReportTest {
 
         ArrayList<Product> product = ProductVault.getInstance().findAll("");
 
-        return report;
+        return (IPrintObject) report;
     }
 }
