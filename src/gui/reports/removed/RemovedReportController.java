@@ -4,7 +4,6 @@ import org.joda.time.DateTime;
 
 import model.item.ItemVault;
 import model.reports.IReportDirector;
-import model.reports.NSupplyReport;
 import model.reports.ObjectReportBuilder;
 import model.reports.RemovedItemsReport;
 import model.reports.ReportBuilder;
@@ -90,14 +89,14 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new ObjectReportBuilder();
+		ReportBuilder builder = new PDFReportBuilder();
 		DateTime sinceWhen = null;
 		IReportDirector director;
 		
 		if(this.getView().getSinceDate() == true)
 			director = new RemovedItemsReport(new DateTime(this.getView().getSinceDateValue()));
 		else {
-			if((ItemVault.getInstance().sinceLastRemovedReport) == null)
+			if((ItemVault.sinceLastRemovedReport) == null)
 				director = new RemovedItemsReport(new DateTime(0));
 			else
 				director = new RemovedItemsReport(ItemVault.getInstance().sinceLastRemovedReport);
