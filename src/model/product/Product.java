@@ -339,6 +339,7 @@ public class Product extends Model{
 	public void obliterate() {
 		this._productVault.obliterate(this);
 		this._saved = false;
+		this._id = -1;
 	}
 	
 	public ArrayList<Item> getItems(){
