@@ -31,18 +31,20 @@ public class PDFReportBuilder implements ReportBuilder {
 	private int _itemsAdded; // Keeps track of how many items have been added, in case we need to fill up dummy items.	
 	private boolean _tableStarted;
 	private int _columns;
+	private String _reportName = "PdfReport.pdf";
     
     public PDFReportBuilder(){
 		_d = new Document();
 		
 		try {
-			_writer = PdfWriter.getInstance(_d, new FileOutputStream("PdfReport.pdf"));
+			_writer = PdfWriter.getInstance(_d, new FileOutputStream(_reportName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			assert false;
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			assert false;
 		}
 		
 		_d.setMargins(25, 25, 25, 25);
@@ -95,17 +97,15 @@ public class PDFReportBuilder implements ReportBuilder {
 
 	@Override
 	public Result endTable() {
-		if (_open){
-			fillNullCells();
-			try {
-				_d.add(_table);
-			} catch (DocumentException e) {
-				return new Result(false, "The document was not successfully constructed.");
-			}
-			_d.close();
-			_open = false;
+		if (!_open)
+			return new Result(false, "Not open!");
+		fillNullCells();
+		try {
+			_d.add(_table);
+		} catch (DocumentException e) {
+			return new Result(false, "I couldn't add this table.");
 		}
-		return new Result(true, "The document is closed.");	
+		return new Result(true);	
 	}
 		
 	/**
@@ -131,21 +131,20 @@ public class PDFReportBuilder implements ReportBuilder {
 		try {
 			_d.add(p);
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			assert false;
 		}
 	}
 
 	@Override
 	public void endFile() {
-		// TODO Auto-generated method stub
-		
+		_d.close();
+		_open = false;
 	}
 
 	@Override
 	public String returnReport() {
-		// TODO Auto-generated method stub
-		return null;
+		return _reportName;
 	}
 	
 
