@@ -79,7 +79,8 @@ public class TransferItemBatchController extends Controller implements
             }
             ProductData pd = GuiModelConverter.wrapProduct(p);
             pd.setCount(Integer.toString(_transferredItems.get(barcode).size()));
-            products.add(pd);
+            if (Integer.parseInt(pd.getCount()) > 0)
+                products.add(pd);
         }
         this.getView().setProducts(products.toArray(new ProductData[0]));
         if(_currentProduct != null){
