@@ -86,7 +86,7 @@ public abstract class Vault extends Observable implements Serializable {
             MyQuery.setValue(params[0]);
             if(params.length > 1)
                 deletedResults = (Boolean) params[1];
-        } else if(params[0] != null){
+        } else if(params.length > 0){
             deletedResults = (Boolean) params[0];
         }
 
@@ -113,7 +113,7 @@ public abstract class Vault extends Observable implements Serializable {
             MyQuery.setValue(params[0]);
             if(params.length > 1)
                 deletedResults = (Boolean) params[1];
-        } else if(params[0] != null){
+        } else if(params.length > 0){
             deletedResults = (Boolean) params[0];
         }
 		//Do a linear Search first
