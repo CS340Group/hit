@@ -1,9 +1,10 @@
 package gui.reports;
 
-import gui.reports.common.IPrintObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import model.reports.IPrintObject;
+
 
 public class TestPrintObject implements IPrintObject {
     private ArrayList<TestPrintObjectHeader> headers;
@@ -16,7 +17,6 @@ public class TestPrintObject implements IPrintObject {
         tables = new ArrayList<TestPrintObjectTable>();
     }
 
-    @Override
     public IPrintObjectHeader getHeader(int position) {
         return headers.get(position);
     }
@@ -25,12 +25,10 @@ public class TestPrintObject implements IPrintObject {
         headers.add(header);
     }
 
-    @Override
     public ArrayList<IPrintObjectHeader> getHeaders() {
         return new ArrayList<IPrintObjectHeader>(headers);
     }
 
-    @Override
     public IPrintObjectTextBlock getTextBlock(int position) {
         return textBlocks.get(position);
     }
@@ -39,12 +37,10 @@ public class TestPrintObject implements IPrintObject {
         textBlocks.add(textBlock);
     }
 
-    @Override
     public ArrayList<IPrintObjectTextBlock> getTextBlocks() {
         return new ArrayList<IPrintObjectTextBlock>(textBlocks);
     }
 
-    @Override
     public IPrintObjectTable getTable(int position) {
         return tables.get(position);
     }
@@ -53,7 +49,6 @@ public class TestPrintObject implements IPrintObject {
         tables.add(table);
     }
 
-    @Override
     public ArrayList<IPrintObjectTable> getTables() {
         return new ArrayList<IPrintObjectTable>(tables);
     }
@@ -104,5 +99,11 @@ public class TestPrintObject implements IPrintObject {
         public String getCell(int x, int y) {
             return contents.get(x).get(y);
         }
+
+		@Override
+		public void addRow(String[] row) {
+			// TODO Auto-generated method stub
+			
+		}
     }
 }
