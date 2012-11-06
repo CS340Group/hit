@@ -47,7 +47,7 @@ public class StatisticReport implements IReportDirector {
         Product prev = new Product();
         ArrayList<Item> items = new ArrayList<Item>();
 
-        builder.startTable();
+        builder.startTable(10);
         builder.addRow(new String[]{
                 "Description", "Barcode", "Size", "3-Month Supply", "Supply: Cur/Avg", "Supply: Min/Max",
                 "Supply: Used/Added", "Shelf Life", "Used Age: Avg/Max", "Cur Age: Avg/Max"

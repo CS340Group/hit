@@ -1,21 +1,26 @@
 package model.reports;
 
+import com.itextpdf.text.Document;
+
 public class PDFReportBuilder implements ReportBuilder {
+
+    Document doc;
+    public PDFReportBuilder(){
+        doc = new Document();
+    }
 
 	@Override
 	public void addHeader(String header) {
-		// TODO Auto-generated method stub
-		
+        doc.addTitle(header);
 	}
 
 	@Override
 	public void addHeading(String heading) {
-		// TODO Auto-generated method stub
-		
+		doc.addHeader(heading,"");
 	}
 
 	@Override
-	public void startTable() {
+	public void startTable(int columns) {
 		// TODO Auto-generated method stub
 		
 	}
