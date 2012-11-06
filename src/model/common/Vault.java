@@ -75,22 +75,26 @@ public abstract class Vault extends Observable implements Serializable {
 	
 	/**
 	 * Returns a list of Models which match the criteria
-	 * 
-	 * @param attribute 
-	 * @param value
+	 *
 	 * 
 	 */
 	public abstract IModel find(String query, Object... params);
 	public IModel findPrivateCall(String query, Object... params)  {
 		QueryParser MyQuery = new QueryParser(query);
-        if(MyQuery.getValue().equals("%o") && params != null)
+        boolean deletedResults = false;
+        if(MyQuery.getValue().equals("%o") && params != null){
             MyQuery.setValue(params[0]);
+            if(params.length > 1)
+                deletedResults = (Boolean) params[1];
+        } else if(params[0] != null){
+            deletedResults = (Boolean) params[0];
+        }
 
 		
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-            ArrayList<Item> results = (ArrayList)linearSearch(MyQuery,1);
+            ArrayList<Item> results = (ArrayList)linearSearch(MyQuery,1,deletedResults);
             if(results.size() == 0)
                 return null;
             return results.get(0);
@@ -104,12 +108,18 @@ public abstract class Vault extends Observable implements Serializable {
 	public abstract  ArrayList findAll(String query, Object... params);
 	protected ArrayList<IModel> findAllPrivateCall(String query, Object... params){
 		QueryParser MyQuery = new QueryParser(query);
-        if(MyQuery.getValue().equals("%o") && params != null)
+        boolean deletedResults = false;
+        if(MyQuery.getValue().equals("%o") && params != null){
             MyQuery.setValue(params[0]);
+            if(params.length > 1)
+                deletedResults = (Boolean) params[1];
+        } else if(params[0] != null){
+            deletedResults = (Boolean) params[0];
+        }
 		//Do a linear Search first
 		//TODO: Add ability to search by index
 		try {
-			ArrayList<IModel> results = linearSearch(MyQuery,0);
+			ArrayList<IModel> results = linearSearch(MyQuery,0,deletedResults);
 			return results;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,8 +128,13 @@ public abstract class Vault extends Observable implements Serializable {
 	}
 	
 	protected abstract IModel getNewObject();
-	protected abstract IModel getCopiedObject(IModel model);	
-	protected ArrayList<IModel> linearSearch(QueryParser MyQuery, int count)
+	protected abstract IModel getCopiedObject(IModel model);
+    protected ArrayList<IModel> linearSearch(QueryParser MyQuery, int count)
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException{
+        return this.linearSearch(MyQuery,count,false);
+    }
+	protected ArrayList<IModel> linearSearch(QueryParser MyQuery, int count, boolean deletedResults)
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException{
 		ArrayList<IModel> results = new ArrayList<IModel>();
@@ -143,7 +158,10 @@ public abstract class Vault extends Observable implements Serializable {
 			myItemValue = method.invoke(myModel);
             Operator operator = OperatorFactory.getOperator(op, myItemValue.getClass());
 
-            if(operator.execute(myItemValue,value) && !myModel.isDeleted()){
+            boolean compare = operator.execute(myItemValue,value);
+            if(deletedResults && compare)
+                results.add(getCopiedObject(myModel));
+            else if(compare && !myModel.isDeleted()){
 		    	//PushDown
 		    	results.add(getCopiedObject(myModel));
 		    }
