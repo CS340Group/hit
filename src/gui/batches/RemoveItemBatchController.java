@@ -179,7 +179,7 @@ public class RemoveItemBatchController extends Controller implements
 		this.enableComponents();
 	}
 
-	private void removeItemFromView(Item i){
+	public void addItemToView(Item i){
 		ItemData iData = GuiModelConverter.wrapItem(i);
 		Product p = i.getProduct();
 		if (_removedItems.containsKey(p.getBarcodeString())){
@@ -189,6 +189,21 @@ public class RemoveItemBatchController extends Controller implements
 			its.add(iData);
 			_removedItems.put(p.getBarcodeString(), its);
 		}
+		this.loadValues();
+	}
+
+	public void removeItemFromView(Item item){
+		Product p = item.getProduct();
+		if (_removedItems.containsKey(p.getBarcodeString())){
+			ItemData itemToDelete = null;
+			for(ItemData i : _removedItems.get(p.getBarcodeString())){
+				if(Integer.toString(item.getId()).equals(i.getTag().toString()))
+					itemToDelete = i;
+			}
+			if (itemToDelete != null)
+				_removedItems.get(p.getBarcodeString()).remove(itemToDelete);
+		}
+		this.loadValues();
 	}
 	
 	/**
