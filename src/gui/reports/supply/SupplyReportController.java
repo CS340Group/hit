@@ -1,5 +1,9 @@
 package gui.reports.supply;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import model.reports.*;
 import gui.common.*;
 
@@ -84,6 +88,14 @@ import gui.common.*;
 		IReportDirector director = new NSupplyReport(Integer.parseInt(this.getView().getMonths()));
 		director.setBuilder(builder);
 		director.constructReport();
+		if (Desktop.isDesktopSupported()) {
+			  try {
+			  File myFile = new File(builder.returnReport());
+			  Desktop.getDesktop().open(myFile);
+			  } catch (IOException ex) {
+			  // no application registered for PDFs
+			  }
+		}
 	}
 
 }

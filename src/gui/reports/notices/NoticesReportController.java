@@ -1,5 +1,9 @@
 package gui.reports.notices;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import model.reports.IReportDirector;
 import model.reports.NSupplyReport;
 import model.reports.NoticesReport;
@@ -88,6 +92,14 @@ public class NoticesReportController extends Controller implements
 		IReportDirector director = new NoticesReport();
 		director.setBuilder(builder);
 		director.constructReport();
+		if (Desktop.isDesktopSupported()) {
+			  try {
+			  File myFile = new File(builder.returnReport());
+			  Desktop.getDesktop().open(myFile);
+			  } catch (IOException ex) {
+			  // no application registered for PDFs
+			  }
+		}
 	}
 
 }
