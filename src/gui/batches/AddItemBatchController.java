@@ -324,7 +324,9 @@ public class AddItemBatchController extends Controller implements
             }
             for (ItemData itemData : itemsToDeleteArrayList){
             	_products.get(productData).remove(itemData);
+                productData.setCount(String.valueOf(_products.get(productData).size()));
             }
+
         }
         loadValues();
     }

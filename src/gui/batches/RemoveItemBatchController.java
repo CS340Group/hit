@@ -10,6 +10,9 @@ import java.util.TimerTask;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
+import common.command.CommandManager;
+import common.command.RemoveItemCommand;
+
 import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
@@ -34,6 +37,7 @@ public class RemoveItemBatchController extends Controller implements
     Timer _timer;
     ModelFacade _ModelFacade;
     ProductData _currentProduct;
+	private CommandManager _commandManager = new CommandManager();
 	
 	/**
 	 * Constructor.
@@ -166,9 +170,8 @@ public class RemoveItemBatchController extends Controller implements
 		if (item == null) {
 			this.getView().displayErrorMessage("There is no item with that barcode.");
 		}else{
-			_ModelFacade.RemoveItem(item);
-			Product product = ProductVault.getInstance().get(item.getProductId());
-			recordRemoved(item, product);
+			RemoveItemCommand command = new RemoveItemCommand(item, this);
+			_commandManager.executeCommand(command);
 		}
 		this.loadValues();
 		getView().setBarcode("");
@@ -176,8 +179,9 @@ public class RemoveItemBatchController extends Controller implements
 		this.enableComponents();
 	}
 
-	private void recordRemoved(Item i, Product p){
+	private void removeItemFromView(Item i){
 		ItemData iData = GuiModelConverter.wrapItem(i);
+		Product p = i.getProduct();
 		if (_removedItems.containsKey(p.getBarcodeString())){
 			_removedItems.get(p.getBarcodeString()).add(iData);
 		} else {
@@ -193,6 +197,7 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void redo() {
+		_commandManager.redo();
 	}
 
 	/**
@@ -201,6 +206,7 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void undo() {
+		_commandManager.undo();
 	}
 
 	/**
