@@ -33,6 +33,10 @@ public class ModelFacadeTest {
 
     @Before
     public void setUp() throws Exception {
+    	StorageUnitVault.getInstance().clear();
+    	ProductGroupVault.getInstance().clear();
+    	ProductVault.getInstance().clear();
+    	ItemVault.getInstance().clear();
         su1 = new StorageUnit();
         su2 = new StorageUnit();
         su3 = new StorageUnit();
@@ -60,6 +64,7 @@ public class ModelFacadeTest {
         pg1.set3MonthSupply(new Size(1, "Count"));
         pg1.setRootParentId(su1.getId());
         pg1.setName("Group 1");
+        pg1.setParentId(su1.getId());
         pg1.validate();
         pg1.save();
 
@@ -105,7 +110,7 @@ public class ModelFacadeTest {
 
         p3.setContainerId(pg3.getId());
         p3.set3MonthSupply(9);
-        p3.setBarcode("0003");
+        p3.setBarcode("0002");
         p3.setCreationDate(new DateTime());
         p3.setDescription("Item C");
         p3.setShelfLife(9);
@@ -187,18 +192,16 @@ public class ModelFacadeTest {
         i.setEntryDate(DateTime.now());
         i.setProductId(p4.getId());
 
-        Result r = c.AddItem(su1, i);
+        Result r = c.addItem(su1, i);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(), i.getProduct().getStorageUnitId());
-        assertEquals(pg1.getId(),i.getProduct().getContainerId());
-
     }
 
     @Test
     public void testMoveItem() throws Exception {
         ModelFacade c = new ModelFacade();
 
-        Result r = c.MoveItem(su1, i6);
+        Result r = c.dragItem(pg1, i6);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(),i6.getProduct().getStorageUnitId());
         assertEquals(pg1.getId(),i6.getProduct().getContainerId());
@@ -213,7 +216,7 @@ public class ModelFacadeTest {
     public void testMoveProduct() throws Exception {
         ModelFacade c = new ModelFacade();
 
-        Result r = c.MoveProduct(su1, pg1, p3);
+        Result r = c.dragProduct(su1, pg1, p3);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(),i6.getProduct().getStorageUnitId());
         assertEquals(pg1.getId(),i6.getProduct().getContainerId());
@@ -223,10 +226,10 @@ public class ModelFacadeTest {
     public void testDeleteProduct() throws Exception {
         ModelFacade c = new ModelFacade();
 
-        Result r = c.DeleteProduct(p3);
+        Result r = c.deleteProduct(p3);
         assertFalse(r.getStatus());
 
-        assertTrue(c.DeleteProduct(p4).getStatus());
+        assertTrue(c.deleteProduct(p4).getStatus());
 
     }
 }

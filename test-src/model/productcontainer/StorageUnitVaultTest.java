@@ -73,7 +73,7 @@ public class StorageUnitVaultTest {
     	su1.validate();
     	su1.save();
     	StorageUnit su3 = su1._storageUnitVault.find("Name = NewName");
-    	su1 = su1._storageUnitVault.find("Name = Unit A");
+    	su1 = su1._storageUnitVault.find("Name = %o", "Unit A");
     	assertTrue("Save modified is not working",su1 == null);
     	assertTrue("Save modified is not working",su3 != null);
     }

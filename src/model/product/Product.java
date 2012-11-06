@@ -48,6 +48,8 @@ public class Product extends Model{
 		_valid = false;
 		_saved = false;
         _creationDate = new DateTime();
+        _containerId = -1;
+        _storageUnitId = -1;
 	}
 
     /**
@@ -208,6 +210,8 @@ public class Product extends Model{
      */
     public Result setSize(Size u){
         assert u != null;
+        if (u.getAmount() <= 0)
+            return new Result(false, "Zero is not allowed in the product size.");
         _size = u;
         invalidate();
         return new Result(true);
@@ -225,6 +229,7 @@ public class Product extends Model{
      * @Pre The shelf life must be a non-negative number.
      */
     public Result setShelfLife(int i){
+        if (i<0) return new Result(false, "Must be non-negative.");
         _shelfLife = i;
         invalidate();
         return new Result(true);
@@ -242,6 +247,8 @@ public class Product extends Model{
      * @Pre Must be non-negative.
      */
     public Result set3MonthSupply(int i){
+        if (i<0)
+            return new Result(false, "3 Month supply must be non-negative.");
         _3MonthSupply = i;
         invalidate();
         return new Result(true);

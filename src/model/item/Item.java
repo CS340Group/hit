@@ -142,6 +142,7 @@ public class Item extends Model{
      *  Return the expiration date for the Item.
      */
     public DateTime getExpirationDate(){
+    	assert this.getProduct() != null;
         return getEntryDate().plusMonths(getProduct().getShelfLife());
     }
     
@@ -213,6 +214,13 @@ public class Item extends Model{
      */
     public String getProductStorageUnitId(){
     	return Integer.toString(this.getProduct().getStorageUnitId());
+    }
+    
+    /**
+     * Return the ID of the StorageUnit that holds this Item.
+     */
+    public int getProductStorageUnitIdInt(){
+    	return this.getProduct().getStorageUnitId();
     }
     
     /**
