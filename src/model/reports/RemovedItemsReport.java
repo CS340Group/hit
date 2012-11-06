@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import static ch.lambdaj.Lambda.*;
 import model.item.Item;
 import model.item.ItemVault;
-import model.product.ProductVault;
 
 public class RemovedItemsReport implements IReportDirector {
 	private ReportBuilder builder;
@@ -33,8 +32,7 @@ public class RemovedItemsReport implements IReportDirector {
 		builder.startTable(5);
 		builder.addRow(new String[] {"Description","Size","Product Barcode","Removed","Current Supply"});
 		ItemVault iv = ItemVault.getInstance();
-		ItemVault.sinceLastRemovedReport = DateTime.now();
-		ProductVault pv = ProductVault.getInstance();
+		iv.sinceLastRemovedReport = DateTime.now();
 		
 		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
 		items = sort(items, on(Item.class).getProductBarcode());
@@ -67,7 +65,10 @@ public class RemovedItemsReport implements IReportDirector {
 			prevItem = currentItem;
 		}
 		
-		currentSupply = 0;
+		builder.endFile();
 		
 	}
+
+
+
 }

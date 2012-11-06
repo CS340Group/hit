@@ -134,6 +134,9 @@ public class StatisticReport implements IReportDirector {
                 String.valueOf(curAge.getMean()) + " days / " + String.valueOf(curAge.getMax()) + " days"
 
         });
+        
+        
+        builder.endFile();
     }
 	
 }
