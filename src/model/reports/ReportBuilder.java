@@ -14,4 +14,8 @@ public interface ReportBuilder {
 	
 	public void endTable();
 	
+	public void endFile();
+	
+	public String returnReport();
+	
 }

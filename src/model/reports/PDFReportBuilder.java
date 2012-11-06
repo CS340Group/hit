@@ -42,6 +42,18 @@ public class PDFReportBuilder implements ReportBuilder {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void endFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String returnReport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 
