@@ -38,7 +38,7 @@ public class TestEnvironment {
         sus = models/6;
         pgs = models/6;
         ps = models/6;
-        is = models/2;
+        is = models;
     }
 
     private void clear() {
@@ -93,7 +93,7 @@ public class TestEnvironment {
             p.setBarcode(new BigInteger(100, random).toString(10));
             p.setShelfLife(((Number) (Math.random() * months)).intValue() + 1);
             p.setStorageUnitId(storageUnits.get(((Number) (Math.random() * storageUnits.size())).intValue()).getId());
-            p.setSize(new Size(3, "count"));
+            p.setSize(new Size(1, "count"));
             if((Math.random() * 5)<3)
                 p.setContainerId(productGroups.get(((Number)(Math.random() * productGroups.size())).intValue()).getId());
             else
@@ -123,8 +123,10 @@ public class TestEnvironment {
             while(item.getEntryDate().plusHours(hours).isAfter(DateTime.now()))
                 hours = ((Number)(Math.random() * 100)).intValue();
 
-            if((Math.random() * 5) < 3)
+            if((Math.random() * 5) < 3){
                 item.setExitDate(item.getEntryDate().plusHours(hours));
+                item.delete();
+            }
 
             Result r = item.validate();
             assert r.getStatus();

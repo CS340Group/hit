@@ -156,6 +156,8 @@ public abstract class Vault extends Observable implements Serializable {
 			myModel = entry.getValue();
 			Object myItemValue;
 			myItemValue = method.invoke(myModel);
+            if(myItemValue == null)
+                continue;
             Operator operator = OperatorFactory.getOperator(op, myItemValue.getClass());
 
             boolean compare = operator.execute(myItemValue,value);

@@ -44,7 +44,7 @@ public class ProductStatsReportTest {
 
     @Test
     public void test(){
-        TestEnvironment env = new TestEnvironment(5,10000);
+        TestEnvironment env = new TestEnvironment(2,10000);
         env.newEnvironment();
 
         StatisticReport report = new StatisticReport();
