@@ -80,7 +80,7 @@ import gui.common.*;
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new ObjectReportBuilder();
+		ReportBuilder builder = new PDFReportBuilder();
 		IReportDirector director = new NSupplyReport(Integer.parseInt(this.getView().getMonths()));
 		director.setBuilder(builder);
 		director.constructReport();
