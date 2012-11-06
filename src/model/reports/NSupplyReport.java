@@ -22,11 +22,12 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	private ReportBuilder builder;
 	private Map<String, Double> pgCounts;
 	private Set<String> possibleSizes;
+	int months;
 	
-	public NSupplyReport(){
+	public NSupplyReport(int months){
 		pgCounts = new HashMap<String,Double>();
 		possibleSizes = new HashSet<String>();
-		
+		this.months = months;
 	}
 	
 	public ReportBuilder getBuilder(){
@@ -39,7 +40,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		
 	}
 	public void constructReport() {
-		builder.addHeader("N Supply Report");
+		builder.addHeader(months+"-Month Supply Report");
 		builder.addHeader("Products");
 		this.SetUpProductGrid();
 		builder.addHeader("Product Groups");
@@ -85,7 +86,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	private void SetUpProductGroupGrid(){
 		StorageUnitVault suv = StorageUnitVault.getInstance();
 		builder.startTable();
-		builder.addRow(new String[]{"Product Group","Storage Unit","3-Month Supply","Current Supply"});
+		builder.addRow(new String[]{"Product Group","Storage Unit",months+"-Month Supply","Current Supply"});
 		
 		List<StorageUnit> storageUnits = suv.findAll("Deleted = %o", false);
 		for(StorageUnit storageUnit : storageUnits){
@@ -132,28 +133,30 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 			
 			//If this product groups current supply is less than it's 3 month supply
 			if(possibleSize.equals(productGroup.get3MonthSupply().getUnit())){
+				int nsupply = (int) (productGroup.get3MonthSupply().getAmount()/3*months);
 				if(pgCounts.containsKey(key)){
-					if(pgCounts.get(key) < productGroup.get3MonthSupply().getAmount())
+					if(pgCounts.get(key) < nsupply)
 						builder.addRow(new String[]{
 								productGroup.getName(),
 								productGroup.getStorageUnit().getName(),
-								Float.toString(productGroup.get3MonthSupply().getAmount()),
+								Integer.toString(nsupply),
 								Double.toString(pgCounts.get(key))}
 						);
-				} else {
+				} /*else {
 					builder.addRow(new String[]{
 							productGroup.getName(),
 							productGroup.getStorageUnit().getName(),
-							Float.toString(productGroup.get3MonthSupply().getAmount()),
+							Integer.toString(nsupply),
 							"0"}
 					);
-				}
+				}*/
 			}
 		}
 				
 	}
 
 	public void visit(StorageUnit storageUnit) {
+		pgCounts.clear();
 		return;
 	}
 }

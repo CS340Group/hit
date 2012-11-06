@@ -6,6 +6,8 @@ public interface ReportBuilder {
 	
 	public void addHeading(String heading);
 	
+	public void addTextBlock(String text);
+	
 	public void startTable();
 	
 	public void addRow(String[] row);

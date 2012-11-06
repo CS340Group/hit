@@ -37,4 +37,9 @@ public class ObjectReportBuilder implements ReportBuilder {
 		
 	}
 
+	@Override
+	public void addTextBlock(String text) {
+		printObject.addTextBlock(text);
+	}
+
 }
