@@ -646,9 +646,9 @@ public class InventoryController extends Controller
 		this.currentlySelectedPC = null;
 		this.currentlySelectedPCId = id;
 		if(selectedProductGroup!=null){
-			_mf.MoveProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
+			_mf.dragProduct(selectedProductGroup.getStorageUnit(), selectedProductGroup, selectedProduct);
 		} else {
-			_mf.MoveProduct(selectedStorageUnit, selectedStorageUnit, selectedProduct);
+			_mf.dragProduct(selectedStorageUnit, selectedStorageUnit, selectedProduct);
 		}
 		
 	}
@@ -676,9 +676,9 @@ public class InventoryController extends Controller
 		this.currentlySelectedPC = null;
 		this.currentlySelectedPCId = id;
 		if(selectedProductGroup!=null){
-			_mf.MoveItem(selectedProductGroup, selectedItem);
+			_mf.dragItem(selectedProductGroup, selectedItem);
 		} else {
-			_mf.MoveItem(selectedStorageUnit, selectedItem);
+			_mf.dragItem(selectedStorageUnit, selectedItem);
 		}
 		
 		
