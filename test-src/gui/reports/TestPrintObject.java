@@ -21,8 +21,8 @@ public class TestPrintObject implements IPrintObject {
         return headers.get(position);
     }
 
-    public void addHeader(TestPrintObjectHeader header){
-        headers.add(header);
+    public void addHeader(String header){
+        headers.add(new TestPrintObjectHeader(header));
     }
 
     public ArrayList<IPrintObjectHeader> getHeaders() {
@@ -33,8 +33,8 @@ public class TestPrintObject implements IPrintObject {
         return textBlocks.get(position);
     }
 
-    public void addTextBlock(TestPrintObjectTextBlock textBlock){
-        textBlocks.add(textBlock);
+    public void addTextBlock(String textBlock){
+        textBlocks.add(new TestPrintObjectTextBlock(textBlock));
     }
 
     public ArrayList<IPrintObjectTextBlock> getTextBlocks() {
@@ -45,8 +45,10 @@ public class TestPrintObject implements IPrintObject {
         return tables.get(position);
     }
 
-    public void addTable(TestPrintObjectTable table){
+    public TestPrintObjectTable newTable(){
+        TestPrintObjectTable table = new TestPrintObjectTable();
         tables.add(table);
+        return table;
     }
 
     public ArrayList<IPrintObjectTable> getTables() {
@@ -86,18 +88,18 @@ public class TestPrintObject implements IPrintObject {
             contents = new HashMap<Integer, HashMap<Integer, String>>();
         }
 
-        public void setCell(int x, int y, String cell){
-            if(contents.containsKey(x))
-                contents.get(x).put(y,cell);
+        public void setCell(int row, int col, String cell){
+            if(contents.containsKey(row))
+                contents.get(row).put(col,cell);
             else{
-                contents.put(x, new HashMap<Integer, String>());
-                contents.get(x).put(y,cell);
+                contents.put(row, new HashMap<Integer, String>());
+                contents.get(row).put(col,cell);
             }
         }
 
         @Override
-        public String getCell(int x, int y) {
-            return contents.get(x).get(y);
+        public String getCell(int row, int col) {
+            return contents.get(row).get(col);
         }
 
 		@Override
