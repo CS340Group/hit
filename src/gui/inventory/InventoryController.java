@@ -275,9 +275,9 @@ public class InventoryController extends Controller
 			ProductGroup selectedProductGroup = _mf.productGroupVault.get(id);
 			StorageUnit selectedStorageUnit = _mf.storageUnitVault.get(id);
 			if(selectedProductGroup!=null){
-				return selectedProductGroup.isDeletable().getStatus();
+				return selectedProductGroup.isDeleteable().getStatus();
 			} else {
-				return selectedStorageUnit.isDeletable().getStatus();
+				return selectedStorageUnit.isDeleteable().getStatus();
 			}
 		}
 		return false;

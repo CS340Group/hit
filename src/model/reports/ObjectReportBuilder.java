@@ -26,6 +26,12 @@ public class ObjectReportBuilder implements ReportBuilder {
 		}
 	}
 
+
+	public void addHeading(String heading) {
+		this.addHeader(heading);
+	}
+
+	@Override
 	public void endTable() {
 		// TODO Auto-generated method stub
 		
