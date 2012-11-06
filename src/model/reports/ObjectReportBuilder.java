@@ -1,5 +1,7 @@
 package model.reports;
 
+import common.Result;
+
 import model.reports.IPrintObject.IPrintObjectTable;
 import model.reports.PrintObject.PrintObjectTable;
 
@@ -18,7 +20,7 @@ public class ObjectReportBuilder implements ReportBuilder {
 		printObject.addTable();
 	}
 
-	public void addRow(String[] row) {
+	public Result addRow(String[] row) {
 		int currentTable = -1 + printObject.getTablesSize();
 		if(currentTable >= 0){
 			IPrintObjectTable table = printObject.getTable(currentTable);
@@ -32,7 +34,7 @@ public class ObjectReportBuilder implements ReportBuilder {
 	}
 
 	@Override
-	public void endTable() {
+	public Result endTable() {
 		// TODO Auto-generated method stub
 		
 	}
