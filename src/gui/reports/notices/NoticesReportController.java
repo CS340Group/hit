@@ -4,6 +4,7 @@ import model.reports.IReportDirector;
 import model.reports.NSupplyReport;
 import model.reports.NoticesReport;
 import model.reports.ObjectReportBuilder;
+import model.reports.PDFReportBuilder;
 import model.reports.ReportBuilder;
 import gui.common.*;
 
@@ -83,7 +84,7 @@ public class NoticesReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new ObjectReportBuilder();
+		ReportBuilder builder = new PDFReportBuilder();
 		IReportDirector director = new NoticesReport();
 		director.setBuilder(builder);
 		director.constructReport();

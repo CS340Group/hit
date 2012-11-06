@@ -1,25 +1,13 @@
 package model.reports;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.joda.time.DateTime;
 
 import static ch.lambdaj.Lambda.*;
 import model.item.Item;
 import model.item.ItemVault;
-import model.product.Product;
 import model.product.ProductVault;
-import model.productcontainer.ProductGroup;
-import model.productcontainer.ProductGroupVault;
-import model.productcontainer.StorageUnit;
-import model.productcontainer.StorageUnitVault;
 
 public class RemovedItemsReport implements IReportDirector {
 	private ReportBuilder builder;
@@ -45,7 +33,7 @@ public class RemovedItemsReport implements IReportDirector {
 		builder.startTable(5);
 		builder.addRow(new String[] {"Description","Size","Product Barcode","Removed","Current Supply"});
 		ItemVault iv = ItemVault.getInstance();
-		iv.sinceLastRemovedReport = DateTime.now();
+		ItemVault.sinceLastRemovedReport = DateTime.now();
 		ProductVault pv = ProductVault.getInstance();
 		
 		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
