@@ -167,7 +167,6 @@ public class OperatorFactoryTest {
     public void testNullOperator() throws Exception {
         Operator op = getOperator("=", Object.class);
         assertNull(op);
-
     }
 
 

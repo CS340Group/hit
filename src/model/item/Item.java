@@ -142,6 +142,7 @@ public class Item extends Model{
      *  Return the expiration date for the Item.
      */
     public DateTime getExpirationDate(){
+    	assert this.getProduct() != null;
         return getEntryDate().plusMonths(getProduct().getShelfLife());
     }
     

@@ -190,8 +190,6 @@ public class ModelFacadeTest {
         Result r = c.AddItem(su1, i);
         assertTrue(r.getStatus());
         assertEquals(su1.getId(), i.getProduct().getStorageUnitId());
-        assertEquals(pg1.getId(),i.getProduct().getContainerId());
-
     }
 
     @Test
