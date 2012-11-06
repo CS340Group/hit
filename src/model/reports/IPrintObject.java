@@ -1,13 +1,13 @@
-package gui.reports.common;
+package model.reports;
 
 import java.util.ArrayList;
 
 /**
  * This is the interface for a printable report object.
  * The report object consists of 3 difference objects:
- *  - {@link gui.reports.common.IPrintObject.IPrintObjectHeader headers}
- *  - {@link gui.reports.common.IPrintObject.IPrintObjectTextBlock text-blocks}
- *  - {@link gui.reports.common.IPrintObject.IPrintObjectTable tables}
+ *  - {@link model.reports.IPrintObject.IPrintObjectHeader headers}
+ *  - {@link model.reports.IPrintObject.IPrintObjectTextBlock text-blocks}
+ *  - {@link model.reports.IPrintObject.IPrintObjectTable tables}
  *
  *  The PrintObject will reference these object by the order in which they are built by the builder.
  *  The index starts at 0
@@ -40,5 +40,7 @@ public interface IPrintObject {
 
     public interface IPrintObjectTable {
         public String getCell(int row, int column);
+
+		public void addRow(String[] row);
     }
 }

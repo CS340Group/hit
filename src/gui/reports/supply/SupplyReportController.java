@@ -1,5 +1,9 @@
 package gui.reports.supply;
 
+import model.reports.IReportDirector;
+import model.reports.NSupplyReport;
+import model.reports.ObjectReportBuilder;
+import model.reports.ReportBuilder;
 import gui.common.*;
 
 /**
@@ -79,6 +83,10 @@ import gui.common.*;
 	 */
 	@Override
 	public void display() {
+		ReportBuilder builder = new ObjectReportBuilder();
+		IReportDirector director = new NSupplyReport();
+		director.setBuilder(builder);
+		director.constructReport();
 	}
 
 }
