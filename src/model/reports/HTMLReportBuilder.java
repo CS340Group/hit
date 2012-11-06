@@ -25,13 +25,13 @@ public class HTMLReportBuilder implements ReportBuilder {
 	@Override
 	public Result addRow(String[] row) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
 	public Result endTable() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override

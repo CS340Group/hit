@@ -26,6 +26,7 @@ public class ObjectReportBuilder implements ReportBuilder {
 			IPrintObjectTable table = printObject.getTable(currentTable);
 			table.addRow(row);
 		}
+		return new Result(true);
 	}
 
 
@@ -36,7 +37,7 @@ public class ObjectReportBuilder implements ReportBuilder {
 	@Override
 	public Result endTable() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
