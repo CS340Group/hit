@@ -8,11 +8,17 @@ import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
+import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import common.command.CommandManager;
+import common.command.TransferItemCommand;
 
 /**
  * Controller class for the transfer item batch view.
@@ -24,8 +30,11 @@ public class TransferItemBatchController extends Controller implements
     boolean scanner;
     Timer timer;
 
-    ArrayList<ProductData> productDatas;
-    ArrayList<ItemData> itemDatas;
+	private CommandManager _commandManager;
+    private Hashtable<String, ArrayList<ItemData>> _transferredItems;
+    private ProductVault _productVault = ProductVault.getInstance();
+    ProductData _currentProduct = null;
+
 	/**
 	 * Constructor.
 	 * 
@@ -37,8 +46,8 @@ public class TransferItemBatchController extends Controller implements
         this.target = target;
         getView().setUseScanner(scanner = true);
         this.timer = new Timer();
-        this.productDatas = new ArrayList<ProductData>();
-        this.itemDatas = new ArrayList<ItemData>();
+        _commandManager = new CommandManager();
+        _transferredItems = new Hashtable<String, ArrayList<ItemData>>();
         construct();
 
     }
@@ -60,10 +69,62 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-        getView().setProducts(productDatas.toArray(new ProductData[0]));
-        getView().setItems(itemDatas.toArray(new ItemData[0]));
         getView().setBarcode("");
+
+        ArrayList<ProductData> products = new ArrayList<ProductData>();
+        for (String barcode : _transferredItems.keySet()){
+            Product p = _productVault.find("BarcodeString = %o",  barcode);
+            if (p == null) {
+                continue;   
+            }
+            ProductData pd = GuiModelConverter.wrapProduct(p);
+            pd.setCount(Integer.toString(_transferredItems.get(barcode).size()));
+            products.add(pd);
+        }
+        this.getView().setProducts(products.toArray(new ProductData[0]));
+        if(_currentProduct != null){
+            this.getView().setItems(getRemovedItemsAsList(_currentProduct));
+        }
 	}
+
+    /**
+     * This is a helper function to avoid long lines:
+     */
+    private ArrayList<ItemData> getRemovedItemsForProduct(ProductData p){
+        return _transferredItems.get(p.getBarcode());
+    }
+
+    private ItemData[] getRemovedItemsAsList(ProductData p){
+        return getRemovedItemsForProduct(p).toArray(new ItemData[0]);
+    }
+
+    public void addItemToView(Item i){
+        ItemData iData = GuiModelConverter.wrapItem(i);
+        Product p = i.getProduct();
+        if (_transferredItems.containsKey(p.getBarcodeString())){
+            _transferredItems.get(p.getBarcodeString()).add(iData);
+        } else {
+            ArrayList<ItemData> its = new ArrayList<ItemData>();
+            its.add(iData);
+            _transferredItems.put(p.getBarcodeString(), its);
+        }
+        this.loadValues();
+    }
+
+    public void removeItemFromView(Item item){
+        Product p = item.getProduct();
+        if (_transferredItems.containsKey(p.getBarcodeString())){
+            ItemData itemToDelete = null;
+            for(ItemData i : _transferredItems.get(p.getBarcodeString())){
+                if(Integer.toString(item.getId()).equals(i.getTag().toString()))
+                    itemToDelete = i;
+            }
+            if (itemToDelete != null)
+                _transferredItems.get(p.getBarcodeString()).remove(itemToDelete);
+        }
+        this.loadValues();
+    }
+
 
 	/**
 	 * Sets the enable/disable state of all components in the controller's view.
@@ -114,6 +175,8 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
+        _currentProduct = this.getView().getSelectedProduct();
+        this.loadValues();
 	}
 	
 	/**
@@ -127,51 +190,20 @@ public class TransferItemBatchController extends Controller implements
             getView().displayErrorMessage("Item not found");
             return;
         }
-
-        Product product = item.getProduct();
-
-        ArrayList<Product> products = ProductVault.getInstance().findAll("BarcodeString = %o",  item.getProduct().getBarcode());
-
-        boolean flag = true;
-        for(Product p : products){
-            if(p.getStorageUnitId() == (Integer) target.getTag())
-                flag = false;
-        }
-
-        if(flag){
-            product = new Product(item.getProduct());
-            product.setStorageUnitId((Integer) target.getTag());
-            product.validate();
-            product.save();
-        }
-
-        item.setProductId(product.getId());
-        item.validate();
-        item.save();
-
-        ProductData pd = findProduct(getView().getBarcode());
-        if(pd == null){
-            pd = GuiModelConverter.wrapProduct(product);
-            pd.setCount("0");
-        }
-
-        ItemData id = GuiModelConverter.wrapItem(item);
-        itemDatas.add(id);
-
-        int count = Integer.parseInt(pd.getCount())+1;
-        pd.setCount(String.valueOf(count));
-
-        productDatas.add(pd);
+        StorageUnit targetSG = StorageUnitVault.getInstance().find("Id = %o", target.getTag());
+        TransferItemCommand command = new TransferItemCommand(targetSG, item, this);
+        _commandManager.executeCommand(command);
 
         loadValues();
 	}
-	
+
 	/**
 	 * This method is called when the user clicks the "Redo" button
 	 * in the transfer item batch view.
 	 */
 	@Override
 	public void redo() {
+        _commandManager.redo();
 	}
 
 	/**
@@ -180,6 +212,7 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void undo() {
+        _commandManager.undo();
 	}
 
 	/**
@@ -199,16 +232,6 @@ public class TransferItemBatchController extends Controller implements
                 transferItem();
             timer.cancel();
         }
-    }
-
-    private ProductData findProduct(String barcode){
-        Iterator<ProductData> i = productDatas.iterator();
-        while(i.hasNext()){
-            ProductData p = i.next();
-            if(p.getBarcode().contentEquals(barcode))
-                return p;
-        }
-        return null;
     }
 }
 
