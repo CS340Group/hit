@@ -62,17 +62,17 @@ public class AddItemCommand extends AbstractCommand {
 
 	@Override
 	protected Result undoGuts() {
-		if(_product != null && _product.isSaved())
-			_product.obliterate();
-		for (Item item : _items){
-			item.obliterate();
-		}
-		
 		if (_controller != null) {
 			for (Item item : _items)
 				_controller.removeItemFromView(item);
 			if (_product != null)
 				_controller.removeProductFromView(_product);
+		}
+		
+		if(_product != null && _product.isSaved())
+			_product.obliterate();
+		for (Item item : _items){
+			item.obliterate();
 		}
 		
 		return new Result(true);

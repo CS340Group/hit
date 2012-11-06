@@ -160,11 +160,14 @@ public class AddItemBatchController extends Controller implements
     public void addItem() {
         int count = getCountFromView();
         if (count == -1) return;
+        boolean createdProduct = false;
 
         // Make sure the product exists to be added to.
         String barcode = getView().getBarcode();
-        if (!_productVault.hasProductWithBarcode(barcode))
+        if (!_productVault.hasProductWithBarcode(barcode)){
             getView().displayAddProductView(_target);
+            createdProduct = true;
+        }
         // If cancel was pressed, there is no product added, reset the view state.
         if (!_productVault.hasProductWithBarcode(barcode)){
             resetViewFields();
@@ -183,6 +186,7 @@ public class AddItemBatchController extends Controller implements
         }
 
         // Make a new command:
+        product = (createdProduct) ? product : null;
         AddItemCommand command = new AddItemCommand(newItems, product, sUnit, this);
         _commandManager.executeCommand(command);
 
@@ -221,6 +225,7 @@ public class AddItemBatchController extends Controller implements
      */
     @Override
     public void redo() {
+    	_commandManager.redo();
     }
 
     /**
@@ -229,6 +234,7 @@ public class AddItemBatchController extends Controller implements
      */
     @Override
     public void undo() {
+    	_commandManager.undo();
     }
 
     /**
@@ -296,6 +302,7 @@ public class AddItemBatchController extends Controller implements
 
         _products.get(productData).add(itemData);
         productData.setCount(String.valueOf(_products.get(productData).size()));
+        loadValues();
     }
 
     @Override
@@ -308,19 +315,26 @@ public class AddItemBatchController extends Controller implements
     public void removeItemFromView(Item item) {
         Product product = item.getProduct();
         ProductData productData = findStoredProductData(product.getBarcode());
+        ArrayList<ItemData> itemsToDeleteArrayList = new ArrayList<ItemData>();
         if(productData != null){
             for(ItemData i : _products.get(productData)){
                 if(i.getTag().toString().equals(Integer.toString(item.getId()))){
-                    _products.get(productData).remove(i);
+                	itemsToDeleteArrayList.add(i);
                 }
             }
+            for (ItemData itemData : itemsToDeleteArrayList){
+            	_products.get(productData).remove(itemData);
+            }
         }
+        loadValues();
     }
 
     @Override
     public void removeProductFromView(Product _product) {
-        // TODO Auto-generated method stub
-        
+        ProductData productData = findStoredProductData(_product.getBarcode());
+        if (productData != null)
+        	_products.remove(productData);
+        loadValues();
     }
 }
 

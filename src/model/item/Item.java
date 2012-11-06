@@ -254,6 +254,7 @@ public class Item extends Model{
 	public void obliterate() {
 		_itemVault.obliterate(this);
 		this._saved = false;
+		this._id = -1;
 	}
 	
 	public void accept(Ivisitor visitor){
