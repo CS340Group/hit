@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 /** 
 * OperatorFactory Tester. 
 * 
-* @author <Authors name> 
+* @author <Nick Ethier>
 * @since <pre>Nov 3, 2012</pre> 
 * @version 1.0 
 */ 
@@ -146,8 +146,26 @@ public class OperatorFactoryTest {
     }
 
     @Test
-    public void testNullOperator() throws Exception {
+    public void testEqualToBooleanOperator() throws Exception {
         Operator op = getOperator("=", ((Object)false).getClass());
+
+        assertTrue(op.execute(false, false));
+        assertTrue(op.execute(true, true));
+        assertFalse(op.execute(false,true));
+    }
+
+    @Test
+    public void testNotEqualToBooleanOperator() throws Exception {
+        Operator op = getOperator("!=", ((Object)false).getClass());
+
+        assertFalse(op.execute(false, false));
+        assertFalse(op.execute(true, true));
+        assertTrue(op.execute(false,true));
+    }
+
+    @Test
+    public void testNullOperator() throws Exception {
+        Operator op = getOperator("=", Object.class);
         assertNull(op);
 
     }
