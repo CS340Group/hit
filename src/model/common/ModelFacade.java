@@ -26,7 +26,7 @@ public class ModelFacade {
     /**
      * Moves an item from one storage unit to another.
      */
-	public Result MoveItem(ProductContainer targetPC, Item item){
+	public Result dragItem(ProductContainer targetPC, Item item){
 		//Create a new product
 		//Add the one item to that product
 		//Call the move product method
@@ -53,9 +53,9 @@ public class ModelFacade {
         
         ProductGroup possiblePG = this.productGroupVault.get(targetPC.getId());
         if(possiblePG != null)
-        	this.MoveProduct(possiblePG.getStorageUnit(), targetPC, newProduct);
+        	this.dragProduct(possiblePG.getStorageUnit(), targetPC, newProduct);
         else
-        	this.MoveProduct((StorageUnit)targetPC, targetPC, newProduct);
+        	this.dragProduct((StorageUnit)targetPC, targetPC, newProduct);
         return new Result(true);
 	}
 
@@ -64,7 +64,7 @@ public class ModelFacade {
      * This is called only when moving items
      * 
      */
-	public Result AddItem(StorageUnit targetSU, Item item){
+	public Result addItem(StorageUnit targetSU, Item item){
         Product currentProduct = item.getProduct();
         assert currentProduct != null : "Product should be in vault";
         assert targetSU != null;
@@ -117,7 +117,7 @@ public class ModelFacade {
     /**
      * Removes an Item from its StorageUnit and ProductGroup.
      */
-    public Result RemoveItem(Item item){
+    public Result removeItem(Item item){
         assert item != null;
 		return item.delete();
 	}
@@ -125,7 +125,7 @@ public class ModelFacade {
     /**
      * Moves a Product from one StorageUnit / ProductGroup to another.
      */
-    public Result MoveProduct(StorageUnit targetSU, ProductContainer targetPC,
+    public Result dragProduct(StorageUnit targetSU, ProductContainer targetPC,
     Product product){
         assert targetSU != null;
         assert targetPC != null;
@@ -172,7 +172,7 @@ public class ModelFacade {
     /**
      * Deletes a Product from the vaults.
      */
-	public Result DeleteProduct(Product product){
+	public Result deleteProduct(Product product){
         assert product != null; 
 		if(product.isDeleteable().getStatus())
             product.delete();
@@ -184,14 +184,14 @@ public class ModelFacade {
     /**
      * Serializes the data in the vaults to a file on disk.
      */
-	public Result Serialize(){
+	public Result serialize(){
 		return vp.SerializeMe();
 	}
 
     /**
      * Reads the serialized data from a file on disk into the vaults.
      */
-	public Result Deserialize(){
+	public Result deserialize(){
 		return vp.DeSerializeMe();
 	}
 	

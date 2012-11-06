@@ -53,8 +53,11 @@ public class StorageUnit extends ProductContainer{
      *  its relatives. Before saving, an instance must be validated using the
      *  validate() call. */
     public Result save(){
-        if(!isValid())
-            return new Result(false, "Item must be valid before saving.");
+        if (!this._valid) {
+            Result result = this.validate();
+            if (!result.getStatus())
+                return result;
+        }
         if(getId() == -1)
             return _storageUnitVault.saveNew(this);
         else

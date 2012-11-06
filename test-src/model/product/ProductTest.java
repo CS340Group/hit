@@ -44,11 +44,8 @@ public class ProductTest {
         assertEquals("Id should be -1", -1, product.getId());
         assertEquals("Product is not saved", false, product.isSaved());
         assertEquals("Product is not valid", false, product.isValid());
-        assertEquals("Product shouldn't be saveable because its not valid",
-                false, product.save().getStatus());
-        //Technically this should be false but we havnt wired up Barcodes and other classes yet
-        //assertEquals("Product should pass validation", false, product.validate().getStatus());
-        assertEquals("Product should save", false, product.save().getStatus());
+        assertEquals("Product should validate automatically when saved.",
+                true, product.save().getStatus());
         //assertEquals("Id should be 0", 0, product.getId());
         //assertEquals("Product is saved", false, product.isSaved());
         //assertEquals("Product is Valid", false, product.isValid());

@@ -71,9 +71,9 @@ public class Size implements Serializable{
         if (_amount < 0){
             return new Result(false, "The amount must not be negative.");
         }
-        //if (_unit.toLowerCase().contentEquals("count") && _amount != 1.0){
-        //    return new Result(false, "If unit=count, amount must be 1");
-        //}
+        if (_unit.toLowerCase().contentEquals("count") && _amount != 1.0){
+           return new Result(false, "If unit=count, amount must be 1");
+        }
         return new Result(true, "You've got yourself a valid unit.");
     }
 

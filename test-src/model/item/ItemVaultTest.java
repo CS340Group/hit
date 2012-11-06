@@ -94,7 +94,7 @@ public class ItemVaultTest {
         assertEquals("Find by expiration date", item4.getId(), ItemVault.getInstance().find("ExpirationDate = %o", item4.getExpirationDate()).getId());
         assertEquals("Find by product barcode", item1.getId(), ItemVault.getInstance().find("ProductBarcode = %o", p1.getBarcode().toString()).getId());
         assertEquals("Find by product description", item3.getId(), ItemVault.getInstance().find("ProductDescription = %o", p2.getDescription()).getId());
-        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("ProductStorageUnitId = %o", p1.getStorageUnitId()).getId());
+        assertEquals("Find by product storage unit id", item1.getId(), ItemVault.getInstance().find("ProductStorageUnitId = %o", Integer.toString(p1.getStorageUnitId())).getId());
     }
 
     @Test

@@ -122,7 +122,7 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void transferItem() {
-        Item item = ItemVault.getInstance().find("Barcode = %o", getView().getBarcode());
+        Item item = ItemVault.getInstance().find("BarcodeString = %o", getView().getBarcode());
         if(item == null){
             getView().displayErrorMessage("Item not found");
             return;
@@ -130,7 +130,7 @@ public class TransferItemBatchController extends Controller implements
 
         Product product = item.getProduct();
 
-        ArrayList<Product> products = ProductVault.getInstance().findAll("Barcode = %o",  item.getProduct().getBarcode());
+        ArrayList<Product> products = ProductVault.getInstance().findAll("BarcodeString = %o",  item.getProduct().getBarcode());
 
         boolean flag = true;
         for(Product p : products){
