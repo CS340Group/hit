@@ -34,6 +34,15 @@ public abstract class Vault extends Observable implements Serializable {
 	 * Returns the size of the vault.
 	 */
 	public int size(){
+		ArrayList<IModel> models = this.findAll("Deleted = %o", false);
+		return models.size();
+    }
+
+    /**
+     * Returns the size of the vault, disregarding the _removed tag. Removed items
+     * will be included in the count unless item.obliterate() is used.
+     */
+    public int trueSize(){
         return dataVault.size();
     }
 
