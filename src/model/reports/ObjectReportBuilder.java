@@ -42,4 +42,16 @@ public class ObjectReportBuilder implements ReportBuilder {
 		printObject.addTextBlock(text);
 	}
 
+	@Override
+	public void endFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String returnReport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
