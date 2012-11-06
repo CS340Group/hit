@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PrintObject implements IPrintObject {
 	ArrayList<IPrintObjectHeader> headers = new ArrayList<IPrintObjectHeader>(); 
+	ArrayList<IPrintObjectHeader> headings = new ArrayList<IPrintObjectHeader>(); 
 	ArrayList<IPrintObjectTextBlock> textBlocks = new ArrayList<IPrintObjectTextBlock>(); 
 	ArrayList<IPrintObjectTable> tables = new ArrayList<IPrintObjectTable>(); 
 	
@@ -98,7 +99,8 @@ public class PrintObject implements IPrintObject {
 			header = data;
 		}
 	}
-	
+
+
 	
 }
 
