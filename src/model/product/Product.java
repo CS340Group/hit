@@ -48,6 +48,8 @@ public class Product extends Model{
 		_valid = false;
 		_saved = false;
         _creationDate = new DateTime();
+        _containerId = -1;
+        _storageUnitId = -1;
 	}
 
     /**

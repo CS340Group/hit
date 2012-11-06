@@ -217,6 +217,13 @@ public class Item extends Model{
     }
     
     /**
+     * Return the ID of the StorageUnit that holds this Item.
+     */
+    public int getProductStorageUnitIdInt(){
+    	return this.getProduct().getStorageUnitId();
+    }
+    
+    /**
      * Return the name of the name of the storage unit that holds this item.
      */
     public String getProductStorageUnitName() {
