@@ -1,14 +1,9 @@
 package gui.batches;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
 import common.command.CommandManager;
 import common.command.RemoveItemCommand;
@@ -30,7 +25,6 @@ public class RemoveItemBatchController extends Controller implements
 		IRemoveItemBatchController {
 	
 	private ProductVault _productVault;
-	private ItemVault _itemVault;
 	private Hashtable<String, ArrayList<ItemData>> _removedItems;
 	
     boolean _scanner = true;
@@ -47,7 +41,6 @@ public class RemoveItemBatchController extends Controller implements
 	public RemoveItemBatchController(IView view) {
 		super(view);
 		_productVault = ProductVault.getInstance();
-		_itemVault = ItemVault.getInstance();
 		_timer = new Timer();
 		_ModelFacade = new ModelFacade();
 		_removedItems = new Hashtable<String, ArrayList<ItemData>>();
