@@ -33,11 +33,15 @@ public class RemoveItemCommand extends AbstractCommand {
 
 	@Override
 	protected Result executeGuts() {
+		if (_controller != null)
+			_controller.addItemToView(_item);
 		return _item.delete();
 	}
 
 	@Override
 	protected Result undoGuts() {
+		if (_controller != null)
+			_controller.removeItemFromView(_item);
 		return _item.unDelete();
 	}
 
