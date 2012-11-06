@@ -1,10 +1,15 @@
 package gui.reports.removed;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import org.joda.time.DateTime;
 
 import model.item.ItemVault;
 import model.reports.IReportDirector;
 import model.reports.ObjectReportBuilder;
+import model.reports.PDFReportBuilder;
 import model.reports.RemovedItemsReport;
 import model.reports.ReportBuilder;
 import gui.common.*;
@@ -96,7 +101,7 @@ public class RemovedReportController extends Controller implements
 		if(this.getView().getSinceDate() == true)
 			director = new RemovedItemsReport(new DateTime(this.getView().getSinceDateValue()));
 		else {
-			if((ItemVault.sinceLastRemovedReport) == null)
+			if((ItemVault.getInstance().sinceLastRemovedReport) == null)
 				director = new RemovedItemsReport(new DateTime(0));
 			else
 				director = new RemovedItemsReport(ItemVault.getInstance().sinceLastRemovedReport);
@@ -104,6 +109,14 @@ public class RemovedReportController extends Controller implements
 		
 		director.setBuilder(builder);
 		director.constructReport();
+		if (Desktop.isDesktopSupported()) {
+			  try {
+			  File myFile = new File(builder.returnReport());
+			  Desktop.getDesktop().open(myFile);
+			  } catch (IOException ex) {
+			  // no application registered for PDFs
+			  }
+		}
 	}
 
 }
