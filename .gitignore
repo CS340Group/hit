@@ -21,3 +21,5 @@ myvaults.ser
 bin/.gitkeep
 
 infinitest.filters
+
+.settings/org.eclipse.ltk.core.refactoring.prefs
