@@ -54,6 +54,11 @@ public class PrintObject implements IPrintObject {
 	
 	public class PrintObjectTable implements IPrintObjectTable{
 		private ArrayList<String[]> table;
+		public PrintObjectTable(){
+			table = new ArrayList<String[]>();
+		}
+		
+		
 		public String getCell(int row, int column){
 			return  table.get(row)[column];
 		}

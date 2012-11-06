@@ -2,6 +2,8 @@ package model.reports;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,22 +23,28 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	private Map<String, Double> pgCounts;
 	private Set<String> possibleSizes;
 	
+	public NSupplyReport(){
+		pgCounts = new HashMap<String,Double>();
+		possibleSizes = new HashSet<String>();
+		
+	}
+	
 	public ReportBuilder getBuilder(){
 		return null;
 	}
+	
 
 	public void setBuilder(ReportBuilder reportBuilder) {
 		builder = reportBuilder;
 		
 	}
-
 	public void constructReport() {
 		builder.addHeader("N Supply Report");
 		builder.addHeader("Products");
 		this.SetUpProductGrid();
 		builder.addHeader("Product Groups");
 		this.SetUpProductGroupGrid();
-
+		return;
 		
 	}
 	private void SetUpProductGrid(){
