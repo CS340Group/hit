@@ -31,6 +31,12 @@ public class PDFReportBuilder implements ReportBuilder {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void addTextBlock(String text) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 
