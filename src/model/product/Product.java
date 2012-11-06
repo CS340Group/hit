@@ -179,6 +179,8 @@ public class Product extends Model{
         return _description;
     }
     public String getDescriptionSort(){
+        if(_description == null)
+            return "";
     	return _description.toLowerCase();
     }
 
