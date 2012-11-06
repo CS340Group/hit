@@ -3,6 +3,7 @@
  */
 package common.command;
 
+import gui.batches.RemoveItemBatchController;
 import model.item.Item;
 import common.Result;
 
@@ -14,18 +15,25 @@ import common.Result;
 public class RemoveItemCommand extends AbstractCommand {
 	
 	Item _item;
+	private RemoveItemBatchController _controller;
 	
 	/**
 	 * Construct a command to remove a specified item from the system.
 	 * @param i the Item to b removed.
 	 */
-	public RemoveItemCommand(Item i) {
-		_item = i;
+	public RemoveItemCommand(Item item) {
+		_item = item;
+	}
+
+	public RemoveItemCommand(Item item,
+			RemoveItemBatchController removeItemBatchController) {
+		this(item);
+		_controller = removeItemBatchController;
 	}
 
 	@Override
 	protected Result executeGuts() {
-		_item.obliterate();
+		_item.delete();
 		return new Result(true);
 	}
 
