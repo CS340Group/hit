@@ -40,20 +40,17 @@ public class RemovedItemsReport implements IReportDirector {
 		
 	}
 
-	public void visit(StorageUnit storageUnit) {
-		return;
-	}
-
-	@Override
 	public void constructReport() {
+		builder.addHeading("Items Removed Since "+sinceWhen.toString());
+		builder.startTable();
 		ItemVault iv = ItemVault.getInstance();
 		iv.sinceLastRemovedReport = DateTime.now();
 		ProductVault pv = ProductVault.getInstance();
 		
-		List<Item> items = iv.findAll("ExitDate >DateTime %o", sinceWhen);
+		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen);
 		items = sort(items, on(Item.class).getProductBarcode());
 		Item prevItem = null;
-		
+
 		int totalRemoved = 0;
 		int currentSupply = 0;
 		
@@ -80,6 +77,8 @@ public class RemovedItemsReport implements IReportDirector {
 			
 			prevItem = currentItem;
 		}
+		
+		currentSupply = 0;
 		
 	}
 }
