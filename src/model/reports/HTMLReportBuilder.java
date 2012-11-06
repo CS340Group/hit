@@ -15,7 +15,7 @@ public class HTMLReportBuilder implements ReportBuilder {
 	}
 
 	@Override
-	public void startTable() {
+	public void startTable(int columns) {
 		// TODO Auto-generated method stub
 		
 	}

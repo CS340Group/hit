@@ -1,5 +1,6 @@
 package model.common;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,11 @@ import java.util.List;
  */
 public class Stats {
     List<Number> data;
+
+    DecimalFormat format;
     public Stats () {
         data = new ArrayList<Number>();
+        format = new DecimalFormat("#.##");
     }
 
     public void insert(Number n){
@@ -28,7 +32,7 @@ public class Stats {
             if(n.doubleValue() > max)
                 max = n.doubleValue();
         }
-        return max;
+        return Double.valueOf(format.format(max));
     }
 
     public double getMin(){
@@ -39,7 +43,7 @@ public class Stats {
             if(n.doubleValue() < min)
                 min = n.doubleValue();
         }
-        return min;
+        return Double.valueOf(format.format(min));
     }
 
     public double getMean(){
@@ -49,7 +53,7 @@ public class Stats {
         for(Number n : data){
             mean += n.doubleValue();
         }
-        return mean/data.size();
+        return Double.valueOf(format.format(mean/data.size()));
     }
 
 

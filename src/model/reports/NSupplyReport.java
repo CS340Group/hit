@@ -49,7 +49,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		
 	}
 	private void SetUpProductGrid(){
-		builder.startTable();
+		builder.startTable(4);
 		builder.addRow(new String[] {"Description","Barcode","3-Month Supply","Current Supply"});
 		
 		ProductVault pv = ProductVault.getInstance();
@@ -85,7 +85,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	}
 	private void SetUpProductGroupGrid(){
 		StorageUnitVault suv = StorageUnitVault.getInstance();
-		builder.startTable();
+		builder.startTable(4);
 		builder.addRow(new String[]{"Product Group","Storage Unit",months+"-Month Supply","Current Supply"});
 		
 		List<StorageUnit> storageUnits = suv.findAll("Deleted = %o", false);

@@ -1,6 +1,7 @@
 package gui.reports.productstats;
 
 import ch.lambdaj.group.Group;
+import common.TestEnvironment;
 import gui.reports.TestPrintObject;
 
 import model.productcontainer.ProductGroupVault;
@@ -43,22 +44,8 @@ public class ProductStatsReportTest {
 
     @Test
     public void test(){
-        StorageUnit su = new StorageUnit();
-        su.generateTestData();
-        su.validate();
-        su.save();
-
-        Product p = new Product();
-        p.setContainerId(su.getId());
-        p.setStorageUnitId(su.getId());
-        p.generateTestData();
-
-        Item i = new Item();
-        i.generateTestData();
-        i.setProductId(p.getId());
-        i.setEntryDate(DateTime.now().minusDays(12));
-        i.validate();
-        i.save();
+        //TestEnvironment env = new TestEnvironment(2,10000);
+        //env.newEnvironment();
 
         StatisticReport report = new StatisticReport();
         ReportBuilder builder = new ObjectReportBuilder();
