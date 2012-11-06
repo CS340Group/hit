@@ -3,6 +3,7 @@ package common.command;
 import static org.junit.Assert.*;
 
 import model.item.Item;
+import model.item.ItemVault;
 import model.product.Product;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
@@ -20,6 +21,7 @@ public class TransferItemCommandTest {
 	Product p1, p2;
 	Item i1;
 	Result result;
+	private ItemVault _itemVault = ItemVault.getInstance();
 	
 	@Before
 	public void setUp() throws Exception {
@@ -27,6 +29,12 @@ public class TransferItemCommandTest {
 		su1.setName("Spam");
 		su2 = new StorageUnit().generateTestData();
 		su2.setName("Eggs");
+		
+		// Clear out the vaults.
+		su1._itemVault.clear();
+		su1._productGroupVault.clear();
+		su1._productVault.clear();
+		su1._storageUnitVault.clear();
 		
 		result = su1.save();
 		result = su2.save();
@@ -53,11 +61,6 @@ public class TransferItemCommandTest {
 
 	@After
 	public void tearDown() throws Exception {
-		// Clear out the vaults.
-		su1._itemVault.clear();
-		su1._productGroupVault.clear();
-		su1._productVault.clear();
-		su1._storageUnitVault.clear();
 	}
 
 	@Test
@@ -65,6 +68,7 @@ public class TransferItemCommandTest {
 		assertEquals(su1.getId(), i1.getProductStorageUnitIdInt());
 		assertEquals(p1.getId(), i1.getProductId()); 
 		assertEquals(-1, i1.getProduct().getProductContainerId());
+		assertNotNull(_itemVault.find("Id = %o", i1.getId()));
 		
 		TransferItemCommand command = new TransferItemCommand(su2, i1);
 		

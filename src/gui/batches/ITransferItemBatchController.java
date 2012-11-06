@@ -1,5 +1,6 @@
 package gui.batches;
 
+import model.item.Item;
 import gui.common.IController;
 
 /**
@@ -48,6 +49,10 @@ public interface ITransferItemBatchController extends IController {
 	 * in the transfer item batch view.
 	 */
 	void done();
+
+	void addItemToView(Item _item);
+
+	void removeItemFromView(Item _item);
 
 }
 
