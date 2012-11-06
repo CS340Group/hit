@@ -41,13 +41,13 @@ public class StatisticReport implements IReportDirector {
 	public void constructReport() {
 		builder.addHeader("Statistic Report");
 
-        ArrayList<Product> products = ProductVault.getInstance().findAll("CreationDate > %o", DateTime.now().minusMonths(months));
+        ArrayList<Product> products = ProductVault.getInstance().findAll("CreationDate > %o", DateTime.now().minusMonths(months), true);
 
         List<Product> sorted = sort(products,on(Product.class).getDescriptionSort());
         Product prev = new Product();
         ArrayList<Item> items = new ArrayList<Item>();
 
-        builder.startTable();
+        builder.startTable(10);
         builder.addRow(new String[]{
                 "Description", "Barcode", "Size", "3-Month Supply", "Supply: Cur/Avg", "Supply: Min/Max",
                 "Supply: Used/Added", "Shelf Life", "Used Age: Avg/Max", "Cur Age: Avg/Max"
@@ -55,9 +55,9 @@ public class StatisticReport implements IReportDirector {
         for(Product p : sorted){
             if(!p.getDescriptionSort().equals(prev.getDescriptionSort())){
                 getStats(items);
-                items = ItemVault.getInstance().findAll("ProductId = %o", p.getId());
+                items = ItemVault.getInstance().findAll("ProductId = %o", p.getId(), true);
             } else {
-                items.addAll(ItemVault.getInstance().findAll("ProductId = %o", p.getId()));
+                items.addAll(ItemVault.getInstance().findAll("ProductId = %o", p.getId(), true));
             }
             prev = p;
         }

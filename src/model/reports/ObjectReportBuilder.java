@@ -14,7 +14,7 @@ public class ObjectReportBuilder implements ReportBuilder {
 		printObject.addHeader(header);
 	}
 
-	public void startTable() {
+	public void startTable(int columns) {
 		printObject.addTable();
 	}
 
