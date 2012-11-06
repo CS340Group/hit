@@ -69,7 +69,7 @@ public class TransferItemCommand extends AbstractCommand {
 			_newProduct = new Product(_oldProduct);
 			_newProduct.setId(-1);
 			_newProduct.setStorageUnitId(_targetSU.getId());
-			_newProduct.setContainerId(-1);
+			_newProduct.setContainerId(_targetSU.getId());
 			_newProduct.save();
 			_createdProduct = true;
 		}
@@ -82,9 +82,6 @@ public class TransferItemCommand extends AbstractCommand {
 			_controller.addItemToView(_item);
 
 		Result result = _item.save();
-		_newProduct.save();
-		_oldProduct.save();
-		_targetSU.save();
 		return result;
 	}
 

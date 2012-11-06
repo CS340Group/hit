@@ -1,5 +1,7 @@
 package model.reports;
 
+import common.Result;
+
 public interface ReportBuilder {
 	
 	public void addHeader(String header);
@@ -10,9 +12,9 @@ public interface ReportBuilder {
 
 	public void startTable(int columns);
 	
-	public void addRow(String[] row);
+	public Result addRow(String[] row);
 	
-	public void endTable();
+	public Result endTable();
 	
 	public void endFile();
 	

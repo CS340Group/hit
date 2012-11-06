@@ -1,5 +1,7 @@
 package model.reports;
 
+import common.Result;
+
 public class HTMLReportBuilder implements ReportBuilder {
 
 	@Override
@@ -21,15 +23,15 @@ public class HTMLReportBuilder implements ReportBuilder {
 	}
 
 	@Override
-	public void addRow(String[] row) {
+	public Result addRow(String[] row) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void endTable() {
+	public Result endTable() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
