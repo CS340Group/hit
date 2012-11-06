@@ -32,5 +32,11 @@ public class HTMLReportBuilder implements ReportBuilder {
 		
 	}
 
+	@Override
+	public void addTextBlock(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

@@ -1,5 +1,13 @@
 package gui.reports.removed;
 
+import org.joda.time.DateTime;
+
+import model.item.ItemVault;
+import model.reports.IReportDirector;
+import model.reports.NSupplyReport;
+import model.reports.ObjectReportBuilder;
+import model.reports.RemovedItemsReport;
+import model.reports.ReportBuilder;
 import gui.common.*;
 
 /**
@@ -58,6 +66,10 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		if(ItemVault.getInstance().sinceLastRemovedReport != null)
+			this.getView().setSinceDateValue(ItemVault.getInstance().sinceLastRemovedReport.toDate());
+		else
+			this.getView().setSinceLast(false);
 	}
 
 	//
@@ -78,6 +90,21 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+		ReportBuilder builder = new ObjectReportBuilder();
+		DateTime sinceWhen = null;
+		IReportDirector director;
+		
+		if(this.getView().getSinceDate() == true)
+			director = new RemovedItemsReport(new DateTime(this.getView().getSinceDateValue()));
+		else {
+			if((ItemVault.getInstance().sinceLastRemovedReport) == null)
+				director = new RemovedItemsReport(new DateTime(0));
+			else
+				director = new RemovedItemsReport(ItemVault.getInstance().sinceLastRemovedReport);
+		}
+		
+		director.setBuilder(builder);
+		director.constructReport();
 	}
 
 }

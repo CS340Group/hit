@@ -81,7 +81,7 @@ import gui.common.*;
 	@Override
 	public void display() {
 		ReportBuilder builder = new ObjectReportBuilder();
-		IReportDirector director = new StatisticReport();
+		IReportDirector director = new NSupplyReport(Integer.parseInt(this.getView().getMonths()));
 		director.setBuilder(builder);
 		director.constructReport();
 	}

@@ -7,6 +7,8 @@ import model.common.Vault;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 
 /**
  * The Item class provides a way to query for ItemModels within the select data backend
@@ -22,7 +24,7 @@ public class ItemVault extends Vault{
 	 */
 	private static final long serialVersionUID = 1L;
 	static ItemVault currentInstance;
-
+	public static DateTime sinceLastRemovedReport;
 	/**
 	 * Private constructor, for the singleton design pattern.
 	 */
