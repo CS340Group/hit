@@ -33,14 +33,12 @@ public class RemoveItemCommand extends AbstractCommand {
 
 	@Override
 	protected Result executeGuts() {
-		_item.delete();
-		return new Result(true);
+		return _item.delete();
 	}
 
 	@Override
 	protected Result undoGuts() {
-		_item.save();
-		return new Result(true);
+		return _item.unDelete();
 	}
 
 }

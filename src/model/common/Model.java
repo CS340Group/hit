@@ -106,7 +106,7 @@ public abstract class Model implements IModel, Serializable, Comparable<IModel>{
             return new Result(false, "Must be deleteable");
         this._deleted = true;
         this._valid = true;
-        return new Result(true);
+        return this.save();
     }
 
     /**
@@ -115,8 +115,7 @@ public abstract class Model implements IModel, Serializable, Comparable<IModel>{
     public Result unDelete(){
         this._deleted = false;
         this._valid = true;
-        this.save();
-        return new Result(true);
+        return this.save();
     }
 
 	/*

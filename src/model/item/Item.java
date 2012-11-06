@@ -188,7 +188,12 @@ public class Item extends Model{
 		}
 	}
 	
-    /**
+    @Override
+	public Result isDeleteable() {
+		return new Result(true);
+	}
+
+	/**
      * Return the string of the Barcode for the Product that this Item belongs
      * to.
      */
