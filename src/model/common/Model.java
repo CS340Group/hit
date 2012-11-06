@@ -129,10 +129,7 @@ public abstract class Model implements IModel, Serializable, Comparable<IModel>{
     /*
      *
      */
-    public Result isDeleteable(){
-        assert false;
-        return new Result(false, "isDeleteable needs to be overridden");
-    }
+    public abstract Result isDeleteable();
 
     /**
      * Put the Product into an invalid state.

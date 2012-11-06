@@ -131,7 +131,7 @@ public class ProductContainer extends Model{
     /**
      * Indicates if the object is able to be deleted
      */
-    public Result isDeletable(){
+    public Result isDeleteable(){
     	//Product Container can not have items
     	ArrayList<Product> products;
     	products = _productVault.findAll("ContainerId = %o", this.getId());
@@ -140,7 +140,7 @@ public class ProductContainer extends Model{
     			return new Result(false);
     	}
     	for(ProductGroup tempPG : this.getChildProductGroups()){
-    		if(tempPG.isDeletable().getStatus() == false)
+    		if(tempPG.isDeleteable().getStatus() == false)
     			return new Result(false);
     	}
     	
@@ -154,4 +154,6 @@ public class ProductContainer extends Model{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
