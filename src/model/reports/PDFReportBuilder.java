@@ -161,11 +161,7 @@ public class PDFReportBuilder implements ReportBuilder {
 		return _reportName;
 	}
 
-	@Override
-	public IPrintObject getReportObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 
 }
