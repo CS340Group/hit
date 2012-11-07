@@ -6,6 +6,8 @@ import java.awt.Desktop;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.item.Item;
 import model.item.ItemVault;
@@ -46,11 +48,13 @@ public class PDFReportBuilderTest {
 		Product product = new Product();
 		product.generateTestData();
 		Result result = product.save();
-		Item item = new Item();
-		item.generateTestData();
-		item.setProduct(product);
-		result = item.save();
-		item.delete();
+		for (int i = 0; i < 25; i++) {
+			Item item = new Item();
+			item.generateTestData();
+			item.setProduct(product);
+			result = item.save();
+			item.delete();
+		}
 		
 		RemovedItemsReport report = new RemovedItemsReport(new DateTime().minusDays(2));
 		report.setBuilder(_builder);
