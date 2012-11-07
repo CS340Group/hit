@@ -1,5 +1,7 @@
 package model.reports;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -7,10 +9,13 @@ import org.joda.time.DateTime;
 import static ch.lambdaj.Lambda.*;
 import model.item.Item;
 import model.item.ItemVault;
+import model.product.Product;
+import model.product.ProductVault;
 
 public class RemovedItemsReport implements IReportDirector {
 	private ReportBuilder builder;
 	DateTime sinceWhen ;
+	private ItemVault _itemVault = ItemVault.getInstance();
 	
 	public RemovedItemsReport(DateTime sinceLastRemovedReport){
 		sinceWhen = new DateTime(sinceLastRemovedReport);
@@ -36,39 +41,35 @@ public class RemovedItemsReport implements IReportDirector {
 		
 		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
 		items = sort(items, on(Item.class).getProductBarcode());
-		Item prevItem = null;
 
-		int totalRemoved = 0;
-		int currentSupply = 0;
-		
-		for(Item currentItem : items){
-			if(currentItem.getProductBarcode() != prevItem.getProductBarcode()){
-				//Print row
-				List<Item> allItems = iv.findAll("ProductBarcode() = "+currentItem.getProductBarcode());
-				for(Item i : allItems)
-					if(i.getExitDate() == null)
-						currentSupply++;
-				
-				
-				builder.addRow(new String[]{
-						prevItem.getProductDescription(),
-						prevItem.getProduct().getSize().toString(),
-						prevItem.getProductBarcode(),
-						Integer.toString(totalRemoved),
-						Integer.toString(currentSupply)});
-				
-				currentSupply=0;
-				totalRemoved=0;
+		// Build a set of the products belonging to the removed items.
+		HashSet<Product> products = new HashSet<Product>();
+		for(Item item : items) products.add(item.getProduct());
+		// Flatten the set and sort it.
+		List<Product> sortedProducts = new ArrayList<Product>(products);
+		sortedProducts = sort(sortedProducts, on(Product.class).getDescription());
+
+		// Build the rows of the report through the products.
+		for(Product product : sortedProducts){
+			// Find all items belonging to this product.
+			ArrayList<Item> theseItems = product.getItems();
+			// Sort out what's deleted and not.
+			int deleted = 0;
+			int remaining = 0;
+			for(Item item : theseItems){
+				if (item.isDeleted()){deleted++;}
+				else{remaining++;}
 			}
-			totalRemoved++;
-			
-			prevItem = currentItem;
+
+			builder.addRow(new String[]{
+			    product.getDescription(),
+			    product.getSize().toString(),
+			    product.getBarcode(),
+			    Integer.toString(deleted),
+			    Integer.toString(remaining)});
 		}
+
 		builder.endTable();
 		builder.endFile();
-		
 	}
-
-
-
 }
