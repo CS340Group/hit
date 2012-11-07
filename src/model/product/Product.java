@@ -373,4 +373,10 @@ public class Product extends Model{
 	public int hashCode() {
 		return this.getId();
 	}
+	
+
+	public double getCurrentSupply(){
+		ArrayList<Item> items = _itemVault.findAll("ProductId = %o", this.getId());
+		return items.size();
+	}
 }

@@ -110,7 +110,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		if(pgCounts.containsKey(key)){
 			pgCounts.put(key, pgCounts.get(key) + product.getSize().getAmount());
 		} else {
-			pgCounts.put(key, (double) product.getSize().getAmount());
+			pgCounts.put(key, product.getCurrentSupply());
 		}
 		
 	}

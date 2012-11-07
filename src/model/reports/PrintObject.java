@@ -61,7 +61,10 @@ public class PrintObject implements IPrintObject {
 		
 		
 		public String getCell(int row, int column){
-			return  table.get(row)[column];
+			String value = table.get(row)[column];
+			if(value == null)
+				value = "";
+			return  value;
 		}
 		public void setCell(int row, int column, String data){
 			table.get(row)[column] = data;

@@ -117,7 +117,8 @@ public class AddProductGroupController extends Controller implements
         pg.setRootParentId(unit.getId());
         pg.setParentId(unit.getId());
         float size = Float.parseFloat(getView().getSupplyValue());
-        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
+        Size tempSize = new Size(size, getView().getSupplyUnit().toString());
+        pg.set3MonthSupply(tempSize);
         pg.setName(getView().getProductGroupName());
         pg.validate();
         pg.save();

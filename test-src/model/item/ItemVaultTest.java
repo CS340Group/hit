@@ -1,5 +1,6 @@
 package model.item;
 
+import junit.framework.TestCase;
 import model.common.Barcode;
 import model.common.Size;
 import model.product.Product;
