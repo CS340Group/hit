@@ -6,9 +6,12 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import model.common.Size;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
+import model.productcontainer.ProductGroup;
+import model.productcontainer.StorageUnit;
 
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -33,7 +36,19 @@ public class NoticesReportTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		builder = new ObjectReportBuilder();
+		StorageUnit storageUnit = new StorageUnit();
+		storageUnit.generateTestData();
+		ProductGroup productGroup = new ProductGroup();
+			productGroup.set3MonthSupply(new Size(10000,"count"));
+			productGroup.setName("pg1");
+			productGroup.setParentId(storageUnit.getId());
+			productGroup.validate();
+			productGroup.save();
+		
+		
+			
 		Product product = new Product();
+		product.setContainerId(productGroup.getId());
 		product.generateTestData();
 		Result result = product.save();
 		for (int i = 0; i < 25; i++) {
@@ -41,10 +56,9 @@ public class NoticesReportTest {
 			item.generateTestData();
 			item.setProduct(product);
 			result = item.save();
-			item.delete();
 		}
 		
-		RemovedItemsReport report = new RemovedItemsReport(new DateTime().minusDays(2));
+		NoticesReport report = new NoticesReport();
 		report.setBuilder(builder);
 		report.constructReport();
 		object = builder.returnObject();
@@ -66,20 +80,15 @@ public class NoticesReportTest {
 	}
 	
 	@Test
-	public void testTableHeader() {
-		assertTrue("Table header is wrong.",object.getTable(0).getCell(0, 0).equals("Description"));
-		assertTrue("Table header is wrong.",object.getTable(0).getCell(0, 1).equals("Size"));
-		assertTrue("Table header is wrong.",object.getTable(0).getCell(0, 2).equals("Product Barcode"));
-		assertTrue("Table header is wrong.",object.getTable(0).getCell(0, 3).equals("Removed"));
-		assertTrue("Table header is wrong.",object.getTable(0).getCell(0, 4).equals("Current Supply"));
+	public void testLines() {
+		String text = object.getTextBlock(0).toString();
+		assertTrue("Text block one is wrong.",text.equals(
+				"Product group Test Storage Unit Name::pg1 has a 3-month supply "+
+				"(10000.0 count) that is inconsistent with the following products:"));
+		text = object.getTextBlock(1).toString();
+		assertTrue("Text block two is wrong.",text.equals("- pg1::Spam and eggs(size: 3.0 oz)"));
 	}
-	@Test
-	public void testRow() {
-		assertTrue("Items removed should be "+"25"+" instead its "+object.getTable(0).getCell(1, 3)
-				,object.getTable(0).getCell(1, 3).equals("25"));
-		assertTrue("Current supply should be "+"0"+" instead its "+object.getTable(0).getCell(1, 4)
-				,object.getTable(0).getCell(1, 4).equals("0"));
-	}
+
 	
 	
 }
