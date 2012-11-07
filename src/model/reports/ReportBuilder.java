@@ -19,7 +19,5 @@ public interface ReportBuilder {
 	public void endFile();
 	
 	public String returnReport();
-	
-	public IPrintObject getReportObject();
-	
+		
 }
