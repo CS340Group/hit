@@ -52,5 +52,11 @@ public class HTMLReportBuilder implements ReportBuilder {
 		return null;
 	}
 
+	@Override
+	public IPrintObject getReportObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

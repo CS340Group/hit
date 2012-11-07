@@ -20,4 +20,6 @@ public interface ReportBuilder {
 	
 	public String returnReport();
 	
+	public IPrintObject getReportObject();
+	
 }

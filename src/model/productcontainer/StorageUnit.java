@@ -82,6 +82,8 @@ public class StorageUnit extends ProductContainer{
 	public StorageUnit generateTestData() {
 		// TODO Auto-generated method stub
 		this.setName("Test Storage Unit Name");
+		this.validate();
+		this.save();
 		return this;
 	}
 	
