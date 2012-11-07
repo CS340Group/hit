@@ -26,7 +26,13 @@ public class Item extends Model{
 
     private Barcode _barcode;
 
-    private DateTime _entryDate;
+    @Override
+	public Result delete() {
+    	setExitDate(new DateTime());
+		return super.delete();
+	}
+
+	private DateTime _entryDate;
 
     private DateTime _exitDate;
     
