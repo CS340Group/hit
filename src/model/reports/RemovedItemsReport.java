@@ -52,14 +52,8 @@ public class RemovedItemsReport implements IReportDirector {
 		// Build the rows of the report through the products.
 		for(Product product : sortedProducts){
 			// Find all items belonging to this product.
-			ArrayList<Item> theseItems = product.getItems();
-			// Sort out what's deleted and not.
-			int deleted = 0;
-			int remaining = 0;
-			for(Item item : theseItems){
-				if (item.isDeleted()){deleted++;}
-				else{remaining++;}
-			}
+			int remaining = product.getItems().size();
+			int deleted = product.getDeletedItems().size();
 
 			builder.addRow(new String[]{
 			    product.getDescription(),
