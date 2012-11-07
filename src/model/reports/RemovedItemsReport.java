@@ -64,7 +64,7 @@ public class RemovedItemsReport implements IReportDirector {
 			
 			prevItem = currentItem;
 		}
-		
+		builder.endTable();
 		builder.endFile();
 		
 	}
