@@ -2,6 +2,7 @@ package model.product;
 
 import common.Result;
 import model.common.Size;
+import model.common.Vault;
 import model.item.Item;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.ProductGroup;
@@ -9,8 +10,10 @@ import model.reports.Ivisitor;
 import model.common.Model;
 
 import org.joda.time.DateTime;
+import static ch.lambdaj.Lambda.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Product class encapsulates all the funtions and data associated with a "Product".
@@ -378,5 +381,10 @@ public class Product extends Model{
 	public double getCurrentSupply(){
 		ArrayList<Item> items = _itemVault.findAll("ProductId = %o", this.getId());
 		return items.size();
+	}
+
+	public List<Item> getDeletedItems() {
+			List<Item> items = this._itemVault.findAll("ProductId = %o", this.getId(), true);
+		return filter(having(on(Item.class).getDeleted()), items);
 	}
 }

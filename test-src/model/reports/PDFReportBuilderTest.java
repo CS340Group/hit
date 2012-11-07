@@ -47,13 +47,14 @@ public class PDFReportBuilderTest {
 	public void test() {
 		Product product = new Product();
 		product.generateTestData();
-		Result result = product.save();
+		product.save();
 		for (int i = 0; i < 25; i++) {
 			Item item = new Item();
 			item.generateTestData();
 			item.setProduct(product);
-			result = item.save();
-			item.delete();
+			item.save();
+            if((i%2) == 0)
+    			item.delete();
 		}
 		
 		RemovedItemsReport report = new RemovedItemsReport(new DateTime().minusDays(2));
