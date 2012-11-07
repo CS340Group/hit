@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itextpdf.text.pdf.Barcode;
-import com.sun.tools.internal.xjc.reader.gbind.OneOrMore;
+
 
 import ch.lambdaj.Lambda.*;
 

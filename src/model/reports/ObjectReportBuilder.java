@@ -56,5 +56,11 @@ public class ObjectReportBuilder implements ReportBuilder {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public IPrintObject returnObject(){
+		return this.printObject;
+	}
+
+
 
 }
