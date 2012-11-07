@@ -34,8 +34,16 @@ public class PDFReportBuilder implements ReportBuilder {
 	private String _reportName = "PdfReport.pdf";
     
     public PDFReportBuilder(){
+		setUpDocument();
+    }
+    
+    public PDFReportBuilder(String filepath){
+    	_reportName = filepath;
+    	setUpDocument();
+    }
+
+	private void setUpDocument() {
 		_d = new Document();
-		
 		try {
 			_writer = PdfWriter.getInstance(_d, new FileOutputStream(_reportName));
 		} catch (FileNotFoundException e) {
@@ -52,16 +60,16 @@ public class PDFReportBuilder implements ReportBuilder {
 		
 		_open = true;
 		_rawContent = _writer.getDirectContent();
-    }
+	}
 
 	@Override
 	public void addHeader(String header) {
-		_d.addHeader("Header", header);
+		addTextAtSize(header+"\n", 20);
 	}
 
 	@Override
 	public void addHeading(String heading) {
-		_d.addTitle(heading);
+		addTextAtSize(heading+"\n", 14);
 	}
 
 	@Override
@@ -92,6 +100,7 @@ public class PDFReportBuilder implements ReportBuilder {
 			
 			_itemsAdded++;
 		};
+		fillNullCells();
 		return new Result(true);
 	}
 
@@ -118,13 +127,13 @@ public class PDFReportBuilder implements ReportBuilder {
 			c.setBorder(0);
 			_table.addCell(c);
 			itemsToAdd--;
+			_itemsAdded++;
 		}
 	}
 
-	@Override
-	public void addTextBlock(String text) {
+	public void addTextAtSize(String text, int size){
 		// Add some text to a chunk, and the image to a chunk.
-		Font font = new Font(Font.FontFamily.HELVETICA, 8);
+		Font font = new Font(Font.FontFamily.HELVETICA, size);
 		Chunk c1 = new Chunk(text);
 		c1.setFont(font);
 		Phrase p = new Phrase(c1);
@@ -134,6 +143,11 @@ public class PDFReportBuilder implements ReportBuilder {
 			e.printStackTrace();
 			assert false;
 		}
+	}
+
+	@Override
+	public void addTextBlock(String text) {
+		addTextAtSize(text, 8);
 	}
 
 	@Override
