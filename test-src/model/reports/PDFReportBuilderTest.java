@@ -47,15 +47,6 @@ public class PDFReportBuilderTest {
 		_builder.addRow(row1);
 		_builder.endTable();
 		_builder.endFile();
-		
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File(filePath);
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                // no application registered for PDFs
-            }
-        }	
 	}
 
 }
