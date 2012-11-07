@@ -361,4 +361,16 @@ public class Product extends Model{
 		}
 		visitor.visit(this);
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		Product otherP = (Product) other;
+		if (this.getBarcode() == otherP.getBarcode())
+			return true;
+		return false;
+	}
+	
+	public int hashCode() {
+		return this.getId();
+	}
 }
