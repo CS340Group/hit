@@ -159,7 +159,13 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void addItem() {
         int count = getCountFromView();
-        if (count == -1) return;
+        if (count <= 0){
+            if(_scanner)
+                getView().displayErrorMessage("Count cannot be less than 1.");
+            getView().setBarcode("");
+            getView().setCount("1");
+            return;
+        }
         boolean createdProduct = false;
 
         // Make sure the product exists to be added to.
