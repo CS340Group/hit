@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.junit.Assert;
-
 import common.Result;
 
 public class HTMLReportBuilder implements ReportBuilder {
