@@ -8,6 +8,8 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
+import common.TestEnvironment;
+
 import model.common.Barcode;
 import model.common.ModelFacade;
 import model.common.Size;
@@ -36,7 +38,7 @@ public class InventoryController extends Controller
 		super(view);
 		_pickler = new VaultPickler();	
 		_pickler.DeSerializeMe();
-//		this.addSampleItems();
+		this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
@@ -104,77 +106,8 @@ public class InventoryController extends Controller
 	}
 
 	private void addSampleItems(){
-		StorageUnit su1 = new StorageUnit();
-        su1.setName("Unit A");
-        StorageUnit su2 = new StorageUnit();
-        su2.setName("Unit B");
-        StorageUnit su3 = new StorageUnit();
-        su3.setName("Unit C");
-        
-        su1.validate();
-        su2.validate();
-        su3.validate();
-        su1.save();
-        su2.save();
-        su3.save();
-        
-        
-        ProductGroup pg1 = new ProductGroup();
-        pg1.setName("Group A");
-        pg1.setParentId(su3.getId());
-        //pg1.setRootParentId(su3.getId());
-        pg1.set3MonthSupply(new Size(3, "oz"));
-        
-        ProductGroup pg2 = new ProductGroup();
-        pg2.setName("Group B");
-        pg2.setParentId(su1.getId());
-        //pg2.setRootParentId(su1.getId());
-        pg2.set3MonthSupply(new Size(3, "oz"));
-        
-        
-        pg1.validate();
-        pg2.validate();
-        
-        pg1.save();
-        pg2.save();
-        
-        ProductGroup pg3 = new ProductGroup();
-        pg3.setName("Group C");
-        pg3.setParentId(pg2.getId());
-        //pg3.setRootParentId(su1.getId());
-        pg3.set3MonthSupply(new Size(3, "oz"));
-        pg3.validate();
-        pg3.save();
-        
-        
-        Product p1 = new Product();
-        p1.setStorageUnitId(su1.getId());
-        p1.set3MonthSupply(3);
-        p1.setBarcode("1111");
-        p1.setContainerId(pg2.getId());
-        p1.setDescription("This is such a great description");
-        p1.setShelfLife(5);
-        p1.setCreationDate(new DateTime());
-        p1.setSize(new Size(123,"oz"));
-        p1.validate();
-        p1.save();
-        
-        Item i1 = new Item();
-        //i1.setBarcode(new Barcode());
-        i1.setEntryDate(new DateTime());
-        i1.setExitDate(new DateTime());
-        i1.setProductId(p1.getId());
-        i1.validate();
-        i1.save();
-        
-        Item i2 = new Item();
-        //i1.setBarcode(new Barcode());
-        i2.setEntryDate(new DateTime());
-        i2.setExitDate(new DateTime());
-        i2.setProductId(p1.getId());
-        i2.validate();
-        i2.save();
-        
+		TestEnvironment env = new TestEnvironment(12, 350);
+		env.newEnvironment();
 	}
 	/*
 	 * Add all children to pc, recursive call
