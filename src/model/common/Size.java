@@ -71,11 +71,12 @@ public class Size implements Serializable{
         if (_amount < 0){
             return new Result(false, "The amount must not be negative.");
         }
-        if (_unit.toLowerCase().contentEquals("count") && _amount != 1.0){
+        if (_unit.toLowerCase().contentEquals("count") && _amount != Math.round(_amount)){
+            //Counts can be > 1 but must be ints - Nick Ethier (11/8/2012)
         	//TODO:I commented this out because product groups can have a 3month supply with a count > 1 - Brendon Beebe (11/7/2012)
         	// If this creates bugs in other places then we need to come up with a better solution
         	
-           //return new Result(false, "If unit=count, amount must be 1");
+           return new Result(false, "If unit=count, amount must be an int");
         }
         return new Result(true, "You've got yourself a valid unit.");
     }
