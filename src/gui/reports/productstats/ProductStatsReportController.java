@@ -89,7 +89,7 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new PDFReportBuilder();
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
 		IReportDirector director = new StatisticReport();
 		director.setBuilder(builder);
         int months = Integer.parseInt(getView().getMonths());

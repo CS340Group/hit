@@ -36,6 +36,7 @@ public class CommandManager {
 		if (!c.canExecute())
 			return new Result(false, "Command could not be executed.");
 		_executedCommands.push(c);
+		_undoneCommands.clear();
 		return c.execute();
 	}
 	
@@ -63,11 +64,11 @@ public class CommandManager {
 		return _executedCommands.peek().execute();
 	}
 
-	private boolean canUndo() {
+	public boolean canUndo() {
 		return _executedCommands.isEmpty() ? false : true;
 	}
 	
-	private boolean canRedo() {
+	public boolean canRedo() {
 		return _undoneCommands.isEmpty() ? false : true;
 	}
 

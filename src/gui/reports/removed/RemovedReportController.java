@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.joda.time.DateTime;
 
 import model.item.ItemVault;
+import model.reports.HTMLReportBuilder;
 import model.reports.IReportDirector;
 import model.reports.ObjectReportBuilder;
 import model.reports.PDFReportBuilder;
@@ -100,8 +101,7 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new PDFReportBuilder();
-		DateTime sinceWhen = null;
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
 		IReportDirector director;
 		
 		if(this.getView().getSinceDate() == true)
