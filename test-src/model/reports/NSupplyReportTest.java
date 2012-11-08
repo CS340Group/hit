@@ -18,6 +18,7 @@ import model.productcontainer.StorageUnitVault;
 
 import org.joda.time.DateTime;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -72,7 +73,14 @@ public class NSupplyReportTest {
 
 	}
 	
-	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
+		
+	}
 	@Before
 	public void setUp() throws Exception {
 		

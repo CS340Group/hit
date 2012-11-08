@@ -7,6 +7,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import static ch.lambdaj.Lambda.*;
+import model.common.AllVaults;
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
@@ -37,6 +38,7 @@ public class RemovedItemsReport implements IReportDirector {
 		builder.startTable(5);
 		builder.addRow(new String[] {"Description","Size","Product Barcode","Removed","Current Supply"});
 		ItemVault iv = ItemVault.getInstance();
+		AllVaults al = new AllVaults();
 		iv.sinceLastRemovedReport = DateTime.now();
 		
 		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
