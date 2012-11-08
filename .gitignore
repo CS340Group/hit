@@ -25,3 +25,13 @@ infinitest.filters
 .settings/org.eclipse.ltk.core.refactoring.prefs
 
 *.pdf
+
+expired.html
+
+nMonth.html
+
+notices.html
+
+removedItems.html
+
+statistics.html
