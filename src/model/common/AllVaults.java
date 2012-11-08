@@ -2,6 +2,8 @@ package model.common;
 
 import java.io.Serializable;
 
+import org.joda.time.DateTime;
+
 import model.item.ItemVault;
 import model.product.ProductVault;
 import model.productcontainer.ProductGroupVault;
@@ -29,6 +31,8 @@ public class AllVaults implements Serializable {
 	public void UseDataFromTheseVaults(){
 		ItemVault.getInstance().useDataFromOtherVault(itemVault);
 		ItemVault.getInstance().notifyObservers();
+		ItemVault.getInstance().sinceLastRemovedReport = itemVault.sinceLastRemovedReport;
+		
 		StorageUnitVault.getInstance().useDataFromOtherVault(storageUnitVault);
 		StorageUnitVault.getInstance().notifyObservers();
 		ProductVault.getInstance().useDataFromOtherVault(productVault);

@@ -11,9 +11,12 @@ import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
+import model.productcontainer.ProductGroupVault;
+import model.productcontainer.StorageUnitVault;
 
 import org.joda.time.DateTime;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +28,9 @@ public class PDFReportBuilderTest {
     PDFReportBuilder _builder;
     ItemVault _itemVault = ItemVault.getInstance();
     private ProductVault _productVault = ProductVault.getInstance();
-
+    ProductGroupVault pgv = ProductGroupVault.getInstance();
+	StorageUnitVault suv = StorageUnitVault.getInstance();
+    
     @Before
     public void setUp() throws Exception {
         TestEnvironment env = new TestEnvironment(4, 200);
@@ -44,6 +49,15 @@ public class PDFReportBuilderTest {
         }
     }
 
+    @AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
+		
+	}
+    
     @Test
     public void testRemovedItemsReport() {
         _filePath = "removedItems.pdf";

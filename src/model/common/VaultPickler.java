@@ -34,6 +34,8 @@ public class VaultPickler {
 	         new FileOutputStream("myvaults.ser");
 	         ObjectOutputStream out =
 	                            new ObjectOutputStream(fileOut);
+	         
+	         allVaults.itemVault.isSaved = true;
 	         out.writeObject(allVaults);
 	         out.close();
 	         fileOut.close();
