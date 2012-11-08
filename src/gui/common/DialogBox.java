@@ -57,7 +57,11 @@ public class DialogBox extends JDialog {
 		setContentPane(content);		
 		pack();
 		setLocationRelativeTo(_parent);
-		setVisible(true);		
+        try {
+		    setVisible(true);
+        } catch (ArrayIndexOutOfBoundsException e){
+            //Do nothing
+        }
 	}
 
 }
