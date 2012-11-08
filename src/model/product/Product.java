@@ -293,8 +293,8 @@ public class Product extends Model{
         if (_size==null || !_size.validate().getStatus()){
             return new Result(false, "The size is invalid.");
         }
-        if (_shelfLife<0){
-            return new Result(false, "The shelf life must be non-negative.");
+        if (_shelfLife<1){
+            return new Result(false, "The shelf life must be greater than 0.");
         }
         if (_3MonthSupply<0){
             return new Result(false, "The 3 mo. supply must be non-negative.");
