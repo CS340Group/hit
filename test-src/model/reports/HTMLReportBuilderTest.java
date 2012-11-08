@@ -5,19 +5,14 @@ import static org.junit.Assert.*;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import model.item.Item;
 import model.item.ItemVault;
-import model.product.Product;
 import model.product.ProductVault;
 
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.tools.javac.comp.Env;
 
 import common.TestEnvironment;
 
