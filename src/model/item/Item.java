@@ -279,4 +279,8 @@ public class Item extends Model{
 	public void accept(Ivisitor visitor){
 		visitor.visit(this);
 	}
+
+    public boolean getIsExpired(){
+        return getExpirationDate().toDateMidnight().isBeforeNow();
+    }
 }

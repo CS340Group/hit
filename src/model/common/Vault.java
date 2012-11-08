@@ -154,8 +154,12 @@ public abstract class Vault extends Observable implements Serializable {
 		//Loop through entire hashmap and check values one at a time
 		for (Entry<Integer, IModel> entry : dataVault.entrySet()) {
 			myModel = entry.getValue();
-			Object myItemValue;
-			myItemValue = method.invoke(myModel);
+			Object myItemValue = null;
+            try{
+			    myItemValue = method.invoke(myModel);
+            } catch (InvocationTargetException ex) {
+                ex.getCause().printStackTrace();
+            }
 			if(myItemValue == null)
 				continue;
             Operator operator = OperatorFactory.getOperator(op, myItemValue.getClass());

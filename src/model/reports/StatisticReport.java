@@ -30,7 +30,7 @@ public class StatisticReport implements IReportDirector {
     private int months;
 
 	public ReportBuilder getBuilder(){
-		return null;
+		return builder;
 	}
 
 	public void setBuilder(ReportBuilder reportBuilder) {
@@ -39,7 +39,7 @@ public class StatisticReport implements IReportDirector {
 	}
 
 	public void constructReport() {
-		builder.addHeader("Statistic Report");
+		builder.addHeader("Statistic Report (" + String.valueOf(months) + " Months)");
 
         ArrayList<Product> products = ProductVault.getInstance().findAll("CreationDate > %o", DateTime.now().minusMonths(months), true);
 
@@ -63,7 +63,8 @@ public class StatisticReport implements IReportDirector {
         }
         getStats(items);
         builder.endTable();
-	}
+        builder.endFile();
+    }
 
     private void getStats(ArrayList<Item> items){
         if(items.isEmpty())
@@ -136,7 +137,6 @@ public class StatisticReport implements IReportDirector {
         });
         
         
-        builder.endFile();
     }
 	
 }
