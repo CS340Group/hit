@@ -191,6 +191,7 @@ public class AddItemBatchController extends Controller implements
         _commandManager.executeCommand(command);
 
         getView().setBarcode("");
+        getView().setCount("1");
         loadValues();
         getView().giveBarcodeFocus();
     }
