@@ -85,7 +85,7 @@ public class ExpiredReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-        ReportBuilder builder = new PDFReportBuilder();
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
         IReportDirector director = new ExpiredItemsReport();
         director.setBuilder(builder);
         director.constructReport();

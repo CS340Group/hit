@@ -34,6 +34,10 @@ public class HTMLReportBuilder implements ReportBuilder {
 		}
 	}
 
+	public HTMLReportBuilder(){
+		this("report.html");
+	}
+
 	private String wrapWithTag(String tag, String body) {
 		return String.format("<%s>%s</%s>", tag, body, tag);
 	}
@@ -42,7 +46,6 @@ public class HTMLReportBuilder implements ReportBuilder {
 		try {
 			_writer.write(str);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -102,8 +105,7 @@ public class HTMLReportBuilder implements ReportBuilder {
 
 	@Override
 	public String returnReport() {
-		// TODO Auto-generated method stub
-		return null;
+		return _filePath;
 	}
 
 

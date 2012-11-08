@@ -78,7 +78,8 @@ public class RemoveItemBatchController extends Controller implements
 			}
 			ProductData pd = GuiModelConverter.wrapProduct(p);
 			pd.setCount(Integer.toString(_removedItems.get(barcode).size()));
-			products.add(pd);
+			if(Integer.parseInt(pd.getCount()) > 0)
+				products.add(pd);
 		}
 		this.getView().setProducts(products.toArray(new ProductData[0]));
 		if(_currentProduct != null){
@@ -114,6 +115,9 @@ public class RemoveItemBatchController extends Controller implements
 		} else {
 			getView().enableItemAction(true);
 		}
+
+        getView().enableRedo(_commandManager.canRedo());
+        getView().enableUndo(_commandManager.canUndo());
 	}
 
 	/**
@@ -206,6 +210,7 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	public void redo() {
 		_commandManager.redo();
+		enableComponents();
 	}
 
 	/**
@@ -215,6 +220,7 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	public void undo() {
 		_commandManager.undo();
+		enableComponents();
 	}
 
 	/**

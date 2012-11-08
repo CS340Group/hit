@@ -143,6 +143,9 @@ public class TransferItemBatchController extends Controller implements
                 !getView().getBarcode().isEmpty()
                  && !scanner
         );
+
+        getView().enableRedo(_commandManager.canRedo());
+        getView().enableUndo(_commandManager.canUndo());
 	}
 
 	/**
@@ -196,6 +199,7 @@ public class TransferItemBatchController extends Controller implements
         _commandManager.executeCommand(command);
 
         loadValues();
+        enableComponents();
 	}
 
 	/**
@@ -205,6 +209,7 @@ public class TransferItemBatchController extends Controller implements
 	@Override
 	public void redo() {
         _commandManager.redo();
+        enableComponents();
 	}
 
 	/**
@@ -214,6 +219,7 @@ public class TransferItemBatchController extends Controller implements
 	@Override
 	public void undo() {
         _commandManager.undo();
+        enableComponents();
 	}
 
 	/**

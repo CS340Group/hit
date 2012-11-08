@@ -98,6 +98,10 @@ public class AddItemBatchController extends Controller implements
                 && count > 0
                 && !_scanner
         );
+
+        getView().enableUndo(_commandManager.canUndo());
+        getView().enableRedo(_commandManager.canRedo());
+
     }
 
     /**
@@ -197,6 +201,7 @@ public class AddItemBatchController extends Controller implements
 
         resetViewFields();
         getView().giveBarcodeFocus();
+        enableComponents();
     }
 
     private int getCountFromView() {
@@ -231,6 +236,7 @@ public class AddItemBatchController extends Controller implements
     public void redo() {
     	_commandManager.redo();
         resetViewFields();
+        enableComponents();
     }
 
     /**
@@ -241,6 +247,7 @@ public class AddItemBatchController extends Controller implements
     public void undo() {
     	_commandManager.undo();
         resetViewFields();
+        enableComponents();
     }
 
     /**
@@ -331,17 +338,11 @@ public class AddItemBatchController extends Controller implements
             for (ItemData itemData : itemsToDeleteArrayList){
             	_products.get(productData).remove(itemData);
                 productData.setCount(String.valueOf(_products.get(productData).size()));
+                if(productData.getCount().equals("0"))
+                    _products.remove(productData);
             }
 
         }
-        loadValues();
-    }
-
-    @Override
-    public void removeProductFromView(Product _product) {
-        ProductData productData = findStoredProductData(_product.getBarcode());
-        if (productData != null)
-        	_products.remove(productData);
         loadValues();
     }
 }
