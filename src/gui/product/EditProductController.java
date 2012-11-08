@@ -1,6 +1,7 @@
 package gui.product;
 
 import common.Result;
+import common.util.StringUtils;
 import gui.common.*;
 import model.common.Size;
 import model.product.Product;
@@ -23,13 +24,14 @@ public class EditProductController extends Controller
 	 */
 	public EditProductController(IView view, ProductData target) {
 		super(view);
+        int id = (Integer) target.getTag();
         getView().setBarcode(target.getBarcode());
         getView().enableBarcode(false);
         getView().setDescription(target.getDescription());
         getView().setShelfLife(target.getShelfLife());
-        //getView().setSizeUnit();
-        //getView().setSizeValue();
         getView().setSupply(target.getSupply());
+        getView().setSizeValue(String.valueOf(ProductVault.getInstance().get(id).getSize().getAmount()));
+        getView().setSizeUnit(SizeUnits.valueOf(StringUtils.capitalize(ProductVault.getInstance().get(id).getSize().getUnit())));
         this.target = target;
 		construct();
 	}
