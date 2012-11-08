@@ -75,7 +75,10 @@ public class AddProductGroupController extends Controller implements
             getView().enableOK(false);
             return;
         }
-        pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
+        if(!pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString())).getStatus()){
+            getView().enableOK(false);
+            return;
+        }
         pg.setName(getView().getProductGroupName());
         getView().enableOK(pg.validate().getStatus() && size > 0);
 	}
