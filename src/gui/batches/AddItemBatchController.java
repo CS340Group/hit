@@ -162,8 +162,7 @@ public class AddItemBatchController extends Controller implements
         if (count <= 0){
             if(_scanner)
                 getView().displayErrorMessage("Count cannot be less than 1.");
-            getView().setBarcode("");
-            getView().setCount("1");
+            resetViewFields();
             return;
         }
         boolean createdProduct = false;
@@ -196,9 +195,7 @@ public class AddItemBatchController extends Controller implements
         AddItemCommand command = new AddItemCommand(newItems, product, sUnit, this);
         _commandManager.executeCommand(command);
 
-        getView().setBarcode("");
-        getView().setCount("1");
-        loadValues();
+        resetViewFields();
         getView().giveBarcodeFocus();
     }
 
@@ -233,6 +230,7 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void redo() {
     	_commandManager.redo();
+        resetViewFields();
     }
 
     /**
@@ -242,6 +240,7 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void undo() {
     	_commandManager.undo();
+        resetViewFields();
     }
 
     /**
