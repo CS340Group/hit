@@ -64,7 +64,7 @@ public class StatisticReport implements IReportDirector {
         getStats(items);
         builder.endTable();
         builder.endFile();
-    }
+	}
 
     private void getStats(ArrayList<Item> items){
         if(items.isEmpty())
