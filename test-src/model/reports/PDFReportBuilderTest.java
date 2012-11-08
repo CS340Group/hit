@@ -3,62 +3,89 @@ package model.reports;
 import static org.junit.Assert.*;
 
 import java.awt.Desktop;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
+import model.product.ProductVault;
 
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.Result;
+import common.TestEnvironment;
 
 public class PDFReportBuilderTest {
-	
-	String filePath = "reportTesting.pdf";
-	PDFReportBuilder _builder;
-	ItemVault _ItemVault = ItemVault.getInstance();
+    
+    String _filePath = "reportTesting.pdf";
+    PDFReportBuilder _builder;
+    ItemVault _itemVault = ItemVault.getInstance();
+    private ProductVault _productVault = ProductVault.getInstance();
 
-	@Before
-	public void setUp() throws Exception {
-		 _builder = new PDFReportBuilder(filePath);
-	}
+    @Before
+    public void setUp() throws Exception {
+        TestEnvironment env = new TestEnvironment(4, 200);
+        env.newEnvironment();
+    }
 
-	@After
-	public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File(filePath);
+                File myFile = new File(_filePath);
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
             }
         }
-	}
+    }
 
-	@Test
-	public void test() {
-		Product product = new Product();
-		product.generateTestData();
-		product.save();
-		for (int i = 0; i < 25; i++) {
-			Item item = new Item();
-			item.generateTestData();
-			item.setProduct(product);
-			item.save();
-            if((i%2) == 0)
-    			item.delete();
-		}
-		
-		RemovedItemsReport report = new RemovedItemsReport(new DateTime().minusDays(2));
-		report.setBuilder(_builder);
-		report.constructReport();
-	}
+    @Test
+    public void testRemovedItemsReport() {
+        _filePath = "removedItems.pdf";
+        _builder = new PDFReportBuilder(_filePath);
+        RemovedItemsReport report = new RemovedItemsReport(new DateTime().minusDays(2));
+        report.setBuilder(_builder);
+        report.constructReport();
+    }
+    
+    @Test
+    public void testNMonthSupply(){
+        _filePath = "nMonth.pdf";
+        _builder = new PDFReportBuilder(_filePath);
+        NSupplyReport report = new NSupplyReport(12);
+        report.setBuilder(_builder);
+        report.constructReport();
+    }
+
+    @Test
+    public void testExpiredItems(){
+        _filePath = "expired.pdf";
+        _builder = new PDFReportBuilder(_filePath);
+        ExpiredItemsReport report = new ExpiredItemsReport();
+        report.setBuilder(_builder);
+        report.constructReport();
+    }
+
+    @Test
+    public void testNotices(){
+        _filePath = "notices.pdf";
+        _builder = new PDFReportBuilder(_filePath);
+        NoticesReport report = new NoticesReport();
+        report.setBuilder(_builder);
+        report.constructReport();
+    }
+
+    @Test
+    public void testStats(){
+        _filePath = "statistics.pdf";
+        _builder = new PDFReportBuilder(_filePath);
+        StatisticReport report = new StatisticReport();
+        report.setBuilder(_builder);
+        report.constructReport();
+    }
 }

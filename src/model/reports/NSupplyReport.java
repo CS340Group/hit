@@ -45,6 +45,7 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		this.SetUpProductGrid();
 		builder.addHeader("Product Groups");
 		this.SetUpProductGroupGrid();
+		builder.endFile();
 		return;
 		
 	}
