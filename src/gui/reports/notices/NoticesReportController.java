@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import model.reports.HTMLReportBuilder;
 import model.reports.IReportDirector;
 import model.reports.NSupplyReport;
 import model.reports.NoticesReport;
@@ -88,7 +89,7 @@ public class NoticesReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new PDFReportBuilder();
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
 		IReportDirector director = new NoticesReport();
 		director.setBuilder(builder);
 		director.constructReport();

@@ -59,9 +59,10 @@ public class TransferItemCommand extends AbstractCommand {
 		ArrayList<Product> psFromTargetUnit = 
 							_productVault.findAll("StorageUnitId = %o", _targetSU.getId());
 		for(Product product : psFromTargetUnit){
-			if (product.getBarcode().equals(_oldProduct.getBarcode()))
+			if (product.getBarcode().equals(_oldProduct.getBarcode())){
 				_newProduct = product;
 				_newProduct.save();
+			}
 		}
 		
 		// If we didn't find it, make a copy of the old one.

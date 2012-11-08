@@ -69,7 +69,5 @@ public interface IAddItemBatchController extends IController {
 
 	void removeItemFromView(Item item);
 
-	void removeProductFromView(Product _product);
-
 }
 

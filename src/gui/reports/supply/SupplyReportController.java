@@ -84,7 +84,7 @@ import gui.common.*;
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = new PDFReportBuilder();
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
 		IReportDirector director = new NSupplyReport(Integer.parseInt(this.getView().getMonths()));
 		director.setBuilder(builder);
 		director.constructReport();

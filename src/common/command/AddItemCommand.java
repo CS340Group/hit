@@ -65,8 +65,6 @@ public class AddItemCommand extends AbstractCommand {
 		if (_controller != null) {
 			for (Item item : _items)
 				_controller.removeItemFromView(item);
-			if (_product != null)
-				_controller.removeProductFromView(_product);
 		}
 		
 		if(_product != null && _product.isSaved())
