@@ -89,7 +89,8 @@ public class NoticesReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ? new HTMLReportBuilder() : new PDFReportBuilder();
+		ReportBuilder builder = (getView().getFormat() == FileFormat.HTML) ?
+							 new HTMLReportBuilder() : new PDFReportBuilder();
 		IReportDirector director = new NoticesReport();
 		director.setBuilder(builder);
 		director.constructReport();
