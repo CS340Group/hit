@@ -42,6 +42,7 @@ public class NoticesReport implements IReportDirector, Ivisitor {
 		builder.addHeader("Notices");
 		builder.addHeading("3-Month Supply Warnings");
 		this.printErrors();
+		builder.endFile();
 	}
 	
 	private void printErrors(){
