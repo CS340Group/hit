@@ -70,10 +70,16 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-		if(ItemVault.getInstance().sinceLastRemovedReport != null)
+		if(ItemVault.getInstance().sinceLastRemovedReport != null){
+			
+			this.getView().setSinceLast(true);
+			this.getView().setSinceLastValue(ItemVault.getInstance().sinceLastRemovedReport.toDate());
 			this.getView().setSinceDateValue(ItemVault.getInstance().sinceLastRemovedReport.toDate());
-		else
-			this.getView().setSinceLast(false);
+		}
+		else{
+			this.getView().setSinceDate(true);
+			this.getView().setSinceDateValue(new DateTime().now().toDate());
+		}
 	}
 
 	//

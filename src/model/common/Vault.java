@@ -9,6 +9,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import org.joda.time.DateTime;
+
 import model.common.operator.Operator;
 import model.common.operator.OperatorFactory;
 import model.item.Item;
@@ -20,7 +22,12 @@ public abstract class Vault extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
-	
+	/**
+	   * Last time the removed report was ran
+	   * @serial
+	   */
+	public DateTime sinceLastRemovedReport;
+	public boolean isSaved;
 	/**
 	 * Constructor.
 	 * 

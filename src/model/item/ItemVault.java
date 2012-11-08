@@ -24,7 +24,7 @@ public class ItemVault extends Vault{
 	 */
 	private static final long serialVersionUID = 1L;
 	static ItemVault currentInstance;
-	public DateTime sinceLastRemovedReport;
+	
 	/**
 	 * Private constructor, for the singleton design pattern.
 	 */
