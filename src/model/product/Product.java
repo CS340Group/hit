@@ -116,6 +116,12 @@ public class Product extends Model{
         return _productGroupVault.get(_containerId);
     }
 
+    public String getContainerName(){
+        ProductGroup pg = getContainer();
+        if(pg == null)
+            return "";
+        return pg.getName();
+    }
     /**
      * Get the id of the ProductGroup that holds this product. If the Product 
      * is not in a ProductGroup, -1 is returned.

@@ -2,6 +2,11 @@ package gui.reports.expired;
 
 
 import gui.common.*;
+import model.reports.*;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -80,6 +85,18 @@ public class ExpiredReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+        ReportBuilder builder = new PDFReportBuilder();
+        IReportDirector director = new ExpiredItemsReport();
+        director.setBuilder(builder);
+        director.constructReport();
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(builder.returnReport());
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
+        }
 	}
 
 }

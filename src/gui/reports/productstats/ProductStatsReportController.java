@@ -4,11 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-import model.reports.IReportDirector;
-import model.reports.NoticesReport;
-import model.reports.ObjectReportBuilder;
-import model.reports.PDFReportBuilder;
-import model.reports.ReportBuilder;
+import model.reports.*;
 import gui.common.*;
 
 /**
@@ -79,6 +75,12 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+        this.getView().enableOK(true);
+        try{
+            Integer.parseInt(getView().getMonths());
+        } catch (Exception e){
+            this.getView().enableOK(false);
+        }
 	}
 	
 	/**
@@ -88,8 +90,10 @@ public class ProductStatsReportController extends Controller implements
 	@Override
 	public void display() {
 		ReportBuilder builder = new PDFReportBuilder();
-		IReportDirector director = new NoticesReport();
+		IReportDirector director = new StatisticReport();
 		director.setBuilder(builder);
+        int months = Integer.parseInt(getView().getMonths());
+        ((StatisticReport)director).setMonths(months);
 		director.constructReport();
 		if (Desktop.isDesktopSupported()) {
 			  try {
