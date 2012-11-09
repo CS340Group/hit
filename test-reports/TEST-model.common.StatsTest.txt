@@ -1,0 +1,11 @@
+Testsuite: model.common.StatsTest
+Tests run: 3, Failures: 1, Errors: 0, Time elapsed: 0.051 sec
+
+Testcase: testGetMax took 0.024 sec
+Testcase: testGetMin took 0.002 sec
+Testcase: testGetMean took 0.011 sec
+	FAILED
+expected:<556.0> but was:<50341.78>
+junit.framework.AssertionFailedError: expected:<556.0> but was:<50341.78>
+	at model.common.StatsTest.testGetMean(StatsTest.java:73)
+

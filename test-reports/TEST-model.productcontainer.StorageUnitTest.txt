@@ -1,89 +1,17 @@
 Testsuite: model.productcontainer.StorageUnitTest
-Tests run: 4, Failures: 0, Errors: 2, Time elapsed: 0.116 sec
-------------- Standard Error -----------------
-java.lang.NullPointerException
-	at model.common.Vault.linearSearch(Vault.java:135)
-	at model.common.Vault.findAllPrivateCall(Vault.java:101)
-	at model.productcontainer.StorageUnitVault.findAll(StorageUnitVault.java:57)
-	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
-	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
-	at model.common.Vault.validateModified(Vault.java:184)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:46)
-	at model.productcontainer.StorageUnitTest.testModified(StorageUnitTest.java:65)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:601)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
-	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
-java.lang.NullPointerException
-	at model.common.Vault.linearSearch(Vault.java:135)
-	at model.common.Vault.findAllPrivateCall(Vault.java:101)
-	at model.productcontainer.StorageUnitVault.findAll(StorageUnitVault.java:57)
-	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
-	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
-	at model.productcontainer.StorageUnitTest.testValidate(StorageUnitTest.java:40)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:601)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
-	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
-	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
-------------- ---------------- ---------------
+Tests run: 4, Failures: 2, Errors: 0, Time elapsed: 0.133 sec
 
-Testcase: testModified took 0.029 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
-	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
-	at model.common.Vault.validateModified(Vault.java:184)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:46)
-	at model.productcontainer.StorageUnitTest.testModified(StorageUnitTest.java:65)
+Testcase: testValidate took 0.033 sec
+Testcase: testSave took 0.003 sec
+	FAILED
 
-Testcase: testIsDeleteable took 0.068 sec
-Testcase: testValidate took 0.002 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at model.productcontainer.StorageUnitVault.checkUniqueName(StorageUnitVault.java:118)
-	at model.productcontainer.StorageUnitVault.validateNew(StorageUnitVault.java:81)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:44)
-	at model.productcontainer.StorageUnitTest.testValidate(StorageUnitTest.java:40)
+junit.framework.AssertionFailedError: 
+	at model.productcontainer.StorageUnitTest.testSave(StorageUnitTest.java:48)
 
-Testcase: testSave took 0.001 sec
+Testcase: testModified took 0.077 sec
+	FAILED
+
+junit.framework.AssertionFailedError: 
+	at model.productcontainer.StorageUnitTest.testModified(StorageUnitTest.java:67)
+
+Testcase: testIsDeleteable took 0.001 sec

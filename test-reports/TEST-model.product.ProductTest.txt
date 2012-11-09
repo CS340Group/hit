@@ -1,28 +1,8 @@
 Testsuite: model.product.ProductTest
-Tests run: 5, Failures: 4, Errors: 0, Time elapsed: 0.119 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.124 sec
 
-Testcase: testItemCreation took 0.096 sec
-	FAILED
-Product shouldn't be saveable because its not valid expected:<false> but was:<true>
-junit.framework.AssertionFailedError: Product shouldn't be saveable because its not valid expected:<false> but was:<true>
-	at model.product.ProductTest.testItemCreation(ProductTest.java:47)
-
+Testcase: testItemCreation took 0.103 sec
 Testcase: testSetShelfLife took 0.002 sec
-	FAILED
-expected:<false> but was:<true>
-junit.framework.AssertionFailedError: expected:<false> but was:<true>
-	at model.product.ProductTest.testSetShelfLife(ProductTest.java:82)
-
-Testcase: testSet3MonthSupply took 0.001 sec
-	FAILED
-expected:<false> but was:<true>
-junit.framework.AssertionFailedError: expected:<false> but was:<true>
-	at model.product.ProductTest.testSet3MonthSupply(ProductTest.java:89)
-
-Testcase: testSetSize took 0.001 sec
-	FAILED
-
-junit.framework.AssertionFailedError: 
-	at model.product.ProductTest.testSetSize(ProductTest.java:97)
-
+Testcase: testSet3MonthSupply took 0.002 sec
+Testcase: testSetSize took 0.002 sec
 Testcase: testValidate took 0.002 sec

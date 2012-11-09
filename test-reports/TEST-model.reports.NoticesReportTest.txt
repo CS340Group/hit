@@ -1,0 +1,4 @@
+Testsuite: model.reports.NoticesReportTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.152 sec
+
+Testcase: testLines took 0.002 sec

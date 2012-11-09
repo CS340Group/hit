@@ -1,0 +1,5 @@
+Testsuite: model.reports.RemovedReportTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.353 sec
+
+Testcase: testTableHeader took 0.002 sec
+Testcase: testRow took 0 sec
