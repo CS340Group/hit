@@ -75,6 +75,7 @@ public class AddItemBatchController extends Controller implements
         ProductData selected = getView().getSelectedProduct();
         getView().setProducts(getStoredProductDatas());
         getView().setItems(getStoredItemDatas(selected));
+        getView().selectProduct(selected);
     }
 
     /**
@@ -233,6 +234,7 @@ public class AddItemBatchController extends Controller implements
     private void resetViewFields() {
         loadValues();
         getView().setBarcode("");
+        getView().setCount("1");
         getView().setUseScanner(true);
         _scanner = true;
     }

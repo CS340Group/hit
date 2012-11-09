@@ -80,7 +80,7 @@ public class AddProductGroupController extends Controller implements
             return;
         }
         pg.setName(getView().getProductGroupName());
-        getView().enableOK(pg.validate().getStatus() && size > 0);
+        getView().enableOK(pg.validate().getStatus());
 	}
 
 	/**
