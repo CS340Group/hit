@@ -1,6 +1,7 @@
 package gui.batches;
 
 import common.BarcodePdf;
+import common.Result;
 import common.command.AddItemCommand;
 import common.command.CommandManager;
 import gui.common.*;
@@ -15,6 +16,8 @@ import model.product.ProductVault;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
+import static ch.lambdaj.Lambda.*;
+
 
 import java.awt.*;
 import java.io.File;
@@ -183,7 +186,21 @@ public class AddItemBatchController extends Controller implements
             return;
         }
 
-        Product product = _productVault.find("Barcode = %o",  barcode);
+        Product product = null;
+        for(Product p : (ArrayList<Product>) _productVault.findAll("Barcode = %o",  barcode))
+            if(p.getStorageUnitId() == (Integer)_target.getTag())
+                product = p;
+
+        if(product == null){
+            product = new Product(_productVault.find("Barcode = %o", barcode));
+            product.setId(-1);
+            product.setStorageUnitId((Integer)_target.getTag());
+            product.setContainerId((Integer) _target.getTag());
+            Result r = product.validate();
+            r = product.save();
+            createdProduct = true;
+        }
+
         StorageUnit sUnit = StorageUnitVault.getInstance().get((Integer) _target.getTag());
         Collection<Item> newItems = new ArrayList<Item>();
 
