@@ -76,7 +76,10 @@ public class StatisticReport implements IReportDirector {
         int used = 0;
         int added = 0;
         int curSupply = 0;
+        int reportingPeriodDays = Days.daysBetween(DateMidnight.now().minusMonths(months), DateMidnight.now()).getDays();
         for(Item i : items){
+            if(i.getEntryDate().isBefore(i.getProduct().getCreationDate().toDateMidnight()))
+                continue;
             if(buckets.containsKey(i.getEntryDate().toDateMidnight())){
                 buckets.put(i.getEntryDate().toDateMidnight(), buckets.get(i.getEntryDate().toDateMidnight()) + 1);
                 added++;
@@ -99,14 +102,18 @@ public class StatisticReport implements IReportDirector {
                 }
             }
         }
-        int days = Days.daysBetween(DateMidnight.now().minusMonths(getMonths()), DateMidnight.now()).getDays();
+        int days = Days.daysBetween(items.get(0).getProduct().getCreationDate().toDateMidnight(), DateMidnight.now()).getDays();
+
+        if(days > reportingPeriodDays)
+            days = reportingPeriodDays;
+
         //first day of the period
         if(buckets.containsKey(DateMidnight.now().minusDays(days)))
             supply.insert(buckets.get(DateMidnight.now().minusDays(days)));
         else
             supply.insert(0);
 
-        for(int i = days-1; i > 0; i--){
+        for(int i = days; i > 0; i--){
             DateMidnight today = DateMidnight.now().minusDays(i);
             DateMidnight yesterday = today.minusDays(1);
             int yesterdaySupply = 0;
