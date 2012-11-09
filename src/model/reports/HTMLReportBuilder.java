@@ -91,6 +91,7 @@ public class HTMLReportBuilder implements ReportBuilder {
 	@Override
 	public void addTextBlock(String text) {
 		write(wrapWithTag("span", text));
+		write("<br />");
 	}
 
 	@Override

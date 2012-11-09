@@ -91,7 +91,9 @@ public class ProductGroupTest {
         // A zero in this context should be fine:
         assertTrue(pg1.set3MonthSupply(new Size(0, "oz")).getStatus());
         // Should fail. If the unit is count, the amt should be 1.
-        assertFalse(pg1.set3MonthSupply(new Size(5, "Count")).getStatus());
+        
+        //Bad test, a pg can have a count > 1
+        //assertFalse(pg1.set3MonthSupply(new Size(5, "Count")).getStatus());
         assertTrue(pg1.set3MonthSupply(new Size(1, "Count")).getStatus());
     }
 

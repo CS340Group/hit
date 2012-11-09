@@ -147,7 +147,7 @@ public class PDFReportBuilder implements ReportBuilder {
 
 	@Override
 	public void addTextBlock(String text) {
-		addTextAtSize(text, 8);
+		addTextAtSize(text+"\n", 8);
 	}
 
 	@Override

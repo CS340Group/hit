@@ -47,18 +47,27 @@ public class NoticesReportTest {
 		StorageUnit storageUnit = new StorageUnit();
 		storageUnit.generateTestData();
 		ProductGroup productGroup = new ProductGroup();
-			productGroup.set3MonthSupply(new Size(10000,"count"));
+			productGroup.set3MonthSupply(new Size(10000,"gallons"));
 			productGroup.setName("pg1");
 			productGroup.setParentId(storageUnit.getId());
 			productGroup.validate();
 			productGroup.save();
-		
-		
+		Product product2 = new Product();
+			product2.setContainerId(productGroup.getId());
+			product2.generateTestData();
+			product2.setBarcode("113");
+			product2.setSize(new Size(10000,"pints"));
+			product2.validate();
+			Result result =product2.save();
+		Item item2 = new Item();
+			item2.generateTestData();
+			item2.setProduct(product2);
+			result = item2.save();
 			
 		Product product = new Product();
 		product.setContainerId(productGroup.getId());
 		product.generateTestData();
-		Result result = product.save();
+		result = product.save();
 		for (int i = 0; i < 25; i++) {
 			Item item = new Item();
 			item.generateTestData();
@@ -99,7 +108,7 @@ public class NoticesReportTest {
 		String text = object.getTextBlock(0).toString();
 		assertTrue("Text block one is wrong.",text.equals(
 				"Product group Test Storage Unit Name::pg1 has a 3-month supply "+
-				"(10000.0 count) that is inconsistent with the following products:"));
+				"(10000.0 gallon) that is inconsistent with the following products:"));
 		text = object.getTextBlock(1).toString();
 		assertTrue("Text block two is wrong.",text.equals("- pg1::Spam and eggs(size: 3.0 oz)"));
 	}
