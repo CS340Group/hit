@@ -1,5 +1,8 @@
 package model.productcontainer;
 
+import model.item.ItemVault;
+import model.product.ProductVault;
+
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -15,6 +18,10 @@ public class StorageUnitTest {
 
     @Before
     public void setup(){
+    	ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
         su1 = new StorageUnit();
         su1.setName("Unit A");
 

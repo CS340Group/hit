@@ -47,7 +47,7 @@ public class NoticesReportTest {
 		StorageUnit storageUnit = new StorageUnit();
 		storageUnit.generateTestData();
 		ProductGroup productGroup = new ProductGroup();
-			productGroup.set3MonthSupply(new Size(10000,"gallon"));
+			productGroup.set3MonthSupply(new Size(10000,"gallons"));
 			productGroup.setName("pg1");
 			productGroup.setParentId(storageUnit.getId());
 			productGroup.validate();
@@ -56,7 +56,7 @@ public class NoticesReportTest {
 			product2.setContainerId(productGroup.getId());
 			product2.generateTestData();
 			product2.setBarcode("113");
-			product2.setSize(new Size(10000,"pint"));
+			product2.setSize(new Size(10000,"pints"));
 			product2.validate();
 			Result result =product2.save();
 		Item item2 = new Item();

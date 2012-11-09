@@ -99,11 +99,12 @@ public class Size implements Serializable{
      * 
      */
     public String getSizeType(){
-    	if(_unit.equals("count"))
+    	String unit = _unit.toLowerCase();
+    	if(unit.equals("count"))
     		return "count";
-    	else if(_unit.equals("pounds") || _unit.equals("ounces") || _unit.equals("grams") || _unit.equals("kilograms"))
+    	else if(unit.equals("pounds") || unit.equals("ounces") || unit.equals("grams") || unit.equals("kilograms"))
     		return "weight";
-    	else if(_unit.equals("gallons") || _unit.equals("quarts") || _unit.equals("fluid ounces") || _unit.equals("liters") || _unit.equals("pints"))
+    	else if(unit.equals("gallons") || unit.equals("quarts") || unit.equals("fluid ounces") || unit.equals("liters") || unit.equals("pints"))
     		return "volume";
     	else return "unknown";
     }
@@ -120,23 +121,24 @@ public class Size implements Serializable{
     	if(_unit.equals("pounds")) 
     		return this._amount;
 		if(_unit.equals("ounces"))
-			return this._amount * 16;
+			return this._amount / 16;
 	 	if(_unit.equals("grams")) 
-	 		return this._amount * 453.592;
+	 		return this._amount / 453.592;
 		if(_unit.equals("kilograms"))
-			return this._amount * 0.453592;
+			return this._amount / 0.453592;
 		
 		if(_unit.equals("gallons")) 
     		return this._amount;
 		if(_unit.equals("quarts"))
-			return this._amount * 4;
+			return this._amount / 4;
 	 	if(_unit.equals("fluid ounces")) 
-	 		return this._amount * 128;
+	 		return this._amount / 128;
 		if(_unit.equals("liters"))
-			return this._amount * 0.453592;
+			return this._amount / 3.78541;
 		if(_unit.equals("pints"))
-			return this._amount * 8;
+			return this._amount / 8;
 			
     	return 1;
     }
+    
 }

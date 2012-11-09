@@ -342,7 +342,7 @@ public class Product extends Model{
 	public Product generateTestData() {
 		this.setBarcode("12345");
 		this.setDescription("Spam and eggs");
-		this.setSize(new Size(3, "oz"));
+		this.setSize(new Size(3, "ounces"));
 		this.setShelfLife(4);
 		this.set3MonthSupply(3);
 		this.validate();
