@@ -109,5 +109,10 @@ public class NSupplyReportTest {
 				,object.getTable(1).getCell(1, 3).equals("25.0"));
 	}
 	
+	@Test
+	public void testMultipleWeights(){
+	}
+	}
+	
 	
 }
