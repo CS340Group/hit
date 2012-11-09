@@ -2,7 +2,11 @@ package model.common;
 
 import static org.junit.Assert.*;
 
+import model.item.ItemVault;
+import model.product.ProductVault;
+import model.productcontainer.ProductGroupVault;
 import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,6 +18,10 @@ public class SerializableTest {
 	private static StorageUnit su;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
 		su = new StorageUnit();
         su.setName("Test");
         su.validate();
@@ -22,14 +30,20 @@ public class SerializableTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
 	}
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		
 	}
 
 	@Test

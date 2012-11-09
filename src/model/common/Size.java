@@ -88,4 +88,57 @@ public class Size implements Serializable{
     public String toString(){
         return _amount + " " + _unit;
     }
+    
+    /*
+     * Returns either count, volume, or weight
+     * 
+     * Count = count
+     * Weight = pounds, ounces, grams,kilograms,
+     * Volume = gallons, quarts, pints, fluid, fluid ounces, liters.
+     * 
+     * 
+     */
+    public String getSizeType(){
+    	String unit = _unit.toLowerCase();
+    	if(unit.equals("count"))
+    		return "count";
+    	else if(unit.equals("pounds") || unit.equals("ounces") || unit.equals("grams") || unit.equals("kilograms"))
+    		return "weight";
+    	else if(unit.equals("gallons") || unit.equals("quarts") || unit.equals("fluid ounces") || unit.equals("liters") || unit.equals("pints"))
+    		return "volume";
+    	else return "unknown";
+    }
+    /*
+     * Returns a standardized count, takes care of multiple weights, and volumes
+     * 
+     * Counts returned as counts
+     * Weights returned as pounds
+     * Volumes returned as gallons
+     */
+    public double getStandardizedCount(){
+    	if(getSizeType().equals("count"))
+    		return this._amount;
+    	if(_unit.equals("pounds")) 
+    		return this._amount;
+		if(_unit.equals("ounces"))
+			return this._amount / 16;
+	 	if(_unit.equals("grams")) 
+	 		return this._amount / 453.592;
+		if(_unit.equals("kilograms"))
+			return this._amount / 0.453592;
+		
+		if(_unit.equals("gallons")) 
+    		return this._amount;
+		if(_unit.equals("quarts"))
+			return this._amount / 4;
+	 	if(_unit.equals("fluid ounces")) 
+	 		return this._amount / 128;
+		if(_unit.equals("liters"))
+			return this._amount / 3.78541;
+		if(_unit.equals("pints"))
+			return this._amount / 8;
+			
+    	return 1;
+    }
+    
 }

@@ -39,6 +39,11 @@ public class RemovedReportTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		ItemVault.getInstance().clear();
+		ProductVault.getInstance().clear();
+		StorageUnitVault.getInstance().clear();
+		ProductGroupVault.getInstance().clear();
+		
 		builder = new ObjectReportBuilder();
 		Product product = new Product();
 		product.generateTestData();

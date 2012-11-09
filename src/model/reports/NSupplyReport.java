@@ -107,18 +107,20 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 	//ProductGroupId - Unit => count
 	public void visit(Product product) {
 		//If a product of the same "size unit" has already been found
-		String key = product.getProductContainerId()+product.getSize().getUnit();
+		String key = product.getProductContainerId()+product.getSize().getSizeType();
+		double additionalSupply = product.getCurrentSupply() *  product.getSize().getStandardizedCount();
 		if(pgCounts.containsKey(key)){
-			pgCounts.put(key, pgCounts.get(key) + product.getSize().getAmount());
+			pgCounts.put(key, pgCounts.get(key) + additionalSupply);
 		} else {
-			pgCounts.put(key, product.getCurrentSupply());
+			pgCounts.put(key, additionalSupply);
 		}
 		
 	}
 
+
 	//Pass up all counts to parent container
 	public void visit(ProductGroup productGroup) {
-		possibleSizes.add(productGroup.get3MonthSupply().getUnit());
+		possibleSizes.add(productGroup.get3MonthSupply().getSizeType());
 		
 		//Pass all the counts up to the parent
 		//If current productGroup-currentUnit < 3monthsupply
@@ -133,16 +135,23 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 			}
 			
 			//If this product groups current supply is less than it's 3 month supply
-			if(possibleSize.equals(productGroup.get3MonthSupply().getUnit())){
-				int nsupply = (int) (productGroup.get3MonthSupply().getAmount()/3*months);
+			if(possibleSize.equals(productGroup.get3MonthSupply().getSizeType())){
+				int nsupply = (int) (productGroup.get3MonthSupply().getStandardizedCount()/3*months);
 				if(pgCounts.containsKey(key)){
-					if(pgCounts.get(key) < nsupply)
+					if(pgCounts.get(key) < nsupply){
+						double standardSize = pgCounts.get(key);
+						standardSize = getUnstardizedCount(standardSize,productGroup.get3MonthSupply().getUnit());
+						String unit = productGroup.get3MonthSupply().getUnit();
+						
 						builder.addRow(new String[]{
+								
+								
 								productGroup.getName(),
 								productGroup.getStorageUnit().getName(),
-								Integer.toString(nsupply),
-								Double.toString(pgCounts.get(key))}
+								Integer.toString(nsupply)  + " " + unit,
+								Double.toString(standardSize)  + " " + unit}
 						);
+					}
 				} /*else {
 					builder.addRow(new String[]{
 							productGroup.getName(),
@@ -160,4 +169,31 @@ public class NSupplyReport implements IReportDirector, Ivisitor {
 		pgCounts.clear();
 		return;
 	}
+	
+    public double getUnstardizedCount(double amount, String type){
+    	type = type.toLowerCase();
+    	if(type.equals("count"))
+    		return amount;
+    	if(type.equals("pounds")) 
+    		return amount;
+		if(type.equals("ounces"))
+			return amount * 16;
+	 	if(type.equals("grams")) 
+	 		return amount * 453.592;
+		if(type.equals("kilograms"))
+			return amount * 0.453592;
+		
+		if(type.equals("gallons")) 
+    		return amount;
+		if(type.equals("quarts"))
+			return amount * 4;
+	 	if(type.equals("fluid ounces")) 
+	 		return amount * 128;
+		if(type.equals("liters"))
+			return amount * 3.78541;
+		if(type.equals("pints"))
+			return amount * 8;
+			
+    	return 1;
+    }
 }

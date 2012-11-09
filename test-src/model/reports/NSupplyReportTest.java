@@ -47,7 +47,7 @@ public class NSupplyReportTest {
 		StorageUnit storageUnit = new StorageUnit();
 		storageUnit.generateTestData();
 		ProductGroup productGroup = new ProductGroup();
-			productGroup.set3MonthSupply(new Size(10000,"oz"));
+			productGroup.set3MonthSupply(new Size(10000,"pounds"));
 			productGroup.setName("pg1");
 			productGroup.setParentId(storageUnit.getId());
 			productGroup.validate();
@@ -103,10 +103,15 @@ public class NSupplyReportTest {
 	}
 	@Test
 	public void testFirstRowSecondTable() {
-		assertTrue("1-Month Supply should be "+"3333"+" instead its "+object.getTable(0).getCell(1, 2)
-				,object.getTable(1).getCell(1, 2).equals("3333"));
-		assertTrue("Current supply should be "+"25.0"+" instead its "+object.getTable(0).getCell(1, 3)
-				,object.getTable(1).getCell(1, 3).equals("25.0"));
+		assertTrue("1-Month Supply should be "+"3333"+"pounds instead its "+object.getTable(0).getCell(1, 2)
+				,object.getTable(1).getCell(1, 2).equals("3333 pounds"));
+		assertTrue("Current supply should be "+"4.6875"+" pounds instead its "+object.getTable(0).getCell(1, 3)
+				,object.getTable(1).getCell(1, 3).equals("4.6875 pounds"));
+	}
+	
+	@Test
+	public void testMultipleWeights(){
+	
 	}
 	
 	

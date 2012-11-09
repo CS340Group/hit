@@ -62,10 +62,10 @@ public class NoticesReport implements IReportDirector, Ivisitor {
 	//Add to hashmap with key 
 	//ProductGroupId - Unit => count
 	public void visit(Product product) {
-		if(!possibleSizes.contains(product.getSize().getUnit()))
-			possibleSizes.add(product.getSize().getUnit());
+		if(!possibleSizes.contains(product.getSize().getSizeType()))
+			possibleSizes.add(product.getSize().getSizeType());
 		//If a product of the same "size unit" has already been found
-		String key = product.getProductContainerId()+product.getSize().getUnit();
+		String key = product.getProductContainerId()+product.getSize().getSizeType();
 		if(productGroup_unit.containsKey(key)){
 			productGroup_unit.get(key).add(product.getId());
 		} else {
@@ -95,7 +95,7 @@ public class NoticesReport implements IReportDirector, Ivisitor {
 					productGroup_unit.put(parentKey, productGroup_unit.get(key));
 				
 				//If current size != current pg.size then print it
-				if(!possibleSize.equals(productGroup.get3MonthSupply().getUnit())){
+				if(!possibleSize.equals(productGroup.get3MonthSupply().getSizeType())){
 					if(incostitentPrinted == false){
 						builder.addTextBlock(
 								"Product group "+
