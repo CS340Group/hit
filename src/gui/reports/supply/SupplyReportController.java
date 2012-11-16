@@ -57,7 +57,6 @@ import gui.common.*;
 		try {
 			months = Integer.parseInt(getView().getMonths());
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
 			months = -1;
 		}
 		boolean valid = (months > 0 && months <= 100) ? true : false;

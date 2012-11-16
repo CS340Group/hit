@@ -20,7 +20,7 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	public ProductStatsReportController(IView view) {
 		super(view);
-		
+		getView().setMonths("3");
 		construct();
 	}
 
@@ -52,6 +52,14 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		int months;
+		try {
+			months = Integer.parseInt(getView().getMonths());
+		} catch (NumberFormatException e) {
+			months = -1;
+		}
+		boolean valid = (months > 0 && months <= 100) ? true : false;
+		getView().enableOK(valid);
 	}
 
 	/**
@@ -75,12 +83,7 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
-        this.getView().enableOK(true);
-        try{
-            Integer.parseInt(getView().getMonths());
-        } catch (Exception e){
-            this.getView().enableOK(false);
-        }
+		enableComponents();
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
-import common.TestEnvironment;
+import model.tempmain.TestEnvironment;
 
 import model.common.Barcode;
 import model.common.ModelFacade;
@@ -38,7 +38,7 @@ public class InventoryController extends Controller
 		super(view);
 		_pickler = new VaultPickler();	
 		_pickler.DeSerializeMe();
-		this.addSampleItems();
+//		this.addSampleItems();
 		construct();
 		
         StorageUnitVault.getInstance().addObserver(this);
