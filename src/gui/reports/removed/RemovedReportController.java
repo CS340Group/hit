@@ -3,6 +3,7 @@ package gui.reports.removed;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import org.joda.time.DateTime;
 
@@ -28,7 +29,10 @@ public class RemovedReportController extends Controller implements
 	 */
 	public RemovedReportController(IView view) {
 		super(view);
-
+		DateTime last = ItemVault.getInstance().sinceLastRemovedReport;
+		if(last == null)
+			last = new DateTime(2000,1,1,1,1);
+		getView().setSinceLastValue(last.toDate());
 		construct();
 	}
 
@@ -60,6 +64,7 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		getView().enableSinceDateValue(getView().getSinceDate());
 	}
 
 	/**
@@ -93,6 +98,7 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+		enableComponents();
 	}
 
 	/**
