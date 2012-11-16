@@ -21,7 +21,7 @@ import gui.common.*;
 	 */	
 	public SupplyReportController(IView view) {
 		super(view);
-		
+		getView().setMonths("3");
 		construct();
 	}
 
@@ -53,6 +53,15 @@ import gui.common.*;
 	 */
 	@Override
 	protected void enableComponents() {
+		int months;
+		try {
+			months = Integer.parseInt(getView().getMonths());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			months = -1;
+		}
+		boolean valid = (months > 0 && months <= 100) ? true : false;
+		getView().enableOK(valid);
 	}
 
 	/**
@@ -76,6 +85,7 @@ import gui.common.*;
 	 */
 	@Override
 	public void valuesChanged() {
+		enableComponents();
 	}
 	
 	/**
