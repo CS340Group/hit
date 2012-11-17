@@ -1,14 +1,14 @@
 Testsuite: model.productcontainer.StorageUnitTest
-Tests run: 4, Failures: 2, Errors: 0, Time elapsed: 0.115 sec
+Tests run: 4, Failures: 2, Errors: 0, Time elapsed: 0.162 sec
 
-Testcase: testValidate took 0.027 sec
+Testcase: testValidate took 0.03 sec
 Testcase: testSave took 0.003 sec
 	FAILED
 
 junit.framework.AssertionFailedError: 
 	at model.productcontainer.StorageUnitTest.testSave(StorageUnitTest.java:55)
 
-Testcase: testModified took 0.07 sec
+Testcase: testModified took 0.113 sec
 	FAILED
 
 junit.framework.AssertionFailedError: 

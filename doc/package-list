@@ -20,5 +20,7 @@ model.common.operator
 model.item
 model.product
 model.productcontainer
+model.productidentifier
 model.reports
+model.storage
 model.tempmain

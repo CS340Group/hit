@@ -37,6 +37,9 @@ Starting audit...
 /Users/murphyra/Github/hit/src/model/common/Size.java:107: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/common/Size.java:118:5: Cyclomatic Complexity is 11 (max allowed is 10).
 /Users/murphyra/Github/hit/src/model/common/Size.java:118:5: NPath Complexity is 1,024 (max allowed is 200).
+/Users/murphyra/Github/hit/src/model/productidentifier/ProductIdentifier.java:10: Line is longer than 100 characters.
+/Users/murphyra/Github/hit/src/model/productidentifier/ProductIdentifier.java:11: Line is longer than 100 characters.
+/Users/murphyra/Github/hit/src/model/productidentifier/ProductIdentifier.java:12: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/reports/ExpiredItemsReport.java:44: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/reports/NSupplyReport.java:90: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/reports/NSupplyReport.java:111: Line is longer than 100 characters.
@@ -56,6 +59,8 @@ Starting audit...
 /Users/murphyra/Github/hit/src/model/reports/StatisticReport.java:105: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/reports/StatisticReport.java:141: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/reports/StatisticReport.java:142: Line is longer than 100 characters.
+/Users/murphyra/Github/hit/src/model/storage/IStorageDAO.java:24: Line is longer than 100 characters.
+/Users/murphyra/Github/hit/src/model/storage/IStorageDAO.java:31: Line is longer than 100 characters.
 /Users/murphyra/Github/hit/src/model/tempmain/TestEnvironment.java:51:5: Cyclomatic Complexity is 12 (max allowed is 10).
 /Users/murphyra/Github/hit/src/model/tempmain/TestEnvironment.java:51:5: NPath Complexity is 270 (max allowed is 200).
 /Users/murphyra/Github/hit/src/model/tempmain/TestEnvironment.java:56: Line is longer than 100 characters.
