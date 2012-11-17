@@ -8,8 +8,7 @@ import model.common.IModel;
 import common.Result;
 
 /**
- * @author murphyra
- *
+ * Provides the functionality of accessing the stored information for an item.
  */
 public class ItemDAO implements IStorageDAO {
 

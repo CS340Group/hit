@@ -5,7 +5,7 @@ package model.storage;
 
 /**
  * @author murphyra
- *
+ * An abstract factory for creating data access objects.
  */
 public interface IDAOFactory {
 	

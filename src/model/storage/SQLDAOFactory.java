@@ -8,8 +8,7 @@ import model.common.IModel;
 import common.Result;
 
 /**
- * @author murphyra
- *
+ * Concrete factory for creating DAOs that use SQL for storage of models.
  */
 public class SQLDAOFactory implements IStorageDAO {
 

@@ -8,8 +8,7 @@ import model.common.IModel;
 import common.Result;
 
 /**
- * @author murphyra
- *
+ * Concrete factory for producing DAOs that use serialization for storage.
  */
 public class SerializationDAOFactory implements IStorageDAO {
 
