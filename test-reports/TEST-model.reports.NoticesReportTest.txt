@@ -1,4 +1,9 @@
 Testsuite: model.reports.NoticesReportTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.152 sec
+Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0.18 sec
 
-Testcase: testLines took 0.002 sec
+Testcase: testLines took 0.005 sec
+	FAILED
+Text block one is wrong.
+junit.framework.AssertionFailedError: Text block one is wrong.
+	at model.reports.NoticesReportTest.testLines(NoticesReportTest.java:109)
+

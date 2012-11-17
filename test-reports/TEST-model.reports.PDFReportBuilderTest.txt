@@ -1,8 +1,8 @@
 Testsuite: model.reports.PDFReportBuilderTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 2.381 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 2.409 sec
 
-Testcase: testRemovedItemsReport took 0.935 sec
-Testcase: testNMonthSupply took 0.611 sec
-Testcase: testExpiredItems took 0.246 sec
-Testcase: testNotices took 0.421 sec
-Testcase: testStats took 0.153 sec
+Testcase: testRemovedItemsReport took 1.063 sec
+Testcase: testNMonthSupply took 0.49 sec
+Testcase: testExpiredItems took 0.237 sec
+Testcase: testNotices took 0.446 sec
+Testcase: testStats took 0.154 sec

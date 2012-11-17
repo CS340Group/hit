@@ -1,6 +1,6 @@
 Testsuite: common.command.AddItemCommandTest
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.151 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.136 sec
 
-Testcase: testCreatedProduct took 0.114 sec
-Testcase: addMultipleItems took 0.015 sec
-Testcase: testProductExisting took 0.007 sec
+Testcase: testCreatedProduct took 0.102 sec
+Testcase: addMultipleItems took 0.016 sec
+Testcase: testProductExisting took 0.006 sec

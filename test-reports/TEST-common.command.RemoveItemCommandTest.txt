@@ -1,4 +1,4 @@
 Testsuite: common.command.RemoveItemCommandTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.175 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.122 sec
 
-Testcase: testCreatedProduct took 0.162 sec
+Testcase: testCreatedProduct took 0.113 sec

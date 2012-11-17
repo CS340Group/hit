@@ -1,4 +1,4 @@
 Testsuite: model.common.SerializableTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.084 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.09 sec
 
-Testcase: SerialTest took 0.042 sec
+Testcase: SerialTest took 0.058 sec
