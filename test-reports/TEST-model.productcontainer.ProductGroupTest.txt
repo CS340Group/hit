@@ -1,5 +1,5 @@
 Testsuite: model.productcontainer.ProductGroupTest
-Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.041 sec
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.044 sec
 
-Testcase: testSet3MonthSupply took 0.023 sec
-Testcase: testValidate took 0.008 sec
+Testcase: testSet3MonthSupply took 0.024 sec
+Testcase: testValidate took 0.009 sec

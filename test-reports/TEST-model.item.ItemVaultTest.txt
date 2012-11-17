@@ -1,11 +1,11 @@
 Testsuite: model.item.ItemVaultTest
-Tests run: 8, Failures: 0, Errors: 0, Time elapsed: 0.163 sec
+Tests run: 8, Failures: 0, Errors: 0, Time elapsed: 0.198 sec
 
-Testcase: testFind took 0.12 sec
-Testcase: testFindAll took 0.006 sec
-Testcase: testGet took 0.007 sec
-Testcase: testSize took 0.004 sec
+Testcase: testFind took 0.145 sec
+Testcase: testFindAll took 0.009 sec
+Testcase: testGet took 0.009 sec
+Testcase: testSize took 0.006 sec
 Testcase: testValidateNew took 0.003 sec
 Testcase: testValidateModified took 0.003 sec
-Testcase: testSaveNew took 0.003 sec
+Testcase: testSaveNew took 0.002 sec
 Testcase: testSaveModified took 0.002 sec

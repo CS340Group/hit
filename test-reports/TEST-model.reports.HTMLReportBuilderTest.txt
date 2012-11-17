@@ -1,8 +1,8 @@
 Testsuite: model.reports.HTMLReportBuilderTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 2.926 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 2.796 sec
 
-Testcase: testRemovedItemsReport took 0.961 sec
-Testcase: testNMonthSupply took 0.457 sec
-Testcase: testExpiredItems took 0.208 sec
-Testcase: testNotices took 0.558 sec
-Testcase: testStats took 0.723 sec
+Testcase: testRemovedItemsReport took 0.86 sec
+Testcase: testNMonthSupply took 0.465 sec
+Testcase: testExpiredItems took 0.185 sec
+Testcase: testNotices took 0.536 sec
+Testcase: testStats took 0.736 sec

@@ -1,6 +1,6 @@
 Testsuite: model.reports.NSupplyReportTest
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.294 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.332 sec
 
-Testcase: testSecondTableHeader took 0.003 sec
-Testcase: testFirstRowSecondTable took 0.001 sec
-Testcase: testMultipleWeights took 0.001 sec
+Testcase: testSecondTableHeader took 0.002 sec
+Testcase: testFirstRowSecondTable took 0 sec
+Testcase: testMultipleWeights took 0 sec
