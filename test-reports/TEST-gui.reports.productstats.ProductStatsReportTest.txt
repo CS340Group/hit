@@ -1,4 +1,4 @@
 Testsuite: gui.reports.productstats.ProductStatsReportTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.265 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.227 sec
 
-Testcase: test took 0.255 sec
+Testcase: test took 0.216 sec

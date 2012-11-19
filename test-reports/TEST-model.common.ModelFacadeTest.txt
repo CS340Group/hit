@@ -1,8 +1,8 @@
 Testsuite: model.common.ModelFacadeTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.207 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.165 sec
 
-Testcase: testAddItem took 0.146 sec
-Testcase: testMoveItem took 0.014 sec
-Testcase: testRemoveItem took 0.007 sec
-Testcase: testMoveProduct took 0.014 sec
-Testcase: testDeleteProduct took 0.01 sec
+Testcase: testAddItem took 0.124 sec
+Testcase: testMoveItem took 0.009 sec
+Testcase: testRemoveItem took 0.006 sec
+Testcase: testMoveProduct took 0.006 sec
+Testcase: testDeleteProduct took 0.007 sec

@@ -1,7 +1,7 @@
 Testsuite: common.command.TransferItemCommandTest
-Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.04 sec
+Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.047 sec
 
-Testcase: targetHasProduct took 0.026 sec
+Testcase: targetHasProduct took 0.03 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException

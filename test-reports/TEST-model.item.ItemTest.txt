@@ -1,6 +1,6 @@
 Testsuite: model.item.ItemTest
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.119 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.117 sec
 
-Testcase: testItemCreation took 0.093 sec
-Testcase: testItemModification took 0.014 sec
+Testcase: testItemCreation took 0.09 sec
+Testcase: testItemModification took 0.013 sec
 Testcase: testValidateEntryDate took 0.001 sec
