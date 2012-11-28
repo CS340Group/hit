@@ -55,7 +55,8 @@ public class ItemDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		// TODO Auto-generated method stub
+		VaultPickler _pickler = new VaultPickler();
+		_pickler.SerializeMe();
 		return null;
 	}
 
