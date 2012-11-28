@@ -40,5 +40,17 @@ public interface IStorageDAO {
 	 * @return an copy of the model.
 	 */
 	public IModel get(int id);
+	
+	/**
+	 * Loads all the data from the table into the vault
+	 * @return A result of the action
+	 */
+	public Result loadAllData();
+	
+	/**
+	 * Saves all the data from the vault into the table
+	 * @return A result of the action
+	 */
+	public Result saveAllData();
 
 }
