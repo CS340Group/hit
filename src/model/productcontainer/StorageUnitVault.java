@@ -105,6 +105,7 @@ public class StorageUnitVault extends Vault{
         model._rootParentId = id;
         model.setSaved(true);
         this.addModel(new StorageUnit(model));
+        
         return new Result(true);
 	}
 	private  Result checkUniqueName(StorageUnit model){

@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 import model.common.operator.Operator;
 import model.common.operator.OperatorFactory;
 import model.item.Item;
+import model.storage.StorageManager;
 import common.Result;
 import common.util.QueryParser;
 
@@ -22,6 +23,8 @@ public abstract class Vault extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
+	public StorageManger storageManager = StorageManager.getInstance();
+	
 	/**
 	   * Last time the removed report was ran
 	   * @serial
@@ -66,6 +69,7 @@ public abstract class Vault extends Observable implements Serializable {
 	protected Result addModel(IModel newItem){
 		int id = newItem.getId();
 		this.dataVault.put(id, newItem);
+		
         this.setChanged();
 		this.notifyObservers();
 		return null;
