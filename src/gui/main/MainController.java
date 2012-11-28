@@ -20,7 +20,6 @@ public class MainController extends Controller implements IMainController {
 	public MainController(IMainView view) {
 		super(view);
 		construct();
-		_pickler = new VaultPickler();	
 	}
 	
 	/**
