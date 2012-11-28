@@ -4,48 +4,38 @@
 package model.storage;
 
 import model.common.IModel;
+import model.storage.SQLDAOs.ItemDAO;
+import model.storage.SQLDAOs.ProductDAO;
+import model.storage.SQLDAOs.ProductGroupDAO;
+import model.storage.SQLDAOs.StorageUnitDAO;
 
 import common.Result;
 
 /**
  * Concrete factory for producing DAOs that use serialization for storage.
  */
-public class SerializationDAOFactory implements IStorageDAO {
+public class SerializationDAOFactory implements IDAOFactory {
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
-	 */
 	@Override
-	public Result insert(IModel model) {
-		// TODO Auto-generated method stub
-		return null;
+	public IStorageDAO getItemDAO() {
+		return new ItemDAO();
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#update(model.common.IModel)
-	 */
 	@Override
-	public Result update(IModel model) {
-		// TODO Auto-generated method stub
-		return null;
+	public IStorageDAO getProductDAO() {
+		return new ProductDAO();
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#delete(model.common.IModel)
-	 */
 	@Override
-	public Result delete(IModel model) {
-		// TODO Auto-generated method stub
-		return null;
+	public IStorageDAO getProductGroupDAO() {
+		return new ProductGroupDAO();
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#get(int)
-	 */
 	@Override
-	public IModel get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public IStorageDAO getStorageUnitDAO() {
+		return new StorageUnitDAO();
 	}
+
+	
 
 }

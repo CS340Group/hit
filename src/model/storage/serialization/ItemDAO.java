@@ -1,23 +1,23 @@
 /**
  * 
  */
-package model.storage;
+package model.storage.serialization;
 
 import model.common.IModel;
+import model.storage.IStorageDAO;
 
 import common.Result;
 
 /**
- * Provides the functionality of accessing the stored information for a product group.
+ * Provides the functionality of accessing the stored information for an item.
  */
-public class ProductGroupDAO implements IStorageDAO {
+public class ItemDAO implements IStorageDAO {
 
 	/* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
 	 */
 	@Override
 	public Result insert(IModel model) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -26,7 +26,6 @@ public class ProductGroupDAO implements IStorageDAO {
 	 */
 	@Override
 	public Result update(IModel model) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,7 +34,6 @@ public class ProductGroupDAO implements IStorageDAO {
 	 */
 	@Override
 	public Result delete(IModel model) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -44,7 +42,6 @@ public class ProductGroupDAO implements IStorageDAO {
 	 */
 	@Override
 	public IModel get(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

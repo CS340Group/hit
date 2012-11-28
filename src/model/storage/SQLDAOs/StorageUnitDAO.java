@@ -1,16 +1,17 @@
 /**
  * 
  */
-package model.storage;
+package model.storage.SQLDAOs;
 
 import model.common.IModel;
+import model.storage.IStorageDAO;
 
 import common.Result;
 
 /**
- * Provides the functionality of accessing the stored information for a product.
+ * Provides the functionality of accessing the stored information for a storage unit.
  */
-public class ProductDAO implements IStorageDAO {
+public class StorageUnitDAO implements IStorageDAO {
 
 	/* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
