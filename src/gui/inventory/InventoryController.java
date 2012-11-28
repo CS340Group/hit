@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
+import model.storage.StorageManager;
 import model.tempmain.TestEnvironment;
 
 import model.common.Barcode;
@@ -36,8 +37,8 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		_pickler = new VaultPickler();	
-		_pickler.DeSerializeMe();
+		
+		StorageManager.getInstance().hitStart();
 //		this.addSampleItems();
 		construct();
 		
