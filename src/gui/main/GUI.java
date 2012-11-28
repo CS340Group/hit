@@ -12,6 +12,8 @@ import gui.reports.supply.*;
 import gui.reports.notices.*;
 import gui.reports.productstats.*;
 import gui.reports.removed.*;
+import model.productidentifier.PluginLoader;
+import model.productidentifier.ProductIdentifier;
 
 
 @SuppressWarnings("serial")
@@ -163,6 +165,8 @@ public final class GUI extends JFrame implements IMainView {
             	}
         	}
 		);
+
+        PluginLoader.load();
     }
 
 }

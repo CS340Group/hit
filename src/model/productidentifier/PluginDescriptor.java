@@ -11,6 +11,12 @@ public class PluginDescriptor {
 	private String name;
 	private String className;
 	private String description;
+
+    public PluginDescriptor(String name, String className, String description){
+        this.name = name;
+        this.className = className;
+        this.description = description;
+    }
 	
 	/**
 	 * @return the name
