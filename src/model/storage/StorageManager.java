@@ -1,10 +1,5 @@
 package model.storage;
 
-import model.common.IModel;
-import model.common.Model;
-import model.common.Vault;
-import model.product.ProductVault;
-
 public class StorageManager {
 	static StorageManager currentInstance;
 	IDAOFactory currentFactory;
@@ -52,7 +47,7 @@ public class StorageManager {
 		this.currentFactory.getStorageUnitDAO().loadAllData();
 	}
 	
-	/*
+	/**
 	 * Method which should be ran when the HIT program closes
 	 */
 	public void hitClose(){
@@ -60,22 +55,6 @@ public class StorageManager {
 		this.currentFactory.getProductDAO().saveAllData();
 		this.currentFactory.getProductGroupDAO().saveAllData();
 		this.currentFactory.getStorageUnitDAO().saveAllData();
-	}
-	
-	
-	/*
-	 * TODO: This should commit any current transaction and return a new one
-	 * It should get the transaction from one of the DAO's?
-	 */
-	public void GetNewTransaction(){
-		
-	}
-	
-	/*
-	 * TODO: This should just return the current transaction if one exists
-	 */
-	public void GetCurrentTransaction(){
-		
 	}
 
 }

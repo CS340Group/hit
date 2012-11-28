@@ -3,6 +3,8 @@
  */
 package model.storage;
 
+import com.sun.corba.se.pept.transport.Connection;
+
 import model.common.IModel;
 import model.storage.SQLDAOs.ItemDAO;
 import model.storage.SQLDAOs.ProductDAO;
@@ -34,6 +36,24 @@ public class SerializationDAOFactory implements IDAOFactory {
 	@Override
 	public IStorageDAO getStorageUnitDAO() {
 		return new StorageUnitDAO();
+	}
+
+	@Override
+	public Result startTransaction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Connection getConnection() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
