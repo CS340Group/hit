@@ -1,5 +1,8 @@
 package model.storage;
 
+import model.common.IModel;
+import model.common.Model;
+import model.common.Vault;
 import model.product.ProductVault;
 
 public class StorageManager {
@@ -25,6 +28,18 @@ public class StorageManager {
 	}
 	public IDAOFactory getFactory(){
 		return this.currentFactory;
+	}
+	public IStorageDAO getAppropriateDAO(IModel model){
+		if(model.getClass().equals("Item"))
+			return this.currentFactory.getItemDAO();
+		if(model.getClass().equals("Product"))
+			return this.currentFactory.getProductDAO();
+		if(model.getClass().equals("ProductGroup"))
+			return this.currentFactory.getProductGroupDAO();
+		if(model.getClass().equals("StorageUnit"))
+			return this.currentFactory.getStorageUnitDAO();
+		
+		return null;
 	}
 	
 	/*
