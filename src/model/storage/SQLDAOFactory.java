@@ -3,47 +3,54 @@
  */
 package model.storage;
 
-import model.common.IModel;
+import model.storage.SQLDAOs.SQLItemDAO;
+import model.storage.SQLDAOs.SQLProductDAO;
+import model.storage.SQLDAOs.SQLProductGroupDAO;
+import model.storage.SQLDAOs.SQLStorageUnitDAO;
 
+import com.sun.corba.se.pept.transport.Connection;
 import common.Result;
+
 
 /**
  * Concrete factory for creating DAOs that use SQL for storage of models.
  */
-public class SQLDAOFactory implements IStorageDAO {
+public class SQLDAOFactory implements IDAOFactory {
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
-	 */
 	@Override
-	public Result insert(IModel model) {
+	public IStorageDAO getItemDAO() {
+		return new SQLItemDAO();
+	}
+
+	@Override
+	public IStorageDAO getProductDAO() {
+		return new SQLProductDAO();
+	}
+
+	@Override
+	public IStorageDAO getProductGroupDAO() {
+		return new SQLProductGroupDAO();
+	}
+
+	@Override
+	public IStorageDAO getStorageUnitDAO() {
+		return new SQLStorageUnitDAO();
+	}
+
+	@Override
+	public Result startTransaction() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#update(model.common.IModel)
-	 */
 	@Override
-	public Result update(IModel model) {
+	public Result endTransaction(boolean commit) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#delete(model.common.IModel)
-	 */
 	@Override
-	public Result delete(IModel model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#get(int)
-	 */
-	@Override
-	public IModel get(int id) {
+	public Connection getConnection() {
 		// TODO Auto-generated method stub
 		return null;
 	}

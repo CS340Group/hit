@@ -9,9 +9,9 @@ import model.storage.IStorageDAO;
 import common.Result;
 
 /**
- * Provides the functionality of accessing the stored information for an item.
+ * Provides the functionality of accessing the stored information for a product group.
  */
-public class ItemDAO implements IStorageDAO {
+public class SQLProductGroupDAO implements IStorageDAO {
 
 	/* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
@@ -45,6 +45,18 @@ public class ItemDAO implements IStorageDAO {
 	 */
 	@Override
 	public IModel get(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result loadAllData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result saveAllData() {
 		// TODO Auto-generated method stub
 		return null;
 	}

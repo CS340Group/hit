@@ -45,4 +45,16 @@ public class ProductGroupDAO implements IStorageDAO {
 		return null;
 	}
 
+	@Override
+	public Result loadAllData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result saveAllData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

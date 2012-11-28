@@ -1,6 +1,7 @@
 package gui.main;
 
 import model.common.VaultPickler;
+import model.storage.StorageManager;
 import gui.common.*;
 
 /**
@@ -9,7 +10,7 @@ import gui.common.*;
  */
 public class MainController extends Controller implements IMainController {
 
-	VaultPickler _pickler;
+	
 
 	/**
 	 * Constructor.
@@ -19,7 +20,6 @@ public class MainController extends Controller implements IMainController {
 	public MainController(IMainView view) {
 		super(view);
 		construct();
-		_pickler = new VaultPickler();	
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class MainController extends Controller implements IMainController {
 	 */
 	@Override
 	public void exit() {
-		_pickler.SerializeMe();
+		StorageManager.getInstance().hitClose();
 	}
 
 	/**
