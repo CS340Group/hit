@@ -1,0 +1,19 @@
+{
+ "plugins" : [
+    {
+      "name" : "Google Plugin",
+      "className" : "model.productidentifier.ProductIdentifierGoogle",
+      "description" : "Product UPC Identifier plugin that works with google's api"
+    },
+    {
+      "name" : "Google Plugin",
+      "className" : "model.productidentifier.ProductIdentifierAmazon",
+      "description" : "Product UPC Identifier plugin that works with google's api"
+    },
+    {
+      "name" : "Google Plugin",
+      "className" : "model.productidentifier.ProductIdentifierUPCSearchDotOrg",
+      "description" : "Product UPC Identifier plugin that works with google's api"
+    }
+  ]
+}

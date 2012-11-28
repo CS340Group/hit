@@ -8,24 +8,15 @@ import model.product.Product;
 /**
  * Attempts to identify a product by searching Amazon.
  */
-public class ProductIdentifierAmazon implements IProductIdentificationPlugin {
+public class ProductIdentifierAmazon extends ProductIdentificationPlugin {
 
-	/* (non-Javadoc)
-	 * @see model.productidentifier.IProductIdentificationHandler#handle(java.lang.String)
-	 */
-	@Override
-	public Product handle(String barcode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public ProductIdentifierAmazon(ProductIdentificationPlugin successor){
+        super(successor);
+    }
 
-	/* (non-Javadoc)
-	 * @see model.productidentifier.IProductIdentificationPlugin#identify(java.lang.String)
-	 */
-	@Override
-	public Product identify(String barcode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    @Override
+    public String identify(String barcode) {
+        System.out.println("AMAZON PLUGIN");
+        return handoff(barcode);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
