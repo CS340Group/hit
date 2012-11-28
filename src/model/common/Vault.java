@@ -23,7 +23,7 @@ public abstract class Vault extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	protected SortedMap<Integer, IModel> dataVault = new TreeMap<Integer, IModel>();
-	public StorageManger storageManager = StorageManager.getInstance();
+	public StorageManager storageManager = StorageManager.getInstance();
 	
 	/**
 	   * Last time the removed report was ran
@@ -39,7 +39,7 @@ public abstract class Vault extends Observable implements Serializable {
 	public Vault(){
 		return;
 	}
-	
+
 	/**
 	 * Returns the size of the vault.
 	 */
@@ -199,6 +199,7 @@ public abstract class Vault extends Observable implements Serializable {
             return new Result(false, "Model must be valid prior to saving,");
         model.setSaved(true);
         this.addModel(getCopiedObject(model));
+        storageManager.getAppropriateDAO(model).update(model);
         return new Result(true);
 	}
 	
@@ -240,6 +241,7 @@ public abstract class Vault extends Observable implements Serializable {
 	public void obliterate(IModel model) {
 		if (this.dataVault.containsKey(model.getId()))
 			this.dataVault.remove(model.getId());
+		storageManager.getAppropriateDAO(model).delete(model);
         this.setChanged();
 		this.notifyObservers();
 	}

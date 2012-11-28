@@ -108,6 +108,7 @@ public class ItemVault extends Vault{
         model.setBarcode(new Barcode(String.valueOf(id)));
         model.setSaved(true);
         this.addModel(new Item(model));
+        storageManager.getAppropriateDAO(model).insert(model);
         return new Result(true);
 	}
 

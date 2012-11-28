@@ -125,6 +125,7 @@ public class ProductGroupVault extends Vault {
         model.setId(id);
         model.setSaved(true);
         this.addModel(new ProductGroup(model));
+        storageManager.getAppropriateDAO(model).insert(model);
         return new Result(true);
 	}
 	

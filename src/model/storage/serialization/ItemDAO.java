@@ -4,6 +4,7 @@
 package model.storage.serialization;
 
 import model.common.IModel;
+import model.common.VaultPickler;
 import model.storage.IStorageDAO;
 
 import common.Result;
@@ -47,8 +48,9 @@ public class ItemDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-		// TODO Auto-generated method stub
-		return null;
+		VaultPickler pickler = new VaultPickler();	
+		pickler.DeSerializeMe();
+		return new Result(true);
 	}
 
 	@Override
