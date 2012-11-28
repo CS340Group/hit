@@ -1,5 +1,7 @@
 package model.storage;
 
+import model.common.IModel;
+
 public class StorageManager {
 	static StorageManager currentInstance;
 	IDAOFactory currentFactory;
