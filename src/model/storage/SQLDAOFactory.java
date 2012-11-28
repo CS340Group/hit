@@ -3,6 +3,14 @@
  */
 package model.storage;
 
+import model.storage.SQLDAOs.SQLItemDAO;
+import model.storage.SQLDAOs.SQLProductDAO;
+import model.storage.SQLDAOs.SQLProductGroupDAO;
+import model.storage.SQLDAOs.SQLStorageUnitDAO;
+
+import com.sun.corba.se.pept.transport.Connection;
+import common.Result;
+
 
 /**
  * Concrete factory for creating DAOs that use SQL for storage of models.
@@ -11,24 +19,38 @@ public class SQLDAOFactory implements IDAOFactory {
 
 	@Override
 	public IStorageDAO getItemDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLItemDAO();
 	}
 
 	@Override
 	public IStorageDAO getProductDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLProductDAO();
 	}
 
 	@Override
 	public IStorageDAO getProductGroupDAO() {
+		return new SQLProductGroupDAO();
+	}
+
+	@Override
+	public IStorageDAO getStorageUnitDAO() {
+		return new SQLStorageUnitDAO();
+	}
+
+	@Override
+	public Result startTransaction() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public IStorageDAO getStorageUnitDAO() {
+	public Result endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Connection getConnection() {
 		// TODO Auto-generated method stub
 		return null;
 	}
