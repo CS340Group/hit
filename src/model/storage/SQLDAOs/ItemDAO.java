@@ -1,9 +1,10 @@
 /**
  * 
  */
-package model.storage;
+package model.storage.SQLDAOs;
 
 import model.common.IModel;
+import model.storage.IStorageDAO;
 
 import common.Result;
 
