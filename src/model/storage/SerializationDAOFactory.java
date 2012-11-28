@@ -4,6 +4,10 @@
 package model.storage;
 
 import model.common.IModel;
+import model.storage.SQLDAOs.ItemDAO;
+import model.storage.SQLDAOs.ProductDAO;
+import model.storage.SQLDAOs.ProductGroupDAO;
+import model.storage.SQLDAOs.StorageUnitDAO;
 
 import common.Result;
 
