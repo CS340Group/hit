@@ -11,7 +11,7 @@ import common.Result;
 /**
  * Provides the functionality of accessing the stored information for an item.
  */
-public class ItemDAO implements IStorageDAO {
+public class SQLItemDAO implements IStorageDAO {
 
 	/* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
