@@ -2,6 +2,8 @@ package model.productcontainer;
 
 import model.item.ItemVault;
 import model.product.ProductVault;
+import model.storage.SerializationDAOFactory;
+import model.storage.StorageManager;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -27,7 +29,8 @@ public class StorageUnitTest {
 
         su2 = new StorageUnit();
         su2.setName("");
-
+        StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+		StorageManager.getInstance().hitStart();
     }
 
     @After
