@@ -55,6 +55,8 @@ public class ProductIdentifierUPCDatabaseDotCom extends ProductIdentificationPlu
         try {
             HashMap result = (HashMap) client.execute(LOOKUP_METHOD, new Object[] {params});
             return result.get("description").toString();
+        } catch (NullPointerException e) {
+            return handoff(barcode);
         } catch (Exception e) {
             e.printStackTrace();
             return handoff(barcode);
