@@ -39,14 +39,14 @@ public class PDFReportBuilderTest {
 
     @After
     public void tearDown() throws Exception {
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File(_filePath);
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                // no application registered for PDFs
-            }
-        }
+//        if (Desktop.isDesktopSupported()) {
+//            try {
+//                File myFile = new File(_filePath);
+//                Desktop.getDesktop().open(myFile);
+//            } catch (IOException ex) {
+//                // no application registered for PDFs
+//            }
+//        }
     }
 
     @AfterClass
