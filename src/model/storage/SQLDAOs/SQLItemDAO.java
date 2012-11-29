@@ -42,7 +42,8 @@ public class SQLItemDAO implements IStorageDAO {
 			statement.setInt(2, item.getProductId());
 			statement.setString(3, item.getBarcodeString());
 			statement.setLong(4, new Long(item.getEntryDate().getMillis()));
-			statement.setLong(5, new Long(item.getExitDate().getMillis()));
+			if(item.getExitDate() != null)
+				statement.setLong(5, new Long(item.getExitDate().getMillis()));
 			statement.setBoolean(6, item.getDeleted());
 			statement.executeUpdate();
 		} catch (SQLException e) {
