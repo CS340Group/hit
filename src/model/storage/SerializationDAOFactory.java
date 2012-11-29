@@ -38,20 +38,22 @@ public class SerializationDAOFactory implements IDAOFactory {
 
 	@Override
 	public Result startTransaction() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Result(true);
 	}
 
 	@Override
 	public Result endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
+		return new Result(true);
+	}
+
+	@Override
+	public java.sql.Connection getConnection() {
 		return null;
 	}
 
 	@Override
-	public Connection getConnection() {
-		// TODO Auto-generated method stub
-		return null;
+	public Result initializeConnection() {
+		return new Result(true);
 	}
 
 	

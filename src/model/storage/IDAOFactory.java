@@ -3,9 +3,8 @@
  */
 package model.storage;
 
-import com.sun.corba.se.pept.transport.Connection;
-
 import common.Result;
+import java.sql.*;
 
 /**
  * @author murphyra
@@ -58,5 +57,11 @@ public interface IDAOFactory {
 	 * @return a pointer to a Connection, or NULL.
 	 */
 	public Connection getConnection();
+	
+	/**
+	 * Initialize the connection to the DB.
+	 * @return A Result indicating the success of the initialization.
+	 */
+	public Result initializeConnection();
 
 }
