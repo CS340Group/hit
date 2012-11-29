@@ -143,14 +143,9 @@ public class SQLItemDAO implements IStorageDAO {
 		item.setId(rSet.getInt(1));
 		item.setProductId(rSet.getInt(2));
 		item.setEntryDate(new DateTime(rSet.getLong(3)));
-		DateTime exit;
 		Long exitValue = rSet.getLong(4);
-		if (exitValue == 0) {
-			exit = null;
-		} else {
-			exit = new DateTime(exitValue);
-		}
-		item.setExitDate(exit);
+		if (exitValue == 0)
+			item.setExitDate(new DateTime(exitValue));
 		item.setDeleted(rSet.getBoolean(5));
 		item.generateBarcodeFromString(rSet.getString(6));
 		item.setValid(true);
