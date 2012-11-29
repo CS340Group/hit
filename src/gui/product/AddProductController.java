@@ -40,6 +40,7 @@ public class AddProductController extends Controller implements
         getView().enableSizeValue(false);
         getView().setShelfLife("0");
         getView().setSupply("0");
+        enableComponents();
     }
 
     private void toggleAll(boolean toggle){

@@ -33,7 +33,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
         PreparedStatement statement;
         ProductGroup pg = (ProductGroup) model;
         try {
-            String query = "INSERT INTO productGroup (id,name,rootParentId,parentId,3MonthSupplyAmount, 3MonthSupplyUnit) VALUES (?,?,?,?,?,?);";
+            String query = "INSERT INTO productGroup (id,name,rootParentId,parentId,MonthSupplyAmount, MonthSupplyUnit) VALUES (?,?,?,?,?,?);";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setInt(1, pg.getId());
             statement.setString(2, pg.getName());
@@ -56,7 +56,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
         PreparedStatement statement;
         ProductGroup pg = (ProductGroup) model;
         try {
-            String query = "UPDATE storageUnit SET name=?,rootParentId=?,parentId=?,3MonthSupplyAmount=?,3MonthSupplyUnit=? where id=?";
+            String query = "UPDATE storageUnit SET name=?,rootParentId=?,parentId=?,MonthSupplyAmount=?,MonthSupplyUnit=? where id=?";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setString(1, pg.getName());
             statement.setInt(2, pg.getRootParentId());
@@ -97,7 +97,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
         PreparedStatement statement;
         ProductGroup pg = null;
         try {
-            String query = "SELECT name,rootParentId,parentId,3MonthSupplyAmount,3MonthSupplyUnit WHERE id=?;";
+            String query = "SELECT name,rootParentId,parentId,MonthSupplyAmount,MonthSupplyUnit WHERE id=?;";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setInt(1, id);
             ResultSet rSet = statement.executeQuery();
@@ -121,7 +121,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
         _vault.clear();
         PreparedStatement statement;
         try {
-            String query = "SELECT id,name,rootParentId,parentId,3MonthSupplyAmount,3MonthSupplyUnit FROM productGroup;";
+            String query = "SELECT id,name,rootParentId,parentId,MonthSupplyAmount,MonthSupplyUnit FROM productGroup;";
             statement = _factory.getConnection().prepareStatement(query);
             ResultSet rSet = statement.executeQuery();
             while(rSet.next()){
@@ -143,16 +143,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-        ArrayList<ProductGroup> pgs = _vault.findAll("Id > %o", 0);
-        Result ultimateResult = new Result(true);
-        for(ProductGroup pg : pgs) {
-            Result result = this.insert(pg);
-            if (result.getStatus() == false) {
-                result = this.update(pg);
-                if (result.getStatus() == false) ultimateResult = new Result(false, "Not all items were saved.");
-            }
-        }
-        return ultimateResult;
+		return new Result(true);
 	}
 
 }

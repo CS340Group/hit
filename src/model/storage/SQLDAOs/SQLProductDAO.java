@@ -41,16 +41,16 @@ public class SQLProductDAO implements IStorageDAO {
 					"                     id," + 
 					"                     storageUnitId," + 
 					"                     parentId," + 
-					"                     barcode," + 
-					"                     3MonthSupply," + 
+					"                     barcode," +
+					"                     MonthSupply," +
 					"                     sizeAmount," + 
 					"                     sizeUnit," + 
 					"                     deleted," + 
 					"                     description," + 
 					"                     shelfLife," + 
-					"                     creationDate," + 
+					"                     creationDate" +
 					"                     )" + 
-					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, product.getId());
 			statement.setInt(2, product.getStorageUnitId());
@@ -83,7 +83,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"            storageUnitId=?," + 
 					"            parentId=?," + 
 					"            barcode=?," + 
-					"            3MonthSupply=?," + 
+					"            MonthSupply=?," +
 					"            sizeAmount=?," + 
 					"            sizeUnit=?," + 
 					"            deleted=?," + 
@@ -140,7 +140,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"    storageUnitId," + 
 					"    parentId," + 
 					"    barcode," + 
-					"    3MonthSupply," + 
+					"    MonthSupply," +
 					"    sizeAmount," + 
 					"    sizeUnit," + 
 					"    deleted," + 
@@ -184,14 +184,14 @@ public class SQLProductDAO implements IStorageDAO {
 					"    storageUnitId," + 
 					"    parentId," + 
 					"    barcode," + 
-					"    3MonthSupply," + 
+					"    MonthSupply," +
 					"    sizeAmount," + 
 					"    sizeUnit," + 
 					"    deleted," + 
 					"    description," + 
 					"    shelfLife," + 
 					"    creationDate" + 
-					"FROM product;";
+					" FROM product;";
 			statement = _factory.getConnection().prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
@@ -219,15 +219,6 @@ public class SQLProductDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		ArrayList<Product> products = _vault.findAll("Id > %o", 0);
-		Result ultimateResult = new Result(true);
-		for(Product product : products) {
-			Result result = this.insert(product);
-			if (result.getStatus() == false) {
-				result = this.update(product);
-				if (result.getStatus() == false) ultimateResult = new Result(false, "Not all products were saved.");
-			}
-		}
-		return ultimateResult;
+		return new Result(true);
 	}
 }
