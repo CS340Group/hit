@@ -48,9 +48,9 @@ public class SQLProductDAO implements IStorageDAO {
 					"                     deleted," + 
 					"                     description," + 
 					"                     shelfLife," + 
-					"                     creationDate," + 
+					"                     creationDate" +
 					"                     )" + 
-					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, product.getId());
 			statement.setInt(2, product.getStorageUnitId());
