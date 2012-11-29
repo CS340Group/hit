@@ -5,6 +5,7 @@ package model.storage.SQLDAOs;
 
 import model.common.IModel;
 import model.item.Item;
+import model.item.ItemVault;
 
 import java.sql.*;
 
@@ -31,7 +32,7 @@ public class SQLItemDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Item item = (Item) model;
 		try {
-			String query = "INSERT INTO main.item (id,productId,barcode,entryTime,exitTime,deleted) VALUES (?,?,?,?,?,?);";
+			String query = "INSERT INTO item (id,productId,barcode,entryTime,exitTime,deleted) VALUES (?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, item.getId());
 			statement.setInt(2, item.getProductId());
@@ -54,7 +55,7 @@ public class SQLItemDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Item item = (Item) model;
 		try {
-			String query = "UPDATE main.item SET productId=?,barcode=?,entryTime=?,exitTime=?,deleted=? where id=?";
+			String query = "UPDATE item SET productId=?,barcode=?,entryTime=?,exitTime=?,deleted=? where id=?";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, item.getProductId());
 			statement.setString(2, item.getBarcodeString());
@@ -77,7 +78,7 @@ public class SQLItemDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Item item = (Item) model;
 		try {
-			String query = "DELETE FROM main.item WHERE id=?;";
+			String query = "DELETE FROM item WHERE id=?;";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, item.getId());
 			statement.executeUpdate();
@@ -95,7 +96,7 @@ public class SQLItemDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Item item = null;
 		try {
-			String query = "SELECT productId,entryTime,exitTime,deleted FROM main.item WHERE id=?;";
+			String query = "SELECT productId,entryTime,exitTime,deleted FROM item WHERE id=?;";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, id);
 			ResultSet rSet = statement.executeQuery();
