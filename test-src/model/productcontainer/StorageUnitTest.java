@@ -20,6 +20,9 @@ public class StorageUnitTest {
 
     @Before
     public void setup(){
+StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+StorageManager.getInstance().hitStart();
+    	
     	ItemVault.getInstance().clear();
 		ProductVault.getInstance().clear();
 		StorageUnitVault.getInstance().clear();
@@ -29,8 +32,7 @@ public class StorageUnitTest {
 
         su2 = new StorageUnit();
         su2.setName("");
-        StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
-		StorageManager.getInstance().hitStart();
+       
     }
 
     @After
