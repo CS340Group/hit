@@ -14,6 +14,9 @@ import gui.reports.productstats.*;
 import gui.reports.removed.*;
 import model.productidentifier.PluginLoader;
 import model.productidentifier.ProductIdentifier;
+import model.storage.SQLDAOFactory;
+import model.storage.SerializationDAOFactory;
+import model.storage.StorageManager;
 
 
 @SuppressWarnings("serial")
@@ -165,6 +168,11 @@ public final class GUI extends JFrame implements IMainView {
             	}
         	}
 		);
+
+        if(args.length > 0 && args[0].equals("-sql"))
+            StorageManager.getInstance().setFactory(new SQLDAOFactory());
+        else
+            StorageManager.getInstance().setFactory(new SerializationDAOFactory());
 
         PluginLoader.load();
     }

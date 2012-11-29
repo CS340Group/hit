@@ -146,7 +146,7 @@ public class SQLItemDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		ArrayList<Item> items = _vault.findAll("id < %o", 0);
+		ArrayList<Item> items = _vault.findAll("Id > %o", 0);
 		Result ultimateResult = new Result(true);
 		for(Item item : items) {
 			Result result = this.insert(item);
