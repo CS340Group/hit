@@ -17,6 +17,10 @@ public class ItemTest {
     public static Item item;
     @Before
     public void setup(){
+StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+StorageManager.getInstance().hitStart();
+StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+StorageManager.getInstance().hitStart();
         item = new Item();
         item.generateTestData();
     }

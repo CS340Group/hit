@@ -18,6 +18,8 @@ public class ProductTest {
     public StorageUnit su;
     @Before
     public void setup(){
+StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+StorageManager.getInstance().hitStart();
         su = new StorageUnit();
         su.setName("Test");
         su.validate();

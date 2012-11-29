@@ -6,10 +6,8 @@ package model.storage;
 import com.sun.corba.se.pept.transport.Connection;
 
 import model.common.IModel;
-import model.storage.SQLDAOs.SQLItemDAO;
-import model.storage.SQLDAOs.SQLProductDAO;
-import model.storage.SQLDAOs.SQLProductGroupDAO;
-import model.storage.SQLDAOs.SQLStorageUnitDAO;
+import model.storage.serialization.*;
+
 
 import common.Result;
 
