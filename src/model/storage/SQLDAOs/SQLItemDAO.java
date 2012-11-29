@@ -38,18 +38,22 @@ public class SQLItemDAO implements IStorageDAO {
 		try {
 			String query = "INSERT INTO item (id,productId,barcode,entryTime,exitTime,deleted) VALUES (?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
-			statement.setInt(1, item.getId());
-			statement.setInt(2, item.getProductId());
-			statement.setString(3, item.getBarcodeString());
-			statement.setLong(4, new Long(item.getEntryDate().getMillis()));
-			if(item.getExitDate() != null)
-				statement.setLong(5, new Long(item.getExitDate().getMillis()));
-			statement.setBoolean(6, item.getDeleted());
+			fillStatementFromItem(statement, item);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true);
+	}
+
+	private void fillStatementFromItem(PreparedStatement statement, Item item) throws SQLException {
+		statement.setInt(1, item.getId());
+		statement.setInt(2, item.getProductId());
+		statement.setString(3, item.getBarcodeString());
+		statement.setLong(4, new Long(item.getEntryDate().getMillis()));
+		if(item.getExitDate() != null)
+			statement.setLong(5, new Long(item.getExitDate().getMillis()));
+		statement.setBoolean(6, item.getDeleted());
 	}
 
 	/* (non-Javadoc)
@@ -62,12 +66,7 @@ public class SQLItemDAO implements IStorageDAO {
 		try {
 			String query = "UPDATE item SET productId=?,barcode=?,entryTime=?,exitTime=?,deleted=? where id=?";
 			statement = _factory.getConnection().prepareStatement(query);
-			statement.setInt(1, item.getProductId());
-			statement.setString(2, item.getBarcodeString());
-			statement.setLong(3, new Long(item.getEntryDate().getMillis()));
-			statement.setLong(4, new Long(item.getExitDate().getMillis()));
-			statement.setBoolean(5, item.getDeleted());
-			statement.setInt(6, item.getId());
+			fillStatementFromItem(statement, item);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
@@ -125,17 +124,11 @@ public class SQLItemDAO implements IStorageDAO {
 		_vault.clear();
 		PreparedStatement statement;
 		try {
-			String query = "SELECT id,productId,entryTime,exitTime,deleted FROM item;";
+			String query = "SELECT id,productId,entryTime,exitTime,deleted,barcode FROM item;";
 			statement = _factory.getConnection().prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
-				Item item = new Item();
-				item.setId(rSet.getInt(1));
-				item.setProductId(rSet.getInt(2));
-				item.setEntryDate(new DateTime(rSet.getLong(3)));
-				item.setExitDate(new DateTime(rSet.getLong(4)));
-				item.setDeleted(rSet.getBoolean(5));
-				item.setValid(true);
+				Item item = populateItemFromResultSet(rSet);
 				Result result = item.save();
 				assert(result.getStatus());
 			}
@@ -143,6 +136,25 @@ public class SQLItemDAO implements IStorageDAO {
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true);
+	}
+
+	private Item populateItemFromResultSet(ResultSet rSet) throws SQLException {
+		Item item = new Item();
+		item.setId(rSet.getInt(1));
+		item.setProductId(rSet.getInt(2));
+		item.setEntryDate(new DateTime(rSet.getLong(3)));
+		DateTime exit;
+		Long exitValue = rSet.getLong(4);
+		if (exitValue == 0) {
+			exit = null;
+		} else {
+			exit = new DateTime(exitValue);
+		}
+		item.setExitDate(exit);
+		item.setDeleted(rSet.getBoolean(5));
+		item.generateBarcodeFromString(rSet.getString(6));
+		item.setValid(true);
+		return item;
 	}
 
 	@Override
