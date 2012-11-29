@@ -1,19 +1,9 @@
 {
  "plugins" : [
     {
-      "name" : "Google Plugin",
-      "className" : "model.productidentifier.ProductIdentifierGoogle",
-      "description" : "Product UPC Identifier plugin that works with google's api"
-    },
-    {
-      "name" : "Google Plugin",
-      "className" : "model.productidentifier.ProductIdentifierAmazon",
-      "description" : "Product UPC Identifier plugin that works with google's api"
-    },
-    {
-      "name" : "Google Plugin",
-      "className" : "model.productidentifier.ProductIdentifierUPCSearchDotOrg",
-      "description" : "Product UPC Identifier plugin that works with google's api"
+      "name" : "upcdatabase.com",
+      "className" : "model.productidentifier.ProductIdentifierUPCDatabaseDotCom",
+      "description" : "uses apache's xml-rpc library to make rpc calls to upcdatabase.com"
     }
   ]
 }

@@ -38,10 +38,12 @@
 	<property name="junit-home" location="${lib}/junit-4.8.2" />
 	
 	<property name="sqlite-home" location="${lib}/sqlitejdbc-v056" />
-	
-	<property name="itext-home" location="${lib}/itext-5.1.0" />
 
-	<property name="import-data-file" location="import.xml"/>
+    <property name="itext-home" location="${lib}/itext-5.1.0" />
+    <property name="xmlrpc-home" location="${lib}/apache-xmlrpc-3.1.3/lib" />
+
+
+    <property name="import-data-file" location="import.xml"/>
 	<property name="export-data-file" location="export.xml"/>
 	<property name="product-classifier-file" location="product-classifiers.xml" />
 	<property name="door-icon-file" location="${images}/door-icon.png" />
@@ -101,6 +103,15 @@
             <include name="gson-2.2.2.jar" />
         </fileset>
     </path>
+
+    <path id="xmlrpc-classpath">
+        <fileset dir="${xmlrpc-home}">
+            <include name="commons-logging-1.1.jar" />
+            <include name="ws-commons-util-1.0.2.jar" />
+            <include name="xmlrpc-client-3.1.3.jar" />
+            <include name="xmlrpc-common-3.1.3.jar" />
+        </fileset>
+    </path>
 	<!-- ***************** -->
 	<!-- task definintions -->
 	<!-- ***************** -->
@@ -146,6 +157,7 @@
             <classpath refid="lamdaj-classpath" />
             <classpath refid="gson-classpath" />
             <classpath refid="sqlite-classpath" />
+            <classpath refid="xmlrpc-classpath" />
         </javac>
 	</target>
 	
@@ -154,8 +166,10 @@
     <property name="joda.jar" value="lib/joda-time-2.1.jar"/>
     <property name="gson.jar" value="lib/google-gson-2.2.2/gson-2.2.2.jar"/>
     <property name="lamdaj.jar" value="lib/lambdaj-2.4-with-dependencies.jar"/>
-	
-	<target name="package" depends="compile"
+    <property name="xmlrpc.jar" value="lib/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar lib/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar lib/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar lib/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar"/>
+
+
+    <target name="package" depends="compile"
         description="package the jar file" >
 		<mkdir dir="${dist}/lib"/>
 		<copy file="${door-icon-file}" todir="${build}/images"/>
@@ -172,7 +186,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="gui.main.GUI"/>
 				<attribute name="Class-Path" 
-					value="${sqlite.jar} ${itext.jar} ${joda.jar} ${lamdaj.jar} ${gson.jar}" />
+					value="${sqlite.jar} ${itext.jar} ${joda.jar} ${lamdaj.jar} ${gson.jar} {xmlrpc.jar}" />
 			</manifest>
 		</jar>
 	</target>
@@ -292,7 +306,8 @@
             <classpath refid="cobertura-classpath" />
             <classpath refid="joda-classpath" />
 			<classpath refid="gson-classpath" />
-			<classpath refid="lamdaj-classpath" />
+            <classpath refid="lamdaj-classpath" />
+            <classpath refid="xmlrpc-classpath" />
         </javac>
 	</target>
 	
@@ -312,7 +327,8 @@
             <classpath refid="joda-classpath" />
             <classpath refid="gson-classpath" />
             <classpath refid="lamdaj-classpath" />
-			<sysproperty key="net.sourceforge.cobertura.datafile"
+            <classpath refid="xmlrpc-classpath" />
+            <sysproperty key="net.sourceforge.cobertura.datafile"
 				value="${coverage-data-file}"/>
 			
 			<formatter type="plain"/>
@@ -353,6 +369,7 @@
 			<classpath refid="joda-classpath" />
             <classpath refid="lamdaj-classpath" />
             <classpath refid="gson-classpath" />
+            <classpath refid="xmlrpc-classpath" />
             <packageset dir="${src}">
 				<include name="common/**"/>
 				<include name="gui/**"/>

@@ -5,6 +5,7 @@ import gui.inventory.ProductContainerData;
 import model.common.Barcode;
 import model.common.Size;
 import model.product.Product;
+import model.productidentifier.ProductIdentifier;
 import org.joda.time.DateTime;
 
 /**
@@ -25,12 +26,30 @@ public class AddProductController extends Controller implements
 		super(view);
         this.target = target;
 		construct();
+        toggleAll(false);
         getView().setBarcode(barcode);
-        getView().enableBarcode(false);
+        getView().setDescription("Fetching Description... Please Wait...");
+        String desc = ProductIdentifier.identify(barcode);
+        toggleAll(true);
+        getView().setDescription("");
+        if(desc.length()>0){
+            getView().enableDescription(false);
+            getView().setDescription(desc);
+        }
         getView().setSizeValue("1");
         getView().enableSizeValue(false);
         getView().setShelfLife("0");
         getView().setSupply("0");
+    }
+
+    private void toggleAll(boolean toggle){
+        getView().enableBarcode(toggle);
+        getView().enableDescription(toggle);
+        getView().enableOK(toggle);
+        getView().enableShelfLife(toggle);
+        getView().enableSizeUnit(toggle);
+        getView().enableSizeValue(toggle);
+        getView().enableSupply(toggle);
     }
 
 	//
