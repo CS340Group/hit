@@ -113,7 +113,7 @@ public class ProductVault extends Vault{
 	 */
 	protected  Result validateModified(Product model){ 
 		assert(model!=null);
-        assert(!dataVault.isEmpty());
+        //assert(!dataVault.isEmpty());
 		
 	    model.setValid(true);
         return new Result(true);
@@ -141,7 +141,6 @@ public class ProductVault extends Vault{
         	model = this.setCreationDate(model);
         model.setSaved(true);
         this.addModel(new Product(model));
-        storageManager.getFactory().getProductDAO().insert(model);
         storageManager.getAppropriateDAO(model).insert(model);
         return new Result(true);
 	}	

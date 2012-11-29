@@ -287,4 +287,8 @@ public class Item extends Model{
 	public void setDeleted(boolean boolean1) {
 		this._deleted = boolean1;
 	}
+
+	public void generateBarcodeFromString(String string) {
+		this._barcode = new Barcode(string);
+	}
 }
