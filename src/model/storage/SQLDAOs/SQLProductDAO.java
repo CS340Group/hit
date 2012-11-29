@@ -41,8 +41,8 @@ public class SQLProductDAO implements IStorageDAO {
 					"                     id," + 
 					"                     storageUnitId," + 
 					"                     parentId," + 
-					"                     barcode," + 
-					"                     3MonthSupply," + 
+					"                     barcode," +
+					"                     MonthSupply," +
 					"                     sizeAmount," + 
 					"                     sizeUnit," + 
 					"                     deleted," + 
@@ -83,7 +83,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"            storageUnitId=?," + 
 					"            parentId=?," + 
 					"            barcode=?," + 
-					"            3MonthSupply=?," + 
+					"            MonthSupply=?," +
 					"            sizeAmount=?," + 
 					"            sizeUnit=?," + 
 					"            deleted=?," + 
@@ -140,7 +140,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"    storageUnitId," + 
 					"    parentId," + 
 					"    barcode," + 
-					"    3MonthSupply," + 
+					"    MonthSupply," +
 					"    sizeAmount," + 
 					"    sizeUnit," + 
 					"    deleted," + 
@@ -184,7 +184,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"    storageUnitId," + 
 					"    parentId," + 
 					"    barcode," + 
-					"    3MonthSupply," + 
+					"    MonthSupply," +
 					"    sizeAmount," + 
 					"    sizeUnit," + 
 					"    deleted," + 
