@@ -3,6 +3,8 @@ package model.item;
 import model.common.Barcode;
 import model.item.Item;
 import model.item.ItemVault;
+import model.storage.SerializationDAOFactory;
+import model.storage.StorageManager;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.joda.time.DateTime;
@@ -19,8 +21,7 @@ public class ItemTest {
     public void setup(){
 StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
 StorageManager.getInstance().hitStart();
-StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
-StorageManager.getInstance().hitStart();
+
         item = new Item();
         item.generateTestData();
     }

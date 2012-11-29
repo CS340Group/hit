@@ -5,6 +5,9 @@ import model.common.Size;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
+import model.storage.SerializationDAOFactory;
+import model.storage.StorageManager;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.After;
