@@ -283,4 +283,8 @@ public class Item extends Model{
     public boolean getIsExpired(){
         return getExpirationDate().toDateMidnight().isBeforeNow();
     }
+
+	public void setDeleted(boolean boolean1) {
+		this._deleted = boolean1;
+	}
 }

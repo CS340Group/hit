@@ -7,6 +7,9 @@ import model.common.IModel;
 import model.item.Item;
 
 import java.sql.*;
+
+import org.joda.time.DateTime;
+
 import model.storage.IStorageDAO;
 import model.storage.SQLDAOFactory;
 
@@ -33,8 +36,8 @@ public class SQLItemDAO implements IStorageDAO {
 			statement.setInt(1, item.getId());
 			statement.setInt(2, item.getProductId());
 			statement.setString(3, item.getBarcodeString());
-			statement.setTimestamp(4, new Timestamp(item.getEntryDate().getMillis()));
-			statement.setTimestamp(5, new Timestamp(item.getExitDate().getMillis()));
+			statement.setLong(4, new Long(item.getEntryDate().getMillis()));
+			statement.setLong(5, new Long(item.getExitDate().getMillis()));
 			statement.setBoolean(6, item.getDeleted());
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -55,8 +58,8 @@ public class SQLItemDAO implements IStorageDAO {
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, item.getProductId());
 			statement.setString(2, item.getBarcodeString());
-			statement.setTimestamp(3, new Timestamp(item.getEntryDate().getMillis()));
-			statement.setTimestamp(4, new Timestamp(item.getExitDate().getMillis()));
+			statement.setLong(3, new Long(item.getEntryDate().getMillis()));
+			statement.setLong(4, new Long(item.getExitDate().getMillis()));
 			statement.setBoolean(5, item.getDeleted());
 			statement.setInt(6, item.getId());
 			statement.executeUpdate();
@@ -92,11 +95,19 @@ public class SQLItemDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Item item = null;
 		try {
-			String query = "SELECT productId,barcode,entryTime,exitTime,deleted FROM main.item WHERE id=?;";
+			String query = "SELECT productId,entryTime,exitTime,deleted FROM main.item WHERE id=?;";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, id);
 			ResultSet rSet = statement.executeQuery();
-			assert rSet != null;
+			while(rSet.next()){
+				item = new Item();
+				item.setId(id);
+				item.setProductId(rSet.getInt(1));
+				Long t = rSet.getLong(2);
+				item.setEntryDate(new DateTime(rSet.getLong(2)));
+				item.setExitDate(new DateTime(rSet.getLong(3)));
+				item.setDeleted(rSet.getBoolean(4));
+			}
 		} catch (SQLException e) {
 			return null;
 		}
