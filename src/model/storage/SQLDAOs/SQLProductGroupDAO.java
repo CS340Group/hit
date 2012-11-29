@@ -15,6 +15,7 @@ import model.storage.SQLDAOFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Provides the functionality of accessing the stored information for a product group.
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 public class SQLProductGroupDAO implements IStorageDAO {
 
     private SQLDAOFactory _factory = new SQLDAOFactory();
+    private ProductGroupVault _vault = ProductGroupVault.getInstance();
 
     /* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
@@ -116,7 +118,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-        ProductGroupVault vault = ProductGroupVault.getInstance();
+        _vault.clear();
         PreparedStatement statement;
         try {
             String query = "SELECT id,name,rootParentId,parentId,3MonthSupplyAmount,3MonthSupplyUnit FROM productGroup;";
@@ -141,8 +143,16 @@ public class SQLProductGroupDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		// TODO Auto-generated method stub
-		return null;
+        ArrayList<ProductGroup> pgs = _vault.findAll("id > %o", 0);
+        Result ultimateResult = new Result(true);
+        for(ProductGroup pg : pgs) {
+            Result result = this.insert(pg);
+            if (result.getStatus() == false) {
+                result = this.update(pg);
+                if (result.getStatus() == false) ultimateResult = new Result(false, "Not all items were saved.");
+            }
+        }
+        return ultimateResult;
 	}
 
 }
