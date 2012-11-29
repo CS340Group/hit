@@ -116,8 +116,27 @@ public class SQLItemDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-		// TODO Auto-generated method stub
-		return null;
+		ItemVault vault = ItemVault.getInstance();
+		PreparedStatement statement;
+		try {
+			String query = "SELECT id,productId,entryTime,exitTime,deleted FROM item;";
+			statement = _factory.getConnection().prepareStatement(query);
+			ResultSet rSet = statement.executeQuery();
+			while(rSet.next()){
+				Item item = new Item();
+				item.setId(rSet.getInt(1));
+				item.setProductId(rSet.getInt(2));
+				item.setEntryDate(new DateTime(rSet.getLong(3)));
+				item.setExitDate(new DateTime(rSet.getLong(4)));
+				item.setDeleted(rSet.getBoolean(5));
+				item.setValid(true);
+				Result result = item.save();
+				assert(result.getStatus());
+			}
+		} catch (SQLException e) {
+			return new Result(false, e.getMessage());
+		}
+		return new Result(true);
 	}
 
 	@Override
