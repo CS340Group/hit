@@ -125,17 +125,11 @@ public class SQLItemDAO implements IStorageDAO {
 		_vault.clear();
 		PreparedStatement statement;
 		try {
-			String query = "SELECT id,productId,entryTime,exitTime,deleted FROM item;";
+			String query = "SELECT id,productId,entryTime,exitTime,deleted,barcode FROM item;";
 			statement = _factory.getConnection().prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
-				Item item = new Item();
-				item.setId(rSet.getInt(1));
-				item.setProductId(rSet.getInt(2));
-				item.setEntryDate(new DateTime(rSet.getLong(3)));
-				item.setExitDate(new DateTime(rSet.getLong(4)));
-				item.setDeleted(rSet.getBoolean(5));
-				item.setValid(true);
+				Item item = populateItemFromResultSet(rSet);
 				Result result = item.save();
 				assert(result.getStatus());
 			}
@@ -143,6 +137,18 @@ public class SQLItemDAO implements IStorageDAO {
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true);
+	}
+
+	private Item populateItemFromResultSet(ResultSet rSet) throws SQLException {
+		Item item = new Item();
+		item.setId(rSet.getInt(1));
+		item.setProductId(rSet.getInt(2));
+		item.setEntryDate(new DateTime(rSet.getLong(3)));
+		item.setExitDate(new DateTime(rSet.getLong(4)));
+		item.setDeleted(rSet.getBoolean(5));
+		item.generateBarcodeFromString(rSet.getString(6));
+		item.setValid(true);
+		return item;
 	}
 
 	@Override
