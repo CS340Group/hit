@@ -60,9 +60,6 @@ public class ItemDAOTest {
 		_item.setProductId(6);
 		Result r = _dao.insert(_item);
 		assertTrue(r.getMessage(), r.getStatus());
-		_factory.endTransaction(true);
-		_factory.startTransaction();
-		_connection = _factory.getConnection();
 		IModel newItem = _dao.get(_item.getId());
 		assertEquals(_item.getProductId(), ((Item)newItem).getProductId());
 		r = _dao.delete(_item);
