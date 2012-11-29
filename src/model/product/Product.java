@@ -393,4 +393,12 @@ public class Product extends Model{
 			List<Item> items = this._itemVault.findAll("ProductId = %o", this.getId(), true);
 		return filter(having(on(Item.class).getDeleted()), items);
 	}
+
+	public void setDeleted(boolean boolean1) {
+		this._deleted = boolean1;
+	}
+
+	public void setProductContainerId(int int1) {
+		this._containerId = int1;
+	}
 }
