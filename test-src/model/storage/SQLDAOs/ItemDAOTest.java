@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.common.IModel;
 import model.item.Item;
 import model.storage.IStorageDAO;
 import model.storage.SQLDAOFactory;
@@ -51,6 +52,16 @@ public class ItemDAOTest {
 		_item.setProductId(10);
 		r = _dao.update(_item);
 		assertTrue(r.getMessage(), r.getStatus());
+		r = _dao.delete(_item);
+	}
+		
+	@Test
+	public void testGet() {
+		_item.setProductId(6);
+		Result r = _dao.insert(_item);
+		assertTrue(r.getMessage(), r.getStatus());
+		IModel newItem = _dao.get(_item.getId());
+		assertEquals(_item.getProductId(), ((Item)newItem).getProductId());
 		r = _dao.delete(_item);
 	}
 }

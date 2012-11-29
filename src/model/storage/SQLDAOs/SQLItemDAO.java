@@ -89,8 +89,18 @@ public class SQLItemDAO implements IStorageDAO {
 	 */
 	@Override
 	public IModel get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement statement;
+		Item item = null;
+		try {
+			String query = "SELECT productId,barcode,entryTime,exitTime,deleted FROM main.item WHERE id=?;";
+			statement = _factory.getConnection().prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet rSet = statement.executeQuery();
+			assert rSet != null;
+		} catch (SQLException e) {
+			return null;
+		}
+		return item;
 	}
 
 	@Override
