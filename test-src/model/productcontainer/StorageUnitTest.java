@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
+import common.Result;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -57,7 +59,8 @@ StorageManager.getInstance().hitStart();
 
     @Test
     public void testSave() throws Exception {
-        assertFalse(su1.save().getStatus());
+    		Result r = su1.save();
+        assertFalse(r.getMessage(), r.getStatus());
         su1.validate();
         assertTrue(su1.save().getStatus());
         assertFalse(su2.save().getStatus());
