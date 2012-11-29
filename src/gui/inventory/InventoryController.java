@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
+import model.storage.SerializationDAOFactory;
 import model.storage.StorageManager;
 import model.tempmain.TestEnvironment;
 
@@ -37,7 +38,7 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		
+		StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
 		StorageManager.getInstance().hitStart();
 //		this.addSampleItems();
 		construct();
