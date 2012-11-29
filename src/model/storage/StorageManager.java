@@ -27,13 +27,14 @@ public class StorageManager {
 		return this.currentFactory;
 	}
 	public IStorageDAO getAppropriateDAO(IModel model){
-		if(model.getClass().equals("Item"))
+		String className = model.getClass().getSimpleName();
+		if(className.equals("Item"))
 			return this.currentFactory.getItemDAO();
-		if(model.getClass().equals("Product"))
+		if(className.equals("Product"))
 			return this.currentFactory.getProductDAO();
-		if(model.getClass().equals("ProductGroup"))
+		if(className.equals("ProductGroup"))
 			return this.currentFactory.getProductGroupDAO();
-		if(model.getClass().equals("StorageUnit"))
+		if(className.equals("StorageUnit"))
 			return this.currentFactory.getStorageUnitDAO();
 		
 		return null;

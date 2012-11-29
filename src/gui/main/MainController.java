@@ -1,6 +1,7 @@
 package gui.main;
 
 import model.common.VaultPickler;
+import model.storage.SerializationDAOFactory;
 import model.storage.StorageManager;
 import gui.common.*;
 
@@ -18,8 +19,11 @@ public class MainController extends Controller implements IMainController {
 	 * @param view Reference to the main view
 	 */
 	public MainController(IMainView view) {
+		
 		super(view);
 		construct();
+		StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+		StorageManager.getInstance().hitStart();
 	}
 	
 	/**
