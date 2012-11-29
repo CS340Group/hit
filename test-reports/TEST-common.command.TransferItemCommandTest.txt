@@ -1,21 +1,22 @@
 Testsuite: common.command.TransferItemCommandTest
-Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.047 sec
+Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.048 sec
 
-Testcase: targetHasProduct took 0.03 sec
+Testcase: targetHasNoProduct took 0.027 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.common.Vault.validateModified(Vault.java:224)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:47)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:57)
-	at common.command.TransferItemCommandTest.setUp(TransferItemCommandTest.java:39)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:86)
+	at common.command.TransferItemCommandTest.setUp(TransferItemCommandTest.java:28)
 
-Testcase: targetHasNoProduct took 0.002 sec
+Testcase: targetHasProduct took 0.007 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.common.Vault.validateModified(Vault.java:224)
-	at model.productcontainer.StorageUnit.validate(StorageUnit.java:47)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:57)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
 	at common.command.TransferItemCommandTest.setUp(TransferItemCommandTest.java:39)
 

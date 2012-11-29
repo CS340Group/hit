@@ -1,8 +1,48 @@
 Testsuite: model.productcontainer.StorageUnitVaultTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.128 sec
+Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.053 sec
 
-Testcase: testFindAll took 0.032 sec
-Testcase: testGet took 0.003 sec
-Testcase: testDuplicateNames took 0.072 sec
-Testcase: testModifiedSave took 0.005 sec
-Testcase: testFind took 0.003 sec
+Testcase: testFind took 0.029 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:27)
+
+Testcase: testFindAll took 0.001 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:27)
+
+Testcase: testGet took 0.001 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:27)
+
+Testcase: testDuplicateNames took 0.001 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:27)
+
+Testcase: testModifiedSave took 0.002 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.productcontainer.StorageUnitVaultTest.setUp(StorageUnitVaultTest.java:27)
+

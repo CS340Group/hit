@@ -1,8 +1,48 @@
 Testsuite: model.common.ModelFacadeTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.165 sec
+Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.063 sec
 
-Testcase: testAddItem took 0.124 sec
-Testcase: testMoveItem took 0.009 sec
-Testcase: testRemoveItem took 0.006 sec
-Testcase: testMoveProduct took 0.006 sec
-Testcase: testDeleteProduct took 0.007 sec
+Testcase: testAddItem took 0.031 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
+
+Testcase: testMoveItem took 0.004 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
+
+Testcase: testRemoveItem took 0.003 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
+
+Testcase: testMoveProduct took 0.004 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
+
+Testcase: testDeleteProduct took 0.003 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
+

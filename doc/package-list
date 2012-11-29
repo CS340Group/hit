@@ -23,4 +23,6 @@ model.productcontainer
 model.productidentifier
 model.reports
 model.storage
+model.storage.SQLDAOs
+model.storage.serialization
 model.tempmain

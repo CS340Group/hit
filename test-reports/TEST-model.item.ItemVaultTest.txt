@@ -1,17 +1,75 @@
 Testsuite: model.item.ItemVaultTest
-Tests run: 8, Failures: 0, Errors: 1, Time elapsed: 0.157 sec
+Tests run: 8, Failures: 0, Errors: 8, Time elapsed: 0.152 sec
 
-Testcase: testValidateNew took 0.109 sec
-Testcase: testValidateModified took 0.008 sec
-Testcase: testSaveNew took 0.007 sec
-Testcase: testSaveModified took 0.002 sec
-Testcase: testFind took 0.004 sec
+Testcase: testValidateNew took 0.101 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.item.Item.getExpirationDate(Item.java:152)
-	at model.item.ItemVaultTest.testFind(ItemVaultTest.java:95)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:34)
+	at model.product.ProductVault.saveNew(ProductVault.java:144)
+	at model.product.Product.save(Product.java:277)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:38)
+
+Testcase: testValidateModified took 0.004 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:34)
+	at model.product.ProductVault.saveNew(ProductVault.java:144)
+	at model.product.Product.save(Product.java:277)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:50)
+
+Testcase: testSaveNew took 0.009 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
+
+Testcase: testSaveModified took 0.007 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
+
+Testcase: testFind took 0.003 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
 
 Testcase: testFindAll took 0.003 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
+
 Testcase: testGet took 0.002 sec
-Testcase: testSize took 0.002 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
+
+Testcase: testSize took 0.001 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
+	at model.item.ItemVault.saveNew(ItemVault.java:111)
+	at model.item.Item.save(Item.java:169)
+	at model.item.ItemVaultTest.setUp(ItemVaultTest.java:58)
+

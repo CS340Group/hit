@@ -1,15 +1,15 @@
 Testsuite: model.common.operator.OperatorFactoryTest
-Tests run: 12, Failures: 0, Errors: 0, Time elapsed: 0.106 sec
+Tests run: 12, Failures: 0, Errors: 0, Time elapsed: 0.109 sec
 
-Testcase: testEqualToStringOperator took 0.019 sec
-Testcase: testNotEqualToStringOperator took 0 sec
-Testcase: testEqualToDateTimeOperator took 0.067 sec
-Testcase: testLessThanDateTimeOperator took 0 sec
-Testcase: testGreaterThanDateTimeOperator took 0 sec
+Testcase: testEqualToStringOperator took 0.02 sec
+Testcase: testGreaterThanDateTimeOperator took 0.069 sec
 Testcase: testEqualToNumberOperator took 0.001 sec
 Testcase: testNotEqualToNumberOperator took 0 sec
-Testcase: testLessThanNumberOperator took 0.001 sec
+Testcase: testLessThanNumberOperator took 0 sec
 Testcase: testGreaterThanNumberOperator took 0 sec
 Testcase: testEqualToBooleanOperator took 0 sec
-Testcase: testNotEqualToBooleanOperator took 0.001 sec
+Testcase: testNotEqualToBooleanOperator took 0 sec
 Testcase: testNullOperator took 0 sec
+Testcase: testNotEqualToStringOperator took 0 sec
+Testcase: testEqualToDateTimeOperator took 0 sec
+Testcase: testLessThanDateTimeOperator took 0 sec

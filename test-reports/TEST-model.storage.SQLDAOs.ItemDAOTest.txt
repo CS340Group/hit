@@ -1,0 +1,6 @@
+Testsuite: model.storage.SQLDAOs.ItemDAOTest
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.162 sec
+
+Testcase: testAdd took 0.144 sec
+Testcase: testUpdate took 0.003 sec
+Testcase: testGet took 0.003 sec
