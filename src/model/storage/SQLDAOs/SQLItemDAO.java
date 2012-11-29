@@ -103,10 +103,10 @@ public class SQLItemDAO implements IStorageDAO {
 				item = new Item();
 				item.setId(id);
 				item.setProductId(rSet.getInt(1));
-				Long t = rSet.getLong(2);
 				item.setEntryDate(new DateTime(rSet.getLong(2)));
 				item.setExitDate(new DateTime(rSet.getLong(3)));
 				item.setDeleted(rSet.getBoolean(4));
+				item.setValid(true);
 			}
 		} catch (SQLException e) {
 			return null;
