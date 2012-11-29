@@ -6,6 +6,7 @@ package model.storage.SQLDAOs;
 import model.common.IModel;
 import model.common.Size;
 import model.productcontainer.ProductGroup;
+import model.productcontainer.ProductGroupVault;
 import model.storage.IStorageDAO;
 
 import common.Result;
@@ -115,8 +116,27 @@ public class SQLProductGroupDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-		// TODO Auto-generated method stub
-		return null;
+        ProductGroupVault vault = ProductGroupVault.getInstance();
+        PreparedStatement statement;
+        try {
+            String query = "SELECT id,name,rootParentId,parentId,3MonthSupplyAmount,3MonthSupplyUnit FROM productGroup;";
+            statement = _factory.getConnection().prepareStatement(query);
+            ResultSet rSet = statement.executeQuery();
+            while(rSet.next()){
+                ProductGroup pg = new ProductGroup();
+                pg.setId(rSet.getInt(1));
+                pg.setName(rSet.getString(2));
+                pg.setRootParentId(rSet.getInt(3));
+                pg.setParentId(rSet.getInt(4));
+                pg.set3MonthSupply(new Size(rSet.getFloat(5), rSet.getString(6)));
+                pg.setValid(true);
+                Result result = pg.save();
+                assert(result.getStatus());
+            }
+        } catch (SQLException e) {
+            return new Result(false, e.getMessage());
+        }
+        return new Result(true);
 	}
 
 	@Override

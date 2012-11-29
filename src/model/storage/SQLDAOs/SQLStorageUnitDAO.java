@@ -5,6 +5,7 @@ package model.storage.SQLDAOs;
 
 import model.common.IModel;
 import model.productcontainer.StorageUnit;
+import model.productcontainer.StorageUnitVault;
 import model.storage.IStorageDAO;
 
 import common.Result;
@@ -106,8 +107,25 @@ public class SQLStorageUnitDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-		// TODO Auto-generated method stub
-		return null;
+        StorageUnitVault vault = StorageUnitVault.getInstance();
+        PreparedStatement statement;
+        try {
+            String query = "SELECT id,name,rootParentId FROM storageUnit;";
+            statement = _factory.getConnection().prepareStatement(query);
+            ResultSet rSet = statement.executeQuery();
+            while(rSet.next()){
+                StorageUnit su = new StorageUnit();
+                su.setId(rSet.getInt(1));
+                su.setName(rSet.getString(2));
+                su.setRootParentId(rSet.getInt(3));
+                su.setValid(true);
+                Result result = su.save();
+                assert(result.getStatus());
+            }
+        } catch (SQLException e) {
+            return new Result(false, e.getMessage());
+        }
+        return new Result(true);
 	}
 
 	@Override
