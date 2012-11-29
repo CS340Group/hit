@@ -22,7 +22,8 @@ import sun.font.TrueTypeFont;
 public class SQLDAOFactory implements IDAOFactory {
 	
 	private static Connection _connection;
-
+	private static Connection _autoConnection;
+	
 	@Override
 	public IStorageDAO getItemDAO() {
 		return new SQLItemDAO();
@@ -45,14 +46,22 @@ public class SQLDAOFactory implements IDAOFactory {
 
 	@Override
 	public Result startTransaction() {
-		String connectionURL = "jdbc:sqlite:grp5db.sqlite";
+		_connection = openNewConnection();
+		if (_connection == null) return new Result(false, "There was a problem opening the connection.");
 		try {
-			assert(_connection == null);
-			_connection = DriverManager.getConnection(connectionURL);
 			_connection.setAutoCommit(false);
-			return new Result(true);
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
+		}
+		return new Result(true);
+	}
+
+	private Connection openNewConnection() {
+		String connectionURL = "jdbc:sqlite:grp5db.sqlite";
+		try {
+			return DriverManager.getConnection(connectionURL);
+		} catch (SQLException e) {
+			return null;
 		}
 	}
 
@@ -78,6 +87,7 @@ public class SQLDAOFactory implements IDAOFactory {
 		if(_connection != null){
 			try {
 				_connection.close();
+				_connection = null;
 			} catch (SQLException e) {
 				return new Result(false, e.getMessage());
 			}
@@ -87,18 +97,25 @@ public class SQLDAOFactory implements IDAOFactory {
 
 	@Override
 	public Connection getConnection() {
-		return _connection;
+		if (_connection == null) {
+			return _autoConnection;
+		}else {
+			return _connection;
+		}
 	}
 
 	@Override
 	public Result initializeConnection() {
+		Result r = new Result();
 		try {
 			String driver = "org.sqlite.JDBC";
 			Class.forName(driver);
-			return new Result(true);
+			r.setStatus(true);
 		} catch (ClassNotFoundException e) {
-			return new Result(false, e.getMessage());
+			r = new Result(false, e.getMessage());
 		}
+		_autoConnection = openNewConnection();
+		return r;
 	}
 
 }
