@@ -18,22 +18,22 @@ public class SerializationDAOFactory implements IDAOFactory {
 
 	@Override
 	public IStorageDAO getItemDAO() {
-		return new SQLItemDAO();
+		return new ItemDAO();
 	}
 
 	@Override
 	public IStorageDAO getProductDAO() {
-		return new SQLProductDAO();
+		return new ProductDAO();
 	}
 
 	@Override
 	public IStorageDAO getProductGroupDAO() {
-		return new SQLProductGroupDAO();
+		return new ProductGroupDAO();
 	}
 
 	@Override
 	public IStorageDAO getStorageUnitDAO() {
-		return new SQLStorageUnitDAO();
+		return new StorageUnitDAO();
 	}
 
 	@Override
