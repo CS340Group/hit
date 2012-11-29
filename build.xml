@@ -186,7 +186,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="gui.main.GUI"/>
 				<attribute name="Class-Path" 
-					value="${sqlite.jar} ${itext.jar} ${joda.jar} ${lamdaj.jar} ${gson.jar} {xmlrpc.jar}" />
+					value="${sqlite.jar} ${itext.jar} ${joda.jar} ${lamdaj.jar} ${gson.jar} ${xmlrpc.jar}" />
 			</manifest>
 		</jar>
 	</target>
