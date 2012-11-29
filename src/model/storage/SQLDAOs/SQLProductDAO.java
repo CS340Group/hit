@@ -191,7 +191,7 @@ public class SQLProductDAO implements IStorageDAO {
 					"    description," + 
 					"    shelfLife," + 
 					"    creationDate" + 
-					"FROM product;";
+					" FROM product;";
 			statement = _factory.getConnection().prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
