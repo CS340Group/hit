@@ -113,7 +113,7 @@ public class ProductVault extends Vault{
 	 */
 	protected  Result validateModified(Product model){ 
 		assert(model!=null);
-        assert(!dataVault.isEmpty());
+        //assert(!dataVault.isEmpty());
 		
 	    model.setValid(true);
         return new Result(true);
