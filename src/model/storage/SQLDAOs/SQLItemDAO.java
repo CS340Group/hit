@@ -8,7 +8,10 @@ import model.item.Item;
 import model.item.ItemVault;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hamcrest.SelfDescribing;
 import org.joda.time.DateTime;
 
 import model.storage.IStorageDAO;
@@ -23,6 +26,7 @@ public class SQLItemDAO implements IStorageDAO {
 
 	private SQLDAOFactory _factory = new SQLDAOFactory();
 	private Connection _connection;
+	private ItemVault _vault = ItemVault.getInstance();
 	
 	/* (non-Javadoc)
 	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
@@ -117,7 +121,7 @@ public class SQLItemDAO implements IStorageDAO {
 
 	@Override
 	public Result loadAllData() {
-		ItemVault vault = ItemVault.getInstance();
+		_vault.clear();
 		PreparedStatement statement;
 		try {
 			String query = "SELECT id,productId,entryTime,exitTime,deleted FROM item;";
@@ -142,8 +146,15 @@ public class SQLItemDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Item> items = _vault.findAll("id < %o", 0);
+		Result ultimateResult = new Result(true);
+		for(Item item : items) {
+			Result result = this.insert(item);
+			if (result.getStatus() == false) {
+				result = this.update(item);
+				if (result.getStatus() == false) ultimateResult = new Result(false, "Not all items were saved.");
+			}
+		}
+		return ultimateResult;
 	}
-
 }
