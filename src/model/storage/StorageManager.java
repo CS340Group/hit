@@ -44,20 +44,25 @@ public class StorageManager {
 	 * Method which should be ran when the HIT program starts
 	 */
 	public void hitStart(){
+        this.currentFactory.initializeConnection();
+        this.currentFactory.startTransaction();
 		this.currentFactory.getItemDAO().loadAllData();
 		this.currentFactory.getProductDAO().loadAllData();
 		this.currentFactory.getProductGroupDAO().loadAllData();
 		this.currentFactory.getStorageUnitDAO().loadAllData();
+        this.currentFactory.endTransaction(true);
 	}
 	
 	/**
 	 * Method which should be ran when the HIT program closes
 	 */
 	public void hitClose(){
+        this.currentFactory.startTransaction();
 		this.currentFactory.getItemDAO().saveAllData();
 		this.currentFactory.getProductDAO().saveAllData();
 		this.currentFactory.getProductGroupDAO().saveAllData();
 		this.currentFactory.getStorageUnitDAO().saveAllData();
+        this.currentFactory.endTransaction(true);
 	}
 
 }

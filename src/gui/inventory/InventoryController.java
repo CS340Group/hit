@@ -38,7 +38,7 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-		StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
+		//StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
 //		this.addSampleItems();
 		construct();
 		

@@ -143,7 +143,7 @@ public class SQLProductGroupDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-        ArrayList<ProductGroup> pgs = _vault.findAll("id > %o", 0);
+        ArrayList<ProductGroup> pgs = _vault.findAll("Id > %o", 0);
         Result ultimateResult = new Result(true);
         for(ProductGroup pg : pgs) {
             Result result = this.insert(pg);

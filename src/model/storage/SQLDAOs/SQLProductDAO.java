@@ -219,7 +219,7 @@ public class SQLProductDAO implements IStorageDAO {
 
 	@Override
 	public Result saveAllData() {
-		ArrayList<Product> products = _vault.findAll("id > %o", 0);
+		ArrayList<Product> products = _vault.findAll("Id > %o", 0);
 		Result ultimateResult = new Result(true);
 		for(Product product : products) {
 			Result result = this.insert(product);

@@ -22,7 +22,6 @@ public class MainController extends Controller implements IMainController {
 		
 		super(view);
 		construct();
-		StorageManager.getInstance().setFactory(new  SerializationDAOFactory());
 		StorageManager.getInstance().hitStart();
 	}
 	
