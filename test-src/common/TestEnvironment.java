@@ -9,6 +9,8 @@ import model.productcontainer.ProductGroup;
 import model.productcontainer.ProductGroupVault;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
+import model.storage.SerializationDAOFactory;
+import model.storage.StorageManager;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -39,9 +41,10 @@ public class TestEnvironment {
         pgs = models/6;
         ps = models/6;
         is = models;
+        StorageManager.getInstance().setFactory(new SerializationDAOFactory());
     }
 
-    private void clear() {
+    public void clear() {
         StorageUnitVault.getInstance().clear();
         ProductGroupVault.getInstance().clear();
         ProductVault.getInstance().clear();

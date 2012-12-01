@@ -76,10 +76,13 @@ public class StatisticReport implements IReportDirector {
         int used = 0;
         int added = 0;
         int curSupply = 0;
-        int reportingPeriodDays = Days.daysBetween(DateMidnight.now().minusMonths(months), DateMidnight.now()).getDays();
+        //int reportingPeriodDays = Days.daysBetween(DateMidnight.now().minusMonths(months), DateMidnight.now()).getDays();
+        ArrayList<Item> toRemove = new ArrayList<Item>();
         for(Item i : items){
-            if(i.getEntryDate().isBefore(i.getProduct().getCreationDate().toDateMidnight()))
+            if(i.getEntryDate().isBefore(i.getProduct().getCreationDate().toDateMidnight())){
+                toRemove.add(i);
                 continue;
+            }
             if(buckets.containsKey(i.getEntryDate().toDateMidnight())){
                 buckets.put(i.getEntryDate().toDateMidnight(), buckets.get(i.getEntryDate().toDateMidnight()) + 1);
                 added++;
@@ -102,10 +105,11 @@ public class StatisticReport implements IReportDirector {
                 }
             }
         }
-        int days = Days.daysBetween(items.get(0).getProduct().getCreationDate().toDateMidnight(), DateMidnight.now()).getDays();
+        items.removeAll(toRemove);
+        if(items.isEmpty())
+            return;
 
-        if(days > reportingPeriodDays)
-            days = reportingPeriodDays;
+        int days = Days.daysBetween(items.get(0).getProduct().getCreationDate().toDateMidnight(), DateMidnight.now()).getDays();
 
         //first day of the period
         if(buckets.containsKey(DateMidnight.now().minusDays(days)))
@@ -131,7 +135,7 @@ public class StatisticReport implements IReportDirector {
 
         builder.addRow(new String[]{
                 items.get(0).getProductDescription(),
-                items.get(0).getBarcodeString(),
+                items.get(0).getProduct().getBarcodeString(),
                 items.get(0).getProduct().getSize().toString(),
                 String.valueOf(items.get(0).getProduct().get3MonthSupply()),
                 String.valueOf(curSupply) + " / " + String.valueOf(supply.getMean()),

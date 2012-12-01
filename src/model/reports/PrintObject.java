@@ -72,6 +72,10 @@ public class PrintObject implements IPrintObject {
 		public void addRow(String[] rowData){
 			table.add(rowData);
 		}
+
+        public int rowCount(){
+            return table.size();
+        }
 	}
 	
 	public class PrintObjectText implements IPrintObjectTextBlock{
