@@ -164,12 +164,14 @@
             <classpath refid="gson-classpath" />
             <classpath refid="sqlite-classpath" />
             <classpath refid="xmlrpc-classpath" />
+            <classpath refid="json-classpath" />
         </javac>
 	</target>
 	
 	<property name="itext.jar" value="lib/itext-5.1.0/itextpdf-5.1.0.jar"/>
 	<property name="sqlite.jar" value="lib/sqlitejdbc-v056/sqlitejdbc-v056.jar"/>
     <property name="joda.jar" value="lib/joda-time-2.1.jar"/>
+    <property name="json.jar" value="lib/json-simple-1.1.1.jar"/>
     <property name="gson.jar" value="lib/google-gson-2.2.2/gson-2.2.2.jar"/>
     <property name="lamdaj.jar" value="lib/lambdaj-2.4-with-dependencies.jar"/>
     <property name="xmlrpc.jar" value="lib/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar lib/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar lib/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar lib/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar"/>
@@ -311,6 +313,7 @@
 			<classpath refid="junit-classpath" />
             <classpath refid="cobertura-classpath" />
             <classpath refid="joda-classpath" />
+            <classpath refid="json-classpath" />
 			<classpath refid="gson-classpath" />
             <classpath refid="lamdaj-classpath" />
             <classpath refid="xmlrpc-classpath" />
@@ -331,6 +334,7 @@
 			<classpath refid="itext-classpath" />
 			<classpath refid="sqlite-classpath" />
             <classpath refid="joda-classpath" />
+            <classpath refid="json-classpath" />
             <classpath refid="gson-classpath" />
             <classpath refid="lamdaj-classpath" />
             <classpath refid="xmlrpc-classpath" />
@@ -373,6 +377,7 @@
 		<javadoc destdir="${doc}" Package="true">
 			<classpath refid="itext-classpath" />
 			<classpath refid="joda-classpath" />
+			<classpath refid="json-classpath" />
             <classpath refid="lamdaj-classpath" />
             <classpath refid="gson-classpath" />
             <classpath refid="xmlrpc-classpath" />

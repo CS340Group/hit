@@ -3,12 +3,7 @@
  */
 package model.storage;
 
-import com.sun.corba.se.pept.transport.Connection;
-
-import model.common.IModel;
 import model.storage.serialization.*;
-
-
 import common.Result;
 
 /**
