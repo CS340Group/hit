@@ -91,6 +91,12 @@
             <include name="joda-time-2.1.jar" />
         </fileset>
     </path>
+	
+    <path id="json-classpath">
+        <fileset dir="${lib}">
+            <include name="json-simple-1.1.1.jar" />
+        </fileset>
+    </path>
 
 	<path id="lamdaj-classpath">
         <fileset dir="${lib}">
