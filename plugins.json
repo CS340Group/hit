@@ -4,6 +4,11 @@
       "name" : "upcdatabase.com",
       "className" : "model.productidentifier.ProductIdentifierUPCDatabaseDotCom",
       "description" : "uses apache's xml-rpc library to make rpc calls to upcdatabase.com"
+    },
+    {
+        "name" : "searchupc.com",
+        "className" : "model.productidentifier.ProductIdentifierSearchUPCDotCom",
+        "description" : "Searches searchupc.com to find the description of the product."
     }
   ]
 }
