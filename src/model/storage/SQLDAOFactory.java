@@ -11,11 +11,6 @@ import model.storage.SQLDAOs.SQLStorageUnitDAO;
 import common.Result;
 import java.sql.*;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
-import sun.font.TrueTypeFont;
-
-
 /**
  * Concrete factory for creating DAOs that use SQL for storage of models.
  */
