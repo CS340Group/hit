@@ -28,6 +28,16 @@ public class Size implements Serializable{
     public float getAmount(){
         return _amount;
     }
+    
+    /**
+     * Returns the amount as a string.
+     */
+    public String getAmountString() {
+    		if (_amount % 1 == 0)
+    			return String.valueOf((int)_amount);
+    		else
+    			return String.valueOf(_amount);
+    }
 
     /**
      * Sets the magnitude of the Size. Must be non-negative.

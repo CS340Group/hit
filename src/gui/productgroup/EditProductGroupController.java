@@ -26,7 +26,7 @@ public class EditProductGroupController extends Controller
         this.target = target;
 		getView().setProductGroupName(target.getName());
         ProductGroup pg = ProductGroupVault.getInstance().get((Integer)target.getTag());
-        getView().setSupplyValue(String.valueOf(pg.get3MonthSupply().getAmount()));
+        getView().setSupplyValue(pg.get3MonthSupply().getAmountString());
         getView().setSupplyUnit(SizeUnits.valueOf(StringUtils.capitalize(pg.get3MonthSupply().getUnit())));
         construct();
 
@@ -63,15 +63,21 @@ public class EditProductGroupController extends Controller
         ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
         float size = 0;
         try {
-            size = Float.parseFloat(getView().getSupplyValue());
-        } catch(Exception e ){
-            getView().enableOK(false);
-            return;
-        }
+	        if(getView().getSupplyUnit().toString() == "count")
+	    			size = Integer.parseInt(getView().getSupplyValue());
+	        else
+	            size = Float.parseFloat(getView().getSupplyValue());
+			if(size < 0)
+				throw new Exception();
+		} catch (Exception e) {
+			getView().enableOK(false);
+			return;
+		}
         pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         getView().enableOK(pg.validate().getStatus());
 	}
+	
 
 	/**
 	 * Loads data into the controller's view.
@@ -94,6 +100,7 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+        enableComponents();
         enableComponents();
 	}
 	

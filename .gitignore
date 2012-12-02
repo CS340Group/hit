@@ -41,3 +41,5 @@ report.html
 grp5db.sqlite
 
 grp5db.sqlite
+
+out/production/hit/.gitkeep

@@ -1,23 +1,16 @@
-/**
- * 
- */
 package model.storage.SQLDAOs;
 
+import common.Result;
 import model.common.IModel;
 import model.item.Item;
 import model.item.ItemVault;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hamcrest.SelfDescribing;
-import org.joda.time.DateTime;
-
 import model.storage.IStorageDAO;
 import model.storage.SQLDAOFactory;
+import org.joda.time.DateTime;
 
-import common.Result;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Provides the functionality of accessing the stored information for an item.
@@ -25,12 +18,11 @@ import common.Result;
 public class SQLItemDAO implements IStorageDAO {
 
 	private SQLDAOFactory _factory = new SQLDAOFactory();
-	private Connection _connection;
 	private ItemVault _vault = ItemVault.getInstance();
-	
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#insert(model.common.IModel)
-	 */
+
+    /* (non-Javadoc)
+     * @see model.storage.IStorageDAO#insert(model.common.IModel)
+     */
 	@Override
 	public Result insert(IModel model) {
 		PreparedStatement statement;
