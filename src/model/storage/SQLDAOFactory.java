@@ -10,6 +10,7 @@ import model.storage.SQLDAOs.SQLStorageUnitDAO;
 
 import common.Result;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Concrete factory for creating DAOs that use SQL for storage of models.
@@ -56,6 +57,7 @@ public class SQLDAOFactory implements IDAOFactory {
 		try {
 			return DriverManager.getConnection(connectionURL);
 		} catch (SQLException e) {
+            assert e.getMessage() == null;
 			return null;
 		}
 	}
@@ -110,7 +112,32 @@ public class SQLDAOFactory implements IDAOFactory {
 			r = new Result(false, e.getMessage());
 		}
 		_autoConnection = openNewConnection();
+        this.generateTables();
 		return r;
 	}
 
+    private void generateTables() {
+        Connection c = this.getConnection();
+        ArrayList<String> cmds = new ArrayList<String>();
+        cmds.add("CREATE TABLE IF NOT EXISTS \"item\" (\"id\" INTEGER, \"productId\" INTEGER, " +
+                "\"barcode\" TEXT,\"entryTime\" LONG,\"exitTime\" LONG, \"deleted\" BOOL);");
+        cmds.add("CREATE TABLE IF NOT EXISTS \"productGroup\" (\"id\" INTEGER, \"name\" TEXT, " +
+                "\"rootParentId\" INTEGER,  \"parentId\" INTEGER, \"MonthSupplyAmount\" FLOAT, " +
+                "\"MonthSupplyUnit\" TEXT);");
+        cmds.add("CREATE TABLE IF NOT EXISTS\"storageUnit\" (\"id\" INTEGER, \"name\" TEXT, " +
+                "\"rootParentId\" INTEGER);");
+        cmds.add("CREATE TABLE IF NOT EXISTS\"product\" (\"id\" INTEGER , " +
+                "\"storageUnitId\" INTEGER, \"parentId\" INTEGER,  \"barcode\" TEXT, " +
+                "\"MonthSupply\" INTEGER, \"sizeAmount\" FLOAT, \"sizeUnit\" TEXT, " +
+                "\"deleted\" BOOL, \"description\" TEXT, \"shelfLife\" INTEGER, " +
+                "\"creationDate\" LONG);");
+        try {
+            for (String cmd : cmds){
+                PreparedStatement p = c.prepareStatement(cmd);
+                p.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
