@@ -100,9 +100,6 @@ public class AddProductController extends Controller implements
             return;
         }
         getView().enableOK(p.validate().getStatus());
-
-
-
 	}
 
 	/**
