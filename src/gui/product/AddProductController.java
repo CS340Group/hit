@@ -33,7 +33,6 @@ public class AddProductController extends Controller implements
         toggleAll(true);
         getView().setDescription("");
         if(desc.length()>0){
-            getView().enableDescription(false);
             getView().setDescription(desc);
         }
         getView().setSizeValue("1");
