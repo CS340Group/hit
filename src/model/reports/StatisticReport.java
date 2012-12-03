@@ -17,6 +17,7 @@ import static ch.lambdaj.Lambda.on;
 import static ch.lambdaj.Lambda.sort;
 
 public class StatisticReport implements IReportDirector {
+    private DateMidnight endReport = DateMidnight.now();
     private ReportBuilder builder;
 
     public int getMonths() {
@@ -25,6 +26,10 @@ public class StatisticReport implements IReportDirector {
 
     public void setMonths(int months) {
         this.months = months;
+    }
+
+    public void setStartDate(DateTime date) {
+        endReport = new DateMidnight(date);
     }
 
     private int months;
@@ -43,7 +48,7 @@ public class StatisticReport implements IReportDirector {
 
 		//Changed to grab ALL products
         ArrayList<Product> products = ProductVault.getInstance().findAll("FirstItemDate >= %o",
-                DateTime.now().minusMonths(months), true);
+                endReport.toDateTime().minusMonths(months), true);
 
         List<Product> sorted = sort(products, on(Product.class).getDescriptionSort());
         Product prev = new Product();
@@ -57,19 +62,19 @@ public class StatisticReport implements IReportDirector {
         });
         for (Product p : sorted) {
             if (!p.getDescriptionSort().equals(prev.getDescriptionSort())) {
-                getStats(items);
+                getStats(items, endReport);
                 items = ItemVault.getInstance().findAll("ProductId = %o", p.getId(), true);
             } else {
                 items.addAll(ItemVault.getInstance().findAll("ProductId = %o", p.getId(), true));
             }
             prev = p;
         }
-        getStats(items);
+        getStats(items, endReport);
         builder.endTable();
         builder.endFile();
     }
 
-    private void getStats(ArrayList<Item> items) {
+    private void getStats(ArrayList<Item> items, DateMidnight endReport) {
         if (items.isEmpty())
             return;
         HashMap<DateMidnight, Integer> buckets = new HashMap<DateMidnight, Integer>();
@@ -81,7 +86,7 @@ public class StatisticReport implements IReportDirector {
         int curSupply = 0;
         ArrayList<Item> toRemove = new ArrayList<Item>();
         for (Item i : items) {
-            if (i.getEntryDate().isBefore(i.getProduct().getCreationDate().toDateMidnight())) {
+            if (i.getEntryDate().isBefore(i.getProduct().getCreationDate().toDateMidnight())){
                 toRemove.add(i);
                 continue;
             }
@@ -95,7 +100,7 @@ public class StatisticReport implements IReportDirector {
             }
 
             if (i.getExitDate() == null) {
-                curAge.insert(Days.daysBetween(i.getEntryDate(), DateTime.now()).getDays());
+                curAge.insert(Days.daysBetween(i.getEntryDate(), endReport).getDays());
             } else {
                 usedAge.insert(Days.daysBetween(i.getEntryDate(), i.getExitDate()).getDays());
 
@@ -115,15 +120,15 @@ public class StatisticReport implements IReportDirector {
             return;
 
         int days = Days.daysBetween(items.get(0).getProduct().getCreationDate().toDateMidnight(),
-                DateMidnight.now()).getDays();
+                endReport).getDays();
 
-        if (buckets.containsKey(DateMidnight.now().minusDays(days)))
-            supply.insert(buckets.get(DateMidnight.now().minusDays(days)));
+        if (buckets.containsKey(endReport.minusDays(days)))
+            supply.insert(buckets.get(endReport.minusDays(days)));
         else
             supply.insert(0);
 
         for (int i = days; i > 0; i--) {
-            DateMidnight today = DateMidnight.now().minusDays(i);
+            DateMidnight today = endReport.minusDays(i);
             DateMidnight yesterday = today.minusDays(1);
             int yesterdaySupply = 0;
             int todaySupply = 0;
