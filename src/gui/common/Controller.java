@@ -39,6 +39,7 @@ package gui.common;
 	 * {@post getView() == view}
 	 */
 	protected Controller(IView view) {
+		//this.loadValues();
 		this._view = view;
 	}
 	

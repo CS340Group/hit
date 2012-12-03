@@ -36,6 +36,8 @@ public interface IDAOFactory {
 	 */
 	public IStorageDAO getStorageUnitDAO();
 	
+	public IStorageDAO getMiscStorageDAO();
+	
 	/**
 	 * Starts a transaction with the DB (if appropriate).
 	 * If the program is not running in SQL mode, no action is taken.

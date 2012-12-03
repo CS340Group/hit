@@ -23,6 +23,7 @@ public class MainController extends Controller implements IMainController {
 		super(view);
 		construct();
 		StorageManager.getInstance().hitStart();
+		
 	}
 	
 	/**

@@ -32,6 +32,11 @@ public class SerializationDAOFactory implements IDAOFactory {
 	}
 
 	@Override
+	public IStorageDAO getMiscStorageDAO() {
+		return new MiscStorageDAO();
+	}
+	
+	@Override
 	public Result startTransaction() {
 		return new Result(true);
 	}

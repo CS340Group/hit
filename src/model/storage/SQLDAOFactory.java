@@ -4,6 +4,7 @@
 package model.storage;
 
 import model.storage.SQLDAOs.SQLItemDAO;
+import model.storage.SQLDAOs.SQLMiscStorageDAO;
 import model.storage.SQLDAOs.SQLProductDAO;
 import model.storage.SQLDAOs.SQLProductGroupDAO;
 import model.storage.SQLDAOs.SQLStorageUnitDAO;
@@ -40,6 +41,11 @@ public class SQLDAOFactory implements IDAOFactory {
 		return new SQLStorageUnitDAO();
 	}
 
+	public IStorageDAO getMiscStorageDAO() {
+		return new SQLMiscStorageDAO();
+	}
+	
+	
 	@Override
 	public Result startTransaction() {
 		_connection = openNewConnection();
@@ -131,6 +137,7 @@ public class SQLDAOFactory implements IDAOFactory {
                 "\"MonthSupply\" INTEGER, \"sizeAmount\" FLOAT, \"sizeUnit\" TEXT, " +
                 "\"deleted\" BOOL, \"description\" TEXT, \"shelfLife\" INTEGER, " +
                 "\"creationDate\" LONG);");
+		cmds.add("CREATE TABLE IF NOT EXISTS \"miscStorage\" (\"id\" INTEGER,  \"datetime\" LONG);");
         try {
             for (String cmd : cmds){
                 PreparedStatement p = c.prepareStatement(cmd);

@@ -46,6 +46,7 @@ public class InventoryController extends Controller
         ProductGroupVault.getInstance().addObserver(this);
         ProductVault.getInstance().addObserver(this);
         ItemVault.getInstance().addObserver(this);
+        
 	}
 
 	/**
