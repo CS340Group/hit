@@ -335,7 +335,7 @@ public class InventoryController extends Controller
 				products = (List)_mf.productVault.findAll("ContainerId = %o", selectedProductGroup.getId());
 				getView().setContextUnit(selectedProductGroup.getStorageUnit().getName());
 				getView().setContextGroup(selectedProductGroup.getName());
-				//getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
+				getView().setContextSupply(selectedProductGroup.get3MonthSupply().toString());
 			} else {
 				products = (List)_mf.productVault.findAll("Deleted = %o", false);
 				// This means that the root is selected.

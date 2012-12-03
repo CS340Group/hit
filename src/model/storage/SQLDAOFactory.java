@@ -129,7 +129,7 @@ public class SQLDAOFactory implements IDAOFactory {
                 "\"barcode\" TEXT,\"entryTime\" LONG,\"exitTime\" LONG, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS \"productGroup\" (\"id\" INTEGER, \"name\" TEXT, " +
                 "\"rootParentId\" INTEGER,  \"parentId\" INTEGER, \"MonthSupplyAmount\" FLOAT, " +
-                "\"MonthSupplyUnit\" TEXT);");
+                "\"MonthSupplyUnit\" TEXT, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"storageUnit\" (\"id\" INTEGER, \"name\" TEXT, " +
                 "\"rootParentId\" INTEGER, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"product\" (\"id\" INTEGER , " +
