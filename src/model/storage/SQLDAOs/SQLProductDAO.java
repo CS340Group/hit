@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.storage.SQLUtils;
 import org.hamcrest.SelfDescribing;
 import org.joda.time.DateTime;
 
@@ -38,8 +39,7 @@ public class SQLProductDAO implements IStorageDAO {
 		Product product = (Product) model;
 		try {
 			String query = "INSERT INTO product (" + 
-					"                     id," + 
-					"                     storageUnitId," + 
+					"                     storageUnitId," +
 					"                     parentId," + 
 					"                     barcode," +
 					"                     MonthSupply," +
@@ -48,21 +48,12 @@ public class SQLProductDAO implements IStorageDAO {
 					"                     deleted," + 
 					"                     description," + 
 					"                     shelfLife," + 
-					"                     creationDate" +
-					"                     )" + 
+					"                     creationDate," +
+                    "                     id" +
+					"                     )" +
 					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
-			statement.setInt(1, product.getId());
-			statement.setInt(2, product.getStorageUnitId());
-			statement.setInt(3, product.getProductContainerId());
-			statement.setString(4, product.getBarcode());
-			statement.setInt(5, product.get3MonthSupply());
-			statement.setFloat(6, product.getSize().getAmount());
-			statement.setString(7, product.getSize().getSizeType());
-			statement.setBoolean(8, product.getDeleted());
-			statement.setString(9, product.getDescription());
-			statement.setInt(10, product.getShelfLife());
-			statement.setLong(11, new Long(product.getCreationDate().getMillis()));
+            FillStatementFromProduct(statement, product);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
@@ -78,9 +69,8 @@ public class SQLProductDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Product product = (Product) model;
 		try {
-			String query = "UPDATE product SET" + 
-					"            id=?," + 
-					"            storageUnitId=?," + 
+			String query = "UPDATE product SET" +
+					"            storageUnitId=?," +
 					"            parentId=?," + 
 					"            barcode=?," + 
 					"            MonthSupply=?," +
@@ -89,29 +79,35 @@ public class SQLProductDAO implements IStorageDAO {
 					"            deleted=?," + 
 					"            description=?," + 
 					"            shelfLife=?," + 
-					"            creationDate=?;";
+					"            creationDate=? where id=?";
 			statement = _factory.getConnection().prepareStatement(query);
-			statement.setInt(1, product.getId());
-			statement.setInt(2, product.getStorageUnitId());
-			statement.setInt(3, product.getProductContainerId());
-			statement.setString(4, product.getBarcode());
-			statement.setInt(5, product.get3MonthSupply());
-			statement.setFloat(6, product.getSize().getAmount());
-			statement.setString(7, product.getSize().getSizeType());
-			statement.setBoolean(8, product.getDeleted());
-			statement.setString(9, product.getDescription());
-			statement.setInt(10, product.getShelfLife());
-			statement.setLong(11, new Long(product.getCreationDate().getMillis()));
+            FillStatementFromProduct(statement, product);
 			statement.executeUpdate();
 		} catch (SQLException e) {
+            assert false;
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true);
 	}
 
-	/* (non-Javadoc)
-	 * @see model.storage.IStorageDAO#delete(model.common.IModel)
-	 */
+    private void FillStatementFromProduct(PreparedStatement statement, Product product) throws SQLException {
+        int i = 1;
+        statement.setInt(i++, product.getStorageUnitId());
+        statement.setInt(i++, product.getProductContainerId());
+        statement.setString(i++, product.getBarcode());
+        statement.setInt(i++, product.get3MonthSupply());
+        statement.setFloat(i++, product.getSize().getAmount());
+        statement.setString(i++, product.getSize().getSizeType());
+        statement.setBoolean(i++, product.getDeleted());
+        statement.setString(i++, product.getDescription());
+        statement.setInt(i++, product.getShelfLife());
+        statement.setString(i++, SQLUtils.DateToLongString(product.getCreationDate()));
+        statement.setInt(i++, product.getId());
+    }
+
+    /* (non-Javadoc)
+     * @see model.storage.IStorageDAO#delete(model.common.IModel)
+     */
 	@Override
 	public Result delete(IModel model) {
 		PreparedStatement statement;
@@ -135,37 +131,25 @@ public class SQLProductDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Product product = null;
 		try {
-			String query = "SELECT " + 
-					"    id," + 
-					"    storageUnitId," + 
-					"    parentId," + 
-					"    barcode," + 
-					"    MonthSupply," +
-					"    sizeAmount," + 
-					"    sizeUnit," + 
-					"    deleted," + 
-					"    description," + 
-					"    shelfLife," + 
-					"    creationDate" + 
+            String query = "SELECT " +
+                    "    id," +
+                    "    storageUnitId," +
+                    "    parentId," +
+                    "    barcode," +
+                    "    MonthSupply," +
+                    "    sizeAmount," +
+                    "    sizeUnit," +
+                    "    deleted," +
+                    "    description," +
+                    "    shelfLife," +
+                    "    creationDate" +
 					"FROM product WHERE id=?;";
 			statement = _factory.getConnection().prepareStatement(query);
 			statement.setInt(1, id);
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
 				product = new Product();
-				product.setId(rSet.getInt(1));
-				product.setStorageUnitId(rSet.getInt(2));
-				product.setProductContainerId(rSet.getInt(3));
-				product.setBarcode(rSet.getString(4));
-				product.set3MonthSupply(rSet.getInt(5));
-				Size newSize = new Size(1, "");
-				newSize.setAmount(rSet.getFloat(6));
-				newSize.setUnit(rSet.getString(7));
-				product.setSize(newSize);
-				product.setDeleted(rSet.getBoolean(8));
-				product.setDescription(rSet.getString(9));
-				product.setShelfLife(rSet.getInt(10));
-				product.setCreationDate(new DateTime(rSet.getLong(11)));
+                fillProductFromResultSet(product, rSet);
 			}
 		} catch (SQLException e) {
 			return null;
@@ -176,6 +160,7 @@ public class SQLProductDAO implements IStorageDAO {
 	@Override
 	public Result loadAllData() {
 		_vault.clear();
+
 		PreparedStatement statement;
 		Product product = null;
 		try {
@@ -196,20 +181,8 @@ public class SQLProductDAO implements IStorageDAO {
 			ResultSet rSet = statement.executeQuery();
 			while(rSet.next()){
 				product = new Product();
-				product.setId(rSet.getInt(1));
-				product.setStorageUnitId(rSet.getInt(2));
-				product.setProductContainerId(rSet.getInt(3));
-				product.setBarcode(rSet.getString(4));
-				product.set3MonthSupply(rSet.getInt(5));
-				Size newSize = new Size(1, "");
-				newSize.setAmount(rSet.getFloat(6));
-				newSize.setUnit(rSet.getString(7));
-				product.setSize(newSize);
-				product.setDeleted(rSet.getBoolean(8));
-				product.setDescription(rSet.getString(9));
-				product.setShelfLife(rSet.getInt(10));
-				product.setCreationDate(new DateTime(rSet.getLong(11)));
-				product.save();
+                fillProductFromResultSet(product, rSet);
+                product.save();
 			}
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
@@ -217,7 +190,23 @@ public class SQLProductDAO implements IStorageDAO {
 		return new Result(true);
 	}
 
-	@Override
+    private void fillProductFromResultSet(Product product, ResultSet rSet) throws SQLException {
+        product.setId(rSet.getInt(1));
+        product.setStorageUnitId(rSet.getInt(2));
+        product.setProductContainerId(rSet.getInt(3));
+        product.setBarcode(rSet.getString(4));
+        product.set3MonthSupply(rSet.getInt(5));
+        Size newSize = new Size(1, "");
+        newSize.setAmount(rSet.getFloat(6));
+        newSize.setUnit(rSet.getString(7));
+        product.setSize(newSize);
+        product.setDeleted(rSet.getBoolean(8));
+        product.setDescription(rSet.getString(9));
+        product.setShelfLife(rSet.getInt(10));
+        product.setCreationDate(SQLUtils.DateFromLongString(rSet.getString(11)));
+    }
+
+    @Override
 	public Result saveAllData() {
 		return new Result(true);
 	}

@@ -55,8 +55,13 @@ public class GuiModelConverter {
 	public static ItemData wrapItem(Item i) {
 		ItemData iData = new ItemData();
 		iData.setEntryDate(i.getEntryDate().toDate());
-		iData.setExpirationDate(i.getExpirationDate().toDate());
-		iData.setBarcode(i.getBarcode().toString());
+        try {
+            iData.setExpirationDate(i.getExpirationDate().toDate());
+        } catch (NullPointerException e) {
+            // If the expiration date is not set, don't add it to the ItemData.
+            iData.setExpirationDate(null);
+        }
+        iData.setBarcode(i.getBarcode().toString());
 		iData.setStorageUnit(i.getProductStorageUnitName());
 		iData.setProductGroup(i.getProductProductGroupName());
 		iData.setTag(i.getId());

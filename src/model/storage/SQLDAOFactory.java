@@ -126,7 +126,7 @@ public class SQLDAOFactory implements IDAOFactory {
         Connection c = this.getConnection();
         ArrayList<String> cmds = new ArrayList<String>();
         cmds.add("CREATE TABLE IF NOT EXISTS \"item\" (\"id\" INTEGER, \"productId\" INTEGER, " +
-                "\"barcode\" TEXT,\"entryTime\" LONG,\"exitTime\" LONG, \"deleted\" BOOL);");
+                "\"barcode\" TEXT,\"entryTime\" TEXT,\"exitTime\" TEXT, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS \"productGroup\" (\"id\" INTEGER, \"name\" TEXT, " +
                 "\"rootParentId\" INTEGER,  \"parentId\" INTEGER, \"MonthSupplyAmount\" FLOAT, " +
                 "\"MonthSupplyUnit\" TEXT, \"deleted\" BOOL);");
@@ -136,8 +136,8 @@ public class SQLDAOFactory implements IDAOFactory {
                 "\"storageUnitId\" INTEGER, \"parentId\" INTEGER,  \"barcode\" TEXT, " +
                 "\"MonthSupply\" INTEGER, \"sizeAmount\" FLOAT, \"sizeUnit\" TEXT, " +
                 "\"deleted\" BOOL, \"description\" TEXT, \"shelfLife\" INTEGER, " +
-                "\"creationDate\" LONG);");
-		cmds.add("CREATE TABLE IF NOT EXISTS \"miscStorage\" (\"id\" INTEGER,  \"datetime\" LONG);");
+                "\"creationDate\" TEXT);");
+		cmds.add("CREATE TABLE IF NOT EXISTS \"miscStorage\" (\"id\" INTEGER,  \"datetime\" TEXT);");
         try {
             for (String cmd : cmds){
                 PreparedStatement p = c.prepareStatement(cmd);
