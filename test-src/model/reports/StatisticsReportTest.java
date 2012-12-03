@@ -469,7 +469,7 @@ public class StatisticsReportTest {
 	/*
 	 * Test a product that was initially added to the system before the
 	 * reporting period (to make sure that the days before the reporting period
-	 * are not counted in the product’s statistics)
+	 * are not counted in the products statistics)
 	 * 
 	 * 1. The product was added many days before the reporting period 
 	 * 2. The
