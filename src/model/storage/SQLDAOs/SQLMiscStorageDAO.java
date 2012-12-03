@@ -38,7 +38,7 @@ public class SQLMiscStorageDAO implements IStorageDAO {
             String query = "INSERT INTO miscStorage (id,dateTime) VALUES (?,?);";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setInt(1, 1);
-            statement.setLong(2, new Long(item.getEntryDate().getMillis()));
+            statement.setString(2, String.valueOf(item.getEntryDate().getMillis()));
             statement.executeUpdate();
         } catch (SQLException e) {
             return new Result(false, e.getMessage());
@@ -56,7 +56,7 @@ public class SQLMiscStorageDAO implements IStorageDAO {
         try {
             String query = "UPDATE miscStorage SET dateTime=?, where id=?";
             statement = _factory.getConnection().prepareStatement(query);
-            statement.setLong(1, new Long(item.getEntryDate().getMillis()));
+            statement.setString(1, String.valueOf(item.getEntryDate().getMillis()));
             statement.setInt(2, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
