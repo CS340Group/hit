@@ -7,176 +7,176 @@ import gui.common.Tagable;
  */
 public class ProductData extends Tagable {
 
-	/**
-	 * Description attribute.
-	 */
-	private String _description;
-	
-	/**
-	 * Size attribute.
-	 */
-	private String _size;
-	
-	/**
-	 * Count attribute.
-	 */
-	private String _count;
-	
-	/**
-	 * Shelf Life attribute
-	 */
-	private String _shelfLife;
-	
-	/**
-	 * Supply attribute.
-	 */
-	private String _supply;
-	
-	/**
-	 * Barcode attribute.
-	 */
-	private String _barcode;
+    /**
+     * Description attribute.
+     */
+    private String _description;
 
-	/**
-	 * Constructor.
-	 * 
-	 * {@pre None}
-	 * 
-	 * {@post getDescription() == ""}
-	 * {@post getSize() == ""}
-	 * {@post getCount() == ""}
-	 * {@post getShelfLife() == ""}
-	 * {@post getSupply() == ""}
-	 * {@post getBarcode() == ""}
-	 */
-	public ProductData() {
-		_description = "";
-		_size = "";
-		_count = "";
-		_shelfLife = "";
-		_supply = "";
-		_barcode = "";
-	}
+    /**
+     * Size attribute.
+     */
+    private String _size;
 
-	/**
-	 * Returns the value of the Barcode attribute.
-	 */
-	public String getBarcode() {
-		return _barcode;
-	}
+    /**
+     * Count attribute.
+     */
+    private String _count;
 
-	/**
-	 * Sets the value of the Barcode attribute.
-	 * 
-	 * @param barcode New Barcode value
-	 * 
-	 * {@pre barcode != null}
-	 * 
-	 * {@post getBarcode() == barcode}
-	 */
-	public void setBarcode(String barcode) {
-		this._barcode = barcode;
-	}
+    /**
+     * Shelf Life attribute
+     */
+    private String _shelfLife;
 
-	/**
-	 * Returns the value of the Description value.
-	 */
-	public String getDescription() {
-		return _description;
-	}
+    /**
+     * Supply attribute.
+     */
+    private String _supply;
 
-	/**
-	 * Sets the value of the Description value.
-	 * 
-	 * @param description New Description value
-	 * 
-	 * {@pre description != null}
-	 * 
-	 * {@post getDescription() == description}
-	 */
-	public void setDescription(String description) {
-		this._description = description;
-	}
+    /**
+     * Barcode attribute.
+     */
+    private String _barcode;
 
-	/**
-	 * Returns the value of the Size attribute.
-	 */
-	public String getSize() {
-		return _size;
-	}
+    /**
+     * Constructor.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post getDescription() == ""}
+     * {@post getSize() == ""}
+     * {@post getCount() == ""}
+     * {@post getShelfLife() == ""}
+     * {@post getSupply() == ""}
+     * {@post getBarcode() == ""}
+     */
+    public ProductData() {
+        _description = "";
+        _size = "";
+        _count = "";
+        _shelfLife = "";
+        _supply = "";
+        _barcode = "";
+    }
 
-	/**
-	 * Sets the value of the Size attribute.
-	 * 
-	 * @param size New Size value
-	 * 
-	 * {@pre size != null}
-	 * 
-	 * {@post getSize() == size}
-	 */
-	public void setSize(String size) {
-		this._size = size;
-	}
+    /**
+     * Returns the value of the Barcode attribute.
+     */
+    public String getBarcode() {
+        return _barcode;
+    }
 
-	/**
-	 * Returns the value of the Count attribute.
-	 */
-	public String getCount() {
-		return _count;
-	}
+    /**
+     * Sets the value of the Barcode attribute.
+     *
+     * @param barcode New Barcode value
+     *                <p/>
+     *                {@pre barcode != null}
+     *                <p/>
+     *                {@post getBarcode() == barcode}
+     */
+    public void setBarcode(String barcode) {
+        this._barcode = barcode;
+    }
 
-	/**
-	 * Sets the value of the Count attribute.
-	 * 
-	 * @param count New Count value
-	 * 
-	 * {@pre count != null}
-	 * 
-	 * {@post getCount() == count}
-	 */
-	public void setCount(String count) {
-		this._count = count;
-	}
+    /**
+     * Returns the value of the Description value.
+     */
+    public String getDescription() {
+        return _description;
+    }
 
-	/**
-	 * Returns the value of the Shelf Life attribute.
-	 */
-	public String getShelfLife() {
-		return _shelfLife;
-	}
+    /**
+     * Sets the value of the Description value.
+     *
+     * @param description New Description value
+     *                    <p/>
+     *                    {@pre description != null}
+     *                    <p/>
+     *                    {@post getDescription() == description}
+     */
+    public void setDescription(String description) {
+        this._description = description;
+    }
 
-	/**
-	 * Sets the value of the Shelf Life attribute.
-	 * 
-	 * @param shelfLife New Shelf Life value
-	 * 
-	 * {@pre shelfLife != null}
-	 * 
-	 * {@post getShelfLife() == shelfLife}
-	 */
-	public void setShelfLife(String shelfLife) {
-		this._shelfLife = shelfLife;
-	}
+    /**
+     * Returns the value of the Size attribute.
+     */
+    public String getSize() {
+        return _size;
+    }
 
-	/**
-	 * Returns the value of the Supply attribute.
-	 */
-	public String getSupply() {
-		return _supply;
-	}
+    /**
+     * Sets the value of the Size attribute.
+     *
+     * @param size New Size value
+     *             <p/>
+     *             {@pre size != null}
+     *             <p/>
+     *             {@post getSize() == size}
+     */
+    public void setSize(String size) {
+        this._size = size;
+    }
 
-	/**
-	 * Sets the value of the Supply attribute.
-	 * 
-	 * @param supply New Supply value
-	 * 
-	 * {@pre supply != null}
-	 * 
-	 * {@post getSupply() == supply}
-	 */
-	public void setSupply(String supply) {
-		this._supply = supply;
-	}
+    /**
+     * Returns the value of the Count attribute.
+     */
+    public String getCount() {
+        return _count;
+    }
+
+    /**
+     * Sets the value of the Count attribute.
+     *
+     * @param count New Count value
+     *              <p/>
+     *              {@pre count != null}
+     *              <p/>
+     *              {@post getCount() == count}
+     */
+    public void setCount(String count) {
+        this._count = count;
+    }
+
+    /**
+     * Returns the value of the Shelf Life attribute.
+     */
+    public String getShelfLife() {
+        return _shelfLife;
+    }
+
+    /**
+     * Sets the value of the Shelf Life attribute.
+     *
+     * @param shelfLife New Shelf Life value
+     *                  <p/>
+     *                  {@pre shelfLife != null}
+     *                  <p/>
+     *                  {@post getShelfLife() == shelfLife}
+     */
+    public void setShelfLife(String shelfLife) {
+        this._shelfLife = shelfLife;
+    }
+
+    /**
+     * Returns the value of the Supply attribute.
+     */
+    public String getSupply() {
+        return _supply;
+    }
+
+    /**
+     * Sets the value of the Supply attribute.
+     *
+     * @param supply New Supply value
+     *               <p/>
+     *               {@pre supply != null}
+     *               <p/>
+     *               {@post getSupply() == supply}
+     */
+    public void setSupply(String supply) {
+        this._supply = supply;
+    }
 
 }
 

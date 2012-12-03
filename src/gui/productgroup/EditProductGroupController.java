@@ -1,8 +1,10 @@
 package gui.productgroup;
 
 import common.util.StringUtils;
-import gui.common.*;
-import gui.inventory.*;
+import gui.common.Controller;
+import gui.common.IView;
+import gui.common.SizeUnits;
+import gui.inventory.ProductContainerData;
 import model.common.Size;
 import model.productcontainer.ProductGroup;
 import model.productcontainer.ProductGroupVault;
@@ -10,113 +12,116 @@ import model.productcontainer.ProductGroupVault;
 /**
  * Controller class for the edit product group view.
  */
-public class EditProductGroupController extends Controller 
-										implements IEditProductGroupController {
+public class EditProductGroupController extends Controller
+        implements IEditProductGroupController {
 
     private ProductContainerData target;
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param view Reference to edit product group view
-	 * @param target Product group being edited
-	 */
-	public EditProductGroupController(IView view, ProductContainerData target) {
-		super(view);
+
+    /**
+     * Constructor.
+     *
+     * @param view   Reference to edit product group view
+     * @param target Product group being edited
+     */
+    public EditProductGroupController(IView view, ProductContainerData target) {
+        super(view);
         this.target = target;
-		getView().setProductGroupName(target.getName());
-        ProductGroup pg = ProductGroupVault.getInstance().get((Integer)target.getTag());
+        getView().setProductGroupName(target.getName());
+        ProductGroup pg = ProductGroupVault.getInstance().get((Integer) target.getTag());
         getView().setSupplyValue(pg.get3MonthSupply().getAmountString());
-        getView().setSupplyUnit(SizeUnits.valueOf(StringUtils.capitalize(pg.get3MonthSupply().getUnit())));
+        getView().setSupplyUnit(
+                SizeUnits.valueOf(StringUtils.capitalize(pg.get3MonthSupply().getUnit())));
         construct();
 
-	}
+    }
 
-	//
-	// Controller overrides
-	//
-	
-	/**
-	 * Returns a reference to the view for this controller.
-	 * 
-	 * {@pre None}
-	 * 
-	 * {@post Returns a reference to the view for this controller.}
-	 */
-	@Override
-	protected IEditProductGroupView getView() {
-		return (IEditProductGroupView)super.getView();
-	}
+    //
+    // Controller overrides
+    //
 
-	/**
-	 * Sets the enable/disable state of all components in the controller's view.
-	 * A component should be enabled only if the user is currently
-	 * allowed to interact with that component.
-	 * 
-	 * {@pre None}
-	 * 
-	 * {@post The enable/disable state of all components in the controller's view
-	 * have been set appropriately.}
-	 */
-	@Override
-	protected void enableComponents() {
-        ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
+    /**
+     * Returns a reference to the view for this controller.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post Returns a reference to the view for this controller.}
+     */
+    @Override
+    protected IEditProductGroupView getView() {
+        return (IEditProductGroupView) super.getView();
+    }
+
+    /**
+     * Sets the enable/disable state of all components in the controller's view.
+     * A component should be enabled only if the user is currently
+     * allowed to interact with that component.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post The enable/disable state of all components in the controller's view
+     * have been set appropriately.}
+     */
+    @Override
+    protected void enableComponents() {
+        ProductGroup pg =
+                ProductGroupVault.getInstance().get(((Number) target.getTag()).intValue());
         float size = 0;
         try {
-	        if(getView().getSupplyUnit().toString() == "count")
-	    			size = Integer.parseInt(getView().getSupplyValue());
-	        else
-	            size = Float.parseFloat(getView().getSupplyValue());
-			if(size < 0)
-				throw new Exception();
-		} catch (Exception e) {
-			getView().enableOK(false);
-			return;
-		}
+            if (getView().getSupplyUnit().toString() == "count")
+                size = Integer.parseInt(getView().getSupplyValue());
+            else
+                size = Float.parseFloat(getView().getSupplyValue());
+            if (size < 0)
+                throw new Exception();
+        } catch (Exception e) {
+            getView().enableOK(false);
+            return;
+        }
         pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         getView().enableOK(pg.validate().getStatus());
-	}
-	
+    }
 
-	/**
-	 * Loads data into the controller's view.
-	 * 
-	 *  {@pre None}
-	 *  
-	 *  {@post The controller has loaded data into its view}
-	 */
-	@Override
-	protected void loadValues() {
-	}
 
-	//
-	// IEditProductGroupController overrides
-	//
+    /**
+     * Loads data into the controller's view.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post The controller has loaded data into its view}
+     */
+    @Override
+    protected void loadValues() {
+    }
 
-	/**
-	 * This method is called when any of the fields in the
-	 * edit product group view is changed by the user.
-	 */
-	@Override
-	public void valuesChanged() {
+    //
+    // IEditProductGroupController overrides
+    //
+
+    /**
+     * This method is called when any of the fields in the
+     * edit product group view is changed by the user.
+     */
+    @Override
+    public void valuesChanged() {
         enableComponents();
         enableComponents();
-	}
-	
-	/**
-	 * This method is called when the user clicks the "OK"
-	 * button in the edit product group view.
-	 */
-	@Override
-	public void editProductGroup() {
-        ProductGroup pg = ProductGroupVault.getInstance().get(((Number)target.getTag()).intValue());
+    }
+
+    /**
+     * This method is called when the user clicks the "OK"
+     * button in the edit product group view.
+     */
+    @Override
+    public void editProductGroup() {
+        ProductGroup pg =
+                ProductGroupVault.getInstance().get(((Number) target.getTag()).intValue());
         float size = Float.parseFloat(getView().getSupplyValue());
         pg.set3MonthSupply(new Size(size, getView().getSupplyUnit().toString()));
         pg.setName(getView().getProductGroupName());
         pg.validate();
         pg.save();
-	}
+    }
 
 }
 

@@ -5,25 +5,25 @@ package common;
  */
 public final class StringOps {
 
-	/**
-	 * Private Constructor.
-	 */
-	private StringOps() {
-		assert false;
-	}
-	
-	/**
-	 * Returns true if string is null or empty, and false otherwise.
-	 * 
-	 * @param s String to be tested.
-	 * 
-	 * {@pre s != null}
-	 * 
-	 * {@post Returns true if string is null or empty, and false otherwise.}
-	 */
-	public static boolean isNullOrEmpty(String s) {
-		return ((s == null) || (s.length() == 0));
-	}
-	
+    /**
+     * Private Constructor.
+     */
+    private StringOps() {
+        assert false;
+    }
+
+    /**
+     * Returns true if string is null or empty, and false otherwise.
+     *
+     * @param s String to be tested.
+     *          <p/>
+     *          {@pre s != null}
+     *          <p/>
+     *          {@post Returns true if string is null or empty, and false otherwise.}
+     */
+    public static boolean isNullOrEmpty(String s) {
+        return ((s == null) || (s.length() == 0));
+    }
+
 }
 
