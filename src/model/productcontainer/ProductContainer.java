@@ -8,12 +8,12 @@ import model.reports.Ivisitor;
 import java.util.ArrayList;
 
 /**
- * The ProductContainer is the base class for 
+ * The ProductContainer is the base class for
  * {@link ProductGroup ProductGroup} and for
  * {@link StorageUnit StorageUnit}. It defines the shared
  * interface for these objects.
  */
-public class ProductContainer extends Model{
+public class ProductContainer extends Model {
 
     /**
      * A string that is non-empty and must be unique among its vault context.
@@ -29,13 +29,13 @@ public class ProductContainer extends Model{
     /* A pointer to the StorageUnit that holds this group. Can be the same
 	 * as _parentId */
     protected int _rootParentId;
-    
-    
+
+
     /**
      * Constructor
      */
-    public ProductContainer(){
-    	super();
+    public ProductContainer() {
+        super();
         _name = "";
         _id = -1;
         _valid = false;
@@ -47,7 +47,7 @@ public class ProductContainer extends Model{
     /**
      * Copy Constructor
      */
-    public ProductContainer(ProductContainer p){
+    public ProductContainer(ProductContainer p) {
         assert p != null : "I wanted a ProductContainer, and I found a null!";
         _id = p.getId();
         _valid = p.isValid();
@@ -61,7 +61,7 @@ public class ProductContainer extends Model{
     /**
      * Return the ID of the StorageUnit.
      */
-    public int getRootParentId(){
+    public int getRootParentId() {
         return _rootParentId;
     }
 
@@ -69,14 +69,14 @@ public class ProductContainer extends Model{
      * Returns a copy of the storage unit that this ProductGroup is contained
      * in.
      */
-    public ProductContainer getRootParent(){
+    public ProductContainer getRootParent() {
         return _storageUnitVault.get(_rootParentId);
     }
 
     /**
      * Set this to the ID of the StorageUnit that this ProductGroup belongs to.
      */
-    public Result setRootParentId(int id){
+    public Result setRootParentId(int id) {
         assert true;
         _rootParentId = id;
         invalidate();
@@ -89,15 +89,14 @@ public class ProductContainer extends Model{
     public String getName() {
         return _name;
     }
-    
-    public String getLowerCaseName(){
-    	return _name.toLowerCase();
+
+    public String getLowerCaseName() {
+        return _name.toLowerCase();
     }
-    
-    
+
 
     /**
-     * Sets the name of the ProductContainer, invalidating it as well so that a 
+     * Sets the name of the ProductContainer, invalidating it as well so that a
      * subsequent save must be validated first.
      */
     public Result setName(String _name) {
@@ -111,7 +110,7 @@ public class ProductContainer extends Model{
     /**
      * If the ProductContainer is valid it is saved into the vault.
      */
-    public Result save(){
+    public Result save() {
         assert true;
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
     }
@@ -119,41 +118,41 @@ public class ProductContainer extends Model{
     /**
      * Validate that the ProductContainer is able to be saved into the vault.
      */
-    public Result validate(){
+    public Result validate() {
         assert true;
         return new Result(false, "THIS METHOD SHOULD BE OVERRIDDEN");
     }
 
-    
-    public ArrayList<ProductGroup> getChildProductGroups(){
-	    return _productGroupVault.findAll("ParentId = %o", this.getId());
+
+    public ArrayList<ProductGroup> getChildProductGroups() {
+        return _productGroupVault.findAll("ParentId = %o", this.getId());
     }
+
     /**
      * Indicates if the object is able to be deleted
      */
-    public Result isDeleteable(){
-    	//Product Container can not have items
-    	ArrayList<Product> products;
-    	products = _productVault.findAll("ContainerId = %o", this.getId());
-    	for(Product tempProduct : products){
-    		if(_itemVault.find("ProductId = %o", tempProduct.getId()) != null)
-    			return new Result(false);
-    	}
-    	for(ProductGroup tempPG : this.getChildProductGroups()){
-    		if(tempPG.isDeleteable().getStatus() == false)
-    			return new Result(false);
-    	}
-    	
-    	
-    	
+    public Result isDeleteable() {
+        //Product Container can not have items
+        ArrayList<Product> products;
+        products = _productVault.findAll("ContainerId = %o", this.getId());
+        for (Product tempProduct : products) {
+            if (_itemVault.find("ProductId = %o", tempProduct.getId()) != null)
+                return new Result(false);
+        }
+        for (ProductGroup tempPG : this.getChildProductGroups()) {
+            if (tempPG.isDeleteable().getStatus() == false)
+                return new Result(false);
+        }
+
+
         return new Result(true);
     }
 
-	@Override
-	public void accept(Ivisitor visitor) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void accept(Ivisitor visitor) {
+        // TODO Auto-generated method stub
+
+    }
 
 
 }

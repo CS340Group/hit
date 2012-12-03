@@ -29,7 +29,7 @@ public class OperatorFactory {
             key += "DateTime";
         } else if (Number.class.isAssignableFrom(paramType)) {
             key += "Number";
-        } else if(Boolean.class.isAssignableFrom(paramType)) {
+        } else if (Boolean.class.isAssignableFrom(paramType)) {
             key += "Boolean";
         } else if (String.class.isAssignableFrom(paramType)) {
             key += "String";
@@ -38,21 +38,21 @@ public class OperatorFactory {
     }
 
     //Operators
-    public static class EqualToStringOperator implements Operator<String>{
+    public static class EqualToStringOperator implements Operator<String> {
         @Override
         public boolean execute(String lhs, String rhs) {
             return lhs.equals(rhs);
         }
     }
 
-    public static class NotEqualToStringOperator implements Operator<String>{
+    public static class NotEqualToStringOperator implements Operator<String> {
         @Override
         public boolean execute(String lhs, String rhs) {
             return !lhs.equals(rhs);
         }
     }
 
-    public static class EqualToDateTimeOperator implements Operator<DateTime>{
+    public static class EqualToDateTimeOperator implements Operator<DateTime> {
 
         @Override
         public boolean execute(DateTime lhs, DateTime rhs) {
@@ -60,7 +60,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class LessThanDateTimeOperator implements Operator<DateTime>{
+    public static class LessThanDateTimeOperator implements Operator<DateTime> {
 
         @Override
         public boolean execute(DateTime lhs, DateTime rhs) {
@@ -68,7 +68,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class GreaterThanDateTimeOperator implements Operator<DateTime>{
+    public static class GreaterThanDateTimeOperator implements Operator<DateTime> {
 
         @Override
         public boolean execute(DateTime lhs, DateTime rhs) {
@@ -77,7 +77,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class GreaterThanOrEqualDateTimeOperator implements Operator<DateTime>{
+    public static class GreaterThanOrEqualDateTimeOperator implements Operator<DateTime> {
 
         @Override
         public boolean execute(DateTime lhs, DateTime rhs) {
@@ -85,8 +85,8 @@ public class OperatorFactory {
             return lhs.isAfter(rhs.minusDays(1));
         }
     }
-    
-    public static class EqualToNumberOperator implements Operator<Number>{
+
+    public static class EqualToNumberOperator implements Operator<Number> {
 
         @Override
         public boolean execute(Number lhs, Number rhs) {
@@ -94,7 +94,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class NotEqualToNumberOperator implements Operator<Number>{
+    public static class NotEqualToNumberOperator implements Operator<Number> {
 
         @Override
         public boolean execute(Number lhs, Number rhs) {
@@ -102,7 +102,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class LessThanNumberOperator implements Operator<Number>{
+    public static class LessThanNumberOperator implements Operator<Number> {
 
         @Override
         public boolean execute(Number lhs, Number rhs) {
@@ -110,7 +110,7 @@ public class OperatorFactory {
         }
     }
 
-    public static class GreaterThanNumberOperator implements Operator<Number>{
+    public static class GreaterThanNumberOperator implements Operator<Number> {
 
         @Override
         public boolean execute(Number lhs, Number rhs) {
@@ -118,18 +118,18 @@ public class OperatorFactory {
         }
     }
 
-    public static class EqualToBooleanOperator implements Operator<Boolean>{
+    public static class EqualToBooleanOperator implements Operator<Boolean> {
 
         @Override
-        public boolean execute(Boolean lhs, Boolean rhs){
+        public boolean execute(Boolean lhs, Boolean rhs) {
             return lhs.booleanValue() == rhs.booleanValue();
         }
     }
 
-    public static class NotEqualToBooleanOperator implements Operator<Boolean>{
+    public static class NotEqualToBooleanOperator implements Operator<Boolean> {
 
         @Override
-        public boolean execute(Boolean lhs, Boolean rhs){
+        public boolean execute(Boolean lhs, Boolean rhs) {
             return lhs.booleanValue() != rhs.booleanValue();
         }
     }

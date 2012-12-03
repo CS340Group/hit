@@ -1,73 +1,73 @@
 package gui.batches;
 
+import gui.common.IController;
 import model.item.Item;
 import model.product.Product;
-import gui.common.IController;
 
 /**
  * Controller interface for add item batch view.
  */
 public interface IAddItemBatchController extends IController {
 
-	/**
-	 * This method is called when the "Entry Date" field in the
-	 * add item batch view is changed by the user.
-	 */
-	void entryDateChanged();
-	
-	/**
-	 * This method is called when the "Count" field in the
-	 * add item batch view is changed by the user.
-	 */
-	void countChanged();
-	
-	/**
-	 * This method is called when the "Product Barcode" field in the
-	 * add item batch view is changed by the user.
-	 */
-	void barcodeChanged();
-	
-	/**
-	 * This method is called when the "Use Barcode Scanner" setting in the
-	 * add item batch view is changed by the user.
-	 */
-	void useScannerChanged();
-	
-	/**
-	 * This method is called when the selected product changes
-	 * in the add item batch view.
-	 */
-	void selectedProductChanged();
-	
-	/**
-	 * This method is called when the user clicks the "Add Item" button
-	 * in the add item batch view.
-	 */
-	void addItem();
-	
-	/**
-	 * This method is called when the user clicks the "Undo" button
-	 * in the add item batch view.
-	 */
-	void undo();
-	
-	/**
-	 * This method is called when the user clicks the "Redo" button
-	 * in the add item batch view.
-	 */
-	void redo();
-	
-	/**
-	 * This method is called when the user clicks the "Done" button
-	 * in the add item batch view.
-	 */
-	void done();
+    /**
+     * This method is called when the "Entry Date" field in the
+     * add item batch view is changed by the user.
+     */
+    void entryDateChanged();
 
-	void addItemToView(Item item);
+    /**
+     * This method is called when the "Count" field in the
+     * add item batch view is changed by the user.
+     */
+    void countChanged();
 
-	void addProductToView(Product _product);
+    /**
+     * This method is called when the "Product Barcode" field in the
+     * add item batch view is changed by the user.
+     */
+    void barcodeChanged();
 
-	void removeItemFromView(Item item);
+    /**
+     * This method is called when the "Use Barcode Scanner" setting in the
+     * add item batch view is changed by the user.
+     */
+    void useScannerChanged();
+
+    /**
+     * This method is called when the selected product changes
+     * in the add item batch view.
+     */
+    void selectedProductChanged();
+
+    /**
+     * This method is called when the user clicks the "Add Item" button
+     * in the add item batch view.
+     */
+    void addItem();
+
+    /**
+     * This method is called when the user clicks the "Undo" button
+     * in the add item batch view.
+     */
+    void undo();
+
+    /**
+     * This method is called when the user clicks the "Redo" button
+     * in the add item batch view.
+     */
+    void redo();
+
+    /**
+     * This method is called when the user clicks the "Done" button
+     * in the add item batch view.
+     */
+    void done();
+
+    void addItemToView(Item item);
+
+    void addProductToView(Product _product);
+
+    void removeItemFromView(Item item);
 
 }
 

@@ -2,7 +2,6 @@ package model.productcontainer;
 
 import common.Result;
 import model.common.Size;
-import model.item.Item;
 import model.product.Product;
 import model.reports.Ivisitor;
 
@@ -11,34 +10,34 @@ import java.util.ArrayList;
 /**
  * The ProductGroup class encapsulates all the funtions and data associated with a "ProductGroup".
  * It extends the {@link model.productcontainer.ProductContainer ProductContainer}
- * 	class which contains getters and setters for the various datas.
+ * class which contains getters and setters for the various datas.
  */
-public class ProductGroup extends ProductContainer{
+public class ProductGroup extends ProductContainer {
 
-	/* A pointer to the ProductContainer that this group belongs to */
-	private int _parentId;
+    /* A pointer to the ProductContainer that this group belongs to */
+    private int _parentId;
 
-	/* A variable representing the three month supply for this group. */
-	private Size _3MonthSupply;
-	
-	/**
-	 * No-args constructor.
-	 */
-	public ProductGroup(){
-		super();
-		_parentId = -1;
-	}
+    /* A variable representing the three month supply for this group. */
+    private Size _3MonthSupply;
 
-	/**
-	 * Expects the parent group, and the storage unit that this group belongs
-	 * to. They can be the same value. Also expects some non-negative integer
-	 * for the three-moth supply for this group.
-	 */
-	public ProductGroup(ProductGroup parent, ProductGroup rootParent, 
-	                    Size threeMonthSupply){
-		super();
-		_parentId = parent.getId();
-		_3MonthSupply = threeMonthSupply;
+    /**
+     * No-args constructor.
+     */
+    public ProductGroup() {
+        super();
+        _parentId = -1;
+    }
+
+    /**
+     * Expects the parent group, and the storage unit that this group belongs
+     * to. They can be the same value. Also expects some non-negative integer
+     * for the three-moth supply for this group.
+     */
+    public ProductGroup(ProductGroup parent, ProductGroup rootParent,
+                        Size threeMonthSupply) {
+        super();
+        _parentId = parent.getId();
+        _3MonthSupply = threeMonthSupply;
     }
 
     /**
@@ -52,77 +51,78 @@ public class ProductGroup extends ProductContainer{
     }
 
     /**
-	 * Returns the three-month supply for this group as an int. */	
-	public Size get3MonthSupply(){
-		return _3MonthSupply;
-	}
+     * Returns the three-month supply for this group as an int.
+     */
+    public Size get3MonthSupply() {
+        return _3MonthSupply;
+    }
 
-	/**
-	 * Allows a non-zero integer to be set for the three month supply.
-	 */
-	public Result set3MonthSupply(Size value){
-        if (!value.validate().getStatus()){
+    /**
+     * Allows a non-zero integer to be set for the three month supply.
+     */
+    public Result set3MonthSupply(Size value) {
+        if (!value.validate().getStatus()) {
             return new Result(false, "The 3 mo. is invalid.");
         }
-		_3MonthSupply = value;
+        _3MonthSupply = value;
         invalidate();
         return new Result(true, "Successfully set.");
-	}
+    }
 
     /**
      * Returns the parent ID
      */
-    public int getParentId(){
+    public int getParentId() {
         return _parentId;
     }
 
     /**
      * Return the parent ID as a string.
      */
-    public String getParentIdString(){
-    	return Integer.toString(_parentId);
+    public String getParentIdString() {
+        return Integer.toString(_parentId);
     }
 
     /**
      * Return a copy of the Parent.
      */
-    public ProductContainer getParent(){
+    public ProductContainer getParent() {
         return this._productGroupVault.get(_parentId);
     }
 
     /**
      * Set this to the ID of the desired parent for this ProductGroup.
      */
-    public Result setParentId(int id){
+    public Result setParentId(int id) {
         _parentId = id;
         invalidate();
         return new Result(true);
     }
 
-    public StorageUnit getStorageUnit(){
-    	ProductGroup tempGroup = this;
-    	int id=-1;
-    	while(tempGroup != null){
-    		if(tempGroup.getParent()!=null){
-	    		id = tempGroup.getParent().getId();
-	    		tempGroup = this._productGroupVault.get(id);
-    		} else {
-    			id = tempGroup.getParentId();
-    			tempGroup = null;
-    		}
-    	}
-    	return this._storageUnitVault.get(id);
-    	
+    public StorageUnit getStorageUnit() {
+        ProductGroup tempGroup = this;
+        int id = -1;
+        while (tempGroup != null) {
+            if (tempGroup.getParent() != null) {
+                id = tempGroup.getParent().getId();
+                tempGroup = this._productGroupVault.get(id);
+            } else {
+                id = tempGroup.getParentId();
+                tempGroup = null;
+            }
+        }
+        return this._storageUnitVault.get(id);
+
     }
 
     /**
      * Checks if this is a valid ProductGroup.
      */
-    public Result validate(){
-        if(getName().isEmpty())
+    public Result validate() {
+        if (getName().isEmpty())
             return new Result(false, "Name cannot be empty");
 
-        if(getId() == -1)
+        if (getId() == -1)
             return _productGroupVault.validateNew(this);
         else
             return _productGroupVault.validateModified(this);
@@ -130,32 +130,34 @@ public class ProductGroup extends ProductContainer{
 
     /**
      * Saves the ProductGroup to its vault.
+     *
      * @Pre The ProductGroup must be validated before it can be saved.
      */
-    public Result save(){
-        if(!isValid())
+    public Result save() {
+        if (!isValid())
             return new Result(false, "Item must be valid before saving.");
-        if(getId() == -1)
+        if (getId() == -1)
             return _productGroupVault.saveNew(this);
         else
             return _productGroupVault.saveModified(this);
     }
 
-    
-    public ArrayList<Product> getProducts(){
-		return this._productVault.findAll("ContainerId = %o", this.getId());
-	}
-    public ArrayList<ProductGroup> getProductGroups(){
-    	return this._productGroupVault.findAll("ParentId = %o", this.getId());
+
+    public ArrayList<Product> getProducts() {
+        return this._productVault.findAll("ContainerId = %o", this.getId());
     }
-    
-	public void accept(Ivisitor visitor){
-		for(ProductGroup productGroup : this.getProductGroups() ){
-			productGroup.accept(visitor);
-		}
-		for(Product product : this.getProducts() ){
-			product.accept(visitor);
-		}
-		visitor.visit(this);
-	}
+
+    public ArrayList<ProductGroup> getProductGroups() {
+        return this._productGroupVault.findAll("ParentId = %o", this.getId());
+    }
+
+    public void accept(Ivisitor visitor) {
+        for (ProductGroup productGroup : this.getProductGroups()) {
+            productGroup.accept(visitor);
+        }
+        for (Product product : this.getProducts()) {
+            product.accept(visitor);
+        }
+        visitor.visit(this);
+    }
 }

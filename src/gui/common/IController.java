@@ -5,6 +5,6 @@ package gui.common;
  * (This interface is currently empty, but may be expanded in the future.)
  */
 public interface IController {
-	
+
 }
 

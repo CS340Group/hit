@@ -1,6 +1,6 @@
 package gui.product;
 
-import gui.common.*;
+import gui.common.DialogBox;
 import gui.inventory.ProductContainerData;
 import gui.main.GUI;
 
@@ -8,33 +8,34 @@ import gui.main.GUI;
 @SuppressWarnings("serial")
 public class AddProductView extends ProductView implements IAddProductView {
 
-	public AddProductView(GUI parent, DialogBox dialog, String barcode, ProductContainerData target) {
-		super(parent, dialog);
-		
-		construct();		
+    public AddProductView(GUI parent, DialogBox dialog, String barcode,
+                          ProductContainerData target) {
+        super(parent, dialog);
 
-		_controller = new AddProductController(this, barcode, target);
-	}
+        construct();
 
-	@Override
-	public IAddProductController getController() {
-		return (IAddProductController)super.getController();
-	}
+        _controller = new AddProductController(this, barcode, target);
+    }
 
-	@Override
-	protected void valuesChanged() {
-		getController().valuesChanged();
-	}
+    @Override
+    public IAddProductController getController() {
+        return (IAddProductController) super.getController();
+    }
 
-	@Override
-	protected void cancel() {
-		return;
-	}
+    @Override
+    protected void valuesChanged() {
+        getController().valuesChanged();
+    }
 
-	@Override
-	protected void ok() {
-		getController().addProduct();
-	}
+    @Override
+    protected void cancel() {
+        return;
+    }
+
+    @Override
+    protected void ok() {
+        getController().addProduct();
+    }
 
 }
 

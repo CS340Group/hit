@@ -5,15 +5,14 @@ import java.util.ArrayList;
 /**
  * This is the interface for a printable report object.
  * The report object consists of 3 difference objects:
- *  - {@link model.reports.IPrintObject.IPrintObjectHeader headers}
- *  - {@link model.reports.IPrintObject.IPrintObjectTextBlock text-blocks}
- *  - {@link model.reports.IPrintObject.IPrintObjectTable tables}
- *
- *  The PrintObject will reference these object by the order in which they are built by the builder.
- *  The index starts at 0
- *
- *  This means that getHeader(1) will return the second header built by the builder.
- *
+ * - {@link model.reports.IPrintObject.IPrintObjectHeader headers}
+ * - {@link model.reports.IPrintObject.IPrintObjectTextBlock text-blocks}
+ * - {@link model.reports.IPrintObject.IPrintObjectTable tables}
+ * <p/>
+ * The PrintObject will reference these object by the order in which they are built by the builder.
+ * The index starts at 0
+ * <p/>
+ * This means that getHeader(1) will return the second header built by the builder.
  */
 
 public interface IPrintObject {
@@ -41,7 +40,7 @@ public interface IPrintObject {
     public interface IPrintObjectTable {
         public String getCell(int row, int column);
 
-		public void addRow(String[] row);
+        public void addRow(String[] row);
 
         public int rowCount();
     }

@@ -12,7 +12,8 @@ import java.util.Iterator;
 public class PluginDescriptorIterator implements IPluginDescriptorIterator {
 
     Iterator<PluginDescriptor> iterator;
-    public PluginDescriptorIterator (Iterator<PluginDescriptor> iterator){
+
+    public PluginDescriptorIterator(Iterator<PluginDescriptor> iterator) {
         this.iterator = iterator;
     }
 
@@ -24,10 +25,11 @@ public class PluginDescriptorIterator implements IPluginDescriptorIterator {
     @Override
     public Class<ProductIdentificationPlugin> next() {
         try {
-            return (Class<ProductIdentificationPlugin>) Class.forName(iterator.next().getClassName());
-        } catch (ClassNotFoundException e){
+            return (Class<ProductIdentificationPlugin>) Class
+                    .forName(iterator.next().getClassName());
+        } catch (ClassNotFoundException e) {
             //We should never get here
-            assert(false);
+            assert (false);
             return null;
         }
     }

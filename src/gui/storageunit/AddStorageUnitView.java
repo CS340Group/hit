@@ -1,39 +1,39 @@
 package gui.storageunit;
 
-import gui.common.*;
+import gui.common.DialogBox;
 import gui.main.GUI;
 
 
 @SuppressWarnings("serial")
 public class AddStorageUnitView extends StorageUnitView implements IAddStorageUnitView {
 
-	public AddStorageUnitView(GUI parent, DialogBox dialog) {
-		super(parent, dialog);
-		
-		construct();		
+    public AddStorageUnitView(GUI parent, DialogBox dialog) {
+        super(parent, dialog);
 
-		_controller = new AddStorageUnitController(this);
-	}
+        construct();
 
-	@Override
-	public IAddStorageUnitController getController() {
-		return (IAddStorageUnitController)super.getController();
-	}
+        _controller = new AddStorageUnitController(this);
+    }
 
-	@Override
-	protected void valuesChanged() {
-		getController().valuesChanged();
-	}
+    @Override
+    public IAddStorageUnitController getController() {
+        return (IAddStorageUnitController) super.getController();
+    }
 
-	@Override
-	protected void cancel() {
-		return;
-	}
+    @Override
+    protected void valuesChanged() {
+        getController().valuesChanged();
+    }
 
-	@Override
-	protected void ok() {
-		getController().addStorageUnit();
-	}
+    @Override
+    protected void cancel() {
+        return;
+    }
+
+    @Override
+    protected void ok() {
+        getController().addStorageUnit();
+    }
 
 }
 
