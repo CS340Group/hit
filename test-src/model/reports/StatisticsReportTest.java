@@ -470,6 +470,32 @@ public class StatisticsReportTest {
 		assertEquals(obj.getTable(0).rowCount(), 2);
 	}
 
+    @Test
+    public void testProductHasNoItems5() {
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+
+        report.setMonths(1);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+
+        assertEquals(obj.getTable(0).rowCount(), 1);
+    }
+
 	/*
 	 * Test a product that was initially added to the system before the
 	 * reporting period (to make sure that the days before the reporting period
@@ -551,4 +577,57 @@ public class StatisticsReportTest {
 		assertTrue(obj.getTable(0).getCell(1, 6).equals("1 / 1"));
 		assertEquals(obj.getTable(0).rowCount(), 2);
 	}
+
+    @Test
+    public void testStandardTimeToDaylightSavingsTime() {
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(new DateMidnight(2012, 3, 11).toDateTime());
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        report.setMonths(1);
+        report.setStartDate(new DateMidnight(2012, 3, 11).toDateTime());
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+
+        assertEquals(obj.getTable(0).rowCount(), 2);
+
+        builder = new ObjectReportBuilder();
+        report = new StatisticReport();
+        report.setMonths(1);
+        report.setStartDate(new DateMidnight(2012, 3, 11).toDateTime().plusDays(15));
+        report.setBuilder(builder);
+        report.constructReport();
+        obj = (PrintObject) builder.returnObject();
+
+        assertEquals(obj.getTable(0).rowCount(), 2);
+
+        builder = new ObjectReportBuilder();
+        report = new StatisticReport();
+        report.setMonths(1);
+        report.setStartDate(new DateMidnight(2012, 3, 11).toDateTime().plusMonths(1));
+        report.setBuilder(builder);
+        report.constructReport();
+        obj = (PrintObject) builder.returnObject();
+
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
 }
