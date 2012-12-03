@@ -1,5 +1,5 @@
 Testsuite: model.reports.RemovedReportTest
-Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.112 sec
+Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.11 sec
 
 Testcase: model.reports.RemovedReportTest took 0 sec
 	Caused an ERROR

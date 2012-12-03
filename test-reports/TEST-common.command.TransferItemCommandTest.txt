@@ -1,7 +1,7 @@
 Testsuite: common.command.TransferItemCommandTest
-Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.048 sec
+Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.049 sec
 
-Testcase: targetHasNoProduct took 0.027 sec
+Testcase: targetHasProduct took 0.028 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
@@ -11,7 +11,7 @@ java.lang.NullPointerException
 	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:86)
 	at common.command.TransferItemCommandTest.setUp(TransferItemCommandTest.java:28)
 
-Testcase: targetHasProduct took 0.007 sec
+Testcase: targetHasNoProduct took 0.007 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException

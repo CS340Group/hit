@@ -1,0 +1,9 @@
+Testsuite: model.reports.StatisticsReportTest
+Tests run: 6, Failures: 0, Errors: 0, Time elapsed: 1.211 sec
+
+Testcase: testMultiYear took 0.273 sec
+Testcase: testSort took 0.92 sec
+Testcase: testBadItemDate took 0.001 sec
+Testcase: testProductInMultipleSU took 0.002 sec
+Testcase: testNotNullBuilder took 0 sec
+Testcase: testGetMonths took 0 sec

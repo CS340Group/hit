@@ -1,8 +1,8 @@
 Testsuite: model.product.ProductTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.14 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.138 sec
 
-Testcase: testSetSize took 0.117 sec
-Testcase: testValidate took 0.003 sec
+Testcase: testSetSize took 0.115 sec
+Testcase: testValidate took 0.002 sec
 Testcase: testItemCreation took 0.004 sec
 Testcase: testSetShelfLife took 0.002 sec
 Testcase: testSet3MonthSupply took 0.002 sec

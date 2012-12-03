@@ -1,7 +1,7 @@
 Testsuite: common.command.RemoveItemCommandTest
-Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.114 sec
+Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.112 sec
 
-Testcase: testCreatedProduct took 0.102 sec
+Testcase: testCreatedProduct took 0.099 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
