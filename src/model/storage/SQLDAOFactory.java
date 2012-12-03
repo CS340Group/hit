@@ -131,7 +131,7 @@ public class SQLDAOFactory implements IDAOFactory {
                 "\"rootParentId\" INTEGER,  \"parentId\" INTEGER, \"MonthSupplyAmount\" FLOAT, " +
                 "\"MonthSupplyUnit\" TEXT);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"storageUnit\" (\"id\" INTEGER, \"name\" TEXT, " +
-                "\"rootParentId\" INTEGER);");
+                "\"rootParentId\" INTEGER, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"product\" (\"id\" INTEGER , " +
                 "\"storageUnitId\" INTEGER, \"parentId\" INTEGER,  \"barcode\" TEXT, " +
                 "\"MonthSupply\" INTEGER, \"sizeAmount\" FLOAT, \"sizeUnit\" TEXT, " +
