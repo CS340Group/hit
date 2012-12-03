@@ -465,17 +465,15 @@ public class StatisticsReportTest {
 		assertTrue(obj.getTable(0).getCell(1, 4).equals("0 / 0.0"));
 		assertEquals(obj.getTable(0).rowCount(), 2);
 	}
-	
-	
-	
-	
-	
-	
-	/*
-	 * Test a product that was initially added to the system before the reporting period (to make sure that the days before the reporting period are not counted in the product’s statistics)
 
-1. The product was added many days before the reporting period
-2. The product was added the day before the reporting period
+	/*
+	 * Test a product that was initially added to the system before the
+	 * reporting period (to make sure that the days before the reporting period
+	 * are not counted in the product’s statistics)
+	 * 
+	 * 1. The product was added many days before the reporting period 
+	 * 2. The
+	 * product was added the day before the reporting period
 	 */
 	@Test
 	public void testProductAddedBefore1() {
@@ -510,10 +508,10 @@ public class StatisticsReportTest {
 		assertTrue(obj.getTable(0).getCell(1, 4).equals("1 / 1.0"));
 		assertTrue(obj.getTable(0).getCell(1, 5).equals("1.0 / 1.0"));
 		assertTrue(obj.getTable(0).getCell(1, 6).equals("1 / 1"));
-		
+
 		assertEquals(obj.getTable(0).rowCount(), 2);
 	}
-	
+
 	@Test
 	public void testProductAddedBefore2() {
 		StorageUnit su = new StorageUnit();
