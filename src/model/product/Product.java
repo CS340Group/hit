@@ -42,8 +42,9 @@ public class Product extends Model{
     private int _shelfLife;
 
     private int _3MonthSupply;
+    private long creationDateFromLong;
 
-	/**
+    /**
 	 * Constructor
 	 */
 	public Product(){
