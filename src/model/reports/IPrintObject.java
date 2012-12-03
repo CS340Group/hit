@@ -42,5 +42,7 @@ public interface IPrintObject {
         public String getCell(int row, int column);
 
 		public void addRow(String[] row);
+
+        public int rowCount();
     }
 }
