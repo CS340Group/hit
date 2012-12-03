@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
+import model.item.Item;
 import model.item.ItemVault;
 import model.reports.HTMLReportBuilder;
 import model.reports.IReportDirector;
@@ -14,6 +15,7 @@ import model.reports.ObjectReportBuilder;
 import model.reports.PDFReportBuilder;
 import model.reports.RemovedItemsReport;
 import model.reports.ReportBuilder;
+import model.storage.StorageManager;
 import gui.common.*;
 
 /**
@@ -29,7 +31,13 @@ public class RemovedReportController extends Controller implements
 	 */
 	public RemovedReportController(IView view) {
 		super(view);
-		DateTime last = ItemVault.getInstance().sinceLastRemovedReport;
+		Item item = (Item) StorageManager.getInstance().getFactory().getMiscStorageDAO().get(1);
+		
+		DateTime last;
+		if(item != null)
+			last = item.getEntryDate();
+		else
+			last = ItemVault.getInstance().sinceLastRemovedReport;
 		if(last == null)
 			last = new DateTime(2000,1,1,1,1);
 		getView().setSinceLastValue(last.toDate());

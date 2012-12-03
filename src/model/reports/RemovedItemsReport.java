@@ -12,6 +12,7 @@ import model.item.Item;
 import model.item.ItemVault;
 import model.product.Product;
 import model.product.ProductVault;
+import model.storage.StorageManager;
 
 public class RemovedItemsReport implements IReportDirector {
 	private ReportBuilder builder;
@@ -40,6 +41,14 @@ public class RemovedItemsReport implements IReportDirector {
 		ItemVault iv = ItemVault.getInstance();
 		AllVaults al = new AllVaults();
 		iv.sinceLastRemovedReport = DateTime.now();
+		
+		
+		//Update Last Removed for sql
+		Item miscStorage = new Item();
+		miscStorage.setEntryDate(DateTime.now());
+		StorageManager.getInstance().getFactory().getMiscStorageDAO().insert(miscStorage);
+		
+		
 		
 		List<Item> items = iv.findAll("ExitDate > %o", sinceWhen,true);
 		items = sort(items, on(Item.class).getProductBarcode());
