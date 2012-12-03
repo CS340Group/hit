@@ -43,12 +43,12 @@ public class ProductIdentifierSearchUPCDotCom extends
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			String result = reader.readLine();
 			return parseAndFindName(result);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return handoff(barcode);
 		}
     }
 
-	private String parseAndFindName(String json) {
+	private String parseAndFindName(String json) throws NullPointerException{
 		JSONObject obj = (JSONObject) JSONValue.parse(json);
 		JSONObject z = (JSONObject)obj.get("0");
 		String s = z.get("productname").toString();

@@ -127,6 +127,10 @@ public abstract class Model implements IModel, Serializable, Comparable<IModel>{
     	return isDeleted();
     }
 
+    public void setDeleted(boolean d){
+        this._deleted = d;
+    }
+
     /*
      *
      */

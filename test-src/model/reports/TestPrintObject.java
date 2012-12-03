@@ -1,4 +1,4 @@
-package gui.reports;
+package model.reports;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,10 +102,15 @@ public class TestPrintObject implements IPrintObject {
             return contents.get(row).get(col);
         }
 
-		@Override
-		public void addRow(String[] row) {
-			// TODO Auto-generated method stub
-			
-		}
+        @Override
+        public void addRow(String[] row) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public int rowCount() {
+            return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        }
     }
 }
