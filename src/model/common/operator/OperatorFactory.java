@@ -14,6 +14,7 @@ public class OperatorFactory {
         OPERATORS.put("=DateTime", new EqualToDateTimeOperator());
         OPERATORS.put("<DateTime", new LessThanDateTimeOperator());
         OPERATORS.put(">DateTime", new GreaterThanDateTimeOperator());
+        OPERATORS.put(">=DateTime", new GreaterThanOrEqualDateTimeOperator());
         OPERATORS.put("=Number", new EqualToNumberOperator());
         OPERATORS.put("!=Number", new NotEqualToNumberOperator());
         OPERATORS.put("<Number", new LessThanNumberOperator());
@@ -72,9 +73,19 @@ public class OperatorFactory {
         @Override
         public boolean execute(DateTime lhs, DateTime rhs) {
             return lhs.isAfter(rhs);
+            //return lhs.isAfter(rhs.minusDays(1));
         }
     }
 
+    public static class GreaterThanOrEqualDateTimeOperator implements Operator<DateTime>{
+
+        @Override
+        public boolean execute(DateTime lhs, DateTime rhs) {
+            //return lhs.isAfter(rhs);
+            return lhs.isAfter(rhs.minusDays(1));
+        }
+    }
+    
     public static class EqualToNumberOperator implements Operator<Number>{
 
         @Override

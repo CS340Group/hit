@@ -41,7 +41,8 @@ public class StatisticReport implements IReportDirector {
 	public void constructReport() {
 		builder.addHeader("Statistic Report (" + String.valueOf(months) + " Months)");
 
-        ArrayList<Product> products = ProductVault.getInstance().findAll("CreationDate > %o", DateTime.now().minusMonths(months), true);
+		//Changed to grab ALL products
+        ArrayList<Product> products = ProductVault.getInstance().findAll("CreationDate >= %o", DateTime.now().minusMonths(20000), true);
 
         List<Product> sorted = sort(products,on(Product.class).getDescriptionSort());
         Product prev = new Product();

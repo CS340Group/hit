@@ -38,8 +38,11 @@ public class RemovedReportController extends Controller implements
 			last = item.getEntryDate();
 		else
 			last = ItemVault.getInstance().sinceLastRemovedReport;
-		if(last == null)
+		if(last == null){
 			last = new DateTime(2000,1,1,1,1);
+			//getView().enableSinceDate(false);
+			getView().enableSinceLast(false);
+		}
 		getView().setSinceLastValue(last.toDate());
 		construct();
 	}
