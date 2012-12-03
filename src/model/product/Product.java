@@ -148,6 +148,17 @@ public class Product extends Model {
         return _creationDate;
     }
 
+    public DateTime getFirstItemDate(){
+        ArrayList<Item> items = _itemVault.findAll("ProductId = %o", getId(), true);
+        if(items.size() == 0)
+            return getCreationDate();
+        DateTime time = DateTime.now();
+        for(Item i: items){
+            if(i.getEntryDate().isBefore(time) && i.getEntryDate().isAfter(getCreationDate()))
+                time = i.getEntryDate();
+        }
+        return time;
+    }
     /**
      * Set the creation date of the Product.
      */

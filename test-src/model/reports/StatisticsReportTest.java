@@ -44,6 +44,7 @@ public class StatisticsReportTest {
 		Product p = new Product();
 		p.setContainerId(su.getId());
 		p.generateTestData();
+        p.setDescription("Test1");
 		p.setCreationDate(DateMidnight.now().minusYears(1).toDateTime());
 		p.setStorageUnitId(su.getId());
 		p.validate();
@@ -74,7 +75,7 @@ public class StatisticsReportTest {
 
 		ObjectReportBuilder builder = new ObjectReportBuilder();
 		StatisticReport report = new StatisticReport();
-		report.setMonths(15);
+		report.setMonths(12);
 		report.setBuilder(builder);
 		report.constructReport();
 		PrintObject obj = (PrintObject) builder.returnObject();
@@ -99,17 +100,20 @@ public class StatisticsReportTest {
 		PrintObject obj = (PrintObject) builder.returnObject();
 
 		List<Product> products = sort(
-				ProductVault.getInstance().findAll("CreationDate > %o",
+				ProductVault.getInstance().findAll("FirstItemDate > %o",
 						DateTime.now().minusMonths(months), true), on(Product.class)
 						.getDescriptionSort());
 		int i = 1;
 		Product prev = new Product();
 		for (Product p : products) {
-			assertEquals(obj.getTable(0).getCell(i, 0), p.getDescription());
-			assertEquals(obj.getTable(0).getCell(i, 1), p.getBarcode());
-			assertEquals(obj.getTable(0).getCell(i, 2), p.getSize().toString());
-			assertEquals(obj.getTable(0).getCell(i, 3), String.valueOf(p.get3MonthSupply()));
-			i++;
+            if(prev.getDescriptionSort() != p.getDescriptionSort()){
+			    assertEquals(obj.getTable(0).getCell(i, 0), p.getDescription());
+			    assertEquals(obj.getTable(0).getCell(i, 1), p.getBarcode());
+			    assertEquals(obj.getTable(0).getCell(i, 2), p.getSize().toString());
+			    assertEquals(obj.getTable(0).getCell(i, 3), String.valueOf(p.get3MonthSupply()));
+            }
+            i++;
+            prev = p;
 		}
 	}
 
