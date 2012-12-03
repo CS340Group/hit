@@ -1,12 +1,12 @@
 Testsuite: model.productcontainer.ProductGroupVaultTest
-Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.04 sec
+Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.041 sec
 
-Testcase: testGet took 0.027 sec
+Testcase: testGet took 0.029 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.productcontainer.ProductGroupVaultTest.setUp(ProductGroupVaultTest.java:28)
 

@@ -1,9 +1,25 @@
 Testsuite: model.reports.StatisticsReportTest
-Tests run: 6, Failures: 0, Errors: 0, Time elapsed: 1.211 sec
+Tests run: 17, Failures: 1, Errors: 0, Time elapsed: 1.609 sec
 
-Testcase: testMultiYear took 0.273 sec
-Testcase: testSort took 0.92 sec
+Testcase: testMultiYear took 0.275 sec
+Testcase: testSort took 1.275 sec
+	FAILED
+expected:<m[lra39dhc50p0r7fbj22icubnv]> but was:<m[u8arnbqdhctmeldbhunr0j2b7]>
+junit.framework.AssertionFailedError: expected:<m[lra39dhc50p0r7fbj22icubnv]> but was:<m[u8arnbqdhctmeldbhunr0j2b7]>
+	at model.reports.StatisticsReportTest.testSort(StatisticsReportTest.java:110)
+
 Testcase: testBadItemDate took 0.001 sec
 Testcase: testProductInMultipleSU took 0.002 sec
 Testcase: testNotNullBuilder took 0 sec
 Testcase: testGetMonths took 0 sec
+Testcase: testProductAddedOnStartDate took 0.002 sec
+Testcase: testProductAddedOnEndDate took 0.001 sec
+Testcase: testProductAddedDuringTest took 0.002 sec
+Testcase: testProductHasNoItems1 took 0.003 sec
+Testcase: testProductHasNoItems2 took 0.003 sec
+Testcase: testProductHasNoItems3 took 0.002 sec
+Testcase: testProductHasNoItems4 took 0.003 sec
+Testcase: testProductHasNoItems5 took 0.001 sec
+Testcase: testProductAddedBefore1 took 0.002 sec
+Testcase: testProductAddedBefore2 took 0.004 sec
+Testcase: testStandardTimeToDaylightSavingsTime took 0.012 sec

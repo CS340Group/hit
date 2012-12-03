@@ -1,90 +1,10 @@
 Starting audit...
-/Users/nethier/Projects/cs340/hit/src/common/BarcodePdf.java:37: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/BarcodePdf.java:87: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:23: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/AbstractCommand.java:40: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/AddItemCommand.java:24: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:11: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/common/command/CommandManager.java:33: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:33: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:167:5: NPath Complexity is 288 (max allowed is 200).
-/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:116: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:327: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:333: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/inventory/InventoryController.java:583: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductController.java:91: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductController.java:144: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/AddProductView.java:11: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/EditProductController.java:33: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/EditProductController.java:34: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/product/EditProductController.java:128: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:65: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:67: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:116: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/productgroup/AddProductGroupController.java:118: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/productgroup/EditProductGroupController.java:30: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/expired/ExpiredReportController.java:88: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/productstats/ProductStatsReportController.java:95: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/removed/RemovedReportController.java:82: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/removed/RemovedReportController.java:83: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/removed/RemovedReportController.java:110: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/gui/reports/supply/SupplyReportController.java:96: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/ModelFacade.java:78: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/ModelFacade.java:139: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:86: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:111:5: Cyclomatic Complexity is 11 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:115: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:117: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:128:5: Cyclomatic Complexity is 11 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:128:5: NPath Complexity is 1,024 (max allowed is 200).
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/PluginDescriptorIterator.java:27: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/PluginLoader.java:22: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:12: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:13: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:14: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:35: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:37: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:39: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:41: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifier.java:43: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifierUPCDatabaseDotCom.java:75: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/productidentifier/ProductIdentifierUPCDatabaseDotCom.java:83: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/ExpiredItemsReport.java:44: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:90: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:111: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:139: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:143: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:173:5: Cyclomatic Complexity is 11 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:173:5: NPath Complexity is 1,024 (max allowed is 200).
-/Users/nethier/Projects/cs340/hit/src/model/reports/PDFReportBuilder.java:31: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/RemovedItemsReport.java:39: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:44: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:52: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:69:5: Cyclomatic Complexity is 12 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:69:5: NPath Complexity is 520 (max allowed is 200).
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:79: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:87: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:100: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:113: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:145: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:146: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/IStorageDAO.java:24: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/IStorageDAO.java:31: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOFactory.java:46: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLItemDAO.java:31: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLItemDAO.java:59: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLProductGroupDAO.java:36: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLProductGroupDAO.java:60: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLProductGroupDAO.java:102: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLProductGroupDAO.java:127: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/storage/SQLDAOs/SQLStorageUnitDAO.java:35: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:51:5: Cyclomatic Complexity is 12 (max allowed is 10).
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:51:5: NPath Complexity is 270 (max allowed is 200).
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:56: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:75: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:77: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:95: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:98: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:102: Line is longer than 100 characters.
-/Users/nethier/Projects/cs340/hit/src/model/tempmain/TestEnvironment.java:116: Line is longer than 100 characters.
+/Users/nethier/Projects/cs340/hit/src/gui/batches/AddItemBatchController.java:168:5: NPath Complexity is 288 (max allowed is 200).
+/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:112:5: Cyclomatic Complexity is 11 (max allowed is 10).
+/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:132:5: Cyclomatic Complexity is 11 (max allowed is 10).
+/Users/nethier/Projects/cs340/hit/src/model/common/Size.java:132:5: NPath Complexity is 1,024 (max allowed is 200).
+/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:175:5: Cyclomatic Complexity is 11 (max allowed is 10).
+/Users/nethier/Projects/cs340/hit/src/model/reports/NSupplyReport.java:175:5: NPath Complexity is 1,024 (max allowed is 200).
+/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:77:5: Cyclomatic Complexity is 12 (max allowed is 10).
+/Users/nethier/Projects/cs340/hit/src/model/reports/StatisticReport.java:77:5: NPath Complexity is 520 (max allowed is 200).
 Audit done.

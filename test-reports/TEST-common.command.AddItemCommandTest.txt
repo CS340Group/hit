@@ -1,34 +1,34 @@
 Testsuite: common.command.AddItemCommandTest
-Tests run: 3, Failures: 0, Errors: 3, Time elapsed: 0.132 sec
+Tests run: 3, Failures: 0, Errors: 3, Time elapsed: 0.136 sec
 
-Testcase: testCreatedProduct took 0.104 sec
+Testcase: testCreatedProduct took 0.105 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:34)
-	at model.product.ProductVault.saveNew(ProductVault.java:144)
-	at model.product.Product.save(Product.java:277)
-	at model.product.Product.generateTestData(Product.java:349)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:37)
+	at model.product.ProductVault.saveNew(ProductVault.java:140)
+	at model.product.Product.save(Product.java:295)
+	at model.product.Product.generateTestData(Product.java:369)
 	at common.command.AddItemCommandTest.setUp(AddItemCommandTest.java:36)
 
 Testcase: addMultipleItems took 0.005 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
-	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:86)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
+	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:87)
 	at common.command.AddItemCommandTest.setUp(AddItemCommandTest.java:37)
 
 Testcase: testProductExisting took 0.009 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:32)
-	at model.item.ItemVault.saveNew(ItemVault.java:111)
-	at model.item.Item.save(Item.java:169)
-	at common.command.AddItemCommand.executeGuts(AddItemCommand.java:50)
-	at common.command.AbstractCommand.execute(AbstractCommand.java:27)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:35)
+	at model.item.ItemVault.saveNew(ItemVault.java:102)
+	at model.item.Item.save(Item.java:168)
+	at common.command.AddItemCommand.executeGuts(AddItemCommand.java:53)
+	at common.command.AbstractCommand.execute(AbstractCommand.java:30)
 	at common.command.AddItemCommandTest.testProductExisting(AddItemCommandTest.java:100)
 

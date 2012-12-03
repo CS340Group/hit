@@ -1,48 +1,48 @@
 Testsuite: model.common.ModelFacadeTest
-Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.065 sec
+Tests run: 5, Failures: 0, Errors: 5, Time elapsed: 0.072 sec
 
-Testcase: testAddItem took 0.03 sec
+Testcase: testAddItem took 0.036 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
 
-Testcase: testMoveItem took 0.003 sec
+Testcase: testMoveItem took 0.004 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
 
 Testcase: testRemoveItem took 0.004 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
 
-Testcase: testMoveProduct took 0.005 sec
+Testcase: testMoveProduct took 0.004 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
 
 Testcase: testDeleteProduct took 0.003 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.common.ModelFacadeTest.setUp(ModelFacadeTest.java:55)
 

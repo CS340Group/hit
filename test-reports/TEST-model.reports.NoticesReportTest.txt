@@ -1,13 +1,13 @@
 Testsuite: model.reports.NoticesReportTest
-Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.038 sec
+Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.039 sec
 
 Testcase: model.reports.NoticesReportTest took 0 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
-	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:86)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
+	at model.productcontainer.StorageUnit.generateTestData(StorageUnit.java:87)
 	at model.reports.NoticesReportTest.setUpBeforeClass(NoticesReportTest.java:48)
 

@@ -1,5 +1,5 @@
 Testsuite: common.TestEnvironment
-Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.014 sec
+Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.013 sec
 
 Testcase: initializationError took 0.002 sec
 	Caused an ERROR

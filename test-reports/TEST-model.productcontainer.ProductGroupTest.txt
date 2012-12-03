@@ -1,21 +1,21 @@
 Testsuite: model.productcontainer.ProductGroupTest
-Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.043 sec
+Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.044 sec
 
 Testcase: testValidate took 0.028 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.productcontainer.ProductGroupTest.setUp(ProductGroupTest.java:27)
 
-Testcase: testSet3MonthSupply took 0.002 sec
+Testcase: testSet3MonthSupply took 0.001 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:38)
-	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:108)
-	at model.productcontainer.StorageUnit.save(StorageUnit.java:62)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:41)
+	at model.productcontainer.StorageUnitVault.saveNew(StorageUnitVault.java:110)
+	at model.productcontainer.StorageUnit.save(StorageUnit.java:63)
 	at model.productcontainer.ProductGroupTest.setUp(ProductGroupTest.java:27)
 

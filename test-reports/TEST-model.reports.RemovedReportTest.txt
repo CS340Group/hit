@@ -1,13 +1,13 @@
 Testsuite: model.reports.RemovedReportTest
-Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.11 sec
+Tests run: 0, Failures: 0, Errors: 1, Time elapsed: 0.109 sec
 
 Testcase: model.reports.RemovedReportTest took 0 sec
 	Caused an ERROR
 null
 java.lang.NullPointerException
-	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:34)
-	at model.product.ProductVault.saveNew(ProductVault.java:144)
-	at model.product.Product.save(Product.java:277)
-	at model.product.Product.generateTestData(Product.java:349)
+	at model.storage.StorageManager.getAppropriateDAO(StorageManager.java:37)
+	at model.product.ProductVault.saveNew(ProductVault.java:140)
+	at model.product.Product.save(Product.java:295)
+	at model.product.Product.generateTestData(Product.java:369)
 	at model.reports.RemovedReportTest.setUpBeforeClass(RemovedReportTest.java:49)
 
