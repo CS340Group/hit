@@ -105,13 +105,13 @@ public class StatisticReport implements IReportDirector {
                 }
             }
         }
+
         items.removeAll(toRemove);
         if(items.isEmpty())
             return;
 
         int days = Days.daysBetween(items.get(0).getProduct().getCreationDate().toDateMidnight(), DateMidnight.now()).getDays();
 
-        //first day of the period
         if(buckets.containsKey(DateMidnight.now().minusDays(days)))
             supply.insert(buckets.get(DateMidnight.now().minusDays(days)));
         else

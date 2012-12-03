@@ -32,11 +32,12 @@ public class SQLStorageUnitDAO implements IStorageDAO {
         PreparedStatement statement;
         StorageUnit su = (StorageUnit) model;
         try {
-            String query = "INSERT INTO storageUnit (id,name,rootParentId) VALUES (?,?,?);";
+            String query = "INSERT INTO storageUnit (id,name,rootParentId,deleted) VALUES (?,?,?,?);";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setInt(1, su.getId());
             statement.setString(2, su.getName());
             statement.setInt(3, su.getRootParentId());
+            statement.setBoolean(4, su.getDeleted());
             statement.executeUpdate();
         } catch (SQLException e) {
             return new Result(false, e.getMessage());
@@ -52,11 +53,12 @@ public class SQLStorageUnitDAO implements IStorageDAO {
         PreparedStatement statement;
         StorageUnit su = (StorageUnit) model;
         try {
-            String query = "UPDATE storageUnit SET name=?,rootParentId=? where id=?";
+            String query = "UPDATE storageUnit SET name=?,rootParentId=?,deleted=? where id=?";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setString(1, su.getName());
             statement.setInt(2, su.getRootParentId());
-            statement.setInt(3, su.getId());
+            statement.setBoolean(3, su.getDeleted());
+            statement.setInt(4, su.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             return new Result(false, e.getMessage());
@@ -90,7 +92,7 @@ public class SQLStorageUnitDAO implements IStorageDAO {
         PreparedStatement statement;
         StorageUnit su = null;
         try {
-            String query = "SELECT name,rootParentId WHERE id=?;";
+            String query = "SELECT name,rootParentId,deleted FROM storageUnit WHERE id=?;";
             statement = _factory.getConnection().prepareStatement(query);
             statement.setInt(1, id);
             ResultSet rSet = statement.executeQuery();
@@ -99,6 +101,7 @@ public class SQLStorageUnitDAO implements IStorageDAO {
                 su.setId(id);
                 su.setName(rSet.getString(1));
                 su.setRootParentId(rSet.getInt(2));
+                su.setDeleted(rSet.getBoolean(3));
                 su.setValid(true);
             }
         } catch (SQLException e) {
@@ -112,7 +115,7 @@ public class SQLStorageUnitDAO implements IStorageDAO {
         _vault.clear();
         PreparedStatement statement;
         try {
-            String query = "SELECT id,name,rootParentId FROM storageUnit;";
+            String query = "SELECT id,name,rootParentId,deleted FROM storageUnit;";
             statement = _factory.getConnection().prepareStatement(query);
             ResultSet rSet = statement.executeQuery();
             while(rSet.next()){
@@ -120,6 +123,7 @@ public class SQLStorageUnitDAO implements IStorageDAO {
                 su.setId(rSet.getInt(1));
                 su.setName(rSet.getString(2));
                 su.setRootParentId(rSet.getInt(3));
+                su.setDeleted(rSet.getBoolean(4));
                 su.setValid(true);
                 Result result = su.save();
                 assert(result.getStatus());
