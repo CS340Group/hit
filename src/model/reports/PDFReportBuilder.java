@@ -55,7 +55,7 @@ public class PDFReportBuilder implements ReportBuilder {
 			assert false;
 		}
 		
-		_d.setMargins(25, 25, 25, 25);
+		_d.setMargins(15, 15, 15, 15);
 		_d.open();
 		
 		_open = true;
@@ -78,6 +78,7 @@ public class PDFReportBuilder implements ReportBuilder {
 		_tableStarted = true;
 		_table = new PdfPTable(_columns);
 		_table.setHorizontalAlignment(Element.ALIGN_CENTER);
+		_table.setWidthPercentage(100);
 		_itemsAdded = 0;
 	}
 
@@ -94,8 +95,8 @@ public class PDFReportBuilder implements ReportBuilder {
 
 			PdfPCell cell = new PdfPCell(p);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setPadding(10);
-			cell.setBorder(0);
+			cell.setPadding(5);
+			cell.setBorder(1);
 			_table.addCell(cell);
 			
 			_itemsAdded++;
