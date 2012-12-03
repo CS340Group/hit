@@ -1,84 +1,84 @@
 package gui.batches;
 
-import gui.common.*;
-import gui.inventory.*;
+import gui.common.DialogBox;
+import gui.inventory.ProductContainerData;
 import gui.main.GUI;
 
 
 @SuppressWarnings("serial")
 public class TransferItemBatchView extends ItemBatchView implements ITransferItemBatchView {
 
-	@SuppressWarnings("unused")
-	private ProductContainerData _target;
-	
-	public TransferItemBatchView(GUI parent, DialogBox dialog, ProductContainerData target) {
-		super(parent, dialog);
-	
-		_target = target;
-		
-		construct();
+    @SuppressWarnings("unused")
+    private ProductContainerData _target;
 
-		_controller = new TransferItemBatchController(this, target);
-	}
+    public TransferItemBatchView(GUI parent, DialogBox dialog, ProductContainerData target) {
+        super(parent, dialog);
 
-	////////////////////////////
-	// ItemBatchView Overrides
-	////////////////////////////
+        _target = target;
 
-	@Override
-	protected String getBarcodeLabel() {
-		return "Item Barcode:";
-	}
+        construct();
 
-	@Override
-	public ITransferItemBatchController getController() {
-		return (ITransferItemBatchController)super.getController();
-	}
-	
-	@Override
-	protected void done() {
-		getController().done();
-	}
+        _controller = new TransferItemBatchController(this, target);
+    }
 
-	@Override
-	protected void itemAction() {
-		getController().transferItem();
-	}
+    ////////////////////////////
+    // ItemBatchView Overrides
+    ////////////////////////////
 
-	@Override
-	protected String getItemActionName() {
-		return "Transfer Item";
-	}
-	
-	@Override
-	protected void barcodeChanged() {
-		getController().barcodeChanged();
-	}
-	
-	@Override
-	protected void useScannerChanged() {
-		getController().useScannerChanged();
-	}
+    @Override
+    protected String getBarcodeLabel() {
+        return "Item Barcode:";
+    }
 
-	@Override
-	protected void selectedProductChanged() {
-		getController().selectedProductChanged();
-	}
+    @Override
+    public ITransferItemBatchController getController() {
+        return (ITransferItemBatchController) super.getController();
+    }
 
-	@Override
-	protected void selectedItemChanged() {
-		return;
-	}
-	
-	@Override
-	protected void redo() {
-		getController().redo();
-	}
+    @Override
+    protected void done() {
+        getController().done();
+    }
 
-	@Override
-	protected void undo() {
-		getController().undo();
-	}
+    @Override
+    protected void itemAction() {
+        getController().transferItem();
+    }
+
+    @Override
+    protected String getItemActionName() {
+        return "Transfer Item";
+    }
+
+    @Override
+    protected void barcodeChanged() {
+        getController().barcodeChanged();
+    }
+
+    @Override
+    protected void useScannerChanged() {
+        getController().useScannerChanged();
+    }
+
+    @Override
+    protected void selectedProductChanged() {
+        getController().selectedProductChanged();
+    }
+
+    @Override
+    protected void selectedItemChanged() {
+        return;
+    }
+
+    @Override
+    protected void redo() {
+        getController().redo();
+    }
+
+    @Override
+    protected void undo() {
+        getController().undo();
+    }
 
 }
 

@@ -1,8 +1,8 @@
 package gui.product;
 
-import gui.common.*;
+import gui.common.Controller;
+import gui.common.IView;
 import gui.inventory.ProductContainerData;
-import model.common.Barcode;
 import model.common.Size;
 import model.product.Product;
 import model.productidentifier.ProductIdentifier;
@@ -12,27 +12,27 @@ import org.joda.time.DateTime;
  * Controller class for the add item view.
  */
 public class AddProductController extends Controller implements
-		IAddProductController {
+        IAddProductController {
 
     private ProductContainerData target;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param view Reference to the add product view
-	 * @param barcode Barcode for the product being added
-	 */
-	public AddProductController(IView view, String barcode, ProductContainerData target) {
-		super(view);
+    /**
+     * Constructor.
+     *
+     * @param view    Reference to the add product view
+     * @param barcode Barcode for the product being added
+     */
+    public AddProductController(IView view, String barcode, ProductContainerData target) {
+        super(view);
         this.target = target;
-		construct();
+        construct();
         toggleAll(false);
         getView().setBarcode(barcode);
         getView().setDescription("Fetching Description... Please Wait...");
         String desc = ProductIdentifier.identify(barcode);
         toggleAll(true);
         getView().setDescription("");
-        if(desc.length()>0){
+        if (desc.length() > 0) {
             getView().setDescription(desc);
         }
         getView().setSizeValue("1");
@@ -43,7 +43,7 @@ public class AddProductController extends Controller implements
         enableComponents();
     }
 
-    private void toggleAll(boolean toggle){
+    private void toggleAll(boolean toggle) {
         getView().enableBarcode(toggle);
         getView().enableDescription(toggle);
         getView().enableOK(toggle);
@@ -53,42 +53,43 @@ public class AddProductController extends Controller implements
         getView().enableSupply(toggle);
     }
 
-	//
-	// Controller overrides
-	//
-	
-	/**
-	 * Returns a reference to the view for this controller.
-	 * 
-	 * {@pre None}
-	 * 
-	 * {@post Returns a reference to the view for this controller.}
-	 */
-	@Override
-	protected IAddProductView getView() {
-		return (IAddProductView)super.getView();
-	}
+    //
+    // Controller overrides
+    //
 
-	/**
-	 * Sets the enable/disable state of all components in the controller's view.
-	 * A component should be enabled only if the user is currently
-	 * allowed to interact with that component.
-	 * 
-	 * {@pre None}
-	 * 
-	 * {@post The enable/disable state of all components in the controller's view
-	 * have been set appropriately.}
-	 */
-	@Override
-	protected void enableComponents() {
+    /**
+     * Returns a reference to the view for this controller.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post Returns a reference to the view for this controller.}
+     */
+    @Override
+    protected IAddProductView getView() {
+        return (IAddProductView) super.getView();
+    }
+
+    /**
+     * Sets the enable/disable state of all components in the controller's view.
+     * A component should be enabled only if the user is currently
+     * allowed to interact with that component.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post The enable/disable state of all components in the controller's view
+     * have been set appropriately.}
+     */
+    @Override
+    protected void enableComponents() {
         getView().enableSizeValue(true);
         Product p = new Product();
-        if(getView().getSizeUnit().name() == "Count"){
+        if (getView().getSizeUnit().name() == "Count") {
             getView().enableSizeValue(false);
             getView().setSizeValue("1");
         }
-        try{
-            p.setSize(new Size(Float.parseFloat(getView().getSizeValue()),getView().getSizeUnit().toString()));
+        try {
+            p.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
+                    getView().getSizeUnit().toString()));
             p.setShelfLife(Integer.parseInt(getView().getShelfLife()));
             p.set3MonthSupply(Integer.parseInt(getView().getSupply()));
             p.setBarcode(getView().getBarcode());
@@ -96,44 +97,44 @@ public class AddProductController extends Controller implements
             p.setContainerId((Integer) target.getTag());
             p.setCreationDate(DateTime.now());
             p.setStorageUnitId((Integer) target.getTag());
-        } catch (Exception e){
+        } catch (Exception e) {
             getView().enableOK(false);
             return;
         }
         getView().enableOK(p.validate().getStatus());
-	}
+    }
 
-	/**
-	 * Loads data into the controller's view.
-	 * 
-	 *  {@pre None}
-	 *  
-	 *  {@post The controller has loaded data into its view}
-	 */
-	@Override
-	protected void loadValues() {
+    /**
+     * Loads data into the controller's view.
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post The controller has loaded data into its view}
+     */
+    @Override
+    protected void loadValues() {
 
-	}
+    }
 
-	//
-	// IAddProductController overrides
-	//
-	
-	/**
-	 * This method is called when any of the fields in the
-	 * add product view is changed by the user.
-	 */
-	@Override
-	public void valuesChanged() {
+    //
+    // IAddProductController overrides
+    //
+
+    /**
+     * This method is called when any of the fields in the
+     * add product view is changed by the user.
+     */
+    @Override
+    public void valuesChanged() {
         enableComponents();
-	}
-	
-	/**
-	 * This method is called when the user clicks the "OK"
-	 * button in the add product view.
-	 */
-	@Override
-	public void addProduct() {
+    }
+
+    /**
+     * This method is called when the user clicks the "OK"
+     * button in the add product view.
+     */
+    @Override
+    public void addProduct() {
         Product product = new Product();
         product.set3MonthSupply(Integer.parseInt(getView().getSupply()));
         product.setBarcode(getView().getBarcode());
@@ -141,11 +142,12 @@ public class AddProductController extends Controller implements
         product.setCreationDate(DateTime.now());
         product.setDescription(getView().getDescription());
         product.setShelfLife(Integer.parseInt(getView().getShelfLife()));
-        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()), getView().getSizeUnit().toString()));
+        product.setSize(new Size(Float.parseFloat(getView().getSizeValue()),
+                getView().getSizeUnit().toString()));
         product.setStorageUnitId((Integer) target.getTag());
         product.validate();
         product.save();
-	}
+    }
 
 }
 

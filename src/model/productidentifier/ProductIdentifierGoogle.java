@@ -1,9 +1,7 @@
 /**
- * 
+ *
  */
 package model.productidentifier;
-
-import model.product.Product;
 
 /**
  * Attempts to identify a product by searching Google.
@@ -15,13 +13,13 @@ public class ProductIdentifierGoogle extends ProductIdentificationPlugin {
     }
 
 
-	/* (non-Javadoc)
-	 * @see model.productidentifier.ProductIdentificationPlugin#identify(java.lang.String)
-	 */
-	@Override
-	public String identify(String barcode) {
+    /* (non-Javadoc)
+      * @see model.productidentifier.ProductIdentificationPlugin#identify(java.lang.String)
+      */
+    @Override
+    public String identify(String barcode) {
         System.out.println("GOOGLE PLUGIN");
-		return handoff(barcode);
-	}
+        return handoff(barcode);
+    }
 
 }

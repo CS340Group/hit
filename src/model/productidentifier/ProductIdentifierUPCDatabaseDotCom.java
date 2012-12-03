@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package model.productidentifier;
 
 import org.apache.ws.commons.util.NamespaceContextImpl;
-import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.common.TypeFactoryImpl;
@@ -34,7 +33,7 @@ public class ProductIdentifierUPCDatabaseDotCom extends ProductIdentificationPlu
     private final String LOOKUP_METHOD = "lookup";
     private final String RPC_KEY = "0c607dbbf75d1416cd833c1d4d66fb1a727b48e4";
 
-    public ProductIdentifierUPCDatabaseDotCom(ProductIdentificationPlugin successor){
+    public ProductIdentifierUPCDatabaseDotCom(ProductIdentificationPlugin successor) {
         super(successor);
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
         try {
@@ -49,11 +48,11 @@ public class ProductIdentifierUPCDatabaseDotCom extends ProductIdentificationPlu
 
     @Override
     public String identify(String barcode) {
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("rpc_key", RPC_KEY);
         params.put("upc", barcode);
         try {
-            HashMap result = (HashMap) client.execute(LOOKUP_METHOD, new Object[] {params});
+            HashMap result = (HashMap) client.execute(LOOKUP_METHOD, new Object[]{params});
             return result.get("description").toString();
         } catch (NullPointerException e) {
             return handoff(barcode);
@@ -72,7 +71,8 @@ public class ProductIdentifierUPCDatabaseDotCom extends ProductIdentificationPlu
             return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         }
 
-        public TypeParser getParser(XmlRpcStreamConfig pConfig, NamespaceContextImpl pContext, String pURI, String pLocalName) {
+        public TypeParser getParser(XmlRpcStreamConfig pConfig, NamespaceContextImpl pContext,
+                                    String pURI, String pLocalName) {
             if (DateSerializer.DATE_TAG.equals(pLocalName)) {
                 return new DateParser(newFormat());
             } else {
@@ -80,7 +80,8 @@ public class ProductIdentifierUPCDatabaseDotCom extends ProductIdentificationPlu
             }
         }
 
-        public TypeSerializer getSerializer(XmlRpcStreamConfig pConfig, Object pObject) throws SAXException {
+        public TypeSerializer getSerializer(XmlRpcStreamConfig pConfig, Object pObject)
+                throws SAXException {
             if (pObject instanceof Date) {
                 return new DateSerializer(newFormat());
             } else {

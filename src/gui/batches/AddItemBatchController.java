@@ -4,10 +4,12 @@ import common.BarcodePdf;
 import common.Result;
 import common.command.AddItemCommand;
 import common.command.CommandManager;
-import gui.common.*;
-import gui.inventory.*;
+import gui.common.Controller;
+import gui.common.GuiModelConverter;
+import gui.common.IView;
+import gui.inventory.ProductContainerData;
 import gui.item.ItemData;
-import gui.product.*;
+import gui.product.ProductData;
 import model.common.ModelFacade;
 import model.item.Item;
 import model.item.ItemVault;
@@ -16,8 +18,6 @@ import model.product.ProductVault;
 import model.productcontainer.StorageUnit;
 import model.productcontainer.StorageUnitVault;
 import org.joda.time.DateTime;
-import static ch.lambdaj.Lambda.*;
-
 
 import java.awt.*;
 import java.io.File;
@@ -30,17 +30,18 @@ import java.util.*;
 public class AddItemBatchController extends Controller implements
         IAddItemBatchController {
 
-    private HashMap<ProductData,ArrayList<ItemData>> _products = new HashMap<ProductData, ArrayList<ItemData>>();
+    private HashMap<ProductData, ArrayList<ItemData>> _products =
+            new HashMap<ProductData, ArrayList<ItemData>>();
     private boolean _scanner = true;
     private Timer _timer;
     private ProductContainerData _target;
     private ProductVault _productVault;
     private CommandManager _commandManager;
-    
+
     /**
      * Constructor.
-     * 
-     * @param view Reference to the add item batch view.
+     *
+     * @param view    Reference to the add item batch view.
      * @param _target Reference to the storage unit to which items are being added.
      */
     public AddItemBatchController(IView view, ProductContainerData target) {
@@ -65,10 +66,10 @@ public class AddItemBatchController extends Controller implements
 
     /**
      * Loads data into the controller's view.
-     * 
-     *  {@pre None}
-     *  
-     *  {@post The controller has loaded data into its view}
+     * <p/>
+     * {@pre None}
+     * <p/>
+     * {@post The controller has loaded data into its view}
      */
     @Override
     protected void loadValues() {
@@ -82,9 +83,9 @@ public class AddItemBatchController extends Controller implements
      * Sets the enable/disable state of all components in the controller's view.
      * A component should be enabled only if the user is currently
      * allowed to interact with that component.
-     * 
+     * <p/>
      * {@pre None}
-     * 
+     * <p/>
      * {@post The enable/disable state of all components in the controller's view
      * have been set appropriately.}
      */
@@ -93,14 +94,14 @@ public class AddItemBatchController extends Controller implements
         int count = 0;
         try {
             count = Integer.parseInt(getView().getCount());
-        } catch(Exception e){
+        } catch (Exception e) {
             getView().enableItemAction(false);
             return;
         }
         getView().enableItemAction(
                 !getView().getBarcode().isEmpty()
-                && count > 0
-                && !_scanner
+                        && count > 0
+                        && !_scanner
         );
 
         getView().enableUndo(_commandManager.canUndo());
@@ -135,9 +136,9 @@ public class AddItemBatchController extends Controller implements
         try {
             _timer.cancel();
             _timer = new Timer();
+        } catch (IllegalStateException e) {
         }
-        catch(IllegalStateException e){ }
-        if(_scanner)
+        if (_scanner)
             _timer.schedule(new ScannerTimer(), SCANNER_SECONDS);
     }
 
@@ -167,8 +168,8 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void addItem() {
         int count = getCountFromView();
-        if (count <= 0){
-            if(_scanner)
+        if (count <= 0) {
+            if (_scanner)
                 getView().displayErrorMessage("Count cannot be less than 1.");
             resetViewFields();
             return;
@@ -177,25 +178,25 @@ public class AddItemBatchController extends Controller implements
 
         // Make sure the product exists to be added to.
         String barcode = getView().getBarcode();
-        if (!_productVault.hasProductWithBarcode(barcode)){
+        if (!_productVault.hasProductWithBarcode(barcode)) {
             getView().displayAddProductView(_target);
             createdProduct = true;
         }
         // If cancel was pressed, there is no product added, reset the view state.
-        if (!_productVault.hasProductWithBarcode(barcode)){
+        if (!_productVault.hasProductWithBarcode(barcode)) {
             resetViewFields();
             return;
         }
 
         Product product = null;
-        for(Product p : (ArrayList<Product>) _productVault.findAll("Barcode = %o",  barcode))
-            if(p.getStorageUnitId() == (Integer)_target.getTag())
+        for (Product p : (ArrayList<Product>) _productVault.findAll("Barcode = %o", barcode))
+            if (p.getStorageUnitId() == (Integer) _target.getTag())
                 product = p;
 
-        if(product == null){
+        if (product == null) {
             product = new Product(_productVault.find("Barcode = %o", barcode));
             product.setId(-1);
-            product.setStorageUnitId((Integer)_target.getTag());
+            product.setStorageUnitId((Integer) _target.getTag());
             product.setContainerId((Integer) _target.getTag());
             Result r = product.validate();
             r = product.save();
@@ -205,7 +206,7 @@ public class AddItemBatchController extends Controller implements
         StorageUnit sUnit = StorageUnitVault.getInstance().get((Integer) _target.getTag());
         Collection<Item> newItems = new ArrayList<Item>();
 
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             Item item = new Item();
             item.setEntryDate(new DateTime(getView().getEntryDate()));
             item.setProduct(product);
@@ -238,10 +239,10 @@ public class AddItemBatchController extends Controller implements
         getView().setUseScanner(true);
         _scanner = true;
     }
-    
-    private ProductData findStoredProductData(String barcode){
-        for(ProductData p: _products.keySet()){
-            if(p.getBarcode().contentEquals(barcode))
+
+    private ProductData findStoredProductData(String barcode) {
+        for (ProductData p : _products.keySet()) {
+            if (p.getBarcode().contentEquals(barcode))
                 return p;
         }
         return null;
@@ -253,7 +254,7 @@ public class AddItemBatchController extends Controller implements
      */
     @Override
     public void redo() {
-    	_commandManager.redo();
+        _commandManager.redo();
         resetViewFields();
         enableComponents();
     }
@@ -264,7 +265,7 @@ public class AddItemBatchController extends Controller implements
      */
     @Override
     public void undo() {
-    	_commandManager.undo();
+        _commandManager.undo();
         resetViewFields();
         enableComponents();
     }
@@ -276,18 +277,18 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void done() {
         getView().close();
-        if(!_products.isEmpty()){
-            try{
+        if (!_products.isEmpty()) {
+            try {
                 BarcodePdf pdf = new BarcodePdf("items.pdf");
-                for(ArrayList<ItemData> i : _products.values()){
-                    for(ItemData data : i){
+                for (ArrayList<ItemData> i : _products.values()) {
+                    for (ItemData data : i) {
                         int id = (Integer) data.getTag();
                         pdf.addItem(ItemVault.getInstance().get(id));
                     }
                 }
                 pdf.finish();
-            } catch (Exception e){
-                getView().displayErrorMessage(e.getMessage()    );
+            } catch (Exception e) {
+                getView().displayErrorMessage(e.getMessage());
             }
             if (Desktop.isDesktopSupported()) {
                 try {
@@ -300,14 +301,14 @@ public class AddItemBatchController extends Controller implements
         }
     }
 
-    private ProductData[] getStoredProductDatas(){
-        if(_products.isEmpty())
+    private ProductData[] getStoredProductDatas() {
+        if (_products.isEmpty())
             return new ProductData[0];
         return _products.keySet().toArray(new ProductData[_products.keySet().size()]);
     }
 
-    private ItemData[] getStoredItemDatas(ProductData pd){
-        if(_products.containsKey(pd))
+    private ItemData[] getStoredItemDatas(ProductData pd) {
+        if (_products.containsKey(pd))
             return _products.get(pd).toArray(new ItemData[_products.get(pd).size()]);
         return new ItemData[0];
     }
@@ -316,7 +317,7 @@ public class AddItemBatchController extends Controller implements
 
         @Override
         public void run() {
-            if(!getView().getBarcode().isEmpty())
+            if (!getView().getBarcode().isEmpty())
                 addItem();
             _timer.cancel();
         }
@@ -327,7 +328,7 @@ public class AddItemBatchController extends Controller implements
         ItemData itemData = GuiModelConverter.wrapItem(item);
         Product product = item.getProduct();
         ProductData productData = findStoredProductData(product.getBarcode());
-        if(productData == null){
+        if (productData == null) {
             productData = GuiModelConverter.wrapProduct(product);
             _products.put(productData, new ArrayList<ItemData>());
         }
@@ -340,7 +341,7 @@ public class AddItemBatchController extends Controller implements
     @Override
     public void addProductToView(Product _product) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -348,16 +349,16 @@ public class AddItemBatchController extends Controller implements
         Product product = item.getProduct();
         ProductData productData = findStoredProductData(product.getBarcode());
         ArrayList<ItemData> itemsToDeleteArrayList = new ArrayList<ItemData>();
-        if(productData != null){
-            for(ItemData i : _products.get(productData)){
-                if(i.getTag().toString().equals(Integer.toString(item.getId()))){
-                	itemsToDeleteArrayList.add(i);
+        if (productData != null) {
+            for (ItemData i : _products.get(productData)) {
+                if (i.getTag().toString().equals(Integer.toString(item.getId()))) {
+                    itemsToDeleteArrayList.add(i);
                 }
             }
-            for (ItemData itemData : itemsToDeleteArrayList){
-            	_products.get(productData).remove(itemData);
+            for (ItemData itemData : itemsToDeleteArrayList) {
+                _products.get(productData).remove(itemData);
                 productData.setCount(String.valueOf(_products.get(productData).size()));
-                if(productData.getCount().equals("0"))
+                if (productData.getCount().equals("0"))
                     _products.remove(productData);
             }
 

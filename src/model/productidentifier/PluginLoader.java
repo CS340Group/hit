@@ -14,15 +14,17 @@ public class PluginLoader {
 
     private static final String PLUGIN_CONFIG = "./plugins.json";
 
-    public static void load(){
+    public static void load() {
         Data data = null;
         try {
             data = new Gson().fromJson(readFile(PLUGIN_CONFIG), Data.class);
-        } catch (IOException e){
-            System.err.println("An error was caught when trying to read plugins.json. Are you sure it exists?");
+        } catch (IOException e) {
+            System.err.println(
+                    "An error was caught when trying to read plugins.json. " +
+                            "Are you sure it exists?");
             e.printStackTrace(System.err);
         }
-        for(PluginData plugin : data.getPlugins()){
+        for (PluginData plugin : data.getPlugins()) {
             ProductIdentificationPluginRegistry.RegisterPlugin(
                     new PluginDescriptor(
                             plugin.getName(),
@@ -40,8 +42,7 @@ public class PluginLoader {
             MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
             /* Instead of using default, pass in a decoder. */
             return Charset.defaultCharset().decode(bb).toString();
-        }
-        finally {
+        } finally {
             stream.close();
         }
     }
@@ -51,14 +52,29 @@ public class PluginLoader {
         private String className;
         private String description;
 
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
+        public String getName() {
+            return name;
+        }
 
-        public String getClassName() { return className; }
-        public void setClassName(String className) { this.className = className; }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-        public String getDescription() { return description; }
-        public void setDescription(String description) { this.description = description; }
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
     }
 
     private class Data {
