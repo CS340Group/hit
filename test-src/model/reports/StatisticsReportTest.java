@@ -215,4 +215,257 @@ public class StatisticsReportTest {
         report.setMonths(months);
         assertEquals(months,report.getMonths());
     }
+    
+    
+    @Test
+    public void testProductAddedOnStartDate(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+        //Product Added on first day of reporting period
+        report.setMonths(3);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    @Test
+    public void testProductAddedOnEndDate(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now());
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(3);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+
+        assertTrue(obj.getTable(0).getCell(1, 6).equals("1 / 1"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    @Test
+    public void testProductAddedDuringTest(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+       
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(6);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+        
+        assertTrue(obj.getTable(0).getCell(1, 6).equals("1 / 1"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    
+    /*
+     * Test a product where a product has no items at them time when the report was ran
+
+1 = All items were removed on the first day of the reporting period
+2 = All items were removed during the middle of the reporting period
+3 = All items were removed on the last day of the reporting period
+4 = All items were removed before the reporting period
+     */
+    @Test
+    public void testProductHasNoItems1(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(DateTime.now().minusMonths(1));
+        i.setExitDate(DateTime.now().minusMonths(1));
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(1);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+        
+        assertTrue(obj.getTable(0).getCell(1, 4).equals("0 / 0.0"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    @Test
+    public void testProductHasNoItems2(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.setExitDate(DateTime.now().minusMonths(1).plusDays(3));
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(6);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+        
+        assertTrue(obj.getTable(0).getCell(1, 4).equals("0 / 0.71"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    @Test
+    public void testProductHasNoItems3(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.setExitDate(DateTime.now());
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(6);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+        
+        assertTrue(obj.getTable(0).getCell(1, 4).equals("1 / 1.0"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
+    @Test
+    public void testProductHasNoItems4(){
+        StorageUnit su = new StorageUnit();
+        su.setName("Test");
+        su.validate();
+        su.save();
+
+        Product p = new Product();
+        p.setContainerId(su.getId());
+        p.generateTestData();
+        p.setCreationDate(DateTime.now().minusMonths(3));
+        p.setStorageUnitId(su.getId());
+        p.validate();
+        p.save();
+
+        Item i = new Item();
+        i.generateTestData();
+        i.setProductId(p.getId());
+        i.setEntryDate(p.getCreationDate());
+        i.setExitDate(DateTime.now().minusMonths(3));
+        i.validate();
+        i.save();
+
+        ObjectReportBuilder builder = new ObjectReportBuilder();
+        StatisticReport report = new StatisticReport();
+        
+
+        report.setMonths(1);
+        report.setBuilder(builder);
+        report.constructReport();
+        PrintObject obj = (PrintObject) builder.returnObject();
+        
+        assertTrue(obj.getTable(0).getCell(1, 4).equals("0 / 0.0"));
+        assertEquals(obj.getTable(0).rowCount(), 2);
+    }
 }

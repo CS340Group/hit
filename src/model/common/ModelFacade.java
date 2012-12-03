@@ -40,7 +40,7 @@ public class ModelFacade {
         newProduct.setDescription(currentProduct.getDescription());
         newProduct.setShelfLife(currentProduct.getShelfLife());
         newProduct.setSize(currentProduct.getSize());
-
+        
         
         newProduct.setStorageUnitId(-1);
         newProduct.setContainerId(-1);
