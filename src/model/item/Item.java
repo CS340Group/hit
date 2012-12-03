@@ -149,6 +149,8 @@ public class Item extends Model{
      */
     public DateTime getExpirationDate(){
     	assert this.getProduct() != null;
+        if(getProduct().getShelfLife() == 0)
+            return null;
         return getEntryDate().plusMonths(getProduct().getShelfLife());
     }
     

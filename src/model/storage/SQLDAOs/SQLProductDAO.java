@@ -39,8 +39,7 @@ public class SQLProductDAO implements IStorageDAO {
 		Product product = (Product) model;
 		try {
 			String query = "INSERT INTO product (" + 
-					"                     id," + 
-					"                     storageUnitId," + 
+					"                     storageUnitId," +
 					"                     parentId," + 
 					"                     barcode," +
 					"                     MonthSupply," +
@@ -49,8 +48,9 @@ public class SQLProductDAO implements IStorageDAO {
 					"                     deleted," + 
 					"                     description," + 
 					"                     shelfLife," + 
-					"                     creationDate" +
-					"                     )" + 
+					"                     creationDate," +
+                    "                     id" +
+					"                     )" +
 					"                     VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			statement = _factory.getConnection().prepareStatement(query);
             FillStatementFromProduct(statement, product);
@@ -69,9 +69,8 @@ public class SQLProductDAO implements IStorageDAO {
 		PreparedStatement statement;
 		Product product = (Product) model;
 		try {
-			String query = "UPDATE product SET" + 
-					"            id=?," + 
-					"            storageUnitId=?," + 
+			String query = "UPDATE product SET" +
+					"            storageUnitId=?," +
 					"            parentId=?," + 
 					"            barcode=?," + 
 					"            MonthSupply=?," +
@@ -80,28 +79,30 @@ public class SQLProductDAO implements IStorageDAO {
 					"            deleted=?," + 
 					"            description=?," + 
 					"            shelfLife=?," + 
-					"            creationDate=?;";
+					"            creationDate=? where id=?";
 			statement = _factory.getConnection().prepareStatement(query);
             FillStatementFromProduct(statement, product);
 			statement.executeUpdate();
 		} catch (SQLException e) {
+            assert false;
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true);
 	}
 
     private void FillStatementFromProduct(PreparedStatement statement, Product product) throws SQLException {
-        statement.setInt(1, product.getId());
-        statement.setInt(2, product.getStorageUnitId());
-        statement.setInt(3, product.getProductContainerId());
-        statement.setString(4, product.getBarcode());
-        statement.setInt(5, product.get3MonthSupply());
-        statement.setFloat(6, product.getSize().getAmount());
-        statement.setString(7, product.getSize().getSizeType());
-        statement.setBoolean(8, product.getDeleted());
-        statement.setString(9, product.getDescription());
-        statement.setInt(10, product.getShelfLife());
-        statement.setString(11, SQLUtils.DateToLongString(product.getCreationDate()));
+        int i = 1;
+        statement.setInt(i++, product.getStorageUnitId());
+        statement.setInt(i++, product.getProductContainerId());
+        statement.setString(i++, product.getBarcode());
+        statement.setInt(i++, product.get3MonthSupply());
+        statement.setFloat(i++, product.getSize().getAmount());
+        statement.setString(i++, product.getSize().getSizeType());
+        statement.setBoolean(i++, product.getDeleted());
+        statement.setString(i++, product.getDescription());
+        statement.setInt(i++, product.getShelfLife());
+        statement.setString(i++, SQLUtils.DateToLongString(product.getCreationDate()));
+        statement.setInt(i++, product.getId());
     }
 
     /* (non-Javadoc)
@@ -181,6 +182,7 @@ public class SQLProductDAO implements IStorageDAO {
 			while(rSet.next()){
 				product = new Product();
                 fillProductFromResultSet(product, rSet);
+                product.save();
 			}
 		} catch (SQLException e) {
 			return new Result(false, e.getMessage());
@@ -202,7 +204,6 @@ public class SQLProductDAO implements IStorageDAO {
         product.setDescription(rSet.getString(9));
         product.setShelfLife(rSet.getInt(10));
         product.setCreationDate(SQLUtils.DateFromLongString(rSet.getString(11)));
-        product.save();
     }
 
     @Override
