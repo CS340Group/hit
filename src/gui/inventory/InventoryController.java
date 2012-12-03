@@ -12,7 +12,6 @@ import model.product.Product;
 import model.product.ProductVault;
 import model.productcontainer.*;
 import model.storage.StorageManager;
-import model.tempmain.TestEnvironment;
 
 import java.util.*;
 
@@ -108,8 +107,7 @@ public class InventoryController extends Controller
     }
 
     private void addSampleItems() {
-        TestEnvironment env = new TestEnvironment(12, 350);
-        env.newEnvironment();
+
     }
 
     /*
