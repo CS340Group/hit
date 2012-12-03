@@ -100,7 +100,7 @@ public class StatisticsReportTest {
 		PrintObject obj = (PrintObject) builder.returnObject();
 
 		List<Product> products = sort(
-				ProductVault.getInstance().findAll("FirstItemDate > %o",
+				ProductVault.getInstance().findAll("FirstItemDate >= %o",
 						DateTime.now().minusMonths(months), true), on(Product.class)
 						.getDescriptionSort());
 		int i = 1;
