@@ -4,6 +4,7 @@
 package model.storage;
 
 import model.storage.SQLDAOs.SQLItemDAO;
+import model.storage.SQLDAOs.SQLMiscStorageDAO;
 import model.storage.SQLDAOs.SQLProductDAO;
 import model.storage.SQLDAOs.SQLProductGroupDAO;
 import model.storage.SQLDAOs.SQLStorageUnitDAO;
@@ -40,6 +41,11 @@ public class SQLDAOFactory implements IDAOFactory {
 		return new SQLStorageUnitDAO();
 	}
 
+	public IStorageDAO getMiscStorageDAO() {
+		return new SQLMiscStorageDAO();
+	}
+	
+	
 	@Override
 	public Result startTransaction() {
 		_connection = openNewConnection();
@@ -123,14 +129,15 @@ public class SQLDAOFactory implements IDAOFactory {
                 "\"barcode\" TEXT,\"entryTime\" LONG,\"exitTime\" LONG, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS \"productGroup\" (\"id\" INTEGER, \"name\" TEXT, " +
                 "\"rootParentId\" INTEGER,  \"parentId\" INTEGER, \"MonthSupplyAmount\" FLOAT, " +
-                "\"MonthSupplyUnit\" TEXT);");
+                "\"MonthSupplyUnit\" TEXT, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"storageUnit\" (\"id\" INTEGER, \"name\" TEXT, " +
-                "\"rootParentId\" INTEGER);");
+                "\"rootParentId\" INTEGER, \"deleted\" BOOL);");
         cmds.add("CREATE TABLE IF NOT EXISTS\"product\" (\"id\" INTEGER , " +
                 "\"storageUnitId\" INTEGER, \"parentId\" INTEGER,  \"barcode\" TEXT, " +
                 "\"MonthSupply\" INTEGER, \"sizeAmount\" FLOAT, \"sizeUnit\" TEXT, " +
                 "\"deleted\" BOOL, \"description\" TEXT, \"shelfLife\" INTEGER, " +
                 "\"creationDate\" LONG);");
+		cmds.add("CREATE TABLE IF NOT EXISTS \"miscStorage\" (\"id\" INTEGER,  \"datetime\" LONG);");
         try {
             for (String cmd : cmds){
                 PreparedStatement p = c.prepareStatement(cmd);
